@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "7f11VG/ddpINAI7rUhkVSri+SPkWQuVVCT8S3UrErhg=",
+  "Source": "JWTAuthExample",
+  "BasePath": "_content/JWTAuthExample",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
