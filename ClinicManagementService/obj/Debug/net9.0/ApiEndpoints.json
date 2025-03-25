@@ -1,0 +1,28 @@
+[
+  {
+    "ContainingType": "ClinicManagementService.Controllers.CliniqueController",
+    "Method": "GetCliniques",
+    "RelativePath": "api/Clinique",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ClinicManagementService.Controllers.CliniqueController",
+    "Method": "CreateClinique",
+    "RelativePath": "api/Clinique",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "clinique",
+        "Type": "ClinicManagementService.Models.Clinique",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
