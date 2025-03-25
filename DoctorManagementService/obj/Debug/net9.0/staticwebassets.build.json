@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "0FZYq5YSIA/xdx0tNAneIUEQGl3ELiCO7DcbDYEAqYc=",
+  "Source": "DoctorManagementService",
+  "BasePath": "_content/DoctorManagementService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
