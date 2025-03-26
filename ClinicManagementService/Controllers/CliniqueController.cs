@@ -1,5 +1,6 @@
 ﻿using ClinicManagementService.Data;
 using ClinicManagementService.Models;
+using ClinicManagementService.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,73 +8,47 @@ namespace ClinicManagementService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CliniqueController(CliniqueDbContext _context) : ControllerBase
+    public class CliniqueController() : ControllerBase
     {
-        [HttpGet]
-        public async Task<IActionResult> GetCliniques() =>
-            Ok(await _context.Cliniques.ToListAsync());
+        private readonly ICliniqueService _cliniqueService;
 
-        [HttpPost]
-        public async Task<IActionResult> CreateClinique(Clinique clinique)
+        public CliniqueController(ICliniqueService cliniqueService) : this()
         {
-            _context.Cliniques.Add(clinique);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetCliniques), new { id = clinique.Id }, clinique);
+            _cliniqueService = cliniqueService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetCliniqueById(Guid id)
+        [HttpPost]
+        public async Task<ActionResult<Clinique>> AjouterClinique(Clinique clinique)
         {
-            var clinique = await _context.Cliniques.FindAsync(id);
-            if (clinique == null)
-            {
-                return NotFound($"Clinique with ID {id} not found.");
-            }
-            return Ok(clinique);
+            var result = await _cliniqueService.AjouterCliniqueAsync(clinique);
+            return CreatedAtAction(nameof(ObtenirClinique), new { id = result.Id }, result);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateClinique(Guid id, Clinique updatedClinique)
+        public async Task<IActionResult> ModifierClinique(Guid id, Clinique clinique)
         {
-            if (updatedClinique == null || id != updatedClinique.Id)
-            {
-                return BadRequest("Invalid clinique data or ID mismatch.");
-            }
-
-            var existingClinique = await _context.Cliniques.FindAsync(id);
-            if (existingClinique == null)
-            {
-                return NotFound($"Clinique with ID {id} not found.");
-            }
-
-            // Update the existing clinique with new values
-            existingClinique.Nom = updatedClinique.Nom;
-            existingClinique.Adresse = updatedClinique.Adresse;
-            existingClinique.Ville = updatedClinique.Ville;
-            existingClinique.Pays = updatedClinique.Pays;
-            existingClinique.CodePostal = updatedClinique.CodePostal;
-            existingClinique.Téléphone = updatedClinique.Téléphone;
-            existingClinique.Email = updatedClinique.Email;
-
-            _context.Cliniques.Update(existingClinique);
-            await _context.SaveChangesAsync();
-
+            await _cliniqueService.ModifierCliniqueAsync(id, clinique);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClinique(Guid id)
+        public async Task<IActionResult> SupprimerClinique(Guid id)
         {
-            var clinique = await _context.Cliniques.FindAsync(id);
-            if (clinique == null)
-            {
-                return NotFound($"Clinique with ID {id} not found.");
-            }
+            var result = await _cliniqueService.SupprimerCliniqueAsync(id);
+            return result ? NoContent() : NotFound();
+        }
 
-            _context.Cliniques.Remove(clinique);
-            await _context.SaveChangesAsync();
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Clinique>> ObtenirClinique(Guid id)
+        {
+            var clinique = await _cliniqueService.ObtenirCliniqueParIdAsync(id);
+            return clinique == null ? NotFound() : Ok(clinique);
+        }
 
-            return NoContent();
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Clinique>>> ListerCliniques()
+        {
+            return Ok(await _cliniqueService.ListerCliniqueAsync());
         }
 
     }

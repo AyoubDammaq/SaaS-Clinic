@@ -1,4 +1,5 @@
 using ClinicManagementService.Data;
+using ClinicManagementService.Service;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,8 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<CliniqueDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CliniqueDatabase")));
+
+builder.Services.AddScoped<ICliniqueService, CliniqueService>();
 
 var app = builder.Build();
 
