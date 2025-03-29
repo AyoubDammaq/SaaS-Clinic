@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RDVManagementService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d8a7aa103e2e1bf717ef4eecc62d3f65c26d509b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1acbbf2a3c9bd7b5db13572fdfdd80af0f6aee27")]
 [assembly: System.Reflection.AssemblyProductAttribute("RDVManagementService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RDVManagementService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
