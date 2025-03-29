@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35913.81 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDVManagementService", "RDVManagementService.csproj", "{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {307382FD-C31C-44B1-949B-575AD34C042D}
+	EndGlobalSection
+EndGlobal
