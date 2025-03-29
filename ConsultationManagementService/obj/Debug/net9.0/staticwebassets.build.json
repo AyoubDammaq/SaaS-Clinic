@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "iXXhntCEFtTYpAcK1W15ynfyHfl5rDZh7ikjC0QqChQ=",
+  "Source": "ConsultationManagementService",
+  "BasePath": "_content/ConsultationManagementService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
