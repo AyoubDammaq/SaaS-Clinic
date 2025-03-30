@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\FacturationService\\FacturationService.csproj": {}
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\FacturationService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\FacturationService\\FacturationService.csproj": {
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\FacturationService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\FacturationService\\FacturationService.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\FacturationService.csproj",
         "projectName": "FacturationService",
-        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\FacturationService\\FacturationService.csproj",
+        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\FacturationService.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\FacturationService\\obj\\",
+        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -53,6 +53,26 @@
           "targetAlias": "net9.0",
           "dependencies": {
             "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.3, )"
             },
