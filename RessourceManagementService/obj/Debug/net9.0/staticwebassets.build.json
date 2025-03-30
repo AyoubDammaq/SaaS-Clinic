@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "Aaqz19zayQF2zEUASXJaTWBEAIjJb7a9G7Beddpx6ws=",
+  "Source": "RessourceManagementService",
+  "BasePath": "_content/RessourceManagementService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
