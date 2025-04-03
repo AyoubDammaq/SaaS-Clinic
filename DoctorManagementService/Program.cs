@@ -1,4 +1,6 @@
 using DoctorManagementService.Data;
+using DoctorManagementService.Repositories;
+using DoctorManagementService.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<MedecinDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MedecinDatabase")));
+
+builder.Services.AddScoped<IMedecinRepository, MedecinRepository>();
+builder.Services.AddScoped<IMedecinService, MedecinService>();
 
 var app = builder.Build();
 

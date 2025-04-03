@@ -339,10 +339,10 @@ C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\stati
 C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.DoctorManagementService.props
 C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.DoctorManagementService.props
 C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\staticwebassets.pack.json
-C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\DoctorMa.FEBAD590.Up2Date
 C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\DoctorManagementService.dll
 C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\refint\DoctorManagementService.dll
 C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\DoctorManagementService.pdb
 C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\DoctorManagementService.genruntimeconfig.cache
 C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\ref\DoctorManagementService.dll
+C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
