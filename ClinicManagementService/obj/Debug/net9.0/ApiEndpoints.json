@@ -1,17 +1,7 @@
 [
   {
     "ContainingType": "ClinicManagementService.Controllers.CliniqueController",
-    "Method": "GetCliniques",
-    "RelativePath": "api/Clinique",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ClinicManagementService.Controllers.CliniqueController",
-    "Method": "CreateClinique",
+    "Method": "AjouterClinique",
     "RelativePath": "api/Clinique",
     "HttpMethod": "POST",
     "IsController": true,
@@ -23,6 +13,99 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": [
+      {
+        "Type": "ClinicManagementService.Models.Clinique",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ClinicManagementService.Controllers.CliniqueController",
+    "Method": "ListerCliniques",
+    "RelativePath": "api/Clinique",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ClinicManagementService.Models.Clinique, ClinicManagementService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ClinicManagementService.Controllers.CliniqueController",
+    "Method": "ModifierClinique",
+    "RelativePath": "api/Clinique/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "clinique",
+        "Type": "ClinicManagementService.Models.Clinique",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ClinicManagementService.Controllers.CliniqueController",
+    "Method": "SupprimerClinique",
+    "RelativePath": "api/Clinique/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ClinicManagementService.Controllers.CliniqueController",
+    "Method": "ObtenirClinique",
+    "RelativePath": "api/Clinique/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ClinicManagementService.Models.Clinique",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]

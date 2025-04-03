@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\ClinicManagementService.csproj": {}
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\ClinicManagementService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\ClinicManagementService.csproj": {
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\ClinicManagementService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\ClinicManagementService.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\ClinicManagementService.csproj",
         "projectName": "ClinicManagementService",
-        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\ClinicManagementService.csproj",
+        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\ClinicManagementService.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\obj\\",
+        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -52,6 +52,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.3, )"
@@ -83,6 +87,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[9.0.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [

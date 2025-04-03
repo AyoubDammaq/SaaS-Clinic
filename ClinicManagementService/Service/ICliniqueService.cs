@@ -9,5 +9,7 @@ namespace ClinicManagementService.Service
         Task<bool> SupprimerCliniqueAsync(Guid id);
         Task<Clinique> ObtenirCliniqueParIdAsync(Guid id);
         Task<IEnumerable<Clinique>> ListerCliniqueAsync();
+        Task<IEnumerable<Clinique>> ListerCliniquesParNomAsync(string nom);
+        Task<IEnumerable<Clinique>> ListerCliniquesParAdresseAsync(string adresse);
     }
 }

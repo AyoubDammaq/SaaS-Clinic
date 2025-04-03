@@ -1,18 +1,19 @@
 ﻿using ClinicManagementService.Data;
 using ClinicManagementService.Models;
+using ClinicManagementService.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClinicManagementService.Service
 {
     public class CliniqueService : ICliniqueService
     {
-        private readonly CliniqueDbContext _context;
+        private readonly ICliniqueRepository _repository;
         private readonly Guid _tenantId;
 
-        public CliniqueService(CliniqueDbContext context, IHttpContextAccessor httpContextAccessor)
+        public CliniqueService(ICliniqueRepository repository, IHttpContextAccessor httpContextAccessor)
         {
-            _context = context;
-            // Récupération du TenantId depuis le contexte HTTP
+            _repository = repository;
+            // Récupération du TenantId depuis le contexte HTTP  
             _tenantId = httpContextAccessor.HttpContext?.Items["TenantId"] is Guid tenantId
                 ? tenantId
                 : throw new UnauthorizedAccessException("Tenant non identifié");
@@ -20,53 +21,44 @@ namespace ClinicManagementService.Service
 
         public async Task<Clinique> AjouterCliniqueAsync(Clinique clinique)
         {
-            clinique.Id = Guid.NewGuid();
             clinique.TenantId = _tenantId;
-
-            _context.Cliniques.Add(clinique);
-            await _context.SaveChangesAsync();
-
+            await _repository.AddAsync(clinique);
             return clinique;
         }
 
         public async Task<Clinique> ModifierCliniqueAsync(Guid id, Clinique clinique)
         {
-            var cliniqueExistante = await _context.Cliniques.FindAsync(id);
-
-            if (cliniqueExistante == null)
-                throw new KeyNotFoundException("Clinique non trouvée");
-
-            cliniqueExistante.Nom = clinique.Nom;
-            cliniqueExistante.Adresse = clinique.Adresse;
-            cliniqueExistante.NumeroTelephone = clinique.NumeroTelephone;
-            cliniqueExistante.Email = clinique.Email;
-
-            await _context.SaveChangesAsync();
-            return cliniqueExistante;
+            clinique.Id = id;
+            await _repository.UpdateAsync(clinique);
+            return clinique;
         }
 
         public async Task<bool> SupprimerCliniqueAsync(Guid id)
         {
-            var clinique = await _context.Cliniques.FindAsync(id);
-
-            if (clinique == null)
-                return false;
-
-            _context.Cliniques.Remove(clinique);
-            await _context.SaveChangesAsync();
-
+            await _repository.DeleteAsync(id);
             return true;
         }
 
         public async Task<Clinique> ObtenirCliniqueParIdAsync(Guid id)
         {
-            return await _context.Cliniques.FindAsync(id);
+            return await _repository.GetByIdAsync(id);
         }
 
         public async Task<IEnumerable<Clinique>> ListerCliniqueAsync()
         {
-            return await _context.Cliniques.ToListAsync();
+            return await _repository.GetAllAsync();
         }
 
+        public async Task<IEnumerable<Clinique>> ListerCliniquesParNomAsync(string nom)
+        {
+            var clinique = await _repository.GetByNameAsync(nom);
+            return new List<Clinique> { clinique };
+        }
+
+        public async Task<IEnumerable<Clinique>> ListerCliniquesParAdresseAsync(string adresse)
+        {
+            var clinique = await _repository.GetByAddressAsync(adresse);
+            return new List<Clinique> { clinique };
+        }
     }
 }

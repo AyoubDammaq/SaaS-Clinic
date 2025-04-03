@@ -1,45 +1,49 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\",
+  "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinc\\clinicmanagementservice\\data\\cliniquedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:data\\cliniquedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinc\\clinicmanagementservice\\data\\cliniquedbcontextfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\clinicmanagementservice\\data\\cliniquedbcontextfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:data\\cliniquedbcontextfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinc\\clinicmanagementservice\\models\\clinique.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:models\\clinique.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinc\\clinicmanagementservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinc\\clinicmanagementservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\clinicmanagementservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinc\\clinicmanagementservice\\controllers\\cliniquecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:controllers\\cliniquecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\clinicmanagementservice\\data\\cliniquedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:data\\cliniquedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinc\\clinicmanagementservice\\service\\cliniqueservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\clinicmanagementservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\clinicmanagementservice\\models\\clinique.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:models\\clinique.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\clinicmanagementservice\\service\\cliniqueservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:service\\cliniqueservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinc\\clinicmanagementservice\\service\\icliniqueservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\clinicmanagementservice\\service\\icliniqueservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:service\\icliniqueservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinc\\clinicmanagementservice\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\clinicmanagementservice\\repositories\\cliniquerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:repositories\\cliniquerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinc\\clinicmanagementservice\\clinicmanagementservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\clinicmanagementservice\\repositories\\icliniquerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:repositories\\icliniquerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\clinicmanagementservice\\controllers\\cliniquecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:controllers\\cliniquecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\clinicmanagementservice\\clinicmanagementservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{A0C38948-A690-464B-BE30-48032259F7CF}|ClinicManagementService.csproj|solutionrelative:clinicmanagementservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
@@ -50,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,87 +66,116 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
+              "Title": "Clinique.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Models\\Clinique.cs",
+              "RelativeDocumentMoniker": "Models\\Clinique.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Models\\Clinique.cs",
+              "RelativeToolTip": "Models\\Clinique.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T15:40:38.872Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CliniqueRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Repositories\\CliniqueRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\CliniqueRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Repositories\\CliniqueRepository.cs",
+              "RelativeToolTip": "Repositories\\CliniqueRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-03T12:51:05.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ICliniqueRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Repositories\\ICliniqueRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\ICliniqueRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Repositories\\ICliniqueRepository.cs",
+              "RelativeToolTip": "Repositories\\ICliniqueRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-03T12:49:58.434Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "CliniqueDbContextFactory.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Data\\CliniqueDbContextFactory.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Data\\CliniqueDbContextFactory.cs",
               "RelativeDocumentMoniker": "Data\\CliniqueDbContextFactory.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Data\\CliniqueDbContextFactory.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Data\\CliniqueDbContextFactory.cs",
               "RelativeToolTip": "Data\\CliniqueDbContextFactory.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABOAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-26T00:17:47.464Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "CliniqueService.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Service\\CliniqueService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Service\\CliniqueService.cs",
               "RelativeDocumentMoniker": "Service\\CliniqueService.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Service\\CliniqueService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Service\\CliniqueService.cs",
               "RelativeToolTip": "Service\\CliniqueService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-25T23:39:53.592Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "ICliniqueService.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Service\\ICliniqueService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Service\\ICliniqueService.cs",
               "RelativeDocumentMoniker": "Service\\ICliniqueService.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Service\\ICliniqueService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Service\\ICliniqueService.cs",
               "RelativeToolTip": "Service\\ICliniqueService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-25T23:39:26.795Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Properties\\launchSettings.json",
-              "RelativeToolTip": "Properties\\launchSettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-24T16:26:57.547Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "CliniqueController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Controllers\\CliniqueController.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Controllers\\CliniqueController.cs",
               "RelativeDocumentMoniker": "Controllers\\CliniqueController.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Controllers\\CliniqueController.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Controllers\\CliniqueController.cs",
               "RelativeToolTip": "Controllers\\CliniqueController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-24T16:23:30.529Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "ClinicManagementService.csproj",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\ClinicManagementService.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\ClinicManagementService.csproj",
               "RelativeDocumentMoniker": "ClinicManagementService.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\ClinicManagementService.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\ClinicManagementService.csproj",
               "RelativeToolTip": "ClinicManagementService.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-03-24T15:58:30.116Z"
+              "WhenOpened": "2025-03-24T15:58:30.116Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\appsettings.json",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\appsettings.json",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\appsettings.json",
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAACbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
@@ -151,41 +184,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Program.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-24T15:53:13.342Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "CliniqueDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Data\\CliniqueDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Data\\CliniqueDbContext.cs",
               "RelativeDocumentMoniker": "Data\\CliniqueDbContext.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Data\\CliniqueDbContext.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ClinicManagementService\\Data\\CliniqueDbContext.cs",
               "RelativeToolTip": "Data\\CliniqueDbContext.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAwAwAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-24T15:51:00.605Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Clinique.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Models\\Clinique.cs",
-              "RelativeDocumentMoniker": "Models\\Clinique.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\ClinicManagementService\\Models\\Clinique.cs",
-              "RelativeToolTip": "Models\\Clinique.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T15:40:38.872Z",
               "EditorCaption": ""
             }
           ]

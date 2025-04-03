@@ -6,10 +6,10 @@ namespace ClinicManagementService.Data
     public class CliniqueDbContext : DbContext
     {
         private readonly Guid _tenantId;
-        public CliniqueDbContext(DbContextOptions<CliniqueDbContext> options, Guid tenantId)
+        public CliniqueDbContext(DbContextOptions<CliniqueDbContext> options, Guid? tenantId = null)
             : base(options)
         {
-            _tenantId = tenantId;
+            _tenantId = tenantId ?? Guid.NewGuid();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
