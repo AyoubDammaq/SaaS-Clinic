@@ -129,6 +129,27 @@
           }
         }
       }
+    },
+    "/api/Medecin/filter": {
+      "get": {
+        "tags": [
+          "Medecin"
+        ],
+        "parameters": [
+          {
+            "name": "specialite",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {

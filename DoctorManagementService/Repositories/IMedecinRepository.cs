@@ -9,5 +9,6 @@ namespace DoctorManagementService.Repositories
         Task AddAsync(Medecin medecin);
         Task UpdateAsync(Medecin medecin);
         Task DeleteAsync(Guid id);
+        Task<List<Medecin>> FilterAsync(string specialite);
     }
 }

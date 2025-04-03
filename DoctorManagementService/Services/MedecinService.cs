@@ -75,5 +75,17 @@ namespace DoctorManagementService.Services
         {
             await _medecinRepository.DeleteAsync(id);
         }
+        public async Task<IEnumerable<MedecinDto>> FilterDoctors(string specialite)
+        {
+            var medecins = await _medecinRepository.FilterAsync(specialite);
+            return medecins.Select(m => new MedecinDto
+            {
+                Prenom = m.Prenom,
+                Nom = m.Nom,
+                Specialite = m.Specialite,
+                CliniqueId = m.CliniqueId
+            });
+        }
+
     }
 }

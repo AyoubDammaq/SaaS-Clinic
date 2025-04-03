@@ -41,5 +41,12 @@ namespace DoctorManagementService.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<List<Medecin>> FilterAsync(string specialite)
+        {
+            return await _context.Medecins
+                .Where(m => (string.IsNullOrEmpty(specialite) || m.Specialite == specialite))
+                .ToListAsync();
+        }
+
     }
 }

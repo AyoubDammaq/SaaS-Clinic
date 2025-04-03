@@ -62,5 +62,12 @@ namespace DoctorManagementService.Controllers
             await _medecinService.DeleteDoctor(id);
             return Ok(new { Message = "Médecin supprimé avec succès" });
         }
+        [HttpGet("filter")]
+        public async Task<IActionResult> FiltrerMedecins([FromQuery] string specialite)
+        {
+            var medecins = await _medecinService.FilterDoctors(specialite);
+            return Ok(medecins);
+        }
+
     }
 }

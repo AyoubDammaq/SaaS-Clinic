@@ -9,5 +9,6 @@ namespace DoctorManagementService.Services
         Task<IEnumerable<MedecinDto>> GetAllDoctors();
         Task UpdateDoctor(Guid id, MedecinDto medecinDto);
         Task DeleteDoctor(Guid id);
+        Task<IEnumerable<MedecinDto>> FilterDoctors(string specialite);
     }
 }
