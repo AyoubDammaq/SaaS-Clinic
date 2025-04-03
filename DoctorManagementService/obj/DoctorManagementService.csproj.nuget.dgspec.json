@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\DoctorManagementService\\DoctorManagementService.csproj": {}
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\DoctorManagementService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\DoctorManagementService\\DoctorManagementService.csproj": {
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\DoctorManagementService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\DoctorManagementService\\DoctorManagementService.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\DoctorManagementService.csproj",
         "projectName": "DoctorManagementService",
-        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\DoctorManagementService\\DoctorManagementService.csproj",
+        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\DoctorManagementService.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinc\\DoctorManagementService\\obj\\",
+        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -83,6 +83,10 @@
             "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
               "target": "Package",
               "version": "[1.21.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[8.1.0, )"
             }
           },
           "imports": [
