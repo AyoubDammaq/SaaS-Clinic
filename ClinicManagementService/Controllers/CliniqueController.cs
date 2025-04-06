@@ -8,11 +8,11 @@ namespace ClinicManagementService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CliniqueController() : ControllerBase
+    public class CliniqueController : ControllerBase
     {
         private readonly ICliniqueService _cliniqueService;
 
-        public CliniqueController(ICliniqueService cliniqueService) : this()
+        public CliniqueController(ICliniqueService cliniqueService)
         {
             _cliniqueService = cliniqueService;
         }
@@ -51,5 +51,16 @@ namespace ClinicManagementService.Controllers
             return Ok(await _cliniqueService.ListerCliniqueAsync());
         }
 
+        [HttpGet("nom/{nom}")]
+        public async Task<ActionResult<IEnumerable<Clinique>>> ListerCliniquesParNom(string nom)
+        {
+            return Ok(await _cliniqueService.ListerCliniquesParNomAsync(nom));
+        }
+
+        [HttpGet("adresse/{adresse}")]
+        public async Task<ActionResult<IEnumerable<Clinique>>> ListerCliniquesParAdresse(string adresse)
+        {
+            return Ok(await _cliniqueService.ListerCliniquesParAdresseAsync(adresse));
+        }
     }
 }

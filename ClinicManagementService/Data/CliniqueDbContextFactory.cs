@@ -3,8 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClinicManagementService.Data
 {
+    /*
     public class CliniqueDbContextFactory : IDesignTimeDbContextFactory<CliniqueDbContext>
     {
+
         public CliniqueDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<CliniqueDbContext>();
@@ -14,4 +16,5 @@ namespace ClinicManagementService.Data
             return new CliniqueDbContext(optionsBuilder.Options, Guid.Empty);
         }
     }
+    */
 }

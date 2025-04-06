@@ -15,8 +15,8 @@ namespace ClinicManagementService.Models
         [MaxLength(200)]
         public string Adresse { get; set; } = string.Empty;
 
-        [Required]
-        public Guid TenantId { get; set; } = Guid.NewGuid();
+        //[Required]
+        //public Guid TenantId { get; set; } = Guid.NewGuid();
 
         [MaxLength(20)]
         public string NumeroTelephone { get; set; } = string.Empty;

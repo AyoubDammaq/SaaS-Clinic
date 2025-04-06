@@ -1,64 +1,58 @@
-﻿using ClinicManagementService.Models;
+﻿using ClinicManagementService.Data;
+using ClinicManagementService.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicManagementService.Repositories
 {
     public class CliniqueRepository : ICliniqueRepository
     {
-        private readonly List<Clinique> cliniques;
+        private readonly CliniqueDbContext _context;
 
-        public CliniqueRepository()
+        public CliniqueRepository(CliniqueDbContext context)
         {
-            cliniques = new List<Clinique>();
+            _context = context;
         }
 
-        public Task<IEnumerable<Clinique>> GetAllAsync() 
+        public Task<List<Clinique>> GetAllAsync() 
         {
-            return Task.FromResult<IEnumerable<Clinique>>(cliniques);
+            return _context.Cliniques.ToListAsync();
         }
 
         public Task<Clinique?> GetByIdAsync(Guid id) 
-        { 
-            return Task.FromResult(cliniques.Find(c => c.Id == id)); 
+        {
+            return _context.Cliniques.FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public Task AddAsync(Clinique clinique) 
+        public async Task AddAsync(Clinique clinique) 
         {
-            cliniques.Add(clinique);
-            return Task.CompletedTask;
+            await _context.Cliniques.AddAsync(clinique);
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(Clinique clinique) 
+        public async Task UpdateAsync(Clinique clinique) 
         {
-            var existingClinique = cliniques.Find(c => c.Id == clinique.Id);
-            if (existingClinique != null)
-            {
-                existingClinique.Nom = clinique.Nom;
-                existingClinique.Adresse = clinique.Adresse;
-                existingClinique.NumeroTelephone = clinique.NumeroTelephone;
-                existingClinique.Email = clinique.Email;
-                // Update other properties as needed
-            }
-            return Task.CompletedTask;
+            _context.Cliniques.Update(clinique);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(Guid id) 
+        public async Task DeleteAsync(Guid id) 
         {
-            var clinique = cliniques.Find(c => c.Id == id);
+            var clinique = await GetByIdAsync(id);
             if (clinique != null)
             {
-                cliniques.Remove(clinique);
+                _context.Cliniques.Remove(clinique);
+                await _context.SaveChangesAsync();
             }
-            return Task.CompletedTask;
         }
 
-        public Task<Clinique?> GetByNameAsync(string name) 
+        public async Task<Clinique?> GetByNameAsync(string name) 
         { 
-            return Task.FromResult(cliniques.Find(c => c.Nom == name)); 
+            return await _context.Cliniques.FirstOrDefaultAsync(c => c.Nom == name); 
         }
 
-        public Task<Clinique?> GetByAddressAsync(string address)
-        { 
-            return Task.FromResult(cliniques.Find(c => c.Adresse == address));
+        public async Task<Clinique?> GetByAddressAsync(string address)
+        {
+            return await _context.Cliniques.FirstOrDefaultAsync(c => c.Adresse == address);
         }
     }
 }

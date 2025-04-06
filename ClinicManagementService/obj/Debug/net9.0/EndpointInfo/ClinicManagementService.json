@@ -189,6 +189,102 @@
           }
         }
       }
+    },
+    "/api/Clinique/nom/{nom}": {
+      "get": {
+        "tags": [
+          "Clinique"
+        ],
+        "parameters": [
+          {
+            "name": "nom",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Clinique"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Clinique"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Clinique"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Clinique/adresse/{adresse}": {
+      "get": {
+        "tags": [
+          "Clinique"
+        ],
+        "parameters": [
+          {
+            "name": "adresse",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Clinique"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Clinique"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Clinique"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -196,8 +292,7 @@
       "Clinique": {
         "required": [
           "adresse",
-          "nom",
-          "tenantId"
+          "nom"
         ],
         "type": "object",
         "properties": {
@@ -214,10 +309,6 @@
             "maxLength": 200,
             "minLength": 1,
             "type": "string"
-          },
-          "tenantId": {
-            "type": "string",
-            "format": "uuid"
           },
           "numeroTelephone": {
             "maxLength": 20,

@@ -20,8 +20,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer();
 
 builder.Services.AddScoped<ICliniqueRepository, CliniqueRepository>();
-builder.Services.AddScoped(provider => Guid.NewGuid().ToString());
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+//builder.Services.AddScoped(provider => Guid.NewGuid().ToString());
+//builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ICliniqueService, CliniqueService>();
 
 var app = builder.Build();

@@ -4,7 +4,7 @@ namespace ClinicManagementService.Repositories
 {
     public interface ICliniqueRepository
     {
-        Task<IEnumerable<Clinique>> GetAllAsync();
+        Task<List<Clinique>> GetAllAsync();
         Task<Clinique>? GetByIdAsync(Guid id);
         Task AddAsync(Clinique clinique);
         Task UpdateAsync(Clinique clinique);

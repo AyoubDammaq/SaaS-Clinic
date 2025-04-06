@@ -545,10 +545,10 @@ C:\Users\USER\Desktop\SaaS-Clinic\ClinicManagementService\obj\Debug\net9.0\stati
 C:\Users\USER\Desktop\SaaS-Clinic\ClinicManagementService\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.ClinicManagementService.props
 C:\Users\USER\Desktop\SaaS-Clinic\ClinicManagementService\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.ClinicManagementService.props
 C:\Users\USER\Desktop\SaaS-Clinic\ClinicManagementService\obj\Debug\net9.0\staticwebassets.pack.json
-C:\Users\USER\Desktop\SaaS-Clinic\ClinicManagementService\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\USER\Desktop\SaaS-Clinic\ClinicManagementService\obj\Debug\net9.0\ClinicMa.BC01CA51.Up2Date
 C:\Users\USER\Desktop\SaaS-Clinic\ClinicManagementService\obj\Debug\net9.0\ClinicManagementService.dll
 C:\Users\USER\Desktop\SaaS-Clinic\ClinicManagementService\obj\Debug\net9.0\refint\ClinicManagementService.dll
 C:\Users\USER\Desktop\SaaS-Clinic\ClinicManagementService\obj\Debug\net9.0\ClinicManagementService.pdb
 C:\Users\USER\Desktop\SaaS-Clinic\ClinicManagementService\obj\Debug\net9.0\ClinicManagementService.genruntimeconfig.cache
 C:\Users\USER\Desktop\SaaS-Clinic\ClinicManagementService\obj\Debug\net9.0\ref\ClinicManagementService.dll
+C:\Users\USER\Desktop\SaaS-Clinic\ClinicManagementService\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

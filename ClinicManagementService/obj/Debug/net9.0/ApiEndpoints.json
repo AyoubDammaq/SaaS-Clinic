@@ -107,5 +107,57 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "ClinicManagementService.Controllers.CliniqueController",
+    "Method": "ListerCliniquesParAdresse",
+    "RelativePath": "api/Clinique/adresse/{adresse}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "adresse",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ClinicManagementService.Models.Clinique, ClinicManagementService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ClinicManagementService.Controllers.CliniqueController",
+    "Method": "ListerCliniquesParNom",
+    "RelativePath": "api/Clinique/nom/{nom}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nom",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ClinicManagementService.Models.Clinique, ClinicManagementService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]

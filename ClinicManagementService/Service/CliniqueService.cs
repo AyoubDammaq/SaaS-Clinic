@@ -10,18 +10,20 @@ namespace ClinicManagementService.Service
         private readonly ICliniqueRepository _repository;
         private readonly Guid _tenantId;
 
-        public CliniqueService(ICliniqueRepository repository, IHttpContextAccessor httpContextAccessor)
+        public CliniqueService(ICliniqueRepository repository /*, IHttpContextAccessor httpContextAccessor*/)
         {
             _repository = repository;
             // Récupération du TenantId depuis le contexte HTTP  
+            /*
             _tenantId = httpContextAccessor.HttpContext?.Items["TenantId"] is Guid tenantId
                 ? tenantId
                 : throw new UnauthorizedAccessException("Tenant non identifié");
+            */
         }
 
         public async Task<Clinique> AjouterCliniqueAsync(Clinique clinique)
         {
-            clinique.TenantId = _tenantId;
+            //clinique.TenantId = _tenantId;
             await _repository.AddAsync(clinique);
             return clinique;
         }
@@ -44,7 +46,7 @@ namespace ClinicManagementService.Service
             return await _repository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Clinique>> ListerCliniqueAsync()
+        public async Task<List<Clinique>> ListerCliniqueAsync()
         {
             return await _repository.GetAllAsync();
         }
