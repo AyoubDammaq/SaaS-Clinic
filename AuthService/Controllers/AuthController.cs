@@ -43,7 +43,6 @@ namespace JWTAuthExample.Controllers
             var result = await authService.LoginAsync(request);
             if (result is null)
             {
-                _logger.LogWarning("Failed login attempt for username: {Username}", request.username);
                 return BadRequest("Invalid username or password");
             }
             

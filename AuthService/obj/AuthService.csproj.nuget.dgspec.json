@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USER\\Desktop\\JWTAuthExample\\AuthService.csproj": {}
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\AuthService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USER\\Desktop\\JWTAuthExample\\AuthService.csproj": {
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\AuthService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Desktop\\JWTAuthExample\\AuthService.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\AuthService.csproj",
         "projectName": "AuthService",
-        "projectPath": "C:\\Users\\USER\\Desktop\\JWTAuthExample\\AuthService.csproj",
+        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\AuthService.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Desktop\\JWTAuthExample\\obj\\",
+        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -104,7 +104,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
