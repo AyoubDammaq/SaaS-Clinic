@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{2120A049-60C7-4E43-B6EE-0E8D4A2D95A9}|DoctorManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2120A049-60C7-4E43-B6EE-0E8D4A2D95A9}|DoctorManagementService.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2120A049-60C7-4E43-B6EE-0E8D4A2D95A9}|DoctorManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\repositories\\imedecinrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2120A049-60C7-4E43-B6EE-0E8D4A2D95A9}|DoctorManagementService.csproj|solutionrelative:repositories\\imedecinrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2120A049-60C7-4E43-B6EE-0E8D4A2D95A9}|DoctorManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\controllers\\medecincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2120A049-60C7-4E43-B6EE-0E8D4A2D95A9}|DoctorManagementService.csproj|solutionrelative:controllers\\medecincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -19,10 +27,6 @@
       "RelativeMoniker": "D:0:0:{2120A049-60C7-4E43-B6EE-0E8D4A2D95A9}|DoctorManagementService.csproj|solutionrelative:services\\imedecinservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2120A049-60C7-4E43-B6EE-0E8D4A2D95A9}|DoctorManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\repositories\\imedecinrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2120A049-60C7-4E43-B6EE-0E8D4A2D95A9}|DoctorManagementService.csproj|solutionrelative:repositories\\imedecinrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2120A049-60C7-4E43-B6EE-0E8D4A2D95A9}|DoctorManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\repositories\\medecinrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2120A049-60C7-4E43-B6EE-0E8D4A2D95A9}|DoctorManagementService.csproj|solutionrelative:repositories\\medecinrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -33,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{2120A049-60C7-4E43-B6EE-0E8D4A2D95A9}|DoctorManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\dtos\\medecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2120A049-60C7-4E43-B6EE-0E8D4A2D95A9}|DoctorManagementService.csproj|solutionrelative:dtos\\medecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2120A049-60C7-4E43-B6EE-0E8D4A2D95A9}|DoctorManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2120A049-60C7-4E43-B6EE-0E8D4A2D95A9}|DoctorManagementService.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,20 +58,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAABYAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-03T11:10:23.783Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "IMedecinService.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Services\\IMedecinService.cs",
               "RelativeDocumentMoniker": "Services\\IMedecinService.cs",
@@ -79,12 +79,11 @@
               "RelativeToolTip": "Services\\IMedecinService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T10:29:38.162Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-03T10:29:38.162Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "MedecinService.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Services\\MedecinService.cs",
               "RelativeDocumentMoniker": "Services\\MedecinService.cs",
@@ -92,12 +91,11 @@
               "RelativeToolTip": "Services\\MedecinService.cs",
               "ViewState": "AgIAAD4AAAAAAAAAAAAcwFEAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-25T00:28:43.077Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-25T00:28:43.077Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "MedecinDto.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\DTOs\\MedecinDto.cs",
               "RelativeDocumentMoniker": "DTOs\\MedecinDto.cs",
@@ -105,12 +103,11 @@
               "RelativeToolTip": "DTOs\\MedecinDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T10:22:55.652Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-03T10:22:55.652Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "MedecinRepository.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Repositories\\MedecinRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\MedecinRepository.cs",
@@ -118,38 +115,37 @@
               "RelativeToolTip": "Repositories\\MedecinRepository.cs",
               "ViewState": "AgIAABYAAAAAAAAAAAAwwDMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T10:19:15.854Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-03T10:19:15.854Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "IMedecinRepository.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Repositories\\IMedecinRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\IMedecinRepository.cs",
               "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Repositories\\IMedecinRepository.cs",
               "RelativeToolTip": "Repositories\\IMedecinRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-03T10:18:54.346Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "MedecinController.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Controllers\\MedecinController.cs",
               "RelativeDocumentMoniker": "Controllers\\MedecinController.cs",
               "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Controllers\\MedecinController.cs",
               "RelativeToolTip": "Controllers\\MedecinController.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAcwDsAAABIAAAAAAAAAA==",
+              "ViewState": "AgIAACwAAAAAAAAAAAAcwEgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-25T00:28:57.483Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "MedecinDbContext.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Data\\MedecinDbContext.cs",
               "RelativeDocumentMoniker": "Data\\MedecinDbContext.cs",
@@ -157,12 +153,11 @@
               "RelativeToolTip": "Data\\MedecinDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-25T00:28:20.339Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-25T00:28:20.339Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Medecin.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Models\\Medecin.cs",
               "RelativeDocumentMoniker": "Models\\Medecin.cs",
@@ -170,8 +165,7 @@
               "RelativeToolTip": "Models\\Medecin.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAQwCgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-25T00:28:07.835Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-25T00:28:07.835Z"
             }
           ]
         }
