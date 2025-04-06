@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConsultationManagementService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ade54961e9dd3a296406db5f155a1ed4d829127")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71e1514f7096ec5d67db88e7655165247301f5aa")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConsultationManagementService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConsultationManagementService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
