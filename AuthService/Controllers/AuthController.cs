@@ -93,6 +93,7 @@ namespace AuthentificationService.Controllers
             return Ok(user);
         }
 
+        [Authorize(Roles = "SuperAdmin")]
         [HttpDelete("users/{id}")]
         public async Task<IActionResult> DeleteUser(Guid userId)
         {
@@ -148,6 +149,5 @@ namespace AuthentificationService.Controllers
 
             return Ok(new { message = "Password has been reset successfully." });
         }
-
     }
 }
