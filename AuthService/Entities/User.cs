@@ -1,13 +1,20 @@
-﻿namespace JWTAuthExample.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace JWTAuthExample.Entities
 {
     public class User
     {
-
+        [Key]
         public Guid Id { get; set; }
-        public string username { get; set; } = string.Empty;
-        public string passwordHashed { get; set; } = string.Empty;
-        public string Role { get; set; } = string.Empty;
-        public string? refreshToken { get; set; }
-        public DateTime? refreshTokenExpiryTime { get; set; }
+
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(100)]
+        public string PasswordHashed { get; set; } = string.Empty;
+        public UserRole Role { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiryTime { get; set; }
     }
 }

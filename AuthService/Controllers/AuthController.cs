@@ -28,7 +28,7 @@ namespace JWTAuthExample.Controllers
         public async Task<ActionResult<TokenResponseDto>> RefreshToken(RefreshTokenRequestDto request)
         {
             var result = await authService.RefreshTokensAsync(request);
-            if(result is null || result.refreshToken is null || result.accessToken is null)
+            if(result is null || result.RefreshToken is null || result.AccessToken is null)
             {
                 return Unauthorized("Invalid refresh token.");
             }

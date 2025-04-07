@@ -17,17 +17,18 @@ namespace JWTAuthExample.Services
     {
         public async Task<User?> RegisterAsync(UserDto request)
         {
-            if (await context.Users.AnyAsync(u => u.username == request.username))
+            if (await context.Users.AnyAsync(u => u.Email == request.Email))
             {
                 return null;
             }
 
             var user = new User();
             var hashedPassword = new PasswordHasher<User>()
-                .HashPassword(user, request.password);
+                .HashPassword(user, request.Password);
 
-            user.username = request.username;
-            user.passwordHashed = hashedPassword;
+            user.Email = request.Email;
+            user.PasswordHashed = hashedPassword;
+            user.Role = UserRole.Patient;
 
             context.Users.Add(user);
             await context.SaveChangesAsync();
@@ -37,14 +38,14 @@ namespace JWTAuthExample.Services
 
         public async Task<TokenResponseDto?> RefreshTokensAsync(RefreshTokenRequestDto request)
         {
-            var user = await ValidateRefreshTokenAsync(request.UserId, request.refreshToken);
+            var user = await ValidateRefreshTokenAsync(request.UserId, request.RefreshToken);
             if (user is null)
                 return null;
 
             var response = new TokenResponseDto
             {
-                accessToken = GenerateJwtToken(user),
-                refreshToken = await GenerateAndSaveRefreshTokenAsync(user)
+                AccessToken = GenerateJwtToken(user),
+                RefreshToken = await GenerateAndSaveRefreshTokenAsync(user)
             };
 
             return response;
@@ -53,21 +54,21 @@ namespace JWTAuthExample.Services
 
         public async Task<TokenResponseDto?> LoginAsync(UserDto request)
         {
-            var user = await context.Users.FirstOrDefaultAsync(u => u.username == request.username);
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
             if (user is null)
             {
                 return null;
             }
 
-            if (new PasswordHasher<User>().VerifyHashedPassword(user, user.passwordHashed, request.password) == PasswordVerificationResult.Failed)
+            if (new PasswordHasher<User>().VerifyHashedPassword(user, user.PasswordHashed, request.Password) == PasswordVerificationResult.Failed)
             {
                 return null;
             }
 
             var response = new TokenResponseDto
             {
-                accessToken = GenerateJwtToken(user),
-                refreshToken = await GenerateAndSaveRefreshTokenAsync(user)
+                AccessToken = GenerateJwtToken(user),
+                RefreshToken = await GenerateAndSaveRefreshTokenAsync(user)
             };
 
 
@@ -77,7 +78,7 @@ namespace JWTAuthExample.Services
         private async Task<User?> ValidateRefreshTokenAsync(Guid userId, string refreshToken)
         {
             var user = await context.Users.FindAsync(userId);
-            if(user is null || user.refreshToken != refreshToken || user.refreshTokenExpiryTime <= DateTime.Now)
+            if(user is null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
             {
                 return null;
             }
@@ -97,8 +98,8 @@ namespace JWTAuthExample.Services
         private async Task<string> GenerateAndSaveRefreshTokenAsync(User user)
         {
             var refreshToken = GenerateRefreshToken();
-            user.refreshToken = refreshToken;
-            user.refreshTokenExpiryTime = DateTime.Now.AddMinutes(30);
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = DateTime.Now.AddMinutes(30);
             await context.SaveChangesAsync();
             return refreshToken;
         }
@@ -108,9 +109,9 @@ namespace JWTAuthExample.Services
         {
             var claims = new[]
             {
-            new Claim(JwtRegisteredClaimNames.Sub, user.username),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
             new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString()),
-            new Claim(ClaimTypes.Role, user.Role)
+            new Claim(ClaimTypes.Role, user.Role.ToString())
         };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ByYM000OLlMQG6VVVp1OH7Xzyr7gHuw1qvUC5dcGt3SNM"));
