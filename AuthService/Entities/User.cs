@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace JWTAuthExample.Entities
+namespace AuthentificationService.Entities
 {
     public class User
     {

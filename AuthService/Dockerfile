@@ -14,19 +14,19 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0-nanoserver-1809 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["JWTAuthExample.csproj", "."]
-RUN dotnet restore "./JWTAuthExample.csproj"
+COPY ["AuthentificationService.csproj", "."]
+RUN dotnet restore "./AuthentificationService.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "./JWTAuthExample.csproj" -c %BUILD_CONFIGURATION% -o /app/build
+RUN dotnet build "./AuthentificationService.csproj" -c %BUILD_CONFIGURATION% -o /app/build
 
 # Cette étape permet de publier le projet de service à copier dans la phase finale
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./JWTAuthExample.csproj" -c %BUILD_CONFIGURATION% -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./AuthentificationService.csproj" -c %BUILD_CONFIGURATION% -o /app/publish /p:UseAppHost=false
 
 # Cette phase est utilisée en production ou lors de l’exécution à partir de VS en mode normal (par défaut quand la configuration de débogage n’est pas utilisée)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "JWTAuthExample.dll"]
+ENTRYPOINT ["dotnet", "AuthentificationService.dll"]

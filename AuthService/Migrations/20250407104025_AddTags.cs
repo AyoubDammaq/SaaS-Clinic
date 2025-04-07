@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace JWTAuthExample.Migrations
+namespace AuthentificationService.Migrations
 {
     /// <inheritdoc />
     public partial class AddTags : Migration

@@ -1,4 +1,4 @@
-﻿namespace JWTAuthExample.Entities
+﻿namespace AuthentificationService.Entities
 {
     public enum UserRole
     {

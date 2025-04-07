@@ -1,4 +1,4 @@
-﻿namespace JWTAuthExample.Models
+﻿namespace AuthentificationService.Models
 {
     public class TokenResponseDto
     {
