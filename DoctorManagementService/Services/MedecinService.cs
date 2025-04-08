@@ -13,16 +13,8 @@ namespace DoctorManagementService.Services
             _medecinRepository = medecinRepository;
         }
 
-        public async Task AddDoctor(MedecinDto medecinDto)
+        public async Task AddDoctor(Medecin medecin)
         {
-            var medecin = new Medecin(
-                Guid.NewGuid(),
-                medecinDto.Prenom,
-                medecinDto.Nom,
-                medecinDto.Specialite,
-                medecinDto.CliniqueId
-            );
-
             await _medecinRepository.AddAsync(medecin);
         }
 
@@ -39,7 +31,10 @@ namespace DoctorManagementService.Services
                 Prenom = medecin.Prenom,
                 Nom = medecin.Nom,
                 Specialite = medecin.Specialite,
-                CliniqueId = medecin.CliniqueId
+                CliniqueId = medecin.CliniqueId,
+                Email = medecin.Email,
+                Telephone = medecin.Telephone,
+                PhotoUrl = medecin.PhotoUrl
             };
         }
 
@@ -51,7 +46,10 @@ namespace DoctorManagementService.Services
                 Prenom = m.Prenom,
                 Nom = m.Nom,
                 Specialite = m.Specialite,
-                CliniqueId = m.CliniqueId
+                CliniqueId = m.CliniqueId,
+                Email = m.Email,
+                Telephone = m.Telephone,
+                PhotoUrl = m.PhotoUrl
             });
         }
 
@@ -66,7 +64,10 @@ namespace DoctorManagementService.Services
             medecin.Prenom = medecinDto.Prenom;
             medecin.Nom = medecinDto.Nom;
             medecin.Specialite = medecinDto.Specialite;
-            medecin.CliniqueId = medecinDto.CliniqueId;
+            medecin.CliniqueId = medecinDto.CliniqueId ?? Guid.Empty;
+            medecin.Email = medecinDto.Email;
+            medecin.Telephone = medecinDto.Telephone;
+            medecin.PhotoUrl = medecinDto.PhotoUrl;
 
             await _medecinRepository.UpdateAsync(medecin);
         }
@@ -75,15 +76,33 @@ namespace DoctorManagementService.Services
         {
             await _medecinRepository.DeleteAsync(id);
         }
-        public async Task<IEnumerable<MedecinDto>> FilterDoctors(string specialite)
+        public async Task<IEnumerable<MedecinDto>> FilterDoctorsBySpecialite(string specialite)
         {
-            var medecins = await _medecinRepository.FilterAsync(specialite);
+            var medecins = await _medecinRepository.FilterBySpecialiteAsync(specialite);
             return medecins.Select(m => new MedecinDto
             {
                 Prenom = m.Prenom,
                 Nom = m.Nom,
                 Specialite = m.Specialite,
-                CliniqueId = m.CliniqueId
+                CliniqueId = m.CliniqueId,
+                Email = m.Email,
+                Telephone = m.Telephone,
+                PhotoUrl = m.PhotoUrl
+            });
+        }
+
+        public async Task<IEnumerable<MedecinDto>> FilterDoctorsByName(string name, string prenom)
+        {
+            var medecins = await _medecinRepository.FilterByNameOrPrenomAsync(name, prenom);
+            return medecins.Select(m => new MedecinDto
+            {
+                Prenom = m.Prenom,
+                Nom = m.Nom,
+                Specialite = m.Specialite,
+                CliniqueId = m.CliniqueId,
+                Email = m.Email,
+                Telephone = m.Telephone,
+                PhotoUrl = m.PhotoUrl
             });
         }
 

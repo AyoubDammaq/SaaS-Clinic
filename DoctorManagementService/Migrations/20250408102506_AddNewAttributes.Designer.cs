@@ -4,6 +4,7 @@ using DoctorManagementService.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoctorManagementService.Migrations
 {
     [DbContext(typeof(MedecinDbContext))]
-    partial class MedecinDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250408102506_AddNewAttributes")]
+    partial class AddNewAttributes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,7 +31,7 @@ namespace DoctorManagementService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CliniqueId")
+                    b.Property<Guid>("CliniqueId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreation")

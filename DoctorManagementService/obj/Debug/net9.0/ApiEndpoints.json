@@ -80,8 +80,29 @@
   },
   {
     "ContainingType": "DoctorManagementService.Controllers.MedecinController",
-    "Method": "FiltrerMedecins",
-    "RelativePath": "api/Medecin/filter",
+    "Method": "FiltrerMedecinsByName",
+    "RelativePath": "api/Medecin/filter/name",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "prenom",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DoctorManagementService.Controllers.MedecinController",
+    "Method": "FiltrerMedecinsBySpecialite",
+    "RelativePath": "api/Medecin/filter/specialite",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

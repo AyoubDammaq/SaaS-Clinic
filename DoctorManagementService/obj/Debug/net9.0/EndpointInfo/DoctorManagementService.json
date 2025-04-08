@@ -130,7 +130,7 @@
         }
       }
     },
-    "/api/Medecin/filter": {
+    "/api/Medecin/filter/specialite": {
       "get": {
         "tags": [
           "Medecin"
@@ -150,28 +150,74 @@
           }
         }
       }
+    },
+    "/api/Medecin/filter/name": {
+      "get": {
+        "tags": [
+          "Medecin"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "prenom",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
       "MedecinDto": {
+        "required": [
+          "nom",
+          "prenom",
+          "specialite"
+        ],
         "type": "object",
         "properties": {
           "prenom": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "nom": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "specialite": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
             "type": "string",
             "nullable": true
           },
-          "specialite": {
+          "telephone": {
             "type": "string",
             "nullable": true
           },
           "cliniqueId": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "nullable": true
+          },
+          "photoUrl": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

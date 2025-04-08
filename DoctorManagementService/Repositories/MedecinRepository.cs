@@ -41,10 +41,23 @@ namespace DoctorManagementService.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task<List<Medecin>> FilterAsync(string specialite)
+        public async Task<List<Medecin>> FilterBySpecialiteAsync(string specialite)
         {
             return await _context.Medecins
                 .Where(m => (string.IsNullOrEmpty(specialite) || m.Specialite == specialite))
+                .ToListAsync();
+        }
+
+        public async Task<List<Medecin>> FilterByNameOrPrenomAsync(string name, string prenom)
+        {
+            name = name?.Trim().ToLower();
+            prenom = prenom?.Trim().ToLower();
+
+            return await _context.Medecins
+                .Where(m =>
+                    (string.IsNullOrEmpty(name) || m.Nom.ToLower().Contains(name)) &&
+                    (string.IsNullOrEmpty(prenom) || m.Prenom.ToLower().Contains(prenom))
+                )
                 .ToListAsync();
         }
 
