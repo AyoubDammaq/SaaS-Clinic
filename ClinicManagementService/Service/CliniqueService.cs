@@ -1,7 +1,5 @@
-﻿using ClinicManagementService.Data;
-using ClinicManagementService.Models;
+﻿using ClinicManagementService.Models;
 using ClinicManagementService.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace ClinicManagementService.Service
 {

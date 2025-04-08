@@ -20,6 +20,7 @@ namespace ClinicManagementService.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin")]
         public async Task<ActionResult<Clinique>> AjouterClinique(Clinique clinique)
         {
             var result = await _cliniqueService.AjouterCliniqueAsync(clinique);
@@ -27,6 +28,7 @@ namespace ClinicManagementService.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin")]
         public async Task<IActionResult> ModifierClinique(Guid id, Clinique clinique)
         {
             await _cliniqueService.ModifierCliniqueAsync(id, clinique);
@@ -34,6 +36,7 @@ namespace ClinicManagementService.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin")]
         public async Task<IActionResult> SupprimerClinique(Guid id)
         {
             var result = await _cliniqueService.SupprimerCliniqueAsync(id);
