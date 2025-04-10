@@ -1,5 +1,89 @@
 [
   {
+    "ContainingType": "DoctorManagementService.Controllers.DisponibiliteController",
+    "Method": "AjouterDisponibilites",
+    "RelativePath": "api/Disponibilite/{id}/disponibilites",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "disponibilite",
+        "Type": "DoctorManagementService.Models.Disponibilite",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DoctorManagementService.Controllers.DisponibiliteController",
+    "Method": "ObtenirTousLesDisponibilites",
+    "RelativePath": "api/Disponibilite/disponibilites",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DoctorManagementService.Controllers.DisponibiliteController",
+    "Method": "SupprimerDisponibilite",
+    "RelativePath": "api/Disponibilite/disponibilites/{disponibiliteId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "disponibiliteId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DoctorManagementService.Controllers.DisponibiliteController",
+    "Method": "ObtenirDisponibilitesParMedecinId",
+    "RelativePath": "api/Disponibilite/disponibilites/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DoctorManagementService.Controllers.DisponibiliteController",
+    "Method": "ObtenirDisponibilitesParMedecinIdEtDate",
+    "RelativePath": "api/Disponibilite/disponibilites/{id}/disponible",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "date",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "DoctorManagementService.Controllers.MedecinController",
     "Method": "AjouterMedecin",
     "RelativePath": "api/Medecin",

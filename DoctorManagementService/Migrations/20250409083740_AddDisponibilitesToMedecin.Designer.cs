@@ -4,6 +4,7 @@ using DoctorManagementService.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoctorManagementService.Migrations
 {
     [DbContext(typeof(MedecinDbContext))]
-    partial class MedecinDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250409083740_AddDisponibilitesToMedecin")]
+    partial class AddDisponibilitesToMedecin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +40,7 @@ namespace DoctorManagementService.Migrations
                     b.Property<int>("Jour")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("MedecinId")
+                    b.Property<Guid?>("MedecinId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -90,13 +93,10 @@ namespace DoctorManagementService.Migrations
 
             modelBuilder.Entity("DoctorManagementService.Models.Disponibilite", b =>
                 {
-                    b.HasOne("DoctorManagementService.Models.Medecin", "Medecin")
+                    b.HasOne("DoctorManagementService.Models.Medecin", null)
                         .WithMany("Disponibilites")
                         .HasForeignKey("MedecinId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Medecin");
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DoctorManagementService.Models.Medecin", b =>

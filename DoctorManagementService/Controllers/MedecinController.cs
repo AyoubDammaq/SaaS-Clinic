@@ -10,9 +10,11 @@ namespace DoctorManagementService.Controllers
     public class MedecinController : ControllerBase
     {
         private readonly IMedecinService _medecinService;
-        public MedecinController(IMedecinService medecinService)
+        private readonly IDisponibiliteService _disponibiliteService;
+        public MedecinController(IMedecinService medecinService, IDisponibiliteService disponibiliteService)
         {
             _medecinService = medecinService;
+            _disponibiliteService = disponibiliteService;
         }
 
         [HttpPost]
@@ -89,13 +91,11 @@ namespace DoctorManagementService.Controllers
         }
 
         [HttpGet("filter/name")]
-        public async Task<IActionResult> FiltrerMedecinsByName([FromQuery] string? name, [FromQuery]  string? prenom)
+        public async Task<IActionResult> FiltrerMedecinsByName([FromQuery] string? name, [FromQuery] string? prenom)
         {
-            var medecins = await _medecinService.FilterDoctorsByName(name, prenom);
+            // Correction des problèmes CS8604 en utilisant des valeurs par défaut pour les paramètres null
+            var medecins = await _medecinService.FilterDoctorsByName(name ?? string.Empty, prenom ?? string.Empty);
             return Ok(medecins);
         }
-
-
-
     }
 }

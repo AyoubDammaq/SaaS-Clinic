@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DoctorManagementService.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace DoctorManagementService.DTOs
 {
@@ -14,5 +15,6 @@ namespace DoctorManagementService.DTOs
         public string Telephone { get; set; }
         public Guid? CliniqueId { get; set; }
         public string PhotoUrl { get; set; }
+        public List<Disponibilite> Disponibilites { get; set; }
     }
 }

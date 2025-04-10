@@ -5,6 +5,137 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Disponibilite/{id}/disponibilites": {
+      "post": {
+        "tags": [
+          "Disponibilite"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Disponibilite"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Disponibilite"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Disponibilite"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Disponibilite/disponibilites/{disponibiliteId}": {
+      "delete": {
+        "tags": [
+          "Disponibilite"
+        ],
+        "parameters": [
+          {
+            "name": "disponibiliteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Disponibilite/disponibilites/{id}": {
+      "get": {
+        "tags": [
+          "Disponibilite"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Disponibilite/disponibilites": {
+      "get": {
+        "tags": [
+          "Disponibilite"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Disponibilite/disponibilites/{id}/disponible": {
+      "get": {
+        "tags": [
+          "Disponibilite"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Medecin": {
       "post": {
         "tags": [
@@ -182,6 +313,108 @@
   },
   "components": {
     "schemas": {
+      "DayOfWeek": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "Disponibilite": {
+        "required": [
+          "heureDebut",
+          "heureFin",
+          "jour"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "jour": {
+            "$ref": "#/components/schemas/DayOfWeek"
+          },
+          "heureDebut": {
+            "type": "string",
+            "format": "date-span"
+          },
+          "heureFin": {
+            "type": "string",
+            "format": "date-span"
+          },
+          "medecinId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "medecin": {
+            "$ref": "#/components/schemas/Medecin"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Medecin": {
+        "required": [
+          "nom",
+          "prenom",
+          "specialite"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "prenom": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "nom": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "specialite": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "telephone": {
+            "type": "string",
+            "nullable": true
+          },
+          "cliniqueId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "photoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateCreation": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "disponibilites": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Disponibilite"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "MedecinDto": {
         "required": [
           "nom",
@@ -217,6 +450,13 @@
           },
           "photoUrl": {
             "type": "string",
+            "nullable": true
+          },
+          "disponibilites": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Disponibilite"
+            },
             "nullable": true
           }
         },

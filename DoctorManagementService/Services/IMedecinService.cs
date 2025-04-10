@@ -1,5 +1,6 @@
 ﻿using DoctorManagementService.DTOs;
 using DoctorManagementService.Models;
+using System.Threading.Tasks;
 
 namespace DoctorManagementService.Services
 {
@@ -12,5 +13,6 @@ namespace DoctorManagementService.Services
         Task DeleteDoctor(Guid id);
         Task<IEnumerable<MedecinDto>> FilterDoctorsBySpecialite(string specialite);
         Task<IEnumerable<MedecinDto>> FilterDoctorsByName(string name, string prenom);
+
     }
 }

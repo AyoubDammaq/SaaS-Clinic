@@ -11,5 +11,6 @@ namespace DoctorManagementService.Repositories
         Task DeleteAsync(Guid id);
         Task<List<Medecin>> FilterBySpecialiteAsync(string specialite);
         Task<List<Medecin>> FilterByNameOrPrenomAsync(string name, string prenom);
+        Task DeleteDisponibiliteAsync(Guid disponibiliteId);
     }
 }

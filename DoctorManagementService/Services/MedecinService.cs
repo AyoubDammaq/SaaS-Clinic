@@ -7,10 +7,12 @@ namespace DoctorManagementService.Services
     public class MedecinService : IMedecinService
     {
         private readonly IMedecinRepository _medecinRepository;
+        private readonly IDisponibiliteRepository _disponibiliteRepository;
 
-        public MedecinService(IMedecinRepository medecinRepository)
+        public MedecinService(IMedecinRepository medecinRepository, IDisponibiliteRepository disponibiliteRepository)
         {
             _medecinRepository = medecinRepository;
+            _disponibiliteRepository = disponibiliteRepository;
         }
 
         public async Task AddDoctor(Medecin medecin)

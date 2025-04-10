@@ -14,6 +14,7 @@ namespace DoctorManagementService.Repositories
         public async Task<Medecin> GetByIdAsync(Guid id)
         {
             return await _context.Medecins
+                .Include(m => m.Disponibilites)
                 .FirstOrDefaultAsync(m => m.Id == id);
         }
         public async Task<List<Medecin>> GetAllAsync()
@@ -59,6 +60,16 @@ namespace DoctorManagementService.Repositories
                     (string.IsNullOrEmpty(prenom) || m.Prenom.ToLower().Contains(prenom))
                 )
                 .ToListAsync();
+        }
+
+        public async Task DeleteDisponibiliteAsync(Guid disponibiliteId)
+        {
+            var disponibilite = await _context.Disponibilites.FindAsync(disponibiliteId);
+            if (disponibilite != null)
+            {
+                _context.Disponibilites.Remove(disponibilite);
+                await _context.SaveChangesAsync();
+            }
         }
 
     }

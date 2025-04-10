@@ -21,11 +21,13 @@ namespace DoctorManagementService.Models
 
         public string Telephone { get; set; }
 
-        public Guid? CliniqueId { get; set; } = Guid.Empty;
+        public Guid? CliniqueId { get; set; }
 
         public string PhotoUrl { get; set; }
 
         public DateTime DateCreation { get; set; } = DateTime.UtcNow;
-       
+
+        // Nouvelle propriété pour les disponibilités
+        public ICollection<Disponibilite> Disponibilites { get; set; } = new List<Disponibilite>();
     }
 }

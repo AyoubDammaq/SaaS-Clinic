@@ -16,7 +16,9 @@ builder.Services.AddDbContext<MedecinDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MedecinDatabase")));
 
 builder.Services.AddScoped<IMedecinRepository, MedecinRepository>();
+builder.Services.AddScoped<IDisponibiliteRepository, DisponibiliteRepository>();
 builder.Services.AddScoped<IMedecinService, MedecinService>();
+builder.Services.AddScoped<IDisponibiliteService, DisponibiliteService>();
 
 var app = builder.Build();
 
