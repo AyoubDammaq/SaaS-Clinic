@@ -20,122 +20,191 @@ namespace DoctorManagementService.Controllers
         [HttpPost]
         public async Task<IActionResult> AjouterMedecin([FromBody] MedecinDto medecinDto)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (medecinDto.CliniqueId == Guid.Empty)
+                {
+                    medecinDto.CliniqueId = null;
+                }
+
+                var medecin = new Medecin
+                {
+                    Prenom = medecinDto.Prenom,
+                    Nom = medecinDto.Nom,
+                    Specialite = medecinDto.Specialite,
+                    Email = medecinDto.Email,
+                    Telephone = medecinDto.Telephone,
+                    CliniqueId = medecinDto.CliniqueId ?? null,
+                    PhotoUrl = medecinDto.PhotoUrl,
+                    DateCreation = DateTime.UtcNow
+                };
+
+                await _medecinService.AddDoctor(medecin);
+                return Ok(new { Message = "Médecin ajouté avec succès" });
             }
-
-            if (medecinDto.CliniqueId == Guid.Empty)
+            catch (Exception ex)
             {
-                medecinDto.CliniqueId = null;
+                return StatusCode(500, new { Message = "Une erreur est survenue lors de l'ajout du médecin", Details = ex.Message });
             }
-
-            var medecin = new Medecin
-            {
-                Prenom = medecinDto.Prenom,
-                Nom = medecinDto.Nom,
-                Specialite = medecinDto.Specialite,
-                Email = medecinDto.Email,
-                Telephone = medecinDto.Telephone,
-                CliniqueId = medecinDto.CliniqueId ?? null,
-                PhotoUrl = medecinDto.PhotoUrl,
-                DateCreation = DateTime.UtcNow
-            };
-
-            await _medecinService.AddDoctor(medecin);
-            return Ok(new { Message = "Médecin ajouté avec succès" });
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> ObtenirMedecinParId(Guid id)
         {
-            var medecin = await _medecinService.GetDoctorById(id);
-            if (medecin == null)
+            try
             {
-                return NotFound(new { Message = "Médecin non trouvé" });
+                var medecin = await _medecinService.GetDoctorById(id);
+                if (medecin == null)
+                {
+                    return NotFound(new { Message = "Médecin non trouvé" });
+                }
+                return Ok(medecin);
             }
-            return Ok(medecin);
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors de la récupération du médecin", Details = ex.Message });
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> ObtenirTousLesMedecins()
         {
-            var medecins = await _medecinService.GetAllDoctors();
-            return Ok(medecins);
+            try
+            {
+                var medecins = await _medecinService.GetAllDoctors();
+                return Ok(medecins);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors de la récupération des médecins", Details = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> MettreAJourMedecin(Guid id, [FromBody] MedecinDto medecinDto)
         {
-            var medecin = await _medecinService.GetDoctorById(id);
-            if (medecin == null)
+            try
             {
-                return NotFound(new { Message = "Médecin non trouvé" });
+                var medecin = await _medecinService.GetDoctorById(id);
+                if (medecin == null)
+                {
+                    return NotFound(new { Message = "Médecin non trouvé" });
+                }
+                await _medecinService.UpdateDoctor(id, medecinDto);
+                return Ok(new { Message = "Médecin mis à jour avec succès" });
             }
-            await _medecinService.UpdateDoctor(id, medecinDto);
-            return Ok(new { Message = "Médecin mis à jour avec succès" });
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors de la mise à jour du médecin", Details = ex.Message });
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> SupprimerMedecin(Guid id)
         {
-            var medecin = await _medecinService.GetDoctorById(id);
-            if (medecin == null)
+            try
             {
-                return NotFound(new { Message = "Médecin non trouvé" });
+                var medecin = await _medecinService.GetDoctorById(id);
+                if (medecin == null)
+                {
+                    return NotFound(new { Message = "Médecin non trouvé" });
+                }
+                await _medecinService.DeleteDoctor(id);
+                return Ok(new { Message = "Médecin supprimé avec succès" });
             }
-            await _medecinService.DeleteDoctor(id);
-            return Ok(new { Message = "Médecin supprimé avec succès" });
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors de la suppression du médecin", Details = ex.Message });
+            }
         }
 
         [HttpGet("filter/specialite")]
         public async Task<IActionResult> FiltrerMedecinsBySpecialite([FromQuery] string specialite)
         {
-            var medecins = await _medecinService.FilterDoctorsBySpecialite(specialite);
-            return Ok(medecins);
+            try
+            {
+                var medecins = await _medecinService.FilterDoctorsBySpecialite(specialite);
+                return Ok(medecins);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors du filtrage des médecins par spécialité", Details = ex.Message });
+            }
         }
 
         [HttpGet("filter/name")]
         public async Task<IActionResult> FiltrerMedecinsByName([FromQuery] string? name, [FromQuery] string? prenom)
         {
-            // Correction des problèmes CS8604 en utilisant des valeurs par défaut pour les paramètres null
-            var medecins = await _medecinService.FilterDoctorsByName(name ?? string.Empty, prenom ?? string.Empty);
-            return Ok(medecins);
+            try
+            {
+                var medecins = await _medecinService.FilterDoctorsByName(name ?? string.Empty, prenom ?? string.Empty);
+                return Ok(medecins);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors du filtrage des médecins par nom", Details = ex.Message });
+            }
         }
 
         [HttpGet("clinique/{cliniqueId}")]
         public async Task<IActionResult> ObtenirMedecinParClinique(Guid cliniqueId)
         {
-            var medecins = await _medecinService.GetMedecinByClinique(cliniqueId);
-            if (medecins == null || !medecins.Any())
+            try
             {
-                return NotFound(new { Message = "Aucun médecin trouvé pour cette clinique" });
+                var medecins = await _medecinService.GetMedecinByClinique(cliniqueId);
+                if (medecins == null || !medecins.Any())
+                {
+                    return NotFound(new { Message = "Aucun médecin trouvé pour cette clinique" });
+                }
+                return Ok(medecins);
             }
-            return Ok(medecins);
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors de la récupération des médecins par clinique", Details = ex.Message });
+            }
         }
 
         [HttpPost("attribuer")]
         public async Task<IActionResult> AttribuerMedecinAUneClinique([FromBody] AttribuerMedecinDto attribuerMedecinDto)
         {
-            var medecin = await _medecinService.GetDoctorById(attribuerMedecinDto.MedecinId);
-            if (medecin == null)
+            try
             {
-                return NotFound(new { Message = "Médecin non trouvé" });
+                var medecin = await _medecinService.GetDoctorById(attribuerMedecinDto.MedecinId);
+                if (medecin == null)
+                {
+                    return NotFound(new { Message = "Médecin non trouvé" });
+                }
+                await _medecinService.AttribuerMedecinAUneClinique(attribuerMedecinDto.MedecinId, attribuerMedecinDto.CliniqueId);
+                return Ok(new { Message = "Médecin attribué à la clinique avec succès" });
             }
-            await _medecinService.AttribuerMedecinAUneClinique(attribuerMedecinDto.MedecinId, attribuerMedecinDto.CliniqueId);
-            return Ok(new { Message = "Médecin attribué à la clinique avec succès" });
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors de l'attribution du médecin à la clinique", Details = ex.Message });
+            }
         }
 
         [HttpDelete("desabonner/{medecinId}")]
         public async Task<IActionResult> DesabonnerMedecinDeClinique(Guid medecinId)
         {
-            var medecin = await _medecinService.GetDoctorById(medecinId);
-            if (medecin == null)
+            try
             {
-                return NotFound(new { Message = "Médecin non trouvé" });
+                var medecin = await _medecinService.GetDoctorById(medecinId);
+                if (medecin == null)
+                {
+                    return NotFound(new { Message = "Médecin non trouvé" });
+                }
+                await _medecinService.DesabonnerMedecinDeClinique(medecinId);
+                return Ok(new { Message = "Médecin désabonné de la clinique avec succès" });
             }
-            await _medecinService.DesabonnerMedecinDeClinique(medecinId);
-            return Ok(new { Message = "Médecin désabonné de la clinique avec succès" });
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors du désabonnement du médecin de la clinique", Details = ex.Message });
+            }
         }
     }
 }

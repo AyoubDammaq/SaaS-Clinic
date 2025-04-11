@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DoctorManagementService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2ff6845feefe1dfe331e06760d92085b4a9e54b7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+44fef48e141b2a561d6de5faa29d04087f14af22")]
 [assembly: System.Reflection.AssemblyProductAttribute("DoctorManagementService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DoctorManagementService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
