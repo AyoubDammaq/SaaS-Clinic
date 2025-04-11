@@ -1,6 +1,7 @@
 ﻿using DoctorManagementService.DTOs;
 using DoctorManagementService.Models;
 using DoctorManagementService.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DoctorManagementService.Controllers
@@ -10,14 +11,13 @@ namespace DoctorManagementService.Controllers
     public class MedecinController : ControllerBase
     {
         private readonly IMedecinService _medecinService;
-        private readonly IDisponibiliteService _disponibiliteService;
-        public MedecinController(IMedecinService medecinService, IDisponibiliteService disponibiliteService)
+        public MedecinController(IMedecinService medecinService)
         {
             _medecinService = medecinService;
-            _disponibiliteService = disponibiliteService;
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         public async Task<IActionResult> AjouterMedecin([FromBody] MedecinDto medecinDto)
         {
             try
@@ -86,6 +86,7 @@ namespace DoctorManagementService.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         public async Task<IActionResult> MettreAJourMedecin(Guid id, [FromBody] MedecinDto medecinDto)
         {
             try
@@ -105,6 +106,7 @@ namespace DoctorManagementService.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> SupprimerMedecin(Guid id)
         {
             try
@@ -156,6 +158,17 @@ namespace DoctorManagementService.Controllers
         {
             try
             {
+                using (var httpClient = new HttpClient())
+                {
+                    var clinicServiceUrl = $"http://localhost:5291/api/Clinique/{cliniqueId}";
+                    var response = await httpClient.GetAsync(clinicServiceUrl);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return NotFound(new { Message = "Clinique non trouvée" });
+                    }
+                }
+
                 var medecins = await _medecinService.GetMedecinByClinique(cliniqueId);
                 if (medecins == null || !medecins.Any())
                 {
@@ -170,6 +183,7 @@ namespace DoctorManagementService.Controllers
         }
 
         [HttpPost("attribuer")]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin")]
         public async Task<IActionResult> AttribuerMedecinAUneClinique([FromBody] AttribuerMedecinDto attribuerMedecinDto)
         {
             try
@@ -179,6 +193,18 @@ namespace DoctorManagementService.Controllers
                 {
                     return NotFound(new { Message = "Médecin non trouvé" });
                 }
+
+                using (var httpClient = new HttpClient())
+                {
+                    var clinicServiceUrl = $"http://localhost:5291/api/Clinique/{attribuerMedecinDto.CliniqueId}";
+                    var response = await httpClient.GetAsync(clinicServiceUrl);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return NotFound(new { Message = "Clinique non trouvée" });
+                    }
+                }
+
                 await _medecinService.AttribuerMedecinAUneClinique(attribuerMedecinDto.MedecinId, attribuerMedecinDto.CliniqueId);
                 return Ok(new { Message = "Médecin attribué à la clinique avec succès" });
             }
@@ -189,6 +215,7 @@ namespace DoctorManagementService.Controllers
         }
 
         [HttpDelete("desabonner/{medecinId}")]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin")]
         public async Task<IActionResult> DesabonnerMedecinDeClinique(Guid medecinId)
         {
             try

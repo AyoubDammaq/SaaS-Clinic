@@ -346,3 +346,4 @@ C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\Docto
 C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\DoctorManagementService.genruntimeconfig.cache
 C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\ref\DoctorManagementService.dll
 C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\USER\Desktop\SaaS-Clinic\DoctorManagementService\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

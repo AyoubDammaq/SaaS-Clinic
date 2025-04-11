@@ -1,5 +1,6 @@
 ﻿using DoctorManagementService.Models;
 using DoctorManagementService.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DoctorManagementService.Controllers
@@ -15,6 +16,7 @@ namespace DoctorManagementService.Controllers
         }
 
         [HttpPost("{id}/disponibilites")]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         public async Task<IActionResult> AjouterDisponibilites(Guid id, [FromBody] Disponibilite disponibilite)
         {
             try
@@ -33,6 +35,7 @@ namespace DoctorManagementService.Controllers
         }
 
         [HttpDelete("disponibilites/{disponibiliteId}")]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         public async Task<IActionResult> SupprimerDisponibilite(Guid disponibiliteId)
         {
             try
