@@ -37,15 +37,15 @@ namespace DoctorManagementService.Services
             return await _disponibiliteRepository.ObtenirDisponibilites();
         }
 
-        public async Task<Disponibilite> GetDisponibiliteWithMedecin(Guid disponibiliteId)
-        {
-            return await _disponibiliteRepository.ObtenirDisponibiliteAvecMedecin(disponibiliteId);
-        }
-
         public async Task<List<Disponibilite>> ObtenirDisponibilitesParMedecinIdEtDate(Guid medecinId, DateTime date)
         {
             var disponibilites = await _disponibiliteRepository.ObtenirDisponibilitesParMedecinId(medecinId);
             return disponibilites.Where(d => d.Jour == date.DayOfWeek).ToList();
+        }
+        public async Task<Medecin> ObtenirDisponibiliteAvecDate(DateTime date, TimeSpan? heureDebut, TimeSpan? heureFin)
+        {
+            var disponibilites = await _disponibiliteRepository.ObtenirMedecinsDisponiblesAsync(date, heureDebut, heureFin);
+            return disponibilites?.FirstOrDefault(); 
         }
     }
 

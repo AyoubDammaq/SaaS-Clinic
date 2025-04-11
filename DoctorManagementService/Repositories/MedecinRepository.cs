@@ -19,7 +19,9 @@ namespace DoctorManagementService.Repositories
         }
         public async Task<List<Medecin>> GetAllAsync()
         {
-            return await _context.Medecins.ToListAsync();
+            return await _context.Medecins
+                .Include(m => m.Disponibilites)
+                .ToListAsync();
         }
         public async Task AddAsync(Medecin medecin)
         {

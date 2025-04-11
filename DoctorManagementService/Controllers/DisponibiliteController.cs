@@ -61,5 +61,28 @@ namespace DoctorManagementService.Controllers
             }
             return Ok(disponibilites);
         }
+       
+        [HttpGet("disponibilites/{date}/medecin")]
+        public async Task<IActionResult> ObtenirDisponibiliteAvecDate([FromRoute] DateTime date, [FromQuery] TimeSpan? heureDebut, [FromQuery] TimeSpan? heureFin)
+        {
+            // Vérification des paramètres
+            if (heureDebut >= heureFin)
+            {
+                return BadRequest(new { Message = "L'heure de début doit être inférieure à l'heure de fin." });
+            }
+
+            // Appel du service pour récupérer la disponibilité
+            var disponibilite = await _disponibiliteService.ObtenirDisponibiliteAvecDate(date, heureDebut, heureFin);
+
+            // Vérification si une disponibilité a été trouvée
+            if (disponibilite == null)
+            {
+                return NotFound(new { Message = "Aucune disponibilité trouvée pour ce médecin." });
+            }
+
+            return Ok(disponibilite);
+        }
+
+
     }
 }

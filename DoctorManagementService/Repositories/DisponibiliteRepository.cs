@@ -55,11 +55,15 @@ namespace DoctorManagementService.Repositories
             return await _context.Disponibilites.ToListAsync();
         }
 
-        public async Task<Disponibilite> ObtenirDisponibiliteAvecMedecin(Guid disponibiliteId)
+        public async Task<List<Medecin>> ObtenirMedecinsDisponiblesAsync(DateTime date, TimeSpan? heureDebut, TimeSpan? heureFin)
         {
-            return await _context.Disponibilites
-                .Include(d => d.Medecin)
-                .FirstOrDefaultAsync(d => d.Id == disponibiliteId);
+            return await _context.Medecins
+                .Include(m => m.Disponibilites)
+                .Where(m => m.Disponibilites.Any(d =>
+                    d.Jour == date.DayOfWeek &&
+                    (!heureDebut.HasValue || d.HeureDebut < heureDebut.Value) &&
+                    (!heureFin.HasValue || d.HeureFin > heureFin.Value)))
+                .ToListAsync();
         }
     }
 }

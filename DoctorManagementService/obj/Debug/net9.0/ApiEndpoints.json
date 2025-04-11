@@ -32,6 +32,32 @@
   },
   {
     "ContainingType": "DoctorManagementService.Controllers.DisponibiliteController",
+    "Method": "ObtenirDisponibiliteAvecDate",
+    "RelativePath": "api/Disponibilite/disponibilites/{date}/medecin",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "date",
+        "Type": "System.DateTime",
+        "IsRequired": true
+      },
+      {
+        "Name": "heureDebut",
+        "Type": "System.Nullable\u00601[[System.TimeSpan, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "heureFin",
+        "Type": "System.Nullable\u00601[[System.TimeSpan, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DoctorManagementService.Controllers.DisponibiliteController",
     "Method": "SupprimerDisponibilite",
     "RelativePath": "api/Disponibilite/disponibilites/{disponibiliteId}",
     "HttpMethod": "DELETE",

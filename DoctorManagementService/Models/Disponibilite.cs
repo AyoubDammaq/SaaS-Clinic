@@ -17,7 +17,9 @@ namespace DoctorManagementService.Models
         [Required]
         public TimeSpan HeureFin { get; set; }
 
+        [JsonIgnore]
         public Guid MedecinId { get; set; }
+        [JsonIgnore]
         public Medecin? Medecin { get; set; }
     }
 }

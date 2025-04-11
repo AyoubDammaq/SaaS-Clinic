@@ -7,12 +7,10 @@ namespace DoctorManagementService.Services
     public class MedecinService : IMedecinService
     {
         private readonly IMedecinRepository _medecinRepository;
-        private readonly IDisponibiliteRepository _disponibiliteRepository;
 
-        public MedecinService(IMedecinRepository medecinRepository, IDisponibiliteRepository disponibiliteRepository)
+        public MedecinService(IMedecinRepository medecinRepository)
         {
             _medecinRepository = medecinRepository;
-            _disponibiliteRepository = disponibiliteRepository;
         }
 
         public async Task AddDoctor(Medecin medecin)
@@ -36,7 +34,8 @@ namespace DoctorManagementService.Services
                 CliniqueId = medecin.CliniqueId,
                 Email = medecin.Email,
                 Telephone = medecin.Telephone,
-                PhotoUrl = medecin.PhotoUrl
+                PhotoUrl = medecin.PhotoUrl,
+                Disponibilites = (List<Disponibilite>)medecin.Disponibilites
             };
         }
 
@@ -51,7 +50,8 @@ namespace DoctorManagementService.Services
                 CliniqueId = m.CliniqueId,
                 Email = m.Email,
                 Telephone = m.Telephone,
-                PhotoUrl = m.PhotoUrl
+                PhotoUrl = m.PhotoUrl,
+                Disponibilites = (List<Disponibilite>)m.Disponibilites
             });
         }
 

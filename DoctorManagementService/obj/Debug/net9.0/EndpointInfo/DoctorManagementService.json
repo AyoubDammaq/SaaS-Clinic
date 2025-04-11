@@ -136,6 +136,45 @@
         }
       }
     },
+    "/api/Disponibilite/disponibilites/{date}/medecin": {
+      "get": {
+        "tags": [
+          "Disponibilite"
+        ],
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "heureDebut",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-span"
+            }
+          },
+          {
+            "name": "heureFin",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-span"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Medecin": {
       "post": {
         "tags": [
@@ -348,69 +387,6 @@
           "heureFin": {
             "type": "string",
             "format": "date-span"
-          },
-          "medecinId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "medecin": {
-            "$ref": "#/components/schemas/Medecin"
-          }
-        },
-        "additionalProperties": false
-      },
-      "Medecin": {
-        "required": [
-          "nom",
-          "prenom",
-          "specialite"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "prenom": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "nom": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "specialite": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "nullable": true
-          },
-          "telephone": {
-            "type": "string",
-            "nullable": true
-          },
-          "cliniqueId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "photoUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "dateCreation": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "disponibilites": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Disponibilite"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false

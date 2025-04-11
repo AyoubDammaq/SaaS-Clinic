@@ -9,8 +9,8 @@ namespace DoctorManagementService.Services
         Task<List<Disponibilite>> GetDisponibilitesByMedecinId(Guid medecinId);
         Task<Disponibilite> GetDisponibiliteById(Guid disponibiliteId);
         Task<List<Disponibilite>> GetDisponibilites();
-        Task<Disponibilite> GetDisponibiliteWithMedecin(Guid disponibiliteId);
         Task<List<Disponibilite>> ObtenirDisponibilitesParMedecinIdEtDate(Guid medecinId, DateTime date);
+        Task<Medecin> ObtenirDisponibiliteAvecDate(DateTime date, TimeSpan? heureDebut, TimeSpan? heureFin);
 
     }
 }
