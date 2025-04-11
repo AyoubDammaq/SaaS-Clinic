@@ -190,6 +190,54 @@
   },
   {
     "ContainingType": "DoctorManagementService.Controllers.MedecinController",
+    "Method": "AttribuerMedecinAUneClinique",
+    "RelativePath": "api/Medecin/attribuer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "attribuerMedecinDto",
+        "Type": "DoctorManagementService.DTOs.AttribuerMedecinDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DoctorManagementService.Controllers.MedecinController",
+    "Method": "ObtenirMedecinParClinique",
+    "RelativePath": "api/Medecin/clinique/{cliniqueId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cliniqueId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DoctorManagementService.Controllers.MedecinController",
+    "Method": "DesabonnerMedecinDeClinique",
+    "RelativePath": "api/Medecin/desabonner/{medecinId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "medecinId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DoctorManagementService.Controllers.MedecinController",
     "Method": "FiltrerMedecinsByName",
     "RelativePath": "api/Medecin/filter/name",
     "HttpMethod": "GET",

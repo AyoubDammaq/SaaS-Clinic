@@ -1,5 +1,6 @@
 ﻿using DoctorManagementService.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace DoctorManagementService.DTOs
 {
@@ -15,6 +16,8 @@ namespace DoctorManagementService.DTOs
         public string Telephone { get; set; }
         public Guid? CliniqueId { get; set; }
         public string PhotoUrl { get; set; }
-        public List<Disponibilite> Disponibilites { get; set; }
+
+        [JsonIgnore]
+        public List<Disponibilite>? Disponibilites { get; set; }
     }
 }

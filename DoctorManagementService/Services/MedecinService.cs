@@ -70,6 +70,7 @@ namespace DoctorManagementService.Services
             medecin.Email = medecinDto.Email;
             medecin.Telephone = medecinDto.Telephone;
             medecin.PhotoUrl = medecinDto.PhotoUrl;
+            medecin.Disponibilites = medecinDto.Disponibilites;
 
             await _medecinRepository.UpdateAsync(medecin);
         }
@@ -89,7 +90,8 @@ namespace DoctorManagementService.Services
                 CliniqueId = m.CliniqueId,
                 Email = m.Email,
                 Telephone = m.Telephone,
-                PhotoUrl = m.PhotoUrl
+                PhotoUrl = m.PhotoUrl,
+                Disponibilites = (List<Disponibilite>)m.Disponibilites
             });
         }
 
@@ -104,8 +106,45 @@ namespace DoctorManagementService.Services
                 CliniqueId = m.CliniqueId,
                 Email = m.Email,
                 Telephone = m.Telephone,
-                PhotoUrl = m.PhotoUrl
+                PhotoUrl = m.PhotoUrl,
+                Disponibilites = (List<Disponibilite>)m.Disponibilites
             });
+        }
+
+        public async Task<IEnumerable<MedecinDto>> GetMedecinByClinique(Guid cliniqueId)
+        {
+            var medecins = await _medecinRepository.GetMedecinByCliniqueIdAsync(cliniqueId);
+            return medecins.Select(m => new MedecinDto
+            {
+                Prenom = m.Prenom,
+                Nom = m.Nom,
+                Specialite = m.Specialite,
+                CliniqueId = m.CliniqueId,
+                Email = m.Email,
+                Telephone = m.Telephone,
+                PhotoUrl = m.PhotoUrl,
+                Disponibilites = (List<Disponibilite>)m.Disponibilites
+            });
+        }
+
+        public async Task AttribuerMedecinAUneClinique(Guid medecinId, Guid cliniqueId)
+        {
+            var medecin = await _medecinRepository.GetByIdAsync(medecinId);
+            if (medecin == null)
+            {
+                throw new Exception("Medecin not found");
+            }
+            await _medecinRepository.AttribuerMedecinAUneCliniqueAsync(medecinId, cliniqueId);
+        }
+
+        public async Task DesabonnerMedecinDeClinique(Guid medecinId)
+        {
+            var medecin = await _medecinRepository.GetByIdAsync(medecinId);
+            if (medecin == null)
+            {
+                throw new Exception("Medecin not found");
+            }
+            await _medecinRepository.DesabonnerMedecinDeCliniqueAsync(medecinId);
         }
 
     }

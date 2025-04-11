@@ -13,6 +13,9 @@ namespace DoctorManagementService.Services
         Task DeleteDoctor(Guid id);
         Task<IEnumerable<MedecinDto>> FilterDoctorsBySpecialite(string specialite);
         Task<IEnumerable<MedecinDto>> FilterDoctorsByName(string name, string prenom);
+        Task<IEnumerable<MedecinDto>> GetMedecinByClinique(Guid cliniqueId);
+        Task AttribuerMedecinAUneClinique(Guid medecinId, Guid cliniqueId);
+        Task DesabonnerMedecinDeClinique(Guid medecinId);
 
     }
 }

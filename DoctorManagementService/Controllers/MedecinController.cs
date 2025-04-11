@@ -25,6 +25,11 @@ namespace DoctorManagementService.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (medecinDto.CliniqueId == Guid.Empty)
+            {
+                medecinDto.CliniqueId = null;
+            }
+
             var medecin = new Medecin
             {
                 Prenom = medecinDto.Prenom,
@@ -32,7 +37,7 @@ namespace DoctorManagementService.Controllers
                 Specialite = medecinDto.Specialite,
                 Email = medecinDto.Email,
                 Telephone = medecinDto.Telephone,
-                CliniqueId = medecinDto.CliniqueId ?? Guid.Empty,
+                CliniqueId = medecinDto.CliniqueId ?? null,
                 PhotoUrl = medecinDto.PhotoUrl,
                 DateCreation = DateTime.UtcNow
             };
@@ -96,6 +101,41 @@ namespace DoctorManagementService.Controllers
             // Correction des problèmes CS8604 en utilisant des valeurs par défaut pour les paramètres null
             var medecins = await _medecinService.FilterDoctorsByName(name ?? string.Empty, prenom ?? string.Empty);
             return Ok(medecins);
+        }
+
+        [HttpGet("clinique/{cliniqueId}")]
+        public async Task<IActionResult> ObtenirMedecinParClinique(Guid cliniqueId)
+        {
+            var medecins = await _medecinService.GetMedecinByClinique(cliniqueId);
+            if (medecins == null || !medecins.Any())
+            {
+                return NotFound(new { Message = "Aucun médecin trouvé pour cette clinique" });
+            }
+            return Ok(medecins);
+        }
+
+        [HttpPost("attribuer")]
+        public async Task<IActionResult> AttribuerMedecinAUneClinique([FromBody] AttribuerMedecinDto attribuerMedecinDto)
+        {
+            var medecin = await _medecinService.GetDoctorById(attribuerMedecinDto.MedecinId);
+            if (medecin == null)
+            {
+                return NotFound(new { Message = "Médecin non trouvé" });
+            }
+            await _medecinService.AttribuerMedecinAUneClinique(attribuerMedecinDto.MedecinId, attribuerMedecinDto.CliniqueId);
+            return Ok(new { Message = "Médecin attribué à la clinique avec succès" });
+        }
+
+        [HttpDelete("desabonner/{medecinId}")]
+        public async Task<IActionResult> DesabonnerMedecinDeClinique(Guid medecinId)
+        {
+            var medecin = await _medecinService.GetDoctorById(medecinId);
+            if (medecin == null)
+            {
+                return NotFound(new { Message = "Médecin non trouvé" });
+            }
+            await _medecinService.DesabonnerMedecinDeClinique(medecinId);
+            return Ok(new { Message = "Médecin désabonné de la clinique avec succès" });
         }
     }
 }

@@ -47,6 +47,7 @@ namespace DoctorManagementService.Repositories
         public async Task<List<Medecin>> FilterBySpecialiteAsync(string specialite)
         {
             return await _context.Medecins
+                .Include(m => m.Disponibilites)
                 .Where(m => (string.IsNullOrEmpty(specialite) || m.Specialite == specialite))
                 .ToListAsync();
         }
@@ -61,18 +62,34 @@ namespace DoctorManagementService.Repositories
                     (string.IsNullOrEmpty(name) || m.Nom.ToLower().Contains(name)) &&
                     (string.IsNullOrEmpty(prenom) || m.Prenom.ToLower().Contains(prenom))
                 )
+                .Include(m => m.Disponibilites)
                 .ToListAsync();
         }
 
-        public async Task DeleteDisponibiliteAsync(Guid disponibiliteId)
+        public async Task<List<Medecin>> GetMedecinByCliniqueIdAsync(Guid cliniqueId)
         {
-            var disponibilite = await _context.Disponibilites.FindAsync(disponibiliteId);
-            if (disponibilite != null)
+            return await _context.Medecins
+                .Where(m => m.CliniqueId == cliniqueId)
+                .Include(m => m.Disponibilites)
+                .ToListAsync();
+        }
+        public async Task AttribuerMedecinAUneCliniqueAsync(Guid medecinId, Guid cliniqueId)
+        {
+            var medecin = await GetByIdAsync(medecinId);
+            if (medecin != null)
             {
-                _context.Disponibilites.Remove(disponibilite);
-                await _context.SaveChangesAsync();
+                medecin.CliniqueId = cliniqueId;
+                await UpdateAsync(medecin);
             }
         }
-
+        public async Task DesabonnerMedecinDeCliniqueAsync(Guid medecinId)
+        {
+            var medecin = await GetByIdAsync(medecinId);
+            if (medecin != null)
+            {
+                medecin.CliniqueId = null;
+                await UpdateAsync(medecin);
+            }
+        }
     }
 }

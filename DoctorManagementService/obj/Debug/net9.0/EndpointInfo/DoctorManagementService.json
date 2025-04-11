@@ -348,10 +348,105 @@
           }
         }
       }
+    },
+    "/api/Medecin/clinique/{cliniqueId}": {
+      "get": {
+        "tags": [
+          "Medecin"
+        ],
+        "parameters": [
+          {
+            "name": "cliniqueId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Medecin/attribuer": {
+      "post": {
+        "tags": [
+          "Medecin"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttribuerMedecinDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttribuerMedecinDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttribuerMedecinDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Medecin/desabonner/{medecinId}": {
+      "delete": {
+        "tags": [
+          "Medecin"
+        ],
+        "parameters": [
+          {
+            "name": "medecinId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AttribuerMedecinDto": {
+        "required": [
+          "cliniqueId",
+          "medecinId"
+        ],
+        "type": "object",
+        "properties": {
+          "medecinId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cliniqueId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
       "DayOfWeek": {
         "enum": [
           0,
@@ -426,13 +521,6 @@
           },
           "photoUrl": {
             "type": "string",
-            "nullable": true
-          },
-          "disponibilites": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Disponibilite"
-            },
             "nullable": true
           }
         },

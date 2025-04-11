@@ -11,6 +11,9 @@ namespace DoctorManagementService.Repositories
         Task DeleteAsync(Guid id);
         Task<List<Medecin>> FilterBySpecialiteAsync(string specialite);
         Task<List<Medecin>> FilterByNameOrPrenomAsync(string name, string prenom);
-        Task DeleteDisponibiliteAsync(Guid disponibiliteId);
+        Task<List<Medecin>> GetMedecinByCliniqueIdAsync(Guid cliniqueId);
+        Task AttribuerMedecinAUneCliniqueAsync(Guid medecinId, Guid cliniqueId);
+        Task DesabonnerMedecinDeCliniqueAsync(Guid medecinId);
+
     }
 }
