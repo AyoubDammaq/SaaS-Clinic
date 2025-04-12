@@ -21,6 +21,15 @@ namespace ClinicManagementService.Service
 
         public async Task<Clinique> AjouterCliniqueAsync(Clinique clinique)
         {
+            if (clinique == null)
+                throw new ArgumentNullException(nameof(clinique), "La clinique ne peut pas être null.");
+
+            if (string.IsNullOrWhiteSpace(clinique.Nom))
+                throw new ArgumentException("Le nom de la clinique est requis.", nameof(clinique.Nom));
+
+            if (string.IsNullOrWhiteSpace(clinique.Adresse))
+                throw new ArgumentException("L'adresse de la clinique est requise.", nameof(clinique.Adresse));
+
             //clinique.TenantId = _tenantId;
             await _repository.AddAsync(clinique);
             return clinique;
@@ -28,6 +37,12 @@ namespace ClinicManagementService.Service
 
         public async Task<Clinique> ModifierCliniqueAsync(Guid id, Clinique clinique)
         {
+            if (clinique == null)
+                throw new ArgumentNullException(nameof(clinique), "La clinique ne peut pas être null.");
+
+            if (id == Guid.Empty)
+                throw new ArgumentException("L'identifiant de la clinique est requis.", nameof(id));
+
             clinique.Id = id;
             await _repository.UpdateAsync(clinique);
             return clinique;
@@ -35,30 +50,56 @@ namespace ClinicManagementService.Service
 
         public async Task<bool> SupprimerCliniqueAsync(Guid id)
         {
+            if (id == Guid.Empty)
+                throw new ArgumentException("L'identifiant de la clinique est requis.", nameof(id));
+
             await _repository.DeleteAsync(id);
             return true;
         }
 
         public async Task<Clinique> ObtenirCliniqueParIdAsync(Guid id)
         {
-            return await _repository.GetByIdAsync(id);
+            if (id == Guid.Empty)
+                throw new ArgumentException("L'identifiant de la clinique est requis.", nameof(id));
+
+            var clinique = await _repository.GetByIdAsync(id);
+            if (clinique == null)
+                throw new KeyNotFoundException($"Aucune clinique trouvée avec l'identifiant {id}.");
+
+            return clinique;
         }
 
         public async Task<List<Clinique>> ListerCliniqueAsync()
         {
-            return await _repository.GetAllAsync();
+            var cliniques = await _repository.GetAllAsync();
+            if (cliniques == null || !cliniques.Any())
+                throw new InvalidOperationException("Aucune clinique disponible.");
+
+            return cliniques;
         }
 
         public async Task<IEnumerable<Clinique>> ListerCliniquesParNomAsync(string nom)
         {
-            var clinique = await _repository.GetByNameAsync(nom);
-            return new List<Clinique> { clinique };
+            if (string.IsNullOrWhiteSpace(nom))
+                throw new ArgumentException("Le nom de la clinique est requis.", nameof(nom));
+
+            var cliniques = await _repository.GetByNameAsync(nom);
+            if (cliniques == null || !cliniques.Any())
+                throw new KeyNotFoundException($"Aucune clinique trouvée avec le nom '{nom}'.");
+
+            return cliniques.Where(c => c != null).Cast<Clinique>();
         }
 
         public async Task<IEnumerable<Clinique>> ListerCliniquesParAdresseAsync(string adresse)
         {
-            var clinique = await _repository.GetByAddressAsync(adresse);
-            return new List<Clinique> { clinique };
+            if (string.IsNullOrWhiteSpace(adresse))
+                throw new ArgumentException("L'adresse de la clinique est requise.", nameof(adresse));
+
+            var cliniques = await _repository.GetByAddressAsync(adresse);
+            if (cliniques == null || !cliniques.Any())
+                throw new KeyNotFoundException($"Aucune clinique trouvée avec l'adresse '{adresse}'.");
+
+            return cliniques.Where(c => c != null).Cast<Clinique>();
         }
     }
 }

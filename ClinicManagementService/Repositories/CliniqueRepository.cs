@@ -45,14 +45,14 @@ namespace ClinicManagementService.Repositories
             }
         }
 
-        public async Task<Clinique?> GetByNameAsync(string name) 
+        public async Task<List<Clinique?>> GetByNameAsync(string name) 
         { 
-            return await _context.Cliniques.FirstOrDefaultAsync(c => c.Nom == name); 
+            return await _context.Cliniques.Where(c => c.Nom.ToLower().Contains(name)).ToListAsync(); 
         }
 
-        public async Task<Clinique?> GetByAddressAsync(string address)
+        public async Task<List<Clinique?>> GetByAddressAsync(string address)
         {
-            return await _context.Cliniques.FirstOrDefaultAsync(c => c.Adresse == address);
+            return await _context.Cliniques.Where(c => c.Adresse.ToLower().Contains(address)).ToListAsync();
         }
     }
 }

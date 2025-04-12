@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClinicManagementService.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CliniqueController : ControllerBase
@@ -23,49 +23,102 @@ namespace ClinicManagementService.Controllers
         [Authorize(Roles = "SuperAdmin, ClinicAdmin")]
         public async Task<ActionResult<Clinique>> AjouterClinique(Clinique clinique)
         {
-            var result = await _cliniqueService.AjouterCliniqueAsync(clinique);
-            return CreatedAtAction(nameof(ObtenirClinique), new { id = result.Id }, result);
+            try
+            {
+                var result = await _cliniqueService.AjouterCliniqueAsync(clinique);
+                return CreatedAtAction(nameof(ObtenirClinique), new { id = result.Id }, result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur lors de l'ajout de la clinique : {ex.Message}");
+            }
         }
 
         [HttpPut("{id}")]
         [Authorize(Roles = "SuperAdmin, ClinicAdmin")]
         public async Task<IActionResult> ModifierClinique(Guid id, Clinique clinique)
         {
-            await _cliniqueService.ModifierCliniqueAsync(id, clinique);
-            return NoContent();
+            try
+            {
+                await _cliniqueService.ModifierCliniqueAsync(id, clinique);
+                return NoContent();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound($"Clinique avec l'ID {id} introuvable.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur lors de la modification de la clinique : {ex.Message}");
+            }
         }
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "SuperAdmin, ClinicAdmin")]
         public async Task<IActionResult> SupprimerClinique(Guid id)
         {
-            var result = await _cliniqueService.SupprimerCliniqueAsync(id);
-            return result ? NoContent() : NotFound();
+            try
+            {
+                var result = await _cliniqueService.SupprimerCliniqueAsync(id);
+                return result ? NoContent() : NotFound($"Clinique avec l'ID {id} introuvable.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur lors de la suppression de la clinique : {ex.Message}");
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Clinique>> ObtenirClinique(Guid id)
         {
-            var clinique = await _cliniqueService.ObtenirCliniqueParIdAsync(id);
-            return clinique == null ? NotFound() : Ok(clinique);
+            try
+            {
+                var clinique = await _cliniqueService.ObtenirCliniqueParIdAsync(id);
+                return clinique == null ? NotFound($"Clinique avec l'ID {id} introuvable.") : Ok(clinique);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur lors de la récupération de la clinique : {ex.Message}");
+            }
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Clinique>>> ListerCliniques()
         {
-            return Ok(await _cliniqueService.ListerCliniqueAsync());
+            try
+            {
+                return Ok(await _cliniqueService.ListerCliniqueAsync());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur lors de la récupération des cliniques : {ex.Message}");
+            }
         }
 
         [HttpGet("nom/{nom}")]
         public async Task<ActionResult<IEnumerable<Clinique>>> ListerCliniquesParNom(string nom)
         {
-            return Ok(await _cliniqueService.ListerCliniquesParNomAsync(nom));
+            try
+            {
+                return Ok(await _cliniqueService.ListerCliniquesParNomAsync(nom));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur lors de la récupération des cliniques par nom : {ex.Message}");
+            }
         }
 
         [HttpGet("adresse/{adresse}")]
         public async Task<ActionResult<IEnumerable<Clinique>>> ListerCliniquesParAdresse(string adresse)
         {
-            return Ok(await _cliniqueService.ListerCliniquesParAdresseAsync(adresse));
+            try
+            {
+                return Ok(await _cliniqueService.ListerCliniquesParAdresseAsync(adresse));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur lors de la récupération des cliniques par adresse : {ex.Message}");
+            }
         }
     }
 }

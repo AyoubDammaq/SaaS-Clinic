@@ -9,7 +9,7 @@ namespace ClinicManagementService.Repositories
         Task AddAsync(Clinique clinique);
         Task UpdateAsync(Clinique clinique);
         Task DeleteAsync(Guid id);
-        Task<Clinique?> GetByNameAsync(string name);
-        Task<Clinique?> GetByAddressAsync(string address);
+        Task<List<Clinique?>> GetByNameAsync(string name);
+        Task<List<Clinique?>> GetByAddressAsync(string address);
     }
 }
