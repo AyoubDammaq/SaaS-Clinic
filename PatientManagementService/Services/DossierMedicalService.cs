@@ -12,6 +12,4 @@ namespace PatientManagementService.Services
             _patientRepository = patientRepository;
         }
     }
-    {
-    }
 }
