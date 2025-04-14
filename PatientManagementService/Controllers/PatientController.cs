@@ -1,74 +1,128 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PatientManagementService.Data;
+using PatientManagementService.DTOs;
 using PatientManagementService.Models;
+using PatientManagementService.Services;
 
 namespace PatientManagementService.Controllers
 {
-    public class PatientController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PatientsController : ControllerBase
     {
-        [Route("api/[controller]")]
-        [ApiController]
-        public class PatientsController : ControllerBase
+        private readonly PatientDbContext _context;
+        private readonly IPatientService _patientService;
+
+        public PatientsController(PatientDbContext context, IPatientService patientService)
         {
-            private readonly PatientDbContext _context;
+            _context = context;
+            _patientService = patientService;
+        }
 
-            public PatientsController(PatientDbContext context)
+        // GET: api/Patients
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Patient>>> GetAllPatients()
+        {
+            try
             {
-                _context = context;
+                var patients = await _patientService.GetAllPatientsAsync();
+                return Ok(patients);
             }
-
-            // GET: api/patients
-            [HttpGet]
-            public async Task<ActionResult<IEnumerable<Patient>>> GetPatients()
+            catch (Exception ex)
             {
-                return await _context.Patients.ToListAsync();
+                return StatusCode(500, $"Erreur interne du serveur : {ex.Message}");
             }
+        }
 
-            // GET: api/patients/{id}
-            [HttpGet("{id}")]
-            public async Task<ActionResult<Patient>> GetPatient(Guid id)
+        // GET: api/Patients/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Patient>> GetPatientById(Guid id)
+        {
+            try
             {
-                var patient = await _context.Patients.FindAsync(id);
+                var patient = await _patientService.GetPatientByIdAsync(id);
                 if (patient == null)
-                    return NotFound();
+                    return NotFound("Patient non trouvé.");
 
-                return patient;
+                return Ok(patient);
             }
-
-            // POST: api/patients
-            [HttpPost]
-            public async Task<ActionResult<Patient>> CreatePatient(Patient patient)
+            catch (Exception ex)
             {
-                _context.Patients.Add(patient);
-                await _context.SaveChangesAsync();
-                return CreatedAtAction(nameof(GetPatient), new { id = patient.Id }, patient);
+                return StatusCode(500, $"Erreur interne du serveur : {ex.Message}");
             }
+        }
 
-            // PUT: api/patients/{id}
-            [HttpPut("{id}")]
-            public async Task<IActionResult> UpdatePatient(Guid id, Patient patient)
+        // POST: api/Patients
+        [HttpPost]
+        public async Task<ActionResult> AddPatient([FromBody] PatientDTO patientDto)
+        {
+            try
             {
-                if (id != patient.Id)
-                    return BadRequest();
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-                _context.Entry(patient).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                await _patientService.AddPatientAsync(patientDto);
+                return CreatedAtAction(nameof(GetPatientById), new { id = patientDto.Id }, patientDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur interne du serveur : {ex.Message}");
+            }
+        }
 
+        // PUT: api/Patients/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdatePatient(Guid id, [FromBody] PatientDTO patientDto)
+        {
+            try
+            {
+                if (id != patientDto.Id)
+                    return BadRequest("L'ID fourni ne correspond pas à celui du patient.");
+
+                var existingPatient = await _patientService.GetPatientByIdAsync(id);
+                if (existingPatient == null)
+                    return NotFound("Patient non trouvé.");
+
+                await _patientService.UpdatePatientAsync(patientDto);
                 return NoContent();
             }
-
-            // DELETE: api/patients/{id}
-            [HttpDelete("{id}")]
-            public async Task<IActionResult> DeletePatient(Guid id)
+            catch (Exception ex)
             {
-                var patient = await _context.Patients.FindAsync(id);
-                if (patient == null)
-                    return NotFound();
+                return StatusCode(500, $"Erreur interne du serveur : {ex.Message}");
+            }
+        }
 
-                _context.Patients.Remove(patient);
-                await _context.SaveChangesAsync();
+        // DELETE: api/Patients/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeletePatient(Guid id)
+        {
+            try
+            {
+                var existingPatient = await _patientService.GetPatientByIdAsync(id);
+                if (existingPatient == null)
+                    return NotFound("Patient non trouvé.");
+
+                await _patientService.DeletePatientAsync(id);
                 return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur interne du serveur : {ex.Message}");
+            }
+        }
+
+        // GET: api/Patients/search?name=John&lastname=Doe
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Patient>>> SearchPatients([FromQuery] string? name, [FromQuery] string? lastname)
+        {
+            try
+            {
+                var patients = await _patientService.GetPatientsByNameAsync(name, lastname);
+                return Ok(patients);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur interne du serveur : {ex.Message}");
             }
         }
     }

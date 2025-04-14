@@ -14,10 +14,6 @@ namespace PatientManagementService.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Patient>()
-                .HasKey(p => p.Id);
-            modelBuilder.Entity<DossierMedical>()
-                .HasKey(dm => dm.Id);
-            modelBuilder.Entity<Patient>()
                 .HasOne(p => p.DossierMedical)
                 .WithOne(dm => dm.Patient)
                 .HasForeignKey<DossierMedical>(dm => dm.PatientId);

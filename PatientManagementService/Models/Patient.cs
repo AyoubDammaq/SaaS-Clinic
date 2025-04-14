@@ -27,7 +27,7 @@ namespace PatientManagementService.Models
 
         public string Email { get; set; }
 
-        public string DossierMedicalId { get; set; } 
+        public Guid? DossierMedicalId { get; set; } 
 
         public DossierMedical DossierMedical { get; set; }
     }

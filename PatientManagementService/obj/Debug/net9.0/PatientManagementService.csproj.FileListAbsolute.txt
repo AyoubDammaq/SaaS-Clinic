@@ -162,4 +162,7 @@ C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\obj\Debug\net9.0\refi
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\obj\Debug\net9.0\PatientManagementService.pdb
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\obj\Debug\net9.0\PatientManagementService.genruntimeconfig.cache
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\obj\Debug\net9.0\ref\PatientManagementService.dll
+C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

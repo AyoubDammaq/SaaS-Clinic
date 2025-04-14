@@ -19,8 +19,7 @@ namespace PatientManagementService.Models
         public string Observations { get; set; }
         public string AutresInformations { get; set; }
         public DateTime DateCreation { get; set; }
-        public DateTime DateModification { get; set; }
-        public string PatientId { get; set; } // Foreign key to Patient
+        public Guid PatientId { get; set; } // Foreign key to Patient
         public Patient Patient { get; set; } // Navigation property to Patient
 
     }
