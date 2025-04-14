@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PatientManagementService.Data;
+using PatientManagementService.Repositories;
+using PatientManagementService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,11 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<PatientDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("PatientDatabase")));
+
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddScoped<IDossierMedicalRepository, DossierMedicalRepository>();
+builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<IDossierMedicalService, DossierMedicalService>();
 
 var app = builder.Build();
 

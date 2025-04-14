@@ -19,12 +19,16 @@ namespace PatientManagementService.Models
         public DateTime DateNaissance { get; set; }
 
         [Required]
+        public string Sexe { get; set; } 
+
         public string Adresse { get; set; }
 
         public string NumeroTelephone { get; set; }
 
         public string Email { get; set; }
 
-        public string DossierMedicalId { get; set; }  // Association avec le microservice Dossier Médical
+        public string DossierMedicalId { get; set; } 
+
+        public DossierMedical DossierMedical { get; set; }
     }
 }
