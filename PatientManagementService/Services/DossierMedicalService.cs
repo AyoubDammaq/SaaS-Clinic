@@ -1,4 +1,6 @@
-﻿using PatientManagementService.Repositories;
+﻿using PatientManagementService.DTOs;
+using PatientManagementService.Models;
+using PatientManagementService.Repositories;
 
 namespace PatientManagementService.Services
 {
@@ -10,6 +12,56 @@ namespace PatientManagementService.Services
         {
             _dossierMedicalRepository = dossierMedicalRepository;
             _patientRepository = patientRepository;
+        }
+
+        public async Task<DossierMedical> GetDossierMedicalByPatientIdAsync(Guid patientId)
+        {
+            return await _dossierMedicalRepository.GetDossierMedicalByPatientIdAsync(patientId);
+        }
+
+        public async Task AddDossierMedicalAsync(DossierMedicalDTO dossierMedical)
+        {
+            var patient = await _patientRepository.GetPatientByIdAsync(dossierMedical.PatientId);
+            if (patient == null)
+            {
+                throw new Exception("Patient not found");
+            }
+            await _dossierMedicalRepository.AddDossierMedicalAsync(dossierMedical);
+        }
+
+        public async Task UpdateDossierMedicalAsync(DossierMedicalDTO dossierMedical)
+        {
+            var patient = await _patientRepository.GetPatientByIdAsync(dossierMedical.PatientId);
+            if (patient == null)
+            {
+                throw new Exception("Patient not found");
+            }
+            await _dossierMedicalRepository.UpdateDossierMedicalAsync(dossierMedical);
+        }
+
+        public async Task DeleteDossierMedicalAsync(Guid dossierMedicalId)
+        {
+            var dossierMedical = await _dossierMedicalRepository.GetDossierMedicalByIdAsync(dossierMedicalId);
+            if (dossierMedical == null)
+            {
+                throw new Exception("Dossier médical not found");
+            }
+            await _dossierMedicalRepository.DeleteDossierMedicalAsync(dossierMedicalId);
+        }
+
+        public async Task<IEnumerable<DossierMedical>> GetAllDossiersMedicalsAsync()
+        {
+            return await _dossierMedicalRepository.GetAllDossiersMedicalsAsync();
+        }
+
+        public async Task<DossierMedical> GetDossierMedicalByIdAsync(Guid Id)
+        {
+            var dossierMedical = await _dossierMedicalRepository.GetDossierMedicalByIdAsync(Id);
+            if (dossierMedical == null)
+            {
+                throw new Exception("Dossier médical not found");
+            }
+            return dossierMedical;
         }
     }
 }

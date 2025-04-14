@@ -14,10 +14,7 @@ namespace PatientManagementService.Models
         public string MedicamentsActuels { get; set; }
         public string AntécédentsFamiliaux { get; set; }
         public string AntécédentsPersonnels { get; set; }
-        public string ExamensComplementaires { get; set; }
-        public string TraitementsEnCours { get; set; }
-        public string Observations { get; set; }
-        public string AutresInformations { get; set; }
+        public string GroupeSanguin { get; set; }
         public DateTime DateCreation { get; set; }
         public Guid PatientId { get; set; } // Foreign key to Patient
         public Patient Patient { get; set; } // Navigation property to Patient

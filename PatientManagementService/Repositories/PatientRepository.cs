@@ -15,12 +15,14 @@ namespace PatientManagementService.Repositories
 
         public async Task<IEnumerable<Patient>> GetAllPatientsAsync()
         {
-            return await _context.Patients.ToListAsync();
+            return await _context.Patients.Include(p => p.DossierMedical).ToListAsync();
         }
 
         public async Task<Patient> GetPatientByIdAsync(Guid id)
         {
-            return await _context.Patients.FindAsync(id);
+            return await _context.Patients
+                .Include(p => p.DossierMedical)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task AddPatientAsync(PatientDTO patientDto)
