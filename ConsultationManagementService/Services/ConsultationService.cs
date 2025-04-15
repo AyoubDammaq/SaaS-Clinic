@@ -62,6 +62,24 @@ namespace ConsultationManagementService.Services
             return await _consultationRepository.DeleteConsultationAsync(id);
         }
 
+        public async Task<IEnumerable<Consultation>> GetConsultationsByPatientIdAsync(Guid patientId)
+        {
+            if (patientId == Guid.Empty)
+            {
+                throw new ArgumentException("L'identifiant du patient ne peut pas être vide.", nameof(patientId));
+            }
+            return await _consultationRepository.GetConsultationsByPatientIdAsync(patientId);
+        }
+
+        public async Task<IEnumerable<Consultation>> GetConsultationsByDoctorIdAsync(Guid doctorId)
+        {
+            if (doctorId == Guid.Empty)
+            {
+                throw new ArgumentException("L'identifiant du médecin ne peut pas être vide.", nameof(doctorId));
+            }
+            return await _consultationRepository.GetConsultationsByDoctorIdAsync(doctorId);
+        }
+
         public async Task<DocumentMedical?> GetDocumentMedicalByIdAsync(Guid id)
         {
             if (id == Guid.Empty)

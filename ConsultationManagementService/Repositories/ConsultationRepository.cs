@@ -83,6 +83,22 @@ namespace ConsultationManagementService.Repositories
             return true;
         }
 
+        public async Task<IEnumerable<Consultation>> GetConsultationsByPatientIdAsync(Guid patientId)
+        {
+            return await _context.Consultations
+                .Include(c => c.Documents)
+                .Where(c => c.PatientId == patientId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Consultation>> GetConsultationsByDoctorIdAsync(Guid doctorId)
+        {
+            return await _context.Consultations
+                .Include(c => c.Documents)
+                .Where(c => c.MedecinId == doctorId)
+                .ToListAsync();
+        }
+
         public async Task<DocumentMedical?> GetDocumentMedicalByIdAsync(Guid id)
         {
             return await _context.DocumentsMedicaux

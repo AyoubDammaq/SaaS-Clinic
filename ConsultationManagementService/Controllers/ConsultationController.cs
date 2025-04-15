@@ -155,6 +155,66 @@ namespace ConsultationManagementService.Controllers
             }
         }
 
+        // GET: api/Consultation/Patient/{patientId}
+        [HttpGet("Patient/{patientId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Consultation>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<Consultation>>> GetConsultationsByPatientIdAsync(Guid patientId)
+        {
+            try
+            {
+                if (patientId == Guid.Empty)
+                {
+                    return BadRequest("Invalid patient ID");
+                }
+
+                var consultations = await _consultationService.GetConsultationsByPatientIdAsync(patientId);
+                if (!consultations.Any())
+                {
+                    return NotFound($"No consultations found for patient with ID {patientId}");
+                }
+
+                return Ok(consultations);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        // GET: api/Consultation/Doctor/{doctorId}
+        [HttpGet("Doctor/{doctorId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Consultation>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<Consultation>>> GetConsultationsByDoctorIdAsync(Guid doctorId)
+        {
+            try
+            {
+                if (doctorId == Guid.Empty)
+                {
+                    return BadRequest("Invalid doctor ID");
+                }
+
+                var consultations = await _consultationService.GetConsultationsByDoctorIdAsync(doctorId);
+                if (!consultations.Any())
+                {
+                    return NotFound($"No consultations found for doctor with ID {doctorId}");
+                }
+
+                return Ok(consultations);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        
+      
         // GET: api/Consultation/Document/{id}
         [HttpGet("Document/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DocumentMedical))]
