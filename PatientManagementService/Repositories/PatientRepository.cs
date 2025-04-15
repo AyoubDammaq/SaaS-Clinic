@@ -15,7 +15,10 @@ namespace PatientManagementService.Repositories
 
         public async Task<IEnumerable<Patient>> GetAllPatientsAsync()
         {
-            return await _context.Patients.Include(p => p.DossierMedical).ToListAsync();
+            return await _context.Patients
+                .Include(p => p.DossierMedical)
+                .Include(p => p.DossierMedical.Documents)
+                .ToListAsync();
         }
 
         public async Task<Patient> GetPatientByIdAsync(Guid id)

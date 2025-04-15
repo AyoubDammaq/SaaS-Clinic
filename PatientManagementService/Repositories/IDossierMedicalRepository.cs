@@ -11,5 +11,6 @@ namespace PatientManagementService.Repositories
         Task DeleteDossierMedicalAsync(Guid dossierMedicalId);
         Task<IEnumerable<DossierMedical>> GetAllDossiersMedicalsAsync();
         Task<DossierMedical> GetDossierMedicalByIdAsync(Guid Id);
+        Task AttacherDocumentAsync(Guid dossierMedicalId, Document document);
     }
 }

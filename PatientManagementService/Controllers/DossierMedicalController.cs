@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PatientManagementService.DTOs;
 using PatientManagementService.Services;
+using PatientManagementService.Models;
 
 namespace PatientManagementService.Controllers
 {
@@ -42,6 +43,10 @@ namespace PatientManagementService.Controllers
                 {
                     return BadRequest("Invalid dossier médical data.");
                 }
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                dossierMedical.Id = Guid.NewGuid();
                 await _dossierMedicalService.AddDossierMedicalAsync(dossierMedical);
                 return CreatedAtAction(nameof(GetDossierMedicalByPatientId), new { patientId = dossierMedical.PatientId }, dossierMedical);
             }
@@ -60,6 +65,9 @@ namespace PatientManagementService.Controllers
                 {
                     return BadRequest("Invalid dossier médical data.");
                 }
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
                 await _dossierMedicalService.UpdateDossierMedicalAsync(dossierMedical);
                 return NoContent();
             }
@@ -95,6 +103,27 @@ namespace PatientManagementService.Controllers
             {
                 var dossiersMedicals = await _dossierMedicalService.GetAllDossiersMedicalsAsync();
                 return Ok(dossiersMedicals);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpPost("dossier-medical/{dossierId}/attacher-document")]
+        public async Task<IActionResult> AttacherDocument(Guid dossierId, [FromBody] Document document)
+        {
+            try
+            {
+                var dossierMedical = await _dossierMedicalService.GetDossierMedicalByIdAsync(dossierId);
+                if (dossierMedical == null)
+                {
+                    return NotFound("Dossier médical not found.");
+                }
+
+                document.Id = Guid.NewGuid();
+                await _dossierMedicalService.AttacherDocumentAsync(dossierId, document);
+                return NoContent();
             }
             catch (Exception ex)
             {

@@ -2,7 +2,7 @@
 {
     public class DossierMedicalDTO
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public Guid PatientId { get; set; }
         public string Allergies { get; set; }
         public string MaladiesChroniques { get; set; }

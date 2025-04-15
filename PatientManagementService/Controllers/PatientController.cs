@@ -3,6 +3,7 @@ using PatientManagementService.Data;
 using PatientManagementService.DTOs;
 using PatientManagementService.Models;
 using PatientManagementService.Services;
+using System.Reflection.Metadata;
 
 namespace PatientManagementService.Controllers
 {
@@ -61,6 +62,7 @@ namespace PatientManagementService.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
+                patientDto.Id = Guid.NewGuid();
                 await _patientService.AddPatientAsync(patientDto);
                 return CreatedAtAction(nameof(GetPatientById), new { id = patientDto.Id }, patientDto);
             }

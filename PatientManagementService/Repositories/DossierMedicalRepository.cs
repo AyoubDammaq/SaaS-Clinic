@@ -16,6 +16,7 @@ namespace PatientManagementService.Repositories
         {
             return await _context.DossiersMedicaux
                 .Include(dm => dm.Patient)
+                .Include(dm => dm.Documents)
                 .FirstOrDefaultAsync(dm => dm.PatientId == patientId);
         }
         public async Task AddDossierMedicalAsync(DossierMedicalDTO dossierMedicalDTO)
@@ -63,12 +64,26 @@ namespace PatientManagementService.Repositories
         }
         public async Task<IEnumerable<DossierMedical>> GetAllDossiersMedicalsAsync()
         {
-            return await _context.DossiersMedicaux.Include(dm => dm.Patient).ToListAsync();
+            return await _context.DossiersMedicaux
+                .Include(dm => dm.Patient)
+                .Include(dm => dm.Documents)
+                .ToListAsync();
         }
 
         public async Task<DossierMedical> GetDossierMedicalByIdAsync(Guid Id)
         {
             return await _context.DossiersMedicaux.FindAsync(Id);
+        }
+
+        public async Task AttacherDocumentAsync(Guid dossierMedicalId, Document document)
+        {
+            var dossierMedical = await _context.DossiersMedicaux.Include(dm => dm.Documents).FirstOrDefaultAsync(dm => dm.Id == dossierMedicalId);
+            if (dossierMedical != null)
+            {
+                document.DossierMedicalId = dossierMedicalId;
+                _context.Documents.Add(document);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

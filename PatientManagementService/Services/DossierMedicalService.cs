@@ -26,6 +26,7 @@ namespace PatientManagementService.Services
             {
                 throw new Exception("Patient not found");
             }
+            patient.DossierMedicalId = dossierMedical.Id;
             await _dossierMedicalRepository.AddDossierMedicalAsync(dossierMedical);
         }
 
@@ -62,6 +63,16 @@ namespace PatientManagementService.Services
                 throw new Exception("Dossier médical not found");
             }
             return dossierMedical;
+        }
+
+        public async Task AttacherDocumentAsync(Guid dossierMedicalId, Document document)
+        {
+            var dossierMedical = await _dossierMedicalRepository.GetDossierMedicalByIdAsync(dossierMedicalId);
+            if (dossierMedical == null)
+            {
+                throw new InvalidOperationException("Dossier médical not found.");
+            }
+            await _dossierMedicalRepository.AttacherDocumentAsync(dossierMedicalId, document);
         }
     }
 }
