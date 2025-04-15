@@ -19,5 +19,7 @@ namespace ConsultationManagementService.Models
         public string FichierURL { get; set; } // Lien vers le fichier stocké
 
         public DateTime DateAjout { get; set; } = DateTime.Now;
+
+        public Consultation Consultation { get; set; } 
     }
 }

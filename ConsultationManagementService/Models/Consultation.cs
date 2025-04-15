@@ -10,10 +10,10 @@ namespace ConsultationManagementService.Models
         public Guid Id { get; set; }
 
         [Required]
-        public Guid PatientId { get; set; }  // Lien avec le microservice Gestion des Patients
+        public Guid PatientId { get; set; }  
 
         [Required]
-        public Guid MedecinId { get; set; }  // Lien avec le microservice Gestion des Médecins
+        public Guid MedecinId { get; set; }  
 
         [Required]
         public DateTime DateConsultation { get; set; }
