@@ -18,11 +18,15 @@ namespace ConsultationManagementService.Models
         [Required]
         public DateTime DateConsultation { get; set; }
 
-        public string Diagnostic { get; set; }
+        [Required]
+        [StringLength(500)] // Ajout d'une limite pour le diagnostic comme dans le DTO
+        public string Diagnostic { get; set; } = string.Empty;
 
-        public string Notes { get; set; }
+        [Required]
+        [StringLength(1000)] // Ajout d'une limite pour les notes comme dans le DTO 
+        public string Notes { get; set; } = string.Empty;
 
         // Liste des documents médicaux liés à cette consultation
-        public List<DocumentMedical> Documents { get; set; } = new List<DocumentMedical>();
+        public virtual ICollection<DocumentMedical> Documents { get; set; } = new List<DocumentMedical>();
     }
 }

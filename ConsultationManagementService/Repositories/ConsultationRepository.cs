@@ -11,7 +11,7 @@ namespace ConsultationManagementService.Repositories
 
         public ConsultationRepository(ConsultationDbContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public async Task<Consultation?> GetConsultationByIdAsync(Guid id)
@@ -30,9 +30,12 @@ namespace ConsultationManagementService.Repositories
 
         public async Task CreateConsultationAsync(ConsultationDTO consultationDto)
         {
+            if (consultationDto == null)
+                throw new ArgumentNullException(nameof(consultationDto));
+
             var consultation = new Consultation
             {
-                Id = Guid.NewGuid(),
+                Id = consultationDto.Id,
                 DateConsultation = consultationDto.DateConsultation,
                 PatientId = consultationDto.PatientId,
                 MedecinId = consultationDto.MedecinId,
@@ -46,27 +49,35 @@ namespace ConsultationManagementService.Repositories
 
         public async Task UpdateConsultationAsync(ConsultationDTO consultationDto)
         {
+            if (consultationDto == null)
+                throw new ArgumentNullException(nameof(consultationDto));
+
             var consultation = await _context.Consultations
                 .Include(c => c.Documents)
                 .FirstOrDefaultAsync(c => c.Id == consultationDto.Id);
-            if (consultation != null)
-            {
-                consultation.DateConsultation = consultationDto.DateConsultation;
-                consultation.PatientId = consultationDto.PatientId;
-                consultation.MedecinId = consultationDto.MedecinId;
-                consultation.Diagnostic = consultationDto.Diagnostic;
-                consultation.Notes = consultationDto.Notes;
 
-                _context.Consultations.Update(consultation);
-                await _context.SaveChangesAsync();
-            }
+            if (consultation == null)
+                throw new InvalidOperationException($"Consultation with ID {consultationDto.Id} not found");
+
+            consultation.DateConsultation = consultationDto.DateConsultation;
+            consultation.PatientId = consultationDto.PatientId;
+            consultation.MedecinId = consultationDto.MedecinId;
+            consultation.Diagnostic = consultationDto.Diagnostic;
+            consultation.Notes = consultationDto.Notes;
+
+            _context.Consultations.Update(consultation);
+            await _context.SaveChangesAsync();
         }  
 
         public async Task<bool> DeleteConsultationAsync(Guid id)
         {
-            var consultation = await _context.Consultations.FindAsync(id);
+            var consultation = await _context.Consultations
+                .Include(c => c.Documents)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
             if (consultation == null)
                 return false;
+
             _context.Consultations.Remove(consultation);
             await _context.SaveChangesAsync();
             return true;
@@ -74,19 +85,30 @@ namespace ConsultationManagementService.Repositories
 
         public async Task<DocumentMedical?> GetDocumentMedicalByIdAsync(Guid id)
         {
-            return await _context.DocumentsMedicaux.FindAsync(id);
-            
+            return await _context.DocumentsMedicaux
+                .Include(d => d.Consultation)
+                .FirstOrDefaultAsync(d => d.Id == id);
         }
 
         public async Task UploadDocumentMedicalAsync(DocumentMedicalDTO documentMedicalDto)
         {
+            if (documentMedicalDto == null)
+                throw new ArgumentNullException(nameof(documentMedicalDto));
+
+            // Vérifier si la consultation existe
+            var consultationExists = await _context.Consultations
+                .AnyAsync(c => c.Id == documentMedicalDto.ConsultationId);
+
+            if (!consultationExists)
+                throw new InvalidOperationException($"Consultation with ID {documentMedicalDto.ConsultationId} not found");
+
             var documentMedical = new DocumentMedical
             {
-                Id = Guid.NewGuid(),
+                Id = documentMedicalDto.Id,
                 ConsultationId = documentMedicalDto.ConsultationId,
                 Type = documentMedicalDto.Type,
                 FichierURL = documentMedicalDto.FichierURL,
-                DateAjout = documentMedicalDto.DateAjout
+                DateAjout = DateTime.Now
             };
 
             await _context.DocumentsMedicaux.AddAsync(documentMedical);
@@ -95,9 +117,12 @@ namespace ConsultationManagementService.Repositories
 
         public async Task<bool> DeleteDocumentMedicalAsync(Guid id)
         {
-            var document = await _context.DocumentsMedicaux.FindAsync(id);
+            var document = await _context.DocumentsMedicaux
+                .FirstOrDefaultAsync(d => d.Id == id);
+
             if (document == null)
                 return false;
+
             _context.DocumentsMedicaux.Remove(document);
             await _context.SaveChangesAsync();
             return true;

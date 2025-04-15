@@ -1,6 +1,4 @@
-﻿using ConsultationManagementService.Models;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ConsultationManagementService.DTOs
 {
@@ -9,15 +7,16 @@ namespace ConsultationManagementService.DTOs
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
-        public Guid ConsultationId { get; set; } 
+        public Guid ConsultationId { get; set; }
 
         [Required]
-        public string Type { get; set; }  
+        [StringLength(50)]
+        public string Type { get; set; } = string.Empty;  // Ex: "Ordonnance", "Radio", "Analyse", etc.
 
         [Required]
-        public string FichierURL { get; set; } 
+        [Url]
+        public string FichierURL { get; set; } = string.Empty;
 
         public DateTime DateAjout { get; set; } = DateTime.Now;
-
     }
 }

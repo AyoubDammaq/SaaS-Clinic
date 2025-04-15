@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\models\\consultation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|solutionrelative:models\\consultation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\controllers\\consultationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|solutionrelative:controllers\\consultationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\services\\consultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|solutionrelative:services\\consultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,20 +23,8 @@
       "RelativeMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|solutionrelative:repositories\\consultationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\controllers\\consultationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|solutionrelative:controllers\\consultationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\data\\consultationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|solutionrelative:data\\consultationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\services\\consultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|solutionrelative:services\\consultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\models\\consultation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|solutionrelative:models\\consultation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{712A7957-20C9-4ECD-8941-B230EFD22900}|ConsultationManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\repositories\\iconsultationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -58,7 +58,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -70,46 +70,44 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ConsultationService.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Services\\ConsultationService.cs",
-              "RelativeDocumentMoniker": "Services\\ConsultationService.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Services\\ConsultationService.cs",
-              "RelativeToolTip": "Services\\ConsultationService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAowBIAAAAIAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "Consultation.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Models\\Consultation.cs",
+              "RelativeDocumentMoniker": "Models\\Consultation.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Models\\Consultation.cs",
+              "RelativeToolTip": "Models\\Consultation.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T14:25:00.411Z",
+              "WhenOpened": "2025-03-29T02:11:50.667Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "ConsultationService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Services\\ConsultationService.cs",
+              "RelativeDocumentMoniker": "Services\\ConsultationService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Services\\ConsultationService.cs",
+              "RelativeToolTip": "Services\\ConsultationService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAwwBwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T14:25:00.411Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "ConsultationController.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Controllers\\ConsultationController.cs",
               "RelativeDocumentMoniker": "Controllers\\ConsultationController.cs",
               "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Controllers\\ConsultationController.cs",
               "RelativeToolTip": "Controllers\\ConsultationController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABsAAABWAAAAAAAAAA==",
+              "ViewState": "AgIAACYAAAAAAAAAAAAwwEAAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T02:13:52.635Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-29T02:13:52.635Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ConsultationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Data\\ConsultationDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\ConsultationDbContext.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Data\\ConsultationDbContext.cs",
-              "RelativeToolTip": "Data\\ConsultationDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T02:13:11.685Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -117,12 +115,11 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T02:16:22.617Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-29T02:16:22.617Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "ConsultationRepository.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Repositories\\ConsultationRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\ConsultationRepository.cs",
@@ -130,21 +127,19 @@
               "RelativeToolTip": "Repositories\\ConsultationRepository.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAowBUAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T13:46:56.238Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-15T13:46:56.238Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "Consultation.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Models\\Consultation.cs",
-              "RelativeDocumentMoniker": "Models\\Consultation.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Models\\Consultation.cs",
-              "RelativeToolTip": "Models\\Consultation.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAwBkAAAA/AAAAAAAAAA==",
+              "Title": "ConsultationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Data\\ConsultationDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ConsultationDbContext.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Data\\ConsultationDbContext.cs",
+              "RelativeToolTip": "Data\\ConsultationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T02:11:50.667Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-29T02:13:11.685Z"
             },
             {
               "$type": "Document",
@@ -156,8 +151,7 @@
               "RelativeToolTip": "Repositories\\IConsultationRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T13:46:27.363Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-15T13:46:27.363Z"
             },
             {
               "$type": "Document",
@@ -169,8 +163,7 @@
               "RelativeToolTip": "DTOs\\DocumentMedicalDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwA4AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T13:55:34.026Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-15T13:55:34.026Z"
             },
             {
               "$type": "Document",
@@ -182,8 +175,7 @@
               "RelativeToolTip": "DTOs\\ConsultationDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T13:55:13.012Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-15T13:55:13.012Z"
             },
             {
               "$type": "Document",
@@ -195,8 +187,7 @@
               "RelativeToolTip": "Models\\DocumentMedical.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T02:12:21.054Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-29T02:12:21.054Z"
             },
             {
               "$type": "Document",
@@ -208,8 +199,7 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-29T02:17:07.102Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-29T02:17:07.102Z"
             },
             {
               "$type": "Document",
@@ -221,8 +211,7 @@
               "RelativeToolTip": "ConsultationManagementService.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAABaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-03-29T02:21:23.124Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-29T02:21:23.124Z"
             }
           ]
         }

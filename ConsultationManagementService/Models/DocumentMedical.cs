@@ -10,16 +10,21 @@ namespace ConsultationManagementService.Models
         public Guid Id { get; set; }
 
         [Required]
-        public Guid ConsultationId { get; set; } // Lien avec la Consultation
+        [ForeignKey("Consultation")]
+        public Guid ConsultationId { get; set; }
 
         [Required]
-        public string Type { get; set; }  // Ex: "Ordonnance", "Radio", "Analyse", etc.
+        [StringLength(50)]
+        public string Type { get; set; } = string.Empty;  // Ex: "Ordonnance", "Radio", "Analyse", etc.
 
         [Required]
-        public string FichierURL { get; set; } // Lien vers le fichier stocké
+        [Url] 
+        public string FichierURL { get; set; } = string.Empty;
 
+        [Required]
         public DateTime DateAjout { get; set; } = DateTime.Now;
 
-        public Consultation Consultation { get; set; } 
+        // Navigation property
+        public virtual Consultation? Consultation { get; set; }
     }
 }

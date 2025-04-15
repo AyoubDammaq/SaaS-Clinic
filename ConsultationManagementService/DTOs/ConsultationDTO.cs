@@ -15,9 +15,14 @@ namespace ConsultationManagementService.DTOs
         [Required]
         public DateTime DateConsultation { get; set; }
 
-        public string Diagnostic { get; set; }
+        [Required]
+        [StringLength(500)] // Ajout d'une limite raisonnable pour le diagnostic
+        public string Diagnostic { get; set; } = string.Empty;
 
-        public string Notes { get; set; }
+        [Required]
+        [StringLength(1000)] // Ajout d'une limite raisonnable pour les notes
+        public string Notes { get; set; } = string.Empty;
 
+        public ICollection<DocumentMedicalDTO> Documents { get; set; } = new List<DocumentMedicalDTO>();
     }
 }
