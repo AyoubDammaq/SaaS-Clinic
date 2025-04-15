@@ -2,6 +2,7 @@
 using ConsultationManagementService.Models;
 using ConsultationManagementService.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConsultationManagementService.Controllers
 {
@@ -62,6 +63,7 @@ namespace ConsultationManagementService.Controllers
         }
 
         // POST: api/Consultation
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -93,6 +95,7 @@ namespace ConsultationManagementService.Controllers
         }
 
         // PUT: api/Consultation
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -128,6 +131,7 @@ namespace ConsultationManagementService.Controllers
         }
 
         // DELETE: api/Consultation/{id}
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -244,6 +248,7 @@ namespace ConsultationManagementService.Controllers
         }
 
         // POST: api/Consultation/Document
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpPost("Document")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -275,6 +280,7 @@ namespace ConsultationManagementService.Controllers
         }
 
         // DELETE: api/Consultation/Document/{id}
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpDelete("Document/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
