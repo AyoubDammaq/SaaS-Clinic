@@ -3,36 +3,56 @@
   "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\rdvmanagementservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:rdvmanagementservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\rdvmanagementservice.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
-      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:rdvmanagementservice.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\controllers\\rendezvouscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:controllers\\rendezvouscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\models\\rendezvous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:models\\rendezvous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\models\\rdvstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:models\\rdvstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\repositories\\rendezvousrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:repositories\\rendezvousrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\dtos\\rendezvousdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:dtos\\rendezvousdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\data\\rendezvousdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:data\\rendezvousdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\controllers\\rendezvouscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:controllers\\rendezvouscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\models\\rdvstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:models\\rdvstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\models\\rendezvous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:models\\rendezvous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\services\\rendezvousservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:services\\rendezvousservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\services\\irendezvousservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:services\\irendezvousservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\rdvmanagementservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:rdvmanagementservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\rdvmanagementservice\\repositories\\irendezvousrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A88BB099-9702-46B8-B3EE-BEE5E7A9B456}|RDVManagementService.csproj|solutionrelative:repositories\\irendezvousrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,34 +62,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 6,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "RDVManagementService.http",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\RDVManagementService.http",
-              "RelativeDocumentMoniker": "RDVManagementService.http",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\RDVManagementService.http",
-              "RelativeToolTip": "RDVManagementService.http",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-03-29T01:58:52.465Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "RDVManagementService",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\RDVManagementService.csproj",
-              "RelativeDocumentMoniker": "RDVManagementService.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\RDVManagementService.csproj",
-              "RelativeToolTip": "RDVManagementService.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-03-29T01:57:27.476Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -80,41 +74,93 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
               "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\appsettings.json",
               "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-29T01:56:45.592Z",
+              "WhenOpened": "2025-04-16T11:08:33.633Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 3,
+              "Title": "RendezVousRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Repositories\\RendezVousRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\RendezVousRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Repositories\\RendezVousRepository.cs",
+              "RelativeToolTip": "Repositories\\RendezVousRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADcAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T09:07:45.483Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAB8AAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T01:56:05.225Z",
+              "WhenOpened": "2025-04-16T09:27:07.871Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
+              "Title": "RDVstatus.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Models\\RDVstatus.cs",
+              "RelativeDocumentMoniker": "Models\\RDVstatus.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Models\\RDVstatus.cs",
+              "RelativeToolTip": "Models\\RDVstatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T01:52:08.807Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "RendezVousController.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Controllers\\RendezVousController.cs",
               "RelativeDocumentMoniker": "Controllers\\RendezVousController.cs",
               "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Controllers\\RendezVousController.cs",
               "RelativeToolTip": "Controllers\\RendezVousController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8BAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T01:54:24.432Z",
+              "WhenOpened": "2025-04-16T09:06:33.619Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RendezVousDTO.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\DTOs\\RendezVousDTO.cs",
+              "RelativeDocumentMoniker": "DTOs\\RendezVousDTO.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\DTOs\\RendezVousDTO.cs",
+              "RelativeToolTip": "DTOs\\RendezVousDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T09:06:38.132Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "RendezVous.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Models\\RendezVous.cs",
+              "RelativeDocumentMoniker": "Models\\RendezVous.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Models\\RendezVous.cs",
+              "RelativeToolTip": "Models\\RendezVous.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T01:51:00.301Z",
               "EditorCaption": ""
             },
             {
@@ -132,28 +178,67 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "RDVstatus.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Models\\RDVstatus.cs",
-              "RelativeDocumentMoniker": "Models\\RDVstatus.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Models\\RDVstatus.cs",
-              "RelativeToolTip": "Models\\RDVstatus.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "DocumentIndex": 10,
+              "Title": "IRendezVousService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Services\\IRendezVousService.cs",
+              "RelativeDocumentMoniker": "Services\\IRendezVousService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Services\\IRendezVousService.cs",
+              "RelativeToolTip": "Services\\IRendezVousService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T01:52:08.807Z",
+              "WhenOpened": "2025-04-16T09:20:38.685Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "RendezVous.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Models\\RendezVous.cs",
-              "RelativeDocumentMoniker": "Models\\RendezVous.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Models\\RendezVous.cs",
-              "RelativeToolTip": "Models\\RendezVous.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAQwBoAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "RendezVousService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Services\\RendezVousService.cs",
+              "RelativeDocumentMoniker": "Services\\RendezVousService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Services\\RendezVousService.cs",
+              "RelativeToolTip": "Services\\RendezVousService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T01:51:00.301Z",
+              "WhenOpened": "2025-04-16T09:20:45.87Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": ".gitignore",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\.gitignore",
+              "RelativeDocumentMoniker": ".gitignore",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\.gitignore",
+              "RelativeToolTip": ".gitignore",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-04-16T10:15:38.045Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "RDVManagementService",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\RDVManagementService.csproj",
+              "RelativeDocumentMoniker": "RDVManagementService.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\RDVManagementService.csproj",
+              "RelativeToolTip": "RDVManagementService.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-16T09:28:12.98Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "IRendezVousRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Repositories\\IRendezVousRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\IRendezVousRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\Repositories\\IRendezVousRepository.cs",
+              "RelativeToolTip": "Repositories\\IRendezVousRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T09:07:28.388Z",
               "EditorCaption": ""
             }
           ]

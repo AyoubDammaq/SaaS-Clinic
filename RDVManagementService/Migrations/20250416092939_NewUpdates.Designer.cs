@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RDVManagementService.Data;
 
@@ -11,9 +12,11 @@ using RDVManagementService.Data;
 namespace RDVManagementService.Migrations
 {
     [DbContext(typeof(RendezVousDbContext))]
-    partial class RendezVousDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250416092939_NewUpdates")]
+    partial class NewUpdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

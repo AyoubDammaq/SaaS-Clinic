@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RDVManagementService.Models;
-using System.Collections.Generic;
 
 namespace RDVManagementService.Data
 {
@@ -8,6 +7,19 @@ namespace RDVManagementService.Data
     {
         public RendezVousDbContext(DbContextOptions<RendezVousDbContext> options) : base(options) { }
 
-        public DbSet<RendezVous> RendezVous { get; set; }
+        public DbSet<RendezVous> RendezVous { get; set; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<RendezVous>()
+                .Property(r => r.DateCreation)
+                .HasDefaultValueSql("GETDATE()");
+
+            modelBuilder.Entity<RendezVous>()
+                .Property(r => r.Statut)
+                .HasConversion<string>();
+        }
     }
 }

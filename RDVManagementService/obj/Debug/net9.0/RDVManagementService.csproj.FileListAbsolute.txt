@@ -162,3 +162,7 @@ C:\Users\USER\Desktop\SaaS-Clinic\RDVManagementService\bin\Debug\net9.0\ru\Micro
 C:\Users\USER\Desktop\SaaS-Clinic\RDVManagementService\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\USER\Desktop\SaaS-Clinic\RDVManagementService\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\USER\Desktop\SaaS-Clinic\RDVManagementService\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\USER\Desktop\SaaS-Clinic\RDVManagementService\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\USER\Desktop\SaaS-Clinic\RDVManagementService\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\USER\Desktop\SaaS-Clinic\RDVManagementService\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\USER\Desktop\SaaS-Clinic\RDVManagementService\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
