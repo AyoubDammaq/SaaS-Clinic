@@ -166,3 +166,4 @@ C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\bin\Debug\net9.0\Swas
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

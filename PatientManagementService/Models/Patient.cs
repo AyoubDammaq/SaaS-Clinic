@@ -10,25 +10,25 @@ namespace PatientManagementService.Models
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
-        public string Nom { get; set; }
+        public string Nom { get; set; } = string.Empty;
 
         [Required]
-        public string Prenom { get; set; }
+        public string Prenom { get; set; } = string.Empty;
 
         [Required]
         public DateTime DateNaissance { get; set; }
 
         [Required]
-        public string Sexe { get; set; } 
+        public string Sexe { get; set; } = string.Empty;
 
-        public string Adresse { get; set; }
+        public string Adresse { get; set; } = string.Empty;
 
-        public string NumeroTelephone { get; set; }
+        public string NumeroTelephone { get; set; } = string.Empty;
 
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         public Guid? DossierMedicalId { get; set; } 
 
-        public DossierMedical DossierMedical { get; set; }
+        public DossierMedical? DossierMedical { get; set; }
     }
 }

@@ -10,6 +10,6 @@ namespace PatientManagementService.Services
         Task AddPatientAsync(PatientDTO patient);
         Task UpdatePatientAsync(PatientDTO patient);
         Task DeletePatientAsync(Guid id);
-        Task<IEnumerable<Patient>> GetPatientsByNameAsync(string name, string lastname);
+        Task<IEnumerable<Patient>> GetPatientsByNameAsync(string? name, string? lastname);
     }
 }

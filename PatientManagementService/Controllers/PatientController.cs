@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using PatientManagementService.Data;
 using PatientManagementService.DTOs;
 using PatientManagementService.Models;
 using PatientManagementService.Services;

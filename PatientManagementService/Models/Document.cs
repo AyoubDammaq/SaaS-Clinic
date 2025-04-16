@@ -11,13 +11,13 @@ namespace PatientManagementService.Models
         public Guid Id { get; set; }
 
         [Required]
-        public string Nom { get; set; }
+        public string Nom { get; set; } = string.Empty;
 
         [Required]
-        public string Type { get; set; } // e.g., PDF, Image, etc.
+        public string Type { get; set; } = string.Empty;// e.g., PDF, Image, etc.
 
         [Required]
-        public byte[] Contenu { get; set; } // File content as binary data
+        public required byte[] Contenu { get; set; } // File content as binary data
 
         [JsonIgnore]
         public Guid DossierMedicalId { get; set; } // Foreign key to DossierMedical

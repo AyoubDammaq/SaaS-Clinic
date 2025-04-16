@@ -8,6 +8,7 @@ namespace PatientManagementService.Repositories
     public class PatientRepository : IPatientRepository
     {
         private readonly PatientDbContext _context;
+
         public PatientRepository(PatientDbContext context)
         {
             _context = context;
@@ -17,11 +18,12 @@ namespace PatientManagementService.Repositories
         {
             return await _context.Patients
                 .Include(p => p.DossierMedical)
-                .Include(p => p.DossierMedical.Documents)
+                    .ThenInclude(d => d.Documents)
                 .ToListAsync();
         }
 
-        public async Task<Patient> GetPatientByIdAsync(Guid id)
+
+        public async Task<Patient?> GetPatientByIdAsync(Guid id)
         {
             return await _context.Patients
                 .Include(p => p.DossierMedical)
@@ -74,7 +76,7 @@ namespace PatientManagementService.Repositories
             }
         }
 
-        public async Task<IEnumerable<Patient>> GetPatientsByNameAsync(string name, string lastname)
+        public async Task<IEnumerable<Patient>> GetPatientsByNameAsync(string? name, string? lastname)
         {
             name = name?.Trim().ToLower();
             lastname = lastname?.Trim().ToLower();

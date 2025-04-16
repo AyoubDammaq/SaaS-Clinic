@@ -12,7 +12,7 @@ namespace PatientManagementService.Repositories
         {
             _context = context;
         }
-        public async Task<DossierMedical> GetDossierMedicalByPatientIdAsync(Guid patientId)
+        public async Task<DossierMedical?> GetDossierMedicalByPatientIdAsync(Guid patientId)
         {
             return await _context.DossiersMedicaux
                 .Include(dm => dm.Patient)
@@ -70,7 +70,7 @@ namespace PatientManagementService.Repositories
                 .ToListAsync();
         }
 
-        public async Task<DossierMedical> GetDossierMedicalByIdAsync(Guid Id)
+        public async Task<DossierMedical?> GetDossierMedicalByIdAsync(Guid Id)
         {
             return await _context.DossiersMedicaux.FindAsync(Id);
         }

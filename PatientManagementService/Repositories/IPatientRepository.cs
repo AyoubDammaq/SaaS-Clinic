@@ -7,10 +7,10 @@ namespace PatientManagementService.Repositories
     {
         // Define methods for patient repository
         Task<IEnumerable<Patient>> GetAllPatientsAsync();
-        Task<Patient> GetPatientByIdAsync(Guid id);
+        Task<Patient?> GetPatientByIdAsync(Guid id);
         Task AddPatientAsync(PatientDTO patient);
         Task UpdatePatientAsync(PatientDTO patient);
         Task DeletePatientAsync(Guid id);
-        Task<IEnumerable<Patient>> GetPatientsByNameAsync(string name, string lastname);
+        Task<IEnumerable<Patient>> GetPatientsByNameAsync(string firstName, string lastName);
     }
 }
