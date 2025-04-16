@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using PatientManagementService.Data;
 using PatientManagementService.DTOs;
 using PatientManagementService.Models;
 using PatientManagementService.Services;
-using System.Reflection.Metadata;
 
 namespace PatientManagementService.Controllers
 {
@@ -11,16 +12,15 @@ namespace PatientManagementService.Controllers
     [ApiController]
     public class PatientsController : ControllerBase
     {
-        private readonly PatientDbContext _context;
         private readonly IPatientService _patientService;
 
-        public PatientsController(PatientDbContext context, IPatientService patientService)
+        public PatientsController(IPatientService patientService)
         {
-            _context = context;
             _patientService = patientService;
         }
 
         // GET: api/Patients
+        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Patient>>> GetAllPatients()
         {
@@ -36,6 +36,7 @@ namespace PatientManagementService.Controllers
         }
 
         // GET: api/Patients/5
+        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
         [HttpGet("{id}")]
         public async Task<ActionResult<Patient>> GetPatientById(Guid id)
         {
@@ -54,6 +55,7 @@ namespace PatientManagementService.Controllers
         }
 
         // POST: api/Patients
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> AddPatient([FromBody] PatientDTO patientDto)
         {
@@ -73,6 +75,7 @@ namespace PatientManagementService.Controllers
         }
 
         // PUT: api/Patients/5
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdatePatient(Guid id, [FromBody] PatientDTO patientDto)
         {
@@ -95,6 +98,7 @@ namespace PatientManagementService.Controllers
         }
 
         // DELETE: api/Patients/5
+        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePatient(Guid id)
         {
@@ -114,6 +118,7 @@ namespace PatientManagementService.Controllers
         }
 
         // GET: api/Patients/search?name=John&lastname=Doe
+        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
         [HttpGet("search")]
         public async Task<ActionResult<IEnumerable<Patient>>> SearchPatients([FromQuery] string? name, [FromQuery] string? lastname)
         {

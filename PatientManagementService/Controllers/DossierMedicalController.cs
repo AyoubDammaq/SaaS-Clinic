@@ -2,6 +2,7 @@
 using PatientManagementService.DTOs;
 using PatientManagementService.Services;
 using PatientManagementService.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PatientManagementService.Controllers
 {
@@ -15,6 +16,7 @@ namespace PatientManagementService.Controllers
         {
             _dossierMedicalService = dossierMedicalService;
         }
+
 
         [HttpGet("dossier-medical/{patientId}")]
         public async Task<IActionResult> GetDossierMedicalByPatientId(Guid patientId)
@@ -34,6 +36,7 @@ namespace PatientManagementService.Controllers
             }
         }
 
+        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
         [HttpPost("dossier-medical")]
         public async Task<IActionResult> AddDossierMedical([FromBody] DossierMedicalDTO dossierMedical)
         {
@@ -56,6 +59,7 @@ namespace PatientManagementService.Controllers
             }
         }
 
+        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
         [HttpPut("dossier-medical")]
         public async Task<IActionResult> UpdateDossierMedical([FromBody] DossierMedicalDTO dossierMedical)
         {
@@ -77,6 +81,7 @@ namespace PatientManagementService.Controllers
             }
         }
 
+        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
         [HttpDelete("dossier-medical/{dossierMedicalId}")]
         public async Task<IActionResult> DeleteDossierMedical(Guid dossierMedicalId)
         {
@@ -96,6 +101,8 @@ namespace PatientManagementService.Controllers
             }
         }
 
+
+        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
         [HttpGet("dossiers-medicals")]
         public async Task<IActionResult> GetAllDossiersMedicals()
         {
@@ -110,6 +117,7 @@ namespace PatientManagementService.Controllers
             }
         }
 
+        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
         [HttpPost("dossier-medical/{dossierId}/attacher-document")]
         public async Task<IActionResult> AttacherDocument(Guid dossierId, [FromBody] Document document)
         {

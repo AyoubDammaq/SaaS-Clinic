@@ -3,48 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\controllers\\patientcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:controllers\\patientcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\controllers\\dossiermedicalcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:controllers\\dossiermedicalcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\repositories\\dossiermedicalrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:repositories\\dossiermedicalrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\controllers\\patientcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:controllers\\patientcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\services\\dossiermedicalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:services\\dossiermedicalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\models\\dossiermedical.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:models\\dossiermedical.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\dtos\\patientdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:dtos\\patientdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\dtos\\dossiermedicaldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:dtos\\dossiermedicaldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\models\\patient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:models\\patient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\repositories\\patientrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:repositories\\patientrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\services\\patientservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:services\\patientservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\repositories\\idossiermedicalrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:repositories\\idossiermedicalrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\repositories\\dossiermedicalrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:repositories\\dossiermedicalrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\repositories\\patientrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:repositories\\patientrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\data\\patientdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -53,6 +37,22 @@
     {
       "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\dtos\\patientdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:dtos\\patientdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\models\\dossiermedical.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:models\\dossiermedical.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\models\\patient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:models\\patient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\repositories\\idossiermedicalrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|solutionrelative:repositories\\idossiermedicalrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0A7ECC2B-CD29-4EAA-A757-F36EF68F965E}|PatientManagementService.csproj|c:\\users\\user\\desktop\\saas-clinic\\patientmanagementservice\\models\\document.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -90,7 +90,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -102,33 +102,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "PatientController.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Controllers\\PatientController.cs",
               "RelativeDocumentMoniker": "Controllers\\PatientController.cs",
               "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Controllers\\PatientController.cs",
               "RelativeToolTip": "Controllers\\PatientController.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAgwEAAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAYwHgAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-15T10:25:14.637Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "DossierMedical.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Models\\DossierMedical.cs",
-              "RelativeDocumentMoniker": "Models\\DossierMedical.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Models\\DossierMedical.cs",
-              "RelativeToolTip": "Models\\DossierMedical.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAoAAAAlAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "DossierMedicalController.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Controllers\\DossierMedicalController.cs",
+              "RelativeDocumentMoniker": "Controllers\\DossierMedicalController.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Controllers\\DossierMedicalController.cs",
+              "RelativeToolTip": "Controllers\\DossierMedicalController.cs",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAowIsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T17:19:02.826Z",
+              "WhenOpened": "2025-04-14T21:06:31.222Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "DossierMedicalDTO.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\DTOs\\DossierMedicalDTO.cs",
               "RelativeDocumentMoniker": "DTOs\\DossierMedicalDTO.cs",
@@ -136,51 +136,108 @@
               "RelativeToolTip": "DTOs\\DossierMedicalDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T22:17:11.301Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T22:17:11.301Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "DossierMedicalService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Services\\DossierMedicalService.cs",
+              "RelativeDocumentMoniker": "Services\\DossierMedicalService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Services\\DossierMedicalService.cs",
+              "RelativeToolTip": "Services\\DossierMedicalService.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAAwEIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T21:07:58.828Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PatientService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Services\\PatientService.cs",
+              "RelativeDocumentMoniker": "Services\\PatientService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Services\\PatientService.cs",
+              "RelativeToolTip": "Services\\PatientService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T21:07:47.101Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "DossierMedicalRepository.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Repositories\\DossierMedicalRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\DossierMedicalRepository.cs",
               "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Repositories\\DossierMedicalRepository.cs",
               "RelativeToolTip": "Repositories\\DossierMedicalRepository.cs",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAowCMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T21:07:30.508Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T21:07:30.508Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DossierMedicalController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Controllers\\DossierMedicalController.cs",
-              "RelativeDocumentMoniker": "Controllers\\DossierMedicalController.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Controllers\\DossierMedicalController.cs",
-              "RelativeToolTip": "Controllers\\DossierMedicalController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHQAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T21:06:31.222Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 6,
               "Title": "PatientRepository.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Repositories\\PatientRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\PatientRepository.cs",
               "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Repositories\\PatientRepository.cs",
               "RelativeToolTip": "Repositories\\PatientRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T10:19:44.155Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-15T10:19:44.155Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
+              "Title": "PatientDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Data\\PatientDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\PatientDbContext.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Data\\PatientDbContext.cs",
+              "RelativeToolTip": "Data\\PatientDbContext.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAmwAgAAABeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T01:29:56.013Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAwBMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T01:33:29.164Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PatientDTO.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\DTOs\\PatientDTO.cs",
+              "RelativeDocumentMoniker": "DTOs\\PatientDTO.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\DTOs\\PatientDTO.cs",
+              "RelativeToolTip": "DTOs\\PatientDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T10:52:12.24Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DossierMedical.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Models\\DossierMedical.cs",
+              "RelativeDocumentMoniker": "Models\\DossierMedical.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Models\\DossierMedical.cs",
+              "RelativeToolTip": "Models\\DossierMedical.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAoAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T17:19:02.826Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "Patient.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Models\\Patient.cs",
               "RelativeDocumentMoniker": "Models\\Patient.cs",
@@ -188,51 +245,11 @@
               "RelativeToolTip": "Models\\Patient.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T10:41:32.428Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-15T10:41:32.428Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "PatientDTO.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\DTOs\\PatientDTO.cs",
-              "RelativeDocumentMoniker": "DTOs\\PatientDTO.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\DTOs\\PatientDTO.cs",
-              "RelativeToolTip": "DTOs\\PatientDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAQAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T10:52:12.24Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DossierMedicalService.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Services\\DossierMedicalService.cs",
-              "RelativeDocumentMoniker": "Services\\DossierMedicalService.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Services\\DossierMedicalService.cs",
-              "RelativeToolTip": "Services\\DossierMedicalService.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAvwBwAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T21:07:58.828Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "PatientService.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Services\\PatientService.cs",
-              "RelativeDocumentMoniker": "Services\\PatientService.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Services\\PatientService.cs",
-              "RelativeToolTip": "Services\\PatientService.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAQwBgAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T21:07:47.101Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "IDossierMedicalRepository.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Repositories\\IDossierMedicalRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\IDossierMedicalRepository.cs",
@@ -240,34 +257,7 @@
               "RelativeToolTip": "Repositories\\IDossierMedicalRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwA0AAABNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T21:08:59.279Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAAwCsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T01:33:29.164Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "PatientDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Data\\PatientDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\PatientDbContext.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\PatientManagementService\\Data\\PatientDbContext.cs",
-              "RelativeToolTip": "Data\\PatientDbContext.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAmwAwAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T01:29:56.013Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T21:08:59.279Z"
             },
             {
               "$type": "Document",
@@ -279,8 +269,7 @@
               "RelativeToolTip": "Models\\Document.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T09:09:27.844Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-15T09:09:27.844Z"
             },
             {
               "$type": "Document",
@@ -292,8 +281,7 @@
               "RelativeToolTip": "Services\\IDossierMedicalService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwA0AAABNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T21:11:22.581Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T21:11:22.581Z"
             },
             {
               "$type": "Document",
