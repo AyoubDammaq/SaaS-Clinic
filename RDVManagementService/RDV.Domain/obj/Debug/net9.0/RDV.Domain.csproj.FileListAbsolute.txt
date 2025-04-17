@@ -1,0 +1,11 @@
+C:\Users\USER\Desktop\RDVManagementService\RDV.Domain\bin\Debug\net9.0\RDV.Domain.deps.json
+C:\Users\USER\Desktop\RDVManagementService\RDV.Domain\bin\Debug\net9.0\RDV.Domain.dll
+C:\Users\USER\Desktop\RDVManagementService\RDV.Domain\bin\Debug\net9.0\RDV.Domain.pdb
+C:\Users\USER\Desktop\RDVManagementService\RDV.Domain\obj\Debug\net9.0\RDV.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Desktop\RDVManagementService\RDV.Domain\obj\Debug\net9.0\RDV.Domain.AssemblyInfoInputs.cache
+C:\Users\USER\Desktop\RDVManagementService\RDV.Domain\obj\Debug\net9.0\RDV.Domain.AssemblyInfo.cs
+C:\Users\USER\Desktop\RDVManagementService\RDV.Domain\obj\Debug\net9.0\RDV.Domain.csproj.CoreCompileInputs.cache
+C:\Users\USER\Desktop\RDVManagementService\RDV.Domain\obj\Debug\net9.0\RDV.Domain.dll
+C:\Users\USER\Desktop\RDVManagementService\RDV.Domain\obj\Debug\net9.0\refint\RDV.Domain.dll
+C:\Users\USER\Desktop\RDVManagementService\RDV.Domain\obj\Debug\net9.0\RDV.Domain.pdb
+C:\Users\USER\Desktop\RDVManagementService\RDV.Domain\obj\Debug\net9.0\ref\RDV.Domain.dll

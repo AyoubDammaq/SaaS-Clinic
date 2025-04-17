@@ -1,6 +1,0 @@
-@RDVManagementService_HostAddress = http://localhost:5069
-
-GET {{RDVManagementService_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
