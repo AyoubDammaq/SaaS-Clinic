@@ -1,0 +1,11 @@
+C:\Users\USER\Desktop\PatientManagementService\Patient.Domain\bin\Debug\net9.0\Patient.Domain.deps.json
+C:\Users\USER\Desktop\PatientManagementService\Patient.Domain\bin\Debug\net9.0\Patient.Domain.dll
+C:\Users\USER\Desktop\PatientManagementService\Patient.Domain\bin\Debug\net9.0\Patient.Domain.pdb
+C:\Users\USER\Desktop\PatientManagementService\Patient.Domain\obj\Debug\net9.0\Patient.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Desktop\PatientManagementService\Patient.Domain\obj\Debug\net9.0\Patient.Domain.AssemblyInfoInputs.cache
+C:\Users\USER\Desktop\PatientManagementService\Patient.Domain\obj\Debug\net9.0\Patient.Domain.AssemblyInfo.cs
+C:\Users\USER\Desktop\PatientManagementService\Patient.Domain\obj\Debug\net9.0\Patient.Domain.csproj.CoreCompileInputs.cache
+C:\Users\USER\Desktop\PatientManagementService\Patient.Domain\obj\Debug\net9.0\Patient.Domain.dll
+C:\Users\USER\Desktop\PatientManagementService\Patient.Domain\obj\Debug\net9.0\refint\Patient.Domain.dll
+C:\Users\USER\Desktop\PatientManagementService\Patient.Domain\obj\Debug\net9.0\Patient.Domain.pdb
+C:\Users\USER\Desktop\PatientManagementService\Patient.Domain\obj\Debug\net9.0\ref\Patient.Domain.dll

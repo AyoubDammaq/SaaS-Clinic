@@ -1,0 +1,15 @@
+C:\Users\USER\Desktop\PatientManagementService\Patient.Application\bin\Debug\net9.0\Patient.Application.deps.json
+C:\Users\USER\Desktop\PatientManagementService\Patient.Application\bin\Debug\net9.0\Patient.Application.dll
+C:\Users\USER\Desktop\PatientManagementService\Patient.Application\bin\Debug\net9.0\Patient.Application.pdb
+C:\Users\USER\Desktop\PatientManagementService\Patient.Application\bin\Debug\net9.0\Patient.Domain.dll
+C:\Users\USER\Desktop\PatientManagementService\Patient.Application\bin\Debug\net9.0\Patient.Domain.pdb
+C:\Users\USER\Desktop\PatientManagementService\Patient.Application\obj\Debug\net9.0\Patient.Application.csproj.AssemblyReference.cache
+C:\Users\USER\Desktop\PatientManagementService\Patient.Application\obj\Debug\net9.0\Patient.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Desktop\PatientManagementService\Patient.Application\obj\Debug\net9.0\Patient.Application.AssemblyInfoInputs.cache
+C:\Users\USER\Desktop\PatientManagementService\Patient.Application\obj\Debug\net9.0\Patient.Application.AssemblyInfo.cs
+C:\Users\USER\Desktop\PatientManagementService\Patient.Application\obj\Debug\net9.0\Patient.Application.csproj.CoreCompileInputs.cache
+C:\Users\USER\Desktop\PatientManagementService\Patient.Application\obj\Debug\net9.0\Patient..E965ACCC.Up2Date
+C:\Users\USER\Desktop\PatientManagementService\Patient.Application\obj\Debug\net9.0\Patient.Application.dll
+C:\Users\USER\Desktop\PatientManagementService\Patient.Application\obj\Debug\net9.0\refint\Patient.Application.dll
+C:\Users\USER\Desktop\PatientManagementService\Patient.Application\obj\Debug\net9.0\Patient.Application.pdb
+C:\Users\USER\Desktop\PatientManagementService\Patient.Application\obj\Debug\net9.0\ref\Patient.Application.dll
