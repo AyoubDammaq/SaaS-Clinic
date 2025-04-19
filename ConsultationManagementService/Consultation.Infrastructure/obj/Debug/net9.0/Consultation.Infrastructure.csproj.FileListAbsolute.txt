@@ -1,0 +1,17 @@
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\bin\Debug\net9.0\Consultation.Infrastructure.deps.json
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\bin\Debug\net9.0\Consultation.Infrastructure.runtimeconfig.json
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\bin\Debug\net9.0\Consultation.Infrastructure.dll
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\bin\Debug\net9.0\Consultation.Infrastructure.pdb
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\bin\Debug\net9.0\Consultation.Domain.dll
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\bin\Debug\net9.0\Consultation.Domain.pdb
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\obj\Debug\net9.0\Consultation.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\obj\Debug\net9.0\Consultation.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\obj\Debug\net9.0\Consultation.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\obj\Debug\net9.0\Consultation.Infrastructure.AssemblyInfo.cs
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\obj\Debug\net9.0\Consultation.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\obj\Debug\net9.0\Consulta.F9A51708.Up2Date
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\obj\Debug\net9.0\Consultation.Infrastructure.dll
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\obj\Debug\net9.0\refint\Consultation.Infrastructure.dll
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\obj\Debug\net9.0\Consultation.Infrastructure.pdb
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\obj\Debug\net9.0\Consultation.Infrastructure.genruntimeconfig.cache
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Infrastructure\obj\Debug\net9.0\ref\Consultation.Infrastructure.dll

@@ -1,0 +1,15 @@
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Application\bin\Debug\net9.0\Consultation.Application.deps.json
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Application\bin\Debug\net9.0\Consultation.Application.dll
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Application\bin\Debug\net9.0\Consultation.Application.pdb
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Application\bin\Debug\net9.0\Consultation.Domain.dll
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Application\bin\Debug\net9.0\Consultation.Domain.pdb
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Application\obj\Debug\net9.0\Consultation.Application.csproj.AssemblyReference.cache
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Application\obj\Debug\net9.0\Consultation.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Application\obj\Debug\net9.0\Consultation.Application.AssemblyInfoInputs.cache
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Application\obj\Debug\net9.0\Consultation.Application.AssemblyInfo.cs
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Application\obj\Debug\net9.0\Consultation.Application.csproj.CoreCompileInputs.cache
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Application\obj\Debug\net9.0\Consulta.A67F578E.Up2Date
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Application\obj\Debug\net9.0\Consultation.Application.dll
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Application\obj\Debug\net9.0\refint\Consultation.Application.dll
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Application\obj\Debug\net9.0\Consultation.Application.pdb
+C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Application\obj\Debug\net9.0\ref\Consultation.Application.dll
