@@ -156,6 +156,14 @@
             "Aspose.PDF": {
               "target": "Package",
               "version": "[25.4.0, )"
+            },
+            "BouncyCastle.NetCore": {
+              "target": "Package",
+              "version": "[2.2.1, )"
+            },
+            "itext7": {
+              "target": "Package",
+              "version": "[9.1.0, )"
             }
           },
           "imports": [

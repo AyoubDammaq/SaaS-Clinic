@@ -7,7 +7,6 @@ namespace Facturation.Domain.Entities
     public class Facture 
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
@@ -27,5 +26,7 @@ namespace Facturation.Domain.Entities
 
         [Required]
         public FactureStatus Status { get; set; }
+
+        public virtual Paiement? Paiement { get; set; }
     }
 }

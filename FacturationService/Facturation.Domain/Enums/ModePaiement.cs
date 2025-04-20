@@ -7,5 +7,5 @@
         Virement,
         Chèque,
         Mobile
-    }
+    }  
 }

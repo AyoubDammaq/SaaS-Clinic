@@ -3,6 +3,7 @@ using Facturation.Domain.Interfaces;
 using Facturation.Infrastructure.Repositories;
 using Facturation.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Facturation.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,8 @@ builder.Services.AddDbContext<FacturationDbContext>(options =>
 
 builder.Services.AddScoped<IFactureService, FactureService>();
 builder.Services.AddScoped<IFactureRepository, FactureRepository>();
+builder.Services.AddScoped<IPaiementRepository, PaiementRepository>();
+builder.Services.AddScoped<IPaiementService, PaiementService>();
 
 
 var app = builder.Build();

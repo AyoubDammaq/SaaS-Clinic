@@ -157,5 +157,42 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Facturation.API.Controllers.PaiementController",
+    "Method": "PayerFacture",
+    "RelativePath": "api/Paiement/payer/{factureId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "factureId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "moyenPaiement",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Facturation.API.Controllers.PaiementController",
+    "Method": "ImprimerRecuDePaiement",
+    "RelativePath": "api/Paiement/recu/{factureId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "factureId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

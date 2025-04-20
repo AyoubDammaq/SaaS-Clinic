@@ -2,7 +2,7 @@
 using Facturation.Domain.Entities;
 using Facturation.Domain.Enums;
 
-namespace Facturation.Application.Services
+namespace Facturation.Application.Interfaces
 {
     public interface IFactureService
     {

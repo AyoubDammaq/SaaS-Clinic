@@ -14,11 +14,12 @@ namespace Facturation.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Facture>()
-                .Property(f => f.Id)
-                .ValueGeneratedOnAdd();
+                .Property(f => f.MontantTotal)
+                .HasColumnType("decimal(18,2)");
             modelBuilder.Entity<Paiement>()
-                .Property(p => p.Id)
-                .ValueGeneratedOnAdd();
+                .HasOne(p => p.Facture)
+                .WithOne(f => f.Paiement)
+                .HasForeignKey<Paiement>(p => p.FactureId);
             base.OnModelCreating(modelBuilder);
         }
     }

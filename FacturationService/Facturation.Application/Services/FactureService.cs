@@ -4,6 +4,7 @@ using Facturation.Domain.Enums;
 using Facturation.Application.DTOs;
 using Aspose.Pdf.Text;
 using Aspose.Pdf;
+using Facturation.Application.Interfaces;
 
 namespace Facturation.Application.Services
 {

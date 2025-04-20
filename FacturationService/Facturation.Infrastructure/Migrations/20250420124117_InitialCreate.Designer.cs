@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Facturation.Infrastructure.Migrations
 {
     [DbContext(typeof(FacturationDbContext))]
-    [Migration("20250420102148_NewUpdates")]
-    partial class NewUpdates
+    [Migration("20250420124117_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,11 +56,9 @@ namespace Facturation.Infrastructure.Migrations
 
             modelBuilder.Entity("Facturation.Domain.Entities.Paiement", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DatePaiement")
                         .HasColumnType("datetime2");
@@ -71,12 +69,31 @@ namespace Facturation.Infrastructure.Migrations
                     b.Property<int>("Mode")
                         .HasColumnType("int");
 
-                    b.Property<double>("Montznt")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Montant")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FactureId")
+                        .IsUnique();
+
                     b.ToTable("Paiements");
+                });
+
+            modelBuilder.Entity("Facturation.Domain.Entities.Paiement", b =>
+                {
+                    b.HasOne("Facturation.Domain.Entities.Facture", "Facture")
+                        .WithOne("Paiement")
+                        .HasForeignKey("Facturation.Domain.Entities.Paiement", "FactureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Facture");
+                });
+
+            modelBuilder.Entity("Facturation.Domain.Entities.Facture", b =>
+                {
+                    b.Navigation("Paiement");
                 });
 #pragma warning restore 612, 618
         }

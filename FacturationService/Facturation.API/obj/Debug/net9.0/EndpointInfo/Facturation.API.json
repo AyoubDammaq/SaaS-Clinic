@@ -238,6 +238,71 @@
           }
         }
       }
+    },
+    "/api/Paiement/payer/{factureId}": {
+      "post": {
+        "tags": [
+          "Paiement"
+        ],
+        "parameters": [
+          {
+            "name": "factureId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModePaiement"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModePaiement"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModePaiement"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Paiement/recu/{factureId}": {
+      "get": {
+        "tags": [
+          "Paiement"
+        ],
+        "parameters": [
+          {
+            "name": "factureId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -270,6 +335,17 @@
           1,
           2,
           3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "ModePaiement": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
         ],
         "type": "integer",
         "format": "int32"
