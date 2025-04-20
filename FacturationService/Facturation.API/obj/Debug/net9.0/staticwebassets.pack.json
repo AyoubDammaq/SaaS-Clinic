@@ -1,0 +1,33 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\wwwroot\\factures\\Facture_6bfe6f80-a3dc-4e83-aae9-035e772ccab9.pdf",
+      "PackagePath": "staticwebassets\\factures\\Facture_6bfe6f80-a3dc-4e83-aae9-035e772ccab9.pdf"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\wwwroot\\factures\\Facture_ac30ba2a-a597-4f29-a0ca-942859a143fe.pdf",
+      "PackagePath": "staticwebassets\\factures\\Facture_ac30ba2a-a597-4f29-a0ca-942859a143fe.pdf"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.Facturation.API.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.Facturation.API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.build.Facturation.API.props",
+      "PackagePath": "build\\Facturation.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildMultiTargeting.Facturation.API.props",
+      "PackagePath": "buildMultiTargeting\\Facturation.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildTransitive.Facturation.API.props",
+      "PackagePath": "buildTransitive\\Facturation.API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

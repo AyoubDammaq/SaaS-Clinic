@@ -1,0 +1,28 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/Facturation.API/factures/Facture_6bfe6f80-a3dc-4e83-aae9-035e772ccab9.n03ndqszwj.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\factures\Facture_6bfe6f80-a3dc-4e83-aae9-035e772ccab9.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"n03ndqszwj"},{"Name":"integrity","Value":"sha256-B8T2f\u002BLvFdx29n5o4esN9mUZGxRpAT1j7J1hkToquqQ="},{"Name":"label","Value":"_content/Facturation.API/factures/Facture_6bfe6f80-a3dc-4e83-aae9-035e772ccab9.pdf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"109832"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u0022B8T2f\u002BLvFdx29n5o4esN9mUZGxRpAT1j7J1hkToquqQ=\u0022"},{"Name":"Last-Modified","Value":"Sun, 20 Apr 2025 11:21:28 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Facturation.API/factures/Facture_6bfe6f80-a3dc-4e83-aae9-035e772ccab9.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\factures\Facture_6bfe6f80-a3dc-4e83-aae9-035e772ccab9.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-B8T2f\u002BLvFdx29n5o4esN9mUZGxRpAT1j7J1hkToquqQ="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"109832"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u0022B8T2f\u002BLvFdx29n5o4esN9mUZGxRpAT1j7J1hkToquqQ=\u0022"},{"Name":"Last-Modified","Value":"Sun, 20 Apr 2025 11:21:28 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Facturation.API/factures/Facture_ac30ba2a-a597-4f29-a0ca-942859a143fe.5ipweew5fc.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\factures\Facture_ac30ba2a-a597-4f29-a0ca-942859a143fe.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"5ipweew5fc"},{"Name":"integrity","Value":"sha256-47DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU="},{"Name":"label","Value":"_content/Facturation.API/factures/Facture_ac30ba2a-a597-4f29-a0ca-942859a143fe.pdf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"0"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u002247DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU=\u0022"},{"Name":"Last-Modified","Value":"Sun, 20 Apr 2025 11:13:53 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Facturation.API/factures/Facture_ac30ba2a-a597-4f29-a0ca-942859a143fe.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\factures\Facture_ac30ba2a-a597-4f29-a0ca-942859a143fe.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-47DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"0"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u002247DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU=\u0022"},{"Name":"Last-Modified","Value":"Sun, 20 Apr 2025 11:13:53 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,161 @@
+[
+  {
+    "ContainingType": "Facturation.API.Controllers.FactureController",
+    "Method": "GetAllFactures",
+    "RelativePath": "api/Facture",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Facturation.API.Controllers.FactureController",
+    "Method": "AddFacture",
+    "RelativePath": "api/Facture",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "facture",
+        "Type": "Facturation.Application.DTOs.CreateFactureRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Facturation.API.Controllers.FactureController",
+    "Method": "UpdateFacture",
+    "RelativePath": "api/Facture",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "facture",
+        "Type": "Facturation.Application.DTOs.UpdateFactureRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Facturation.API.Controllers.FactureController",
+    "Method": "GetFactureById",
+    "RelativePath": "api/Facture/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Facturation.API.Controllers.FactureController",
+    "Method": "DeleteFacture",
+    "RelativePath": "api/Facture/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Facturation.API.Controllers.FactureController",
+    "Method": "GetAllFacturesByClinicId",
+    "RelativePath": "api/Facture/clinic/{clinicId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "clinicId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Facturation.API.Controllers.FactureController",
+    "Method": "ExportFacture",
+    "RelativePath": "api/Facture/export/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Facturation.API.Controllers.FactureController",
+    "Method": "GetAllFacturesByPatientId",
+    "RelativePath": "api/Facture/patient/{patientId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "patientId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Facturation.API.Controllers.FactureController",
+    "Method": "GetAllFacturesByRangeOfDate",
+    "RelativePath": "api/Facture/range",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "endDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Facturation.API.Controllers.FactureController",
+    "Method": "GetAllFacturesByState",
+    "RelativePath": "api/Facture/state",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "status",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

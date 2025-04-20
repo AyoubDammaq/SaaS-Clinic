@@ -1,0 +1,228 @@
+{
+  "Version": 1,
+  "Hash": "uT17oVhd/ealjvvC0XB3YciD4L5kcFPyoCtUuTPJ/aY=",
+  "Source": "Facturation.API",
+  "BasePath": "_content/Facturation.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Facturation.API\\wwwroot",
+      "Source": "Facturation.API",
+      "ContentRoot": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\wwwroot\\",
+      "BasePath": "_content/Facturation.API",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\wwwroot\\factures\\Facture_6bfe6f80-a3dc-4e83-aae9-035e772ccab9.pdf",
+      "SourceId": "Facturation.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\wwwroot\\",
+      "BasePath": "_content/Facturation.API",
+      "RelativePath": "factures/Facture_6bfe6f80-a3dc-4e83-aae9-035e772ccab9#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "n03ndqszwj",
+      "Integrity": "B8T2f+LvFdx29n5o4esN9mUZGxRpAT1j7J1hkToquqQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\factures\\Facture_6bfe6f80-a3dc-4e83-aae9-035e772ccab9.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\wwwroot\\factures\\Facture_ac30ba2a-a597-4f29-a0ca-942859a143fe.pdf",
+      "SourceId": "Facturation.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\wwwroot\\",
+      "BasePath": "_content/Facturation.API",
+      "RelativePath": "factures/Facture_ac30ba2a-a597-4f29-a0ca-942859a143fe#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5ipweew5fc",
+      "Integrity": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\factures\\Facture_ac30ba2a-a597-4f29-a0ca-942859a143fe.pdf"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "factures/Facture_6bfe6f80-a3dc-4e83-aae9-035e772ccab9.n03ndqszwj.pdf",
+      "AssetFile": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\wwwroot\\factures\\Facture_6bfe6f80-a3dc-4e83-aae9-035e772ccab9.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "109832"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"B8T2f+LvFdx29n5o4esN9mUZGxRpAT1j7J1hkToquqQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 20 Apr 2025 11:21:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n03ndqszwj"
+        },
+        {
+          "Name": "label",
+          "Value": "factures/Facture_6bfe6f80-a3dc-4e83-aae9-035e772ccab9.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-B8T2f+LvFdx29n5o4esN9mUZGxRpAT1j7J1hkToquqQ="
+        }
+      ]
+    },
+    {
+      "Route": "factures/Facture_6bfe6f80-a3dc-4e83-aae9-035e772ccab9.pdf",
+      "AssetFile": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\wwwroot\\factures\\Facture_6bfe6f80-a3dc-4e83-aae9-035e772ccab9.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "109832"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"B8T2f+LvFdx29n5o4esN9mUZGxRpAT1j7J1hkToquqQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 20 Apr 2025 11:21:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-B8T2f+LvFdx29n5o4esN9mUZGxRpAT1j7J1hkToquqQ="
+        }
+      ]
+    },
+    {
+      "Route": "factures/Facture_ac30ba2a-a597-4f29-a0ca-942859a143fe.5ipweew5fc.pdf",
+      "AssetFile": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\wwwroot\\factures\\Facture_ac30ba2a-a597-4f29-a0ca-942859a143fe.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 20 Apr 2025 11:13:53 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5ipweew5fc"
+        },
+        {
+          "Name": "label",
+          "Value": "factures/Facture_ac30ba2a-a597-4f29-a0ca-942859a143fe.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "factures/Facture_ac30ba2a-a597-4f29-a0ca-942859a143fe.pdf",
+      "AssetFile": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\wwwroot\\factures\\Facture_ac30ba2a-a597-4f29-a0ca-942859a143fe.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 20 Apr 2025 11:13:53 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    }
+  ]
+}

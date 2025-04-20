@@ -3,32 +3,80 @@
   "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6735A2B3-9319-4920-94A5-7D1BB9880D77}|FacturationService.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\data\\facturationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6735A2B3-9319-4920-94A5-7D1BB9880D77}|FacturationService.csproj|solutionrelative:data\\facturationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{97D7D1D9-E570-44AA-BD7C-1EFE62284E91}|Facturation.Domain\\Facturation.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.domain\\entities\\paiement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97D7D1D9-E570-44AA-BD7C-1EFE62284E91}|Facturation.Domain\\Facturation.Domain.csproj|solutionrelative:facturation.domain\\entities\\paiement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6735A2B3-9319-4920-94A5-7D1BB9880D77}|FacturationService.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\controllers\\facturecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6735A2B3-9319-4920-94A5-7D1BB9880D77}|FacturationService.csproj|solutionrelative:controllers\\facturecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6CFBE92C-8337-4BC6-BCB3-330E903449F7}|Facturation.API\\Facturation.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.api\\controllers\\facturecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6CFBE92C-8337-4BC6-BCB3-330E903449F7}|Facturation.API\\Facturation.API.csproj|solutionrelative:facturation.api\\controllers\\facturecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6735A2B3-9319-4920-94A5-7D1BB9880D77}|FacturationService.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturationservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{6735A2B3-9319-4920-94A5-7D1BB9880D77}|FacturationService.csproj|solutionrelative:facturationservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{25D9643C-4DA4-4176-AD23-4D51230D03F6}|Facturation.Application\\Facturation.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.application\\services\\factureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25D9643C-4DA4-4176-AD23-4D51230D03F6}|Facturation.Application\\Facturation.Application.csproj|solutionrelative:facturation.application\\services\\factureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6735A2B3-9319-4920-94A5-7D1BB9880D77}|FacturationService.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6735A2B3-9319-4920-94A5-7D1BB9880D77}|FacturationService.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{12A1C7D6-3AC8-4ABC-A0AE-7746179D861F}|Facturation.Infrastructure\\Facturation.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.infrastructure\\repositories\\facturerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12A1C7D6-3AC8-4ABC-A0AE-7746179D861F}|Facturation.Infrastructure\\Facturation.Infrastructure.csproj|solutionrelative:facturation.infrastructure\\repositories\\facturerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6735A2B3-9319-4920-94A5-7D1BB9880D77}|FacturationService.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\models\\facturestatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6735A2B3-9319-4920-94A5-7D1BB9880D77}|FacturationService.csproj|solutionrelative:models\\facturestatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{25D9643C-4DA4-4176-AD23-4D51230D03F6}|Facturation.Application\\Facturation.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.application\\services\\ifactureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25D9643C-4DA4-4176-AD23-4D51230D03F6}|Facturation.Application\\Facturation.Application.csproj|solutionrelative:facturation.application\\services\\ifactureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6735A2B3-9319-4920-94A5-7D1BB9880D77}|FacturationService.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{6735A2B3-9319-4920-94A5-7D1BB9880D77}|FacturationService.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{25D9643C-4DA4-4176-AD23-4D51230D03F6}|Facturation.Application\\Facturation.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.application\\dtos\\getfacturesresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25D9643C-4DA4-4176-AD23-4D51230D03F6}|Facturation.Application\\Facturation.Application.csproj|solutionrelative:facturation.application\\dtos\\getfacturesresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6735A2B3-9319-4920-94A5-7D1BB9880D77}|FacturationService.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\models\\facture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6735A2B3-9319-4920-94A5-7D1BB9880D77}|FacturationService.csproj|solutionrelative:models\\facture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{97D7D1D9-E570-44AA-BD7C-1EFE62284E91}|Facturation.Domain\\Facturation.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.domain\\interfaces\\ifacturerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97D7D1D9-E570-44AA-BD7C-1EFE62284E91}|Facturation.Domain\\Facturation.Domain.csproj|solutionrelative:facturation.domain\\interfaces\\ifacturerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6CFBE92C-8337-4BC6-BCB3-330E903449F7}|Facturation.API\\Facturation.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{6CFBE92C-8337-4BC6-BCB3-330E903449F7}|Facturation.API\\Facturation.API.csproj|solutionrelative:facturation.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25D9643C-4DA4-4176-AD23-4D51230D03F6}|Facturation.Application\\Facturation.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.application\\facturation.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{25D9643C-4DA4-4176-AD23-4D51230D03F6}|Facturation.Application\\Facturation.Application.csproj|solutionrelative:facturation.application\\facturation.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97D7D1D9-E570-44AA-BD7C-1EFE62284E91}|Facturation.Domain\\Facturation.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.domain\\entities\\facture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97D7D1D9-E570-44AA-BD7C-1EFE62284E91}|Facturation.Domain\\Facturation.Domain.csproj|solutionrelative:facturation.domain\\entities\\facture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25D9643C-4DA4-4176-AD23-4D51230D03F6}|Facturation.Application\\Facturation.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.application\\dtos\\updatefacturerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25D9643C-4DA4-4176-AD23-4D51230D03F6}|Facturation.Application\\Facturation.Application.csproj|solutionrelative:facturation.application\\dtos\\updatefacturerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{12A1C7D6-3AC8-4ABC-A0AE-7746179D861F}|Facturation.Infrastructure\\Facturation.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.infrastructure\\data\\facturationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12A1C7D6-3AC8-4ABC-A0AE-7746179D861F}|Facturation.Infrastructure\\Facturation.Infrastructure.csproj|solutionrelative:facturation.infrastructure\\data\\facturationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6CFBE92C-8337-4BC6-BCB3-330E903449F7}|Facturation.API\\Facturation.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6CFBE92C-8337-4BC6-BCB3-330E903449F7}|Facturation.API\\Facturation.API.csproj|solutionrelative:facturation.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{12A1C7D6-3AC8-4ABC-A0AE-7746179D861F}|Facturation.Infrastructure\\Facturation.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.infrastructure\\facturation.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{12A1C7D6-3AC8-4ABC-A0AE-7746179D861F}|Facturation.Infrastructure\\Facturation.Infrastructure.csproj|solutionrelative:facturation.infrastructure\\facturation.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25D9643C-4DA4-4176-AD23-4D51230D03F6}|Facturation.Application\\Facturation.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.application\\dtos\\createfacturerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25D9643C-4DA4-4176-AD23-4D51230D03F6}|Facturation.Application\\Facturation.Application.csproj|solutionrelative:facturation.application\\dtos\\createfacturerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97D7D1D9-E570-44AA-BD7C-1EFE62284E91}|Facturation.Domain\\Facturation.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.domain\\enums\\facturestatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97D7D1D9-E570-44AA-BD7C-1EFE62284E91}|Facturation.Domain\\Facturation.Domain.csproj|solutionrelative:facturation.domain\\enums\\facturestatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25D9643C-4DA4-4176-AD23-4D51230D03F6}|Facturation.Application\\Facturation.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.application\\dtos\\facturedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25D9643C-4DA4-4176-AD23-4D51230D03F6}|Facturation.Application\\Facturation.Application.csproj|solutionrelative:facturation.application\\dtos\\facturedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97D7D1D9-E570-44AA-BD7C-1EFE62284E91}|Facturation.Domain\\Facturation.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.domain\\enums\\modepaiement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97D7D1D9-E570-44AA-BD7C-1EFE62284E91}|Facturation.Domain\\Facturation.Domain.csproj|solutionrelative:facturation.domain\\enums\\modepaiement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97D7D1D9-E570-44AA-BD7C-1EFE62284E91}|Facturation.Domain\\Facturation.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\facturationservice\\facturation.domain\\facturation.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{97D7D1D9-E570-44AA-BD7C-1EFE62284E91}|Facturation.Domain\\Facturation.Domain.csproj|solutionrelative:facturation.domain\\facturation.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,7 +86,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,93 +98,249 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "FacturationService",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\FacturationService.csproj",
-              "RelativeDocumentMoniker": "FacturationService.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\FacturationService.csproj",
-              "RelativeToolTip": "FacturationService.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-03-30T01:31:56.168Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\appsettings.json",
+              "RelativeDocumentMoniker": "Facturation.API\\appsettings.json",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\appsettings.json",
+              "RelativeToolTip": "Facturation.API\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-30T01:24:28.312Z",
+              "WhenOpened": "2025-04-20T10:04:52.001Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
+              "Title": "FactureRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Infrastructure\\Repositories\\FactureRepository.cs",
+              "RelativeDocumentMoniker": "Facturation.Infrastructure\\Repositories\\FactureRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Infrastructure\\Repositories\\FactureRepository.cs",
+              "RelativeToolTip": "Facturation.Infrastructure\\Repositories\\FactureRepository.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAiwEsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-30T01:23:51.269Z",
+              "WhenOpened": "2025-04-20T10:29:07.265Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IFactureRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Domain\\Interfaces\\IFactureRepository.cs",
+              "RelativeDocumentMoniker": "Facturation.Domain\\Interfaces\\IFactureRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Domain\\Interfaces\\IFactureRepository.cs",
+              "RelativeToolTip": "Facturation.Domain\\Interfaces\\IFactureRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T10:31:21.417Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FactureService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Application\\Services\\FactureService.cs",
+              "RelativeDocumentMoniker": "Facturation.Application\\Services\\FactureService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Application\\Services\\FactureService.cs",
+              "RelativeToolTip": "Facturation.Application\\Services\\FactureService.cs",
+              "ViewState": "AgIAALkAAAAAAAAAAAAAwOIAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T10:44:04.418Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IFactureService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Application\\Services\\IFactureService.cs",
+              "RelativeDocumentMoniker": "Facturation.Application\\Services\\IFactureService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Application\\Services\\IFactureService.cs",
+              "RelativeToolTip": "Facturation.Application\\Services\\IFactureService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T10:05:00.775Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "FactureController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Controllers\\FactureController.cs",
-              "RelativeDocumentMoniker": "Controllers\\FactureController.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Controllers\\FactureController.cs",
-              "RelativeToolTip": "Controllers\\FactureController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAyAAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\Controllers\\FactureController.cs",
+              "RelativeDocumentMoniker": "Facturation.API\\Controllers\\FactureController.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\Controllers\\FactureController.cs",
+              "RelativeToolTip": "Facturation.API\\Controllers\\FactureController.cs",
+              "ViewState": "AgIAAJIAAAAAAAAAAAAAAMoAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-30T01:23:32.213Z",
+              "WhenOpened": "2025-04-17T10:07:15.399Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GetFacturesResponse.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Application\\DTOs\\GetFacturesResponse.cs",
+              "RelativeDocumentMoniker": "Facturation.Application\\DTOs\\GetFacturesResponse.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Application\\DTOs\\GetFacturesResponse.cs",
+              "RelativeToolTip": "Facturation.Application\\DTOs\\GetFacturesResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T09:39:27.953Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Paiement.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Domain\\Entities\\Paiement.cs",
+              "RelativeDocumentMoniker": "Facturation.Domain\\Entities\\Paiement.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Domain\\Entities\\Paiement.cs",
+              "RelativeToolTip": "Facturation.Domain\\Entities\\Paiement.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T20:54:22.287Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "UpdateFactureRequest.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Application\\DTOs\\UpdateFactureRequest.cs",
+              "RelativeDocumentMoniker": "Facturation.Application\\DTOs\\UpdateFactureRequest.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Application\\DTOs\\UpdateFactureRequest.cs",
+              "RelativeToolTip": "Facturation.Application\\DTOs\\UpdateFactureRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T09:42:04.473Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Facturation.Infrastructure.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Infrastructure\\Facturation.Infrastructure.csproj",
+              "RelativeDocumentMoniker": "Facturation.Infrastructure\\Facturation.Infrastructure.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Infrastructure\\Facturation.Infrastructure.csproj",
+              "RelativeToolTip": "Facturation.Infrastructure\\Facturation.Infrastructure.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-19T20:48:18.964Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Facturation.Application.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Application\\Facturation.Application.csproj",
+              "RelativeDocumentMoniker": "Facturation.Application\\Facturation.Application.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Application\\Facturation.Application.csproj",
+              "RelativeToolTip": "Facturation.Application\\Facturation.Application.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-19T20:48:14.699Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "FacturationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Data\\FacturationDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\FacturationDbContext.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Data\\FacturationDbContext.cs",
-              "RelativeToolTip": "Data\\FacturationDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Infrastructure\\Data\\FacturationDbContext.cs",
+              "RelativeDocumentMoniker": "Facturation.Infrastructure\\Data\\FacturationDbContext.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Infrastructure\\Data\\FacturationDbContext.cs",
+              "RelativeToolTip": "Facturation.Infrastructure\\Data\\FacturationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-30T01:22:40.07Z",
+              "WhenOpened": "2025-04-19T21:03:57.081Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "FactureStatus.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Models\\FactureStatus.cs",
-              "RelativeDocumentMoniker": "Models\\FactureStatus.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Models\\FactureStatus.cs",
-              "RelativeToolTip": "Models\\FactureStatus.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-30T01:06:27.944Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "Facture.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Models\\Facture.cs",
-              "RelativeDocumentMoniker": "Models\\Facture.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Models\\Facture.cs",
-              "RelativeToolTip": "Models\\Facture.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAzAAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Domain\\Entities\\Facture.cs",
+              "RelativeDocumentMoniker": "Facturation.Domain\\Entities\\Facture.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Domain\\Entities\\Facture.cs",
+              "RelativeToolTip": "Facturation.Domain\\Entities\\Facture.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAYwB0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-30T01:04:39.526Z",
+              "WhenOpened": "2025-04-17T10:03:06.49Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\Program.cs",
+              "RelativeDocumentMoniker": "Facturation.API\\Program.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.API\\Program.cs",
+              "RelativeToolTip": "Facturation.API\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T10:05:12.665Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "FactureStatus.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Domain\\Enums\\FactureStatus.cs",
+              "RelativeDocumentMoniker": "Facturation.Domain\\Enums\\FactureStatus.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Domain\\Enums\\FactureStatus.cs",
+              "RelativeToolTip": "Facturation.Domain\\Enums\\FactureStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T20:53:09.745Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "CreateFactureRequest.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Application\\DTOs\\CreateFactureRequest.cs",
+              "RelativeDocumentMoniker": "Facturation.Application\\DTOs\\CreateFactureRequest.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Application\\DTOs\\CreateFactureRequest.cs",
+              "RelativeToolTip": "Facturation.Application\\DTOs\\CreateFactureRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T09:40:15.685Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "FactureDto.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Application\\DTOs\\FactureDto.cs",
+              "RelativeDocumentMoniker": "Facturation.Application\\DTOs\\FactureDto.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Application\\DTOs\\FactureDto.cs",
+              "RelativeToolTip": "Facturation.Application\\DTOs\\FactureDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T10:04:34.803Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ModePaiement.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Domain\\Enums\\ModePaiement.cs",
+              "RelativeDocumentMoniker": "Facturation.Domain\\Enums\\ModePaiement.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Domain\\Enums\\ModePaiement.cs",
+              "RelativeToolTip": "Facturation.Domain\\Enums\\ModePaiement.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T20:56:20.257Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Facturation.Domain.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Domain\\Facturation.Domain.csproj",
+              "RelativeDocumentMoniker": "Facturation.Domain\\Facturation.Domain.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\FacturationService\\Facturation.Domain\\Facturation.Domain.csproj",
+              "RelativeToolTip": "Facturation.Domain\\Facturation.Domain.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-17T10:10:13.391Z",
               "EditorCaption": ""
             }
           ]
