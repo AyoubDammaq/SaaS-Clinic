@@ -195,11 +195,15 @@ namespace Facturation.API.Controllers
                 Status = facture.Status
             };
 
-            var pdfPath = await _factureService.ExportToPdfAsync(pdfFacture);
-            var fileBytes = await System.IO.File.ReadAllBytesAsync(pdfPath);
-            var fileName = Path.GetFileName(pdfPath);
-
-            return File(fileBytes, "application/pdf", fileName);
+            try
+            {
+                var pdfBytes = await _factureService.ExportToPdfAsync(pdfFacture);
+                return File(pdfBytes, "application/pdf", $"Facture_{id}.pdf");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Error generating the PDF.");
+            }
         }
     }
 }

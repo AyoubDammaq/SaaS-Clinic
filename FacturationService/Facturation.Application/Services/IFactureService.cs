@@ -15,6 +15,6 @@ namespace Facturation.Application.Services
         Task<IEnumerable<GetFacturesResponse>> GetAllFacturesByStateAsync(FactureStatus status);
         Task<IEnumerable<GetFacturesResponse>> GetAllFacturesByPatientIdAsync(Guid patientId);
         Task<IEnumerable<GetFacturesResponse>> GetAllFacturesByClinicIdAsync(Guid clinicId);
-        Task<string> ExportToPdfAsync(Facture facture);
+        Task<byte[]> ExportToPdfAsync(Facture facture);
     }
 }

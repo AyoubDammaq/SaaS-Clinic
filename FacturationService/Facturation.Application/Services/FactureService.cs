@@ -195,7 +195,7 @@ namespace Facturation.Application.Services
             });
         }
 
-        public async Task<string> ExportToPdfAsync(Facture facture)
+        public async Task<byte[]> ExportToPdfAsync(Facture facture)
         {
             return await Task.Run(() =>
             {
@@ -216,29 +216,10 @@ namespace Facturation.Application.Services
                 page.Paragraphs.Add(new TextFragment($"Montant total: {facture.MontantTotal:C}"));
                 page.Paragraphs.Add(new TextFragment($"Statut: {facture.Status}"));
 
-                var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "factures");
-                Directory.CreateDirectory(folderPath);
-
-                var filePath = Path.Combine(folderPath, $"Facture_{facture.Id}.pdf");
-                document.Save(filePath);
-
-                return filePath;
+                using var stream = new MemoryStream();
+                document.Save(stream);
+                return stream.ToArray();
             });
-        }
-
-
-        private Facture MapToEntity(FactureDto factureDto)
-        {
-            return new Facture
-            {
-                Id = factureDto.Id,
-                PatientId = factureDto.PatientId,
-                ConsultationId = factureDto.ConsultationId,
-                ClinicId = factureDto.ClinicId,
-                DateEmission = factureDto.DateEmission,
-                MontantTotal = factureDto.MontantTotal,
-                Status = factureDto.Status
-            };
         }
     }
 }
