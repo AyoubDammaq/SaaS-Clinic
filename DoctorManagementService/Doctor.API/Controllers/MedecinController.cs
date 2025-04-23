@@ -233,5 +233,79 @@ namespace Doctor.API.Controllers
                 return StatusCode(500, new { Message = "Une erreur est survenue lors du désabonnement du médecin de la clinique", Details = ex.Message });
             }
         }
+
+        [HttpGet("statistiques/specialite")]
+        public async Task<IActionResult> ObtenirNombreMedecinParSpecialite()
+        {
+            try
+            {
+                var statistiques = await _medecinService.GetNombreMedecinBySpecialite();
+                return Ok(statistiques);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors de la récupération des statistiques", Details = ex.Message });
+            }
+        }
+
+        [HttpGet("statistiques/clinique")]
+        public async Task<IActionResult> ObtenirNombreMedecinParClinique()
+        {
+            try
+            {
+                var statistiques = await _medecinService.GetNombreMedecinByClinique();
+                return Ok(statistiques);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors de la récupération des statistiques", Details = ex.Message });
+            }
+        }
+
+        [HttpGet("statistiques/specialite/clinique/{cliniqueId}")]
+        public async Task<IActionResult> ObtenirNombreMedecinParSpecialiteDansUneClinique(Guid cliniqueId)
+        {
+            try
+            {
+                var statistiques = await _medecinService.GetNombreMedecinBySpecialiteDansUneClinique(cliniqueId);
+                return Ok(statistiques);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors de la récupération des statistiques", Details = ex.Message });
+            }
+        }
+
+        [HttpGet("medecinsIds/clinique/{cliniqueId}")]
+        public async Task<IActionResult> ObtenirMedecinsIdsParCliniqueId(Guid cliniqueId)
+        {
+            try
+            {
+                var medecinsIds = await _medecinService.GetMedecinsIdsByCliniqueId(cliniqueId);
+                return Ok(medecinsIds);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors de la récupération des IDs des médecins", Details = ex.Message });
+            }
+        }
+
+        [HttpGet("activites/{medecinId}")]
+        public async Task<IActionResult> ObtenirActivitesMedecin(Guid medecinId)
+        {
+            try
+            {
+                var activites = await _medecinService.GetActivitesMedecin(medecinId);
+                if (activites == null || !activites.Any())
+                {
+                    return NotFound(new { Message = "Aucune activité trouvée pour ce médecin" });
+                }
+                return Ok(activites);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors de la récupération des activités du médecin", Details = ex.Message });
+            }
+        }
     }
 }

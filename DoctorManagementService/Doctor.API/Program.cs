@@ -26,6 +26,10 @@ builder.Services.AddScoped<IDisponibiliteRepository, DisponibiliteRepository>();
 builder.Services.AddScoped<IMedecinService, MedecinService>();
 builder.Services.AddScoped<IDisponibiliteService, DisponibiliteService>();
 
+
+builder.Services.AddHttpClient<IMedecinRepository, MedecinRepository>();
+
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

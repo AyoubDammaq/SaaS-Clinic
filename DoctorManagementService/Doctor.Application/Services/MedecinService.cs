@@ -227,5 +227,86 @@ namespace Doctor.Application.Services
 
             await _medecinRepository.DesabonnerMedecinDeCliniqueAsync(medecinId);
         }
+
+        public async Task<IEnumerable<StatistiqueMedecinDTO>> GetNombreMedecinBySpecialite()
+        {
+            var statistiques = await _medecinRepository.GetNombreMedecinBySpecialiteAsync();
+            if (statistiques == null || !statistiques.Any())
+            {
+                throw new InvalidOperationException("Aucune statistique trouvée.");
+            }
+            return statistiques.Select(s => new StatistiqueMedecinDTO
+            {
+                Cle = s.Cle,
+                Nombre = s.Nombre
+            });
+        }
+
+        public async Task<IEnumerable<StatistiqueMedecinDTO>> GetNombreMedecinByClinique()
+        {
+            var statistiques = await _medecinRepository.GetNombreMedecinByCliniqueAsync();
+            if (statistiques == null || !statistiques.Any())
+            {
+                throw new InvalidOperationException("Aucune statistique trouvée.");
+            }
+            return statistiques.Select(s => new StatistiqueMedecinDTO
+            {
+                Cle = s.Cle,
+                Nombre = s.Nombre
+            });
+        }
+
+        public async Task<IEnumerable<StatistiqueMedecinDTO>> GetNombreMedecinBySpecialiteDansUneClinique(Guid cliniqueId)
+        {
+            if (cliniqueId == Guid.Empty)
+            {
+                throw new ArgumentException("L'identifiant de la clinique est invalide.", nameof(cliniqueId));
+            }
+            var statistiques = await _medecinRepository.GetNombreMedecinBySpecialiteDansUneCliniqueAsync(cliniqueId);
+            if (statistiques == null || !statistiques.Any())
+            {
+                throw new InvalidOperationException("Aucune statistique trouvée.");
+            }
+            return statistiques.Select(s => new StatistiqueMedecinDTO
+            {
+                Cle = s.Cle,
+                Nombre = s.Nombre
+            });
+        }
+
+        public async Task<IEnumerable<Guid>> GetMedecinsIdsByCliniqueId(Guid cliniqueId)
+        {
+            if (cliniqueId == Guid.Empty)
+            {
+                throw new ArgumentException("L'identifiant de la clinique est invalide.", nameof(cliniqueId));
+            }
+            var medecinsIds = await _medecinRepository.GetMedecinsIdsByCliniqueId(cliniqueId);
+            if (medecinsIds == null || !medecinsIds.Any())
+            {
+                throw new InvalidOperationException("Aucun médecin trouvé pour la clinique spécifiée.");
+            }
+            return medecinsIds;
+        }
+
+
+        public async Task<IEnumerable<ActiviteMedecinDTO>> GetActivitesMedecin(Guid medecinId)
+        {
+            if (medecinId == Guid.Empty)
+            {
+                throw new ArgumentException("L'identifiant du médecin est invalide.", nameof(medecinId));
+            }
+            var activites = await _medecinRepository.GetActivitesMedecinAsync(medecinId);
+            if (activites == null || !activites.Any())
+            {
+                throw new InvalidOperationException("Aucune activité trouvée pour le médecin spécifié.");
+            }
+            return activites.Select(a => new ActiviteMedecinDTO
+            {
+                MedecinId = a.MedecinId,
+                NomComplet = a.NomComplet,
+                NombreConsultations = a.NombreConsultations,
+                NombreRendezVous = a.NombreRendezVous,
+            });
+        }
     }
 }

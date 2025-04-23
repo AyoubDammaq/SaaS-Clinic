@@ -1,85 +1,101 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\",
+  "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.api\\controllers\\disponibilitecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|solutionrelative:doctor.api\\controllers\\disponibilitecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.application\\dtos\\activitemedecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|solutionrelative:doctor.application\\dtos\\activitemedecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.api\\controllers\\medecincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|solutionrelative:doctor.api\\controllers\\medecincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.domain\\entities\\disponibilite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|solutionrelative:doctor.domain\\entities\\disponibilite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.application\\services\\disponibiliteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|solutionrelative:doctor.application\\services\\disponibiliteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.application\\dtos\\medecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|solutionrelative:doctor.application\\dtos\\medecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.application\\interfaces\\imedecinservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|solutionrelative:doctor.application\\interfaces\\imedecinservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.application\\interfaces\\idisponibiliteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|solutionrelative:doctor.application\\interfaces\\idisponibiliteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.application\\services\\medecinservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.application\\services\\medecinservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|solutionrelative:doctor.application\\services\\medecinservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1E363F75-13EB-424D-895E-3931BD0B2F3C}|Doctor.Infrastructure\\Doctor.Infrastructure.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.infrastructure\\repositories\\disponibiliterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1E363F75-13EB-424D-895E-3931BD0B2F3C}|Doctor.Infrastructure\\Doctor.Infrastructure.csproj|solutionrelative:doctor.infrastructure\\repositories\\disponibiliterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1E363F75-13EB-424D-895E-3931BD0B2F3C}|Doctor.Infrastructure\\Doctor.Infrastructure.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.infrastructure\\repositories\\medecinrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1E363F75-13EB-424D-895E-3931BD0B2F3C}|Doctor.Infrastructure\\Doctor.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.infrastructure\\repositories\\medecinrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1E363F75-13EB-424D-895E-3931BD0B2F3C}|Doctor.Infrastructure\\Doctor.Infrastructure.csproj|solutionrelative:doctor.infrastructure\\repositories\\medecinrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1E363F75-13EB-424D-895E-3931BD0B2F3C}|Doctor.Infrastructure\\Doctor.Infrastructure.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.infrastructure\\data\\medecindbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1E363F75-13EB-424D-895E-3931BD0B2F3C}|Doctor.Infrastructure\\Doctor.Infrastructure.csproj|solutionrelative:doctor.infrastructure\\data\\medecindbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.api\\controllers\\medecincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|solutionrelative:doctor.api\\controllers\\medecincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|solutionrelative:doctor.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.domain\\valueobject\\activitemedecin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|solutionrelative:doctor.domain\\valueobject\\activitemedecin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.api\\doctor.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|solutionrelative:doctor.api\\doctor.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.application\\interfaces\\imedecinservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|solutionrelative:doctor.application\\interfaces\\imedecinservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.application\\dtos\\attribuermedecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|solutionrelative:doctor.application\\dtos\\attribuermedecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.domain\\interfaces\\imedecinrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.domain\\interfaces\\imedecinrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|solutionrelative:doctor.domain\\interfaces\\imedecinrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.domain\\interfaces\\idisponibiliterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|solutionrelative:doctor.domain\\interfaces\\idisponibiliterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|solutionrelative:doctor.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.domain\\entities\\medecin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.domain\\entities\\medecin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|solutionrelative:doctor.domain\\entities\\medecin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.application\\doctor.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|solutionrelative:doctor.application\\doctor.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.domain\\interfaces\\idisponibiliterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|solutionrelative:doctor.domain\\interfaces\\idisponibiliterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.domain\\doctor.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.application\\dtos\\statistiquemedecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|solutionrelative:doctor.application\\dtos\\statistiquemedecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.application\\interfaces\\idisponibiliteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|solutionrelative:doctor.application\\interfaces\\idisponibiliteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.domain\\valueobject\\statistiquemedecin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|solutionrelative:doctor.domain\\valueobject\\statistiquemedecin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.domain\\doctor.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|solutionrelative:doctor.domain\\doctor.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1E363F75-13EB-424D-895E-3931BD0B2F3C}|Doctor.Infrastructure\\Doctor.Infrastructure.csproj|c:\\users\\user\\desktop\\doctormanagementservice\\doctor.infrastructure\\doctor.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.api\\controllers\\disponibilitecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|solutionrelative:doctor.api\\controllers\\disponibilitecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.domain\\entities\\disponibilite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34AEA2AB-0808-47D8-9C75-DE5CC28E4291}|Doctor.Domain\\Doctor.Domain.csproj|solutionrelative:doctor.domain\\entities\\disponibilite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.application\\services\\disponibiliteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|solutionrelative:doctor.application\\services\\disponibiliteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.application\\dtos\\medecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|solutionrelative:doctor.application\\dtos\\medecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E363F75-13EB-424D-895E-3931BD0B2F3C}|Doctor.Infrastructure\\Doctor.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.infrastructure\\repositories\\disponibiliterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1E363F75-13EB-424D-895E-3931BD0B2F3C}|Doctor.Infrastructure\\Doctor.Infrastructure.csproj|solutionrelative:doctor.infrastructure\\repositories\\disponibiliterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E363F75-13EB-424D-895E-3931BD0B2F3C}|Doctor.Infrastructure\\Doctor.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.infrastructure\\data\\medecindbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1E363F75-13EB-424D-895E-3931BD0B2F3C}|Doctor.Infrastructure\\Doctor.Infrastructure.csproj|solutionrelative:doctor.infrastructure\\data\\medecindbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.api\\doctor.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{A692C14E-DA81-4D36-988E-7967B2094CC6}|Doctor.API\\Doctor.API.csproj|solutionrelative:doctor.api\\doctor.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.application\\dtos\\attribuermedecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|solutionrelative:doctor.application\\dtos\\attribuermedecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.application\\doctor.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{074CA0A8-E698-48BA-87BE-E5FF51AEB901}|Doctor.Application\\Doctor.Application.csproj|solutionrelative:doctor.application\\doctor.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E363F75-13EB-424D-895E-3931BD0B2F3C}|Doctor.Infrastructure\\Doctor.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\doctormanagementservice\\doctor.infrastructure\\doctor.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{1E363F75-13EB-424D-895E-3931BD0B2F3C}|Doctor.Infrastructure\\Doctor.Infrastructure.csproj|solutionrelative:doctor.infrastructure\\doctor.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
@@ -90,7 +106,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -102,219 +118,115 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DisponibiliteController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.API\\Controllers\\DisponibiliteController.cs",
-              "RelativeDocumentMoniker": "Doctor.API\\Controllers\\DisponibiliteController.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.API\\Controllers\\DisponibiliteController.cs",
-              "RelativeToolTip": "Doctor.API\\Controllers\\DisponibiliteController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T14:26:27.902Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "MedecinController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.API\\Controllers\\MedecinController.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.API\\Controllers\\MedecinController.cs",
               "RelativeDocumentMoniker": "Doctor.API\\Controllers\\MedecinController.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.API\\Controllers\\MedecinController.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.API\\Controllers\\MedecinController.cs",
               "RelativeToolTip": "Doctor.API\\Controllers\\MedecinController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAABkBAAAAAAAAAAAwwCkBAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-17T14:26:02.772Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Disponibilite.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Domain\\Entities\\Disponibilite.cs",
-              "RelativeDocumentMoniker": "Doctor.Domain\\Entities\\Disponibilite.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Domain\\Entities\\Disponibilite.cs",
-              "RelativeToolTip": "Doctor.Domain\\Entities\\Disponibilite.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "ActiviteMedecin.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Domain\\ValueObject\\ActiviteMedecin.cs",
+              "RelativeDocumentMoniker": "Doctor.Domain\\ValueObject\\ActiviteMedecin.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Domain\\ValueObject\\ActiviteMedecin.cs",
+              "RelativeToolTip": "Doctor.Domain\\ValueObject\\ActiviteMedecin.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T14:08:44.892Z",
+              "WhenOpened": "2025-04-23T08:12:09.505Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DisponibiliteService.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Application\\Services\\DisponibiliteService.cs",
-              "RelativeDocumentMoniker": "Doctor.Application\\Services\\DisponibiliteService.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Application\\Services\\DisponibiliteService.cs",
-              "RelativeToolTip": "Doctor.Application\\Services\\DisponibiliteService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T14:14:36.025Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "DisponibiliteRepository.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Infrastructure\\Repositories\\DisponibiliteRepository.cs",
-              "RelativeDocumentMoniker": "Doctor.Infrastructure\\Repositories\\DisponibiliteRepository.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Infrastructure\\Repositories\\DisponibiliteRepository.cs",
-              "RelativeToolTip": "Doctor.Infrastructure\\Repositories\\DisponibiliteRepository.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAawDsAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T14:09:45.878Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "MedecinService.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Application\\Services\\MedecinService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\Services\\MedecinService.cs",
               "RelativeDocumentMoniker": "Doctor.Application\\Services\\MedecinService.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Application\\Services\\MedecinService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\Services\\MedecinService.cs",
               "RelativeToolTip": "Doctor.Application\\Services\\MedecinService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABcBAAAAAAAAAAAmwDMBAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-17T14:14:45.066Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "IDisponibiliteService.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Application\\Interfaces\\IDisponibiliteService.cs",
-              "RelativeDocumentMoniker": "Doctor.Application\\Interfaces\\IDisponibiliteService.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Application\\Interfaces\\IDisponibiliteService.cs",
-              "RelativeToolTip": "Doctor.Application\\Interfaces\\IDisponibiliteService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T14:10:18.886Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IMedecinService.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Application\\Interfaces\\IMedecinService.cs",
-              "RelativeDocumentMoniker": "Doctor.Application\\Interfaces\\IMedecinService.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Application\\Interfaces\\IMedecinService.cs",
-              "RelativeToolTip": "Doctor.Application\\Interfaces\\IMedecinService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAEAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T14:14:27.741Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MedecinDto.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Application\\DTOs\\MedecinDto.cs",
-              "RelativeDocumentMoniker": "Doctor.Application\\DTOs\\MedecinDto.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Application\\DTOs\\MedecinDto.cs",
-              "RelativeToolTip": "Doctor.Application\\DTOs\\MedecinDto.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAnwBwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T14:06:32.533Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 2,
               "Title": "MedecinRepository.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Infrastructure\\Repositories\\MedecinRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Infrastructure\\Repositories\\MedecinRepository.cs",
               "RelativeDocumentMoniker": "Doctor.Infrastructure\\Repositories\\MedecinRepository.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Infrastructure\\Repositories\\MedecinRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Infrastructure\\Repositories\\MedecinRepository.cs",
               "RelativeToolTip": "Doctor.Infrastructure\\Repositories\\MedecinRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAALIAAAAAAAAAAAAqwMUAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-17T14:16:25.767Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "MedecinDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Infrastructure\\Data\\MedecinDbContext.cs",
-              "RelativeDocumentMoniker": "Doctor.Infrastructure\\Data\\MedecinDbContext.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Infrastructure\\Data\\MedecinDbContext.cs",
-              "RelativeToolTip": "Doctor.Infrastructure\\Data\\MedecinDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBAAAABAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "ActiviteMedecinDTO.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\DTOs\\ActiviteMedecinDTO.cs",
+              "RelativeDocumentMoniker": "Doctor.Application\\DTOs\\ActiviteMedecinDTO.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\DTOs\\ActiviteMedecinDTO.cs",
+              "RelativeToolTip": "Doctor.Application\\DTOs\\ActiviteMedecinDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T14:06:07.129Z",
+              "WhenOpened": "2025-04-23T08:11:55.67Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 5,
+              "Title": "IMedecinService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\Interfaces\\IMedecinService.cs",
+              "RelativeDocumentMoniker": "Doctor.Application\\Interfaces\\IMedecinService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\Interfaces\\IMedecinService.cs",
+              "RelativeToolTip": "Doctor.Application\\Interfaces\\IMedecinService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBUAAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T14:14:27.741Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.API\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.API\\Program.cs",
               "RelativeDocumentMoniker": "Doctor.API\\Program.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.API\\Program.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.API\\Program.cs",
               "RelativeToolTip": "Doctor.API\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAqwBwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-17T14:13:35.095Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Doctor.API",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.API\\Doctor.API.csproj",
-              "RelativeDocumentMoniker": "Doctor.API\\Doctor.API.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.API\\Doctor.API.csproj",
-              "RelativeToolTip": "Doctor.API\\Doctor.API.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-17T14:01:23.199Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "AttribuerMedecinDto.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Application\\DTOs\\AttribuerMedecinDto.cs",
-              "RelativeDocumentMoniker": "Doctor.Application\\DTOs\\AttribuerMedecinDto.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Application\\DTOs\\AttribuerMedecinDto.cs",
-              "RelativeToolTip": "Doctor.Application\\DTOs\\AttribuerMedecinDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T14:06:21.593Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 6,
               "Title": "IMedecinRepository.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Domain\\Interfaces\\IMedecinRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Domain\\Interfaces\\IMedecinRepository.cs",
               "RelativeDocumentMoniker": "Doctor.Domain\\Interfaces\\IMedecinRepository.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Domain\\Interfaces\\IMedecinRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Domain\\Interfaces\\IMedecinRepository.cs",
               "RelativeToolTip": "Doctor.Domain\\Interfaces\\IMedecinRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAxwBsAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-17T14:09:35.447Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "IDisponibiliteRepository.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Domain\\Interfaces\\IDisponibiliteRepository.cs",
-              "RelativeDocumentMoniker": "Doctor.Domain\\Interfaces\\IDisponibiliteRepository.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Domain\\Interfaces\\IDisponibiliteRepository.cs",
-              "RelativeToolTip": "Doctor.Domain\\Interfaces\\IDisponibiliteRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T14:09:21.592Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 8,
               "Title": "Medecin.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Domain\\Entities\\Medecin.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Domain\\Entities\\Medecin.cs",
               "RelativeDocumentMoniker": "Doctor.Domain\\Entities\\Medecin.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Domain\\Entities\\Medecin.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Domain\\Entities\\Medecin.cs",
               "RelativeToolTip": "Doctor.Domain\\Entities\\Medecin.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -323,42 +235,185 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Doctor.Application",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Application\\Doctor.Application.csproj",
-              "RelativeDocumentMoniker": "Doctor.Application\\Doctor.Application.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Application\\Doctor.Application.csproj",
-              "RelativeToolTip": "Doctor.Application\\Doctor.Application.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-17T14:02:17.39Z",
+              "DocumentIndex": 9,
+              "Title": "IDisponibiliteRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Domain\\Interfaces\\IDisponibiliteRepository.cs",
+              "RelativeDocumentMoniker": "Doctor.Domain\\Interfaces\\IDisponibiliteRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Domain\\Interfaces\\IDisponibiliteRepository.cs",
+              "RelativeToolTip": "Doctor.Domain\\Interfaces\\IDisponibiliteRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T14:09:21.592Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "StatistiqueMedecinDTO.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\DTOs\\StatistiqueMedecinDTO.cs",
+              "RelativeDocumentMoniker": "Doctor.Application\\DTOs\\StatistiqueMedecinDTO.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\DTOs\\StatistiqueMedecinDTO.cs",
+              "RelativeToolTip": "Doctor.Application\\DTOs\\StatistiqueMedecinDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T10:07:23.353Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IDisponibiliteService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\Interfaces\\IDisponibiliteService.cs",
+              "RelativeDocumentMoniker": "Doctor.Application\\Interfaces\\IDisponibiliteService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\Interfaces\\IDisponibiliteService.cs",
+              "RelativeToolTip": "Doctor.Application\\Interfaces\\IDisponibiliteService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T14:10:18.886Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "StatistiqueMedecin.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Domain\\ValueObject\\StatistiqueMedecin.cs",
+              "RelativeDocumentMoniker": "Doctor.Domain\\ValueObject\\StatistiqueMedecin.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Domain\\ValueObject\\StatistiqueMedecin.cs",
+              "RelativeToolTip": "Doctor.Domain\\ValueObject\\StatistiqueMedecin.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T09:58:31.259Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Doctor.Domain.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Domain\\Doctor.Domain.csproj",
+              "RelativeDocumentMoniker": "Doctor.Domain\\Doctor.Domain.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Domain\\Doctor.Domain.csproj",
+              "RelativeToolTip": "Doctor.Domain\\Doctor.Domain.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-17T14:03:47.275Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DisponibiliteController.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.API\\Controllers\\DisponibiliteController.cs",
+              "RelativeDocumentMoniker": "Doctor.API\\Controllers\\DisponibiliteController.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.API\\Controllers\\DisponibiliteController.cs",
+              "RelativeToolTip": "Doctor.API\\Controllers\\DisponibiliteController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T14:26:27.902Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 18,
-              "Title": "Doctor.Domain",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Domain\\Doctor.Domain.csproj",
-              "RelativeDocumentMoniker": "Doctor.Domain\\Doctor.Domain.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Domain\\Doctor.Domain.csproj",
-              "RelativeToolTip": "Doctor.Domain\\Doctor.Domain.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-17T14:03:47.275Z",
-              "EditorCaption": ""
+              "Title": "DisponibiliteRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Infrastructure\\Repositories\\DisponibiliteRepository.cs",
+              "RelativeDocumentMoniker": "Doctor.Infrastructure\\Repositories\\DisponibiliteRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Infrastructure\\Repositories\\DisponibiliteRepository.cs",
+              "RelativeToolTip": "Doctor.Infrastructure\\Repositories\\DisponibiliteRepository.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAawDsAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T14:09:45.878Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "DisponibiliteService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\Services\\DisponibiliteService.cs",
+              "RelativeDocumentMoniker": "Doctor.Application\\Services\\DisponibiliteService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\Services\\DisponibiliteService.cs",
+              "RelativeToolTip": "Doctor.Application\\Services\\DisponibiliteService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T14:14:36.025Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Disponibilite.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Domain\\Entities\\Disponibilite.cs",
+              "RelativeDocumentMoniker": "Doctor.Domain\\Entities\\Disponibilite.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Domain\\Entities\\Disponibilite.cs",
+              "RelativeToolTip": "Doctor.Domain\\Entities\\Disponibilite.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T14:08:44.892Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "MedecinDto.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\DTOs\\MedecinDto.cs",
+              "RelativeDocumentMoniker": "Doctor.Application\\DTOs\\MedecinDto.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\DTOs\\MedecinDto.cs",
+              "RelativeToolTip": "Doctor.Application\\DTOs\\MedecinDto.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAnwBwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T14:06:32.533Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 19,
-              "Title": "Doctor.Infrastructure",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Infrastructure\\Doctor.Infrastructure.csproj",
+              "Title": "MedecinDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Infrastructure\\Data\\MedecinDbContext.cs",
+              "RelativeDocumentMoniker": "Doctor.Infrastructure\\Data\\MedecinDbContext.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Infrastructure\\Data\\MedecinDbContext.cs",
+              "RelativeToolTip": "Doctor.Infrastructure\\Data\\MedecinDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBAAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T14:06:07.129Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Doctor.API.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.API\\Doctor.API.csproj",
+              "RelativeDocumentMoniker": "Doctor.API\\Doctor.API.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.API\\Doctor.API.csproj",
+              "RelativeToolTip": "Doctor.API\\Doctor.API.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-17T14:01:23.199Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "AttribuerMedecinDto.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\DTOs\\AttribuerMedecinDto.cs",
+              "RelativeDocumentMoniker": "Doctor.Application\\DTOs\\AttribuerMedecinDto.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\DTOs\\AttribuerMedecinDto.cs",
+              "RelativeToolTip": "Doctor.Application\\DTOs\\AttribuerMedecinDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T14:06:21.593Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Doctor.Application.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\Doctor.Application.csproj",
+              "RelativeDocumentMoniker": "Doctor.Application\\Doctor.Application.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Application\\Doctor.Application.csproj",
+              "RelativeToolTip": "Doctor.Application\\Doctor.Application.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-17T14:02:17.39Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Doctor.Infrastructure.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Infrastructure\\Doctor.Infrastructure.csproj",
               "RelativeDocumentMoniker": "Doctor.Infrastructure\\Doctor.Infrastructure.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\DoctorManagementService\\Doctor.Infrastructure\\Doctor.Infrastructure.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\DoctorManagementService\\Doctor.Infrastructure\\Doctor.Infrastructure.csproj",
               "RelativeToolTip": "Doctor.Infrastructure\\Doctor.Infrastructure.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-17T14:02:30.839Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-17T14:02:30.839Z"
             }
           ]
         }
