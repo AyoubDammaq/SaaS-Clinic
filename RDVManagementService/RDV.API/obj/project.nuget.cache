@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "b2Sm1LmiQK4=",
+  "dgSpecHash": "Et6dQEy8HKc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\USER\\Desktop\\RDVManagementService\\RDV.API\\RDV.API.csproj",
+  "projectFilePath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\RDVManagementService\\RDV.API\\RDV.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

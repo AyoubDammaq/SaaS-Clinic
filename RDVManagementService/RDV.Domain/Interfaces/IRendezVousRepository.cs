@@ -14,6 +14,11 @@ namespace RDV.Domain.Interfaces
         Task<IEnumerable<RendezVous>> GetRendezVousByMedecinIdAsync(Guid medecinId);
         Task<IEnumerable<RendezVous>> GetRendezVousByDateAsync(DateTime date);
         Task<IEnumerable<RendezVous>> GetRendezVousByStatutAsync(RDVstatus statut);
+        Task<IEnumerable<RendezVous>> GetRendezVousByPeriod(DateTime start, DateTime end);
+
+        Task<int> CountDistinctPatientsByMedecinIdsAsync(List<Guid> medecinIds);
+        Task<int> CountByMedecinIdsAsync(List<Guid> medecinIds);
+
         Task ConfirmerRendezVousParMedecin(Guid rendezVousId);
         Task AnnulerRendezVousParMedecin(Guid rendezVousId, string justification);
     }

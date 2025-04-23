@@ -120,5 +120,45 @@ namespace RDV.Application.Services
             }
             await _rendezVousRepository.AnnulerRendezVousParMedecin(rendezVousId, justification);
         }
+
+
+        public async Task<IEnumerable<RendezVousStatDTO>> GetStatistiquesAsync(DateTime dateDebut, DateTime dateFin)
+        {
+            var rendezVous = await _rendezVousRepository.GetRendezVousByPeriod(dateDebut, dateFin);
+
+            var stats = rendezVous
+                .GroupBy(r => r.DateHeure.Date)
+                .Select(group => new RendezVousStatDTO
+                {
+                    Date = group.Key,
+                    TotalRendezVous = group.Count(),
+                    Confirmes = group.Count(r => r.Statut == RDVstatus.CONFIRME),
+                    Annules = group.Count(r => r.Statut == RDVstatus.ANNULE),
+                    EnAttente = group.Count(r => r.Statut == RDVstatus.EN_ATTENTE)
+                })
+                .OrderBy(s => s.Date)
+                .ToList();
+
+            return stats;
+        }
+
+        public async Task<int> CountDistinctPatientsByMedecinIdsAsync(List<Guid> medecinIds)
+        {
+            if (medecinIds == null || !medecinIds.Any())
+            {
+                throw new ArgumentException("La liste des identifiants de médecins ne peut pas être vide.", nameof(medecinIds));
+            }
+            return await _rendezVousRepository.CountDistinctPatientsByMedecinIdsAsync(medecinIds);
+        }
+
+        public async Task<int> CountByMedecinIdsAsync(List<Guid> medecinIds)
+        {
+            if (medecinIds == null || !medecinIds.Any())
+            {
+                throw new ArgumentException("La liste des identifiants de médecins ne peut pas être vide.", nameof(medecinIds));
+            }
+            return await _rendezVousRepository.CountByMedecinIdsAsync(medecinIds);
+
+        }
     }
 }

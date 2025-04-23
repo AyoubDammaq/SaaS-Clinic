@@ -18,7 +18,7 @@ namespace RDVManagementService.Controllers
             _rendezVousService = rendezVousService;
         }
 
-        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
+        //[Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RendezVous>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -174,7 +174,7 @@ namespace RDVManagementService.Controllers
             }
         }
 
-        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
+        //[Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpGet("medecin/{medecinId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RendezVous>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -293,5 +293,53 @@ namespace RDVManagementService.Controllers
                 return StatusCode(500, $"Erreur interne du serveur: {ex.Message}");
             }
         }
+
+
+        [HttpGet("period")]
+        public async Task<ActionResult<IEnumerable<RendezVous>>> GetStats([FromQuery] DateTime start, [FromQuery] DateTime end)
+        {
+            try
+            {
+                var rendezVous = await _rendezVousService.GetStatistiquesAsync(start, end);
+                if (rendezVous == null || !rendezVous.Any())
+                {
+                    return NotFound("Rendez-vous non trouvé");
+                }
+                return Ok(rendezVous);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur interne du serveur: {ex.Message}");
+            }
+        }
+
+        [HttpGet("count")]
+        public async Task<ActionResult<int>> CountRendezVous([FromQuery] List<Guid> medecinIds)
+        {
+            try
+            {
+                var count = await _rendezVousService.CountByMedecinIdsAsync(medecinIds);
+                return Ok(count);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur interne du serveur: {ex.Message}");
+            }
+        }
+
+        [HttpGet("distinct/patients")]
+        public async Task<ActionResult<int>> CountDistinctPatients([FromQuery] List<Guid> medecinIds)
+        {
+            try
+            {
+                var count = await _rendezVousService.CountDistinctPatientsByMedecinIdsAsync(medecinIds);
+                return Ok(count);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur interne du serveur: {ex.Message}");
+            }
+        }
+
     }
 }

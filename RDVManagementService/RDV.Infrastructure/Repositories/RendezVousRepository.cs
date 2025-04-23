@@ -88,6 +88,29 @@ namespace RDV.Infrastructure.Repositories
             return await _context.RendezVous.Where(r => r.Statut == statut).ToListAsync();
         }
 
+        public async Task<IEnumerable<RendezVous>> GetRendezVousByPeriod(DateTime start, DateTime end)
+        {
+            return await _context.RendezVous
+                .Where(r => r.DateHeure >= start && r.DateHeure <= end)
+                .ToListAsync();
+        }
+
+
+        public async Task<int> CountByMedecinIdsAsync(List<Guid> medecinIds)
+        {
+            return await _context.RendezVous
+                .CountAsync(r => medecinIds.Contains(r.MedecinId));
+        }
+
+        public async Task<int> CountDistinctPatientsByMedecinIdsAsync(List<Guid> medecinIds)
+        {
+            return await _context.RendezVous
+                .Where(r => medecinIds.Contains(r.MedecinId))
+                .Select(r => r.PatientId)
+                .Distinct()
+                .CountAsync();
+        }
+
         public async Task ConfirmerRendezVousParMedecin(Guid rendezVousId)
         {
             var rendezVous = await _context.RendezVous.FindAsync(rendezVousId);
