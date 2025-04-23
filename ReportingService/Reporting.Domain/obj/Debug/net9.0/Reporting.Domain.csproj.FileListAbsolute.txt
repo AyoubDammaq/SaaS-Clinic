@@ -1,0 +1,11 @@
+C:\Users\USER\Desktop\ReportingService\Reporting.Domain\bin\Debug\net9.0\Reporting.Domain.deps.json
+C:\Users\USER\Desktop\ReportingService\Reporting.Domain\bin\Debug\net9.0\Reporting.Domain.dll
+C:\Users\USER\Desktop\ReportingService\Reporting.Domain\bin\Debug\net9.0\Reporting.Domain.pdb
+C:\Users\USER\Desktop\ReportingService\Reporting.Domain\obj\Debug\net9.0\Reporting.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Desktop\ReportingService\Reporting.Domain\obj\Debug\net9.0\Reporting.Domain.AssemblyInfoInputs.cache
+C:\Users\USER\Desktop\ReportingService\Reporting.Domain\obj\Debug\net9.0\Reporting.Domain.AssemblyInfo.cs
+C:\Users\USER\Desktop\ReportingService\Reporting.Domain\obj\Debug\net9.0\Reporting.Domain.csproj.CoreCompileInputs.cache
+C:\Users\USER\Desktop\ReportingService\Reporting.Domain\obj\Debug\net9.0\Reporting.Domain.dll
+C:\Users\USER\Desktop\ReportingService\Reporting.Domain\obj\Debug\net9.0\refint\Reporting.Domain.dll
+C:\Users\USER\Desktop\ReportingService\Reporting.Domain\obj\Debug\net9.0\Reporting.Domain.pdb
+C:\Users\USER\Desktop\ReportingService\Reporting.Domain\obj\Debug\net9.0\ref\Reporting.Domain.dll
