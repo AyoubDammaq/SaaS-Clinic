@@ -159,6 +159,52 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Facturation.API.Controllers.FactureController",
+    "Method": "GetNombreDeFactureParClinique",
+    "RelativePath": "api/Facture/stats/clinic",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Facturation.API.Controllers.FactureController",
+    "Method": "GetNombreDeFactureByStatus",
+    "RelativePath": "api/Facture/stats/status",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Facturation.API.Controllers.FactureController",
+    "Method": "GetNombreDeFacturesByStatusParClinique",
+    "RelativePath": "api/Facture/stats/status/clinic",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Facturation.API.Controllers.FactureController",
+    "Method": "GetNombreDeFacturesByStatusDansUneClinique",
+    "RelativePath": "api/Facture/stats/status/clinic/{clinicId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "clinicId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Facturation.API.Controllers.PaiementController",
     "Method": "PayerFacture",
     "RelativePath": "api/Paiement/payer/{factureId}",

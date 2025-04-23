@@ -1,6 +1,7 @@
 ﻿using Facturation.Application.DTOs;
 using Facturation.Domain.Entities;
 using Facturation.Domain.Enums;
+using Facturation.Domain.ValueObjects;
 
 namespace Facturation.Application.Interfaces
 {
@@ -16,5 +17,10 @@ namespace Facturation.Application.Interfaces
         Task<IEnumerable<GetFacturesResponse>> GetAllFacturesByPatientIdAsync(Guid patientId);
         Task<IEnumerable<GetFacturesResponse>> GetAllFacturesByClinicIdAsync(Guid clinicId);
         Task<byte[]> ExportToPdfAsync(Facture facture);
+
+        Task<IEnumerable<FactureStatsDTO>> GetNombreDeFactureByStatus();
+        Task<IEnumerable<FactureStatsDTO>> GetNombreDeFactureParClinique();
+        Task<IEnumerable<FactureStatsDTO>> GetNombreDeFacturesByStatusParClinique();
+        Task<IEnumerable<FactureStatsDTO>> GetNombreDeFacturesByStatusDansUneClinique(Guid cliniqueId);
     }
 }

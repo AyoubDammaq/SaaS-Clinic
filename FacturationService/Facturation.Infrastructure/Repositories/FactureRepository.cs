@@ -1,6 +1,7 @@
 ﻿using Facturation.Domain.Entities;
 using Facturation.Domain.Enums;
 using Facturation.Domain.Interfaces;
+using Facturation.Domain.ValueObjects;
 using Facturation.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -72,6 +73,55 @@ namespace Facturation.Infrastructure.Repositories
         {
             return await _context.Factures
                 .Where(f => f.ClinicId == clinicId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<FactureStats>> GetNombreDeFactureByStatusAsync()
+        {
+            return await _context.Factures
+               .GroupBy(f => f.Status)
+               .Select(g => new FactureStats
+               {
+                   Cle = g.Key.ToString(),
+                   Nombre = g.Count()
+               })
+               .ToListAsync();
+        }
+
+        public async Task<IEnumerable<FactureStats>> GetNombreDeFactureParCliniqueAsync()
+        {
+            return await _context.Factures
+                .GroupBy(f => f.ClinicId)
+                .Select(g => new FactureStats
+                {
+                    Cle = g.Key.ToString(), 
+                    Nombre = g.Count()
+                })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<FactureStats>> GetNombreDeFacturesByStatusParCliniqueAsync()
+        {
+            return await _context.Factures
+                .GroupBy(f => new { f.ClinicId, f.Status })
+                .Select(g => new FactureStats
+                {
+                    Cle = g.Key.ToString(), 
+                    Nombre = g.Count()
+                })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<FactureStats>> GetNombreDeFacturesByStatusDansUneCliniqueAsync(Guid cliniqueId)
+        {
+            return await _context.Factures
+                .Where(f => f.ClinicId == cliniqueId)
+                .GroupBy(f => f.ClinicId)
+                .Select(g => new FactureStats
+                {
+                    Cle = g.Key.ToString(),
+                    Nombre = g.Count()
+                })
                 .ToListAsync();
         }
     }

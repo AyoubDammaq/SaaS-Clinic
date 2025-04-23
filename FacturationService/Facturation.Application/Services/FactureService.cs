@@ -222,5 +222,59 @@ namespace Facturation.Application.Services
                 return stream.ToArray();
             });
         }
+
+        public async Task<IEnumerable<FactureStatsDTO>> GetNombreDeFactureByStatus()
+        {
+            var stats = await _factureRepository.GetNombreDeFactureByStatusAsync();
+            if (!stats.Any())
+                throw new InvalidOperationException("Aucune statistique de facture trouvée.");
+
+            return stats.Select(s => new FactureStatsDTO
+            {
+                Cle = s.Cle,
+                Nombre = s.Nombre
+            });
+
+        }
+
+        public async Task<IEnumerable<FactureStatsDTO>> GetNombreDeFactureParClinique()
+        {
+            var stats = await _factureRepository.GetNombreDeFactureParCliniqueAsync();
+            if (!stats.Any())
+                throw new InvalidOperationException("Aucune statistique de facture trouvée.");
+            return stats.Select(s => new FactureStatsDTO
+            {
+                Cle = s.Cle,
+                Nombre = s.Nombre
+            });
+        }
+
+        public async Task<IEnumerable<FactureStatsDTO>> GetNombreDeFacturesByStatusParClinique()
+        {
+            var stats = await _factureRepository.GetNombreDeFacturesByStatusParCliniqueAsync();
+            if (!stats.Any())
+                throw new InvalidOperationException("Aucune statistique de facture trouvée.");
+            return stats.Select(s => new FactureStatsDTO
+            {
+                Cle = s.Cle,
+                Nombre = s.Nombre
+            });
+        }
+
+        public async Task<IEnumerable<FactureStatsDTO>> GetNombreDeFacturesByStatusDansUneClinique(Guid cliniqueId)
+        {
+            if (cliniqueId == Guid.Empty)
+                throw new ArgumentException("L'identifiant de la clinique ne peut pas être vide.", nameof(cliniqueId));
+            var stats = await _factureRepository.GetNombreDeFacturesByStatusDansUneCliniqueAsync(cliniqueId);
+            if (!stats.Any())
+                throw new InvalidOperationException("Aucune statistique de facture trouvée.");
+            return stats.Select(s => new FactureStatsDTO
+            {
+                Cle = s.Cle,
+                Nombre = s.Nombre
+            });
+        }
+
+
     }
 }

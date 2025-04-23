@@ -239,6 +239,65 @@
         }
       }
     },
+    "/api/Facture/stats/status": {
+      "get": {
+        "tags": [
+          "Facture"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Facture/stats/clinic": {
+      "get": {
+        "tags": [
+          "Facture"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Facture/stats/status/clinic": {
+      "get": {
+        "tags": [
+          "Facture"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Facture/stats/status/clinic/{clinicId}": {
+      "get": {
+        "tags": [
+          "Facture"
+        ],
+        "parameters": [
+          {
+            "name": "clinicId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Paiement/payer/{factureId}": {
       "post": {
         "tags": [

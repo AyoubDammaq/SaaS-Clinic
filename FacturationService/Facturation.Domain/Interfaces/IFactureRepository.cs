@@ -1,5 +1,6 @@
 ﻿using Facturation.Domain.Entities;
 using Facturation.Domain.Enums;
+using Facturation.Domain.ValueObjects;
 
 namespace Facturation.Domain.Interfaces
 {
@@ -14,5 +15,10 @@ namespace Facturation.Domain.Interfaces
         Task<IEnumerable<Facture>> GetAllFacturesByStateAsync(FactureStatus status);
         Task<IEnumerable<Facture>> GetAllFacturesByPatientIdAsync(Guid patientId);
         Task<IEnumerable<Facture>> GetAllFacturesByClinicIdAsync(Guid clinicId);
+
+        Task<IEnumerable<FactureStats>> GetNombreDeFactureByStatusAsync();
+        Task<IEnumerable<FactureStats>> GetNombreDeFactureParCliniqueAsync();
+        Task<IEnumerable<FactureStats>> GetNombreDeFacturesByStatusParCliniqueAsync();
+        Task<IEnumerable<FactureStats>> GetNombreDeFacturesByStatusDansUneCliniqueAsync(Guid cliniqueId);
     }
 }

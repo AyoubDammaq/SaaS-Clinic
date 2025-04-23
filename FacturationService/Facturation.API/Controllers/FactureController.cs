@@ -205,5 +205,61 @@ namespace Facturation.API.Controllers
                 return StatusCode(500, "Error generating the PDF.");
             }
         }
+
+        [HttpGet("stats/status")]
+        public async Task<IActionResult> GetNombreDeFactureByStatus()
+        {
+            try
+            {
+                var stats = await _factureService.GetNombreDeFactureByStatus();
+                return Ok(stats);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("stats/clinic")]
+        public async Task<IActionResult> GetNombreDeFactureParClinique()
+        {
+            try
+            {
+                var stats = await _factureService.GetNombreDeFactureParClinique();
+                return Ok(stats);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("stats/status/clinic")]
+        public async Task<IActionResult> GetNombreDeFacturesByStatusParClinique()
+        {
+            try
+            {
+                var stats = await _factureService.GetNombreDeFacturesByStatusParClinique();
+                return Ok(stats);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("stats/status/clinic/{clinicId}")]
+        public async Task<IActionResult> GetNombreDeFacturesByStatusDansUneClinique(Guid clinicId)
+        {
+            try
+            {
+                var stats = await _factureService.GetNombreDeFacturesByStatusDansUneClinique(clinicId);
+                return Ok(stats);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }
