@@ -1,6 +1,0 @@
-@RessourceManagementService_HostAddress = http://localhost:5282
-
-GET {{RessourceManagementService_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
