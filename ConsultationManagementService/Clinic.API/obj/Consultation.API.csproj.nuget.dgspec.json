@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Clinic.API\\Consultation.API.csproj": {}
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Clinic.API\\Consultation.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Clinic.API\\Consultation.API.csproj": {
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Clinic.API\\Consultation.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Clinic.API\\Consultation.API.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Clinic.API\\Consultation.API.csproj",
         "projectName": "Consultation.API",
-        "projectPath": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Clinic.API\\Consultation.API.csproj",
+        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Clinic.API\\Consultation.API.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Clinic.API\\obj\\",
+        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Clinic.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -34,14 +34,14 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\Consultation.Application.csproj": {
-                "projectPath": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\Consultation.Application.csproj"
+              "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\Consultation.Application.csproj": {
+                "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\Consultation.Application.csproj"
               },
-              "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj": {
-                "projectPath": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj"
+              "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj": {
+                "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj"
               },
-              "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Infrastructure\\Consultation.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Infrastructure\\Consultation.Infrastructure.csproj"
+              "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Infrastructure\\Consultation.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Infrastructure\\Consultation.Infrastructure.csproj"
               }
             }
           }
@@ -110,14 +110,14 @@
         }
       }
     },
-    "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\Consultation.Application.csproj": {
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\Consultation.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\Consultation.Application.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\Consultation.Application.csproj",
         "projectName": "Consultation.Application",
-        "projectPath": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\Consultation.Application.csproj",
+        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\Consultation.Application.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\obj\\",
+        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -140,8 +140,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj": {
-                "projectPath": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj"
+              "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj": {
+                "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj"
               }
             }
           }
@@ -181,14 +181,14 @@
         }
       }
     },
-    "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj": {
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj",
         "projectName": "Consultation.Domain",
-        "projectPath": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj",
+        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\obj\\",
+        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -248,14 +248,14 @@
         }
       }
     },
-    "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Infrastructure\\Consultation.Infrastructure.csproj": {
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Infrastructure\\Consultation.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Infrastructure\\Consultation.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Infrastructure\\Consultation.Infrastructure.csproj",
         "projectName": "Consultation.Infrastructure",
-        "projectPath": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Infrastructure\\Consultation.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Infrastructure\\Consultation.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -278,8 +278,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj": {
-                "projectPath": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj"
+              "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj": {
+                "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj"
               }
             }
           }

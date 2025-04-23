@@ -307,5 +307,24 @@ namespace ConsultationManagementService.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+        [HttpGet("count")]
+        public async Task<IActionResult> GetNombreConsultations([FromQuery] DateTime start, [FromQuery] DateTime end)
+        {
+            var count = await _consultationService.GetNombreConsultationsAsync(start, end);
+            return Ok(count);
+        }
+
+        [HttpGet("countByMedecinIds")]
+        public async Task<IActionResult> GetCountByMedecinIds([FromQuery] List<Guid> medecinIds)
+        {
+            if (medecinIds == null || !medecinIds.Any())
+            {
+                return BadRequest("La liste des identifiants de médecins ne peut pas être vide.");
+            }
+            var count = await _consultationService.CountByMedecinIds(medecinIds);
+            return Ok(count);
+        }
+
     }
 }

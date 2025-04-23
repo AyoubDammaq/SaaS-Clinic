@@ -98,6 +98,19 @@ namespace ConsultationManagementService.Repositories
                 .ToListAsync();
         }
 
+        public Task<int> CountConsultationsAsync(DateTime dateDebut, DateTime dateFin)
+        {
+            return _context.Consultations
+                .Where(c => c.DateConsultation >= dateDebut && c.DateConsultation <= dateFin)
+                .CountAsync();
+        }
+
+        public async Task<int> CountByMedecinIdsAsync(List<Guid> medecinIds)
+        {
+            return await _context.Consultations
+                .CountAsync(c => medecinIds.Contains(c.MedecinId));
+        }
+
         public async Task<DocumentMedical?> GetDocumentMedicalByIdAsync(Guid id)
         {
             return await _context.DocumentsMedicaux

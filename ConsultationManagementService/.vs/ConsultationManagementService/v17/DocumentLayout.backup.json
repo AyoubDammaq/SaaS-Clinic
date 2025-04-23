@@ -1,65 +1,65 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\",
+  "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3FE9327D-68D5-4057-820F-0B2F8C2B4A25}|Clinic.API\\Consultation.API.csproj|c:\\users\\user\\desktop\\consultationmanagementservice\\clinic.api\\controllers\\consultationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{3FE9327D-68D5-4057-820F-0B2F8C2B4A25}|Clinic.API\\Consultation.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\clinic.api\\controllers\\consultationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3FE9327D-68D5-4057-820F-0B2F8C2B4A25}|Clinic.API\\Consultation.API.csproj|solutionrelative:clinic.api\\controllers\\consultationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3FE9327D-68D5-4057-820F-0B2F8C2B4A25}|Clinic.API\\Consultation.API.csproj|c:\\users\\user\\desktop\\consultationmanagementservice\\clinic.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3FE9327D-68D5-4057-820F-0B2F8C2B4A25}|Clinic.API\\Consultation.API.csproj|solutionrelative:clinic.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3FE9327D-68D5-4057-820F-0B2F8C2B4A25}|Clinic.API\\Consultation.API.csproj|c:\\users\\user\\desktop\\consultationmanagementservice\\clinic.api\\consultation.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{3FE9327D-68D5-4057-820F-0B2F8C2B4A25}|Clinic.API\\Consultation.API.csproj|solutionrelative:clinic.api\\consultation.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{925E9BBB-F55A-4FA4-A4B0-CACC94ADD8EF}|Consultation.Infrastructure\\Consultation.Infrastructure.csproj|c:\\users\\user\\desktop\\consultationmanagementservice\\consultation.infrastructure\\data\\consultationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{925E9BBB-F55A-4FA4-A4B0-CACC94ADD8EF}|Consultation.Infrastructure\\Consultation.Infrastructure.csproj|solutionrelative:consultation.infrastructure\\data\\consultationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|c:\\users\\user\\desktop\\consultationmanagementservice\\consultation.application\\services\\consultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\consultation.application\\services\\consultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|solutionrelative:consultation.application\\services\\consultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|c:\\users\\user\\desktop\\consultationmanagementservice\\consultation.application\\interfaces\\iconsultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\consultation.application\\interfaces\\iconsultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|solutionrelative:consultation.application\\interfaces\\iconsultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|c:\\users\\user\\desktop\\consultationmanagementservice\\consultation.application\\dtos\\documentmedicaldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|solutionrelative:consultation.application\\dtos\\documentmedicaldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|c:\\users\\user\\desktop\\consultationmanagementservice\\consultation.application\\dtos\\consultationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|solutionrelative:consultation.application\\dtos\\consultationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{925E9BBB-F55A-4FA4-A4B0-CACC94ADD8EF}|Consultation.Infrastructure\\Consultation.Infrastructure.csproj|c:\\users\\user\\desktop\\consultationmanagementservice\\consultation.infrastructure\\repositories\\consultationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{925E9BBB-F55A-4FA4-A4B0-CACC94ADD8EF}|Consultation.Infrastructure\\Consultation.Infrastructure.csproj|solutionrelative:consultation.infrastructure\\repositories\\consultationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{88611FEB-0670-40E8-BFBF-344092C15679}|Consultation.Domain\\Consultation.Domain.csproj|c:\\users\\user\\desktop\\consultationmanagementservice\\consultation.domain\\interfaces\\iconsultationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{88611FEB-0670-40E8-BFBF-344092C15679}|Consultation.Domain\\Consultation.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\consultation.domain\\interfaces\\iconsultationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{88611FEB-0670-40E8-BFBF-344092C15679}|Consultation.Domain\\Consultation.Domain.csproj|solutionrelative:consultation.domain\\interfaces\\iconsultationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{88611FEB-0670-40E8-BFBF-344092C15679}|Consultation.Domain\\Consultation.Domain.csproj|c:\\users\\user\\desktop\\consultationmanagementservice\\consultation.domain\\entities\\consultation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{925E9BBB-F55A-4FA4-A4B0-CACC94ADD8EF}|Consultation.Infrastructure\\Consultation.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\consultation.infrastructure\\repositories\\consultationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{925E9BBB-F55A-4FA4-A4B0-CACC94ADD8EF}|Consultation.Infrastructure\\Consultation.Infrastructure.csproj|solutionrelative:consultation.infrastructure\\repositories\\consultationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{88611FEB-0670-40E8-BFBF-344092C15679}|Consultation.Domain\\Consultation.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\consultation.domain\\entities\\consultation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{88611FEB-0670-40E8-BFBF-344092C15679}|Consultation.Domain\\Consultation.Domain.csproj|solutionrelative:consultation.domain\\entities\\consultation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3FE9327D-68D5-4057-820F-0B2F8C2B4A25}|Clinic.API\\Consultation.API.csproj|c:\\users\\user\\desktop\\consultationmanagementservice\\clinic.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{3FE9327D-68D5-4057-820F-0B2F8C2B4A25}|Clinic.API\\Consultation.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\clinic.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3FE9327D-68D5-4057-820F-0B2F8C2B4A25}|Clinic.API\\Consultation.API.csproj|solutionrelative:clinic.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3FE9327D-68D5-4057-820F-0B2F8C2B4A25}|Clinic.API\\Consultation.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\clinic.api\\consultation.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{3FE9327D-68D5-4057-820F-0B2F8C2B4A25}|Clinic.API\\Consultation.API.csproj|solutionrelative:clinic.api\\consultation.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{925E9BBB-F55A-4FA4-A4B0-CACC94ADD8EF}|Consultation.Infrastructure\\Consultation.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\consultation.infrastructure\\data\\consultationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{925E9BBB-F55A-4FA4-A4B0-CACC94ADD8EF}|Consultation.Infrastructure\\Consultation.Infrastructure.csproj|solutionrelative:consultation.infrastructure\\data\\consultationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\consultation.application\\dtos\\documentmedicaldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|solutionrelative:consultation.application\\dtos\\documentmedicaldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\consultation.application\\dtos\\consultationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|solutionrelative:consultation.application\\dtos\\consultationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3FE9327D-68D5-4057-820F-0B2F8C2B4A25}|Clinic.API\\Consultation.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\clinic.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{3FE9327D-68D5-4057-820F-0B2F8C2B4A25}|Clinic.API\\Consultation.API.csproj|solutionrelative:clinic.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|c:\\users\\user\\desktop\\consultationmanagementservice\\consultation.application\\consultation.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\consultation.application\\consultation.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{17115C78-0568-4D02-8FD8-78A632348B1F}|Consultation.Application\\Consultation.Application.csproj|solutionrelative:consultation.application\\consultation.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{925E9BBB-F55A-4FA4-A4B0-CACC94ADD8EF}|Consultation.Infrastructure\\Consultation.Infrastructure.csproj|c:\\users\\user\\desktop\\consultationmanagementservice\\consultation.infrastructure\\consultation.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{925E9BBB-F55A-4FA4-A4B0-CACC94ADD8EF}|Consultation.Infrastructure\\Consultation.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\consultation.infrastructure\\consultation.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{925E9BBB-F55A-4FA4-A4B0-CACC94ADD8EF}|Consultation.Infrastructure\\Consultation.Infrastructure.csproj|solutionrelative:consultation.infrastructure\\consultation.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{88611FEB-0670-40E8-BFBF-344092C15679}|Consultation.Domain\\Consultation.Domain.csproj|c:\\users\\user\\desktop\\consultationmanagementservice\\consultation.domain\\consultation.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{88611FEB-0670-40E8-BFBF-344092C15679}|Consultation.Domain\\Consultation.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\consultationmanagementservice\\consultation.domain\\consultation.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{88611FEB-0670-40E8-BFBF-344092C15679}|Consultation.Domain\\Consultation.Domain.csproj|solutionrelative:consultation.domain\\consultation.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
@@ -70,7 +70,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -82,104 +82,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ConsultationController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Clinic.API\\Controllers\\ConsultationController.cs",
-              "RelativeDocumentMoniker": "Clinic.API\\Controllers\\ConsultationController.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Clinic.API\\Controllers\\ConsultationController.cs*",
-              "RelativeToolTip": "Clinic.API\\Controllers\\ConsultationController.cs*",
-              "ViewState": "AgIAACcAAAAAAAAAAAAYwEEAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T10:35:23.678Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "ConsultationService.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\Services\\ConsultationService.cs",
-              "RelativeDocumentMoniker": "Consultation.Application\\Services\\ConsultationService.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\Services\\ConsultationService.cs",
-              "RelativeToolTip": "Consultation.Application\\Services\\ConsultationService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T10:34:57.514Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IConsultationService.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\Interfaces\\IConsultationService.cs",
-              "RelativeDocumentMoniker": "Consultation.Application\\Interfaces\\IConsultationService.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\Interfaces\\IConsultationService.cs",
-              "RelativeToolTip": "Consultation.Application\\Interfaces\\IConsultationService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T10:34:35.382Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "DocumentMedicalDTO.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\DTOs\\DocumentMedicalDTO.cs",
-              "RelativeDocumentMoniker": "Consultation.Application\\DTOs\\DocumentMedicalDTO.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\DTOs\\DocumentMedicalDTO.cs",
-              "RelativeToolTip": "Consultation.Application\\DTOs\\DocumentMedicalDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T10:34:32.822Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Clinic.API\\Program.cs",
-              "RelativeDocumentMoniker": "Clinic.API\\Program.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Clinic.API\\Program.cs",
-              "RelativeToolTip": "Clinic.API\\Program.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAcwDQAAABLAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T10:29:25.115Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Consultation.API.csproj",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Clinic.API\\Consultation.API.csproj",
-              "RelativeDocumentMoniker": "Clinic.API\\Consultation.API.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Clinic.API\\Consultation.API.csproj",
-              "RelativeToolTip": "Clinic.API\\Consultation.API.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-19T10:10:56.447Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ConsultationDTO.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\DTOs\\ConsultationDTO.cs",
-              "RelativeDocumentMoniker": "Consultation.Application\\DTOs\\ConsultationDTO.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\DTOs\\ConsultationDTO.cs",
-              "RelativeToolTip": "Consultation.Application\\DTOs\\ConsultationDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T10:34:29.814Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
               "Title": "ConsultationRepository.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Infrastructure\\Repositories\\ConsultationRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Infrastructure\\Repositories\\ConsultationRepository.cs",
               "RelativeDocumentMoniker": "Consultation.Infrastructure\\Repositories\\ConsultationRepository.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Infrastructure\\Repositories\\ConsultationRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Infrastructure\\Repositories\\ConsultationRepository.cs",
               "RelativeToolTip": "Consultation.Infrastructure\\Repositories\\ConsultationRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAUwGsAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-19T10:33:35.414Z",
               "EditorCaption": ""
@@ -187,93 +96,175 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ConsultationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Infrastructure\\Data\\ConsultationDbContext.cs",
-              "RelativeDocumentMoniker": "Consultation.Infrastructure\\Data\\ConsultationDbContext.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Infrastructure\\Data\\ConsultationDbContext.cs",
-              "RelativeToolTip": "Consultation.Infrastructure\\Data\\ConsultationDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T10:32:38.435Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
               "Title": "IConsultationRepository.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\Interfaces\\IConsultationRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\Interfaces\\IConsultationRepository.cs",
               "RelativeDocumentMoniker": "Consultation.Domain\\Interfaces\\IConsultationRepository.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\Interfaces\\IConsultationRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\Interfaces\\IConsultationRepository.cs",
               "RelativeToolTip": "Consultation.Domain\\Interfaces\\IConsultationRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-19T10:32:06.566Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 0,
+              "Title": "ConsultationController.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Clinic.API\\Controllers\\ConsultationController.cs",
+              "RelativeDocumentMoniker": "Clinic.API\\Controllers\\ConsultationController.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Clinic.API\\Controllers\\ConsultationController.cs",
+              "RelativeToolTip": "Clinic.API\\Controllers\\ConsultationController.cs",
+              "ViewState": "AgIAACwBAAAAAAAAAAAuwEYBAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T10:35:23.678Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ConsultationService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\Services\\ConsultationService.cs",
+              "RelativeDocumentMoniker": "Consultation.Application\\Services\\ConsultationService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\Services\\ConsultationService.cs",
+              "RelativeToolTip": "Consultation.Application\\Services\\ConsultationService.cs",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAIwIkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T10:34:57.514Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IConsultationService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\Interfaces\\IConsultationService.cs",
+              "RelativeDocumentMoniker": "Consultation.Application\\Interfaces\\IConsultationService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\Interfaces\\IConsultationService.cs",
+              "RelativeToolTip": "Consultation.Application\\Interfaces\\IConsultationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T10:34:35.382Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "Consultation.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\Entities\\Consultation.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\Entities\\Consultation.cs",
               "RelativeDocumentMoniker": "Consultation.Domain\\Entities\\Consultation.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\Entities\\Consultation.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\Entities\\Consultation.cs",
               "RelativeToolTip": "Consultation.Domain\\Entities\\Consultation.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAxwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-19T10:31:54.662Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ConsultationDTO.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\DTOs\\ConsultationDTO.cs",
+              "RelativeDocumentMoniker": "Consultation.Application\\DTOs\\ConsultationDTO.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\DTOs\\ConsultationDTO.cs",
+              "RelativeToolTip": "Consultation.Application\\DTOs\\ConsultationDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T10:34:29.814Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Consultation.API.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Clinic.API\\Consultation.API.csproj",
+              "RelativeDocumentMoniker": "Clinic.API\\Consultation.API.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Clinic.API\\Consultation.API.csproj",
+              "RelativeToolTip": "Clinic.API\\Consultation.API.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-19T10:10:56.447Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Clinic.API\\Program.cs",
+              "RelativeDocumentMoniker": "Clinic.API\\Program.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Clinic.API\\Program.cs",
+              "RelativeToolTip": "Clinic.API\\Program.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAcwDQAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T10:29:25.115Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DocumentMedicalDTO.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\DTOs\\DocumentMedicalDTO.cs",
+              "RelativeDocumentMoniker": "Consultation.Application\\DTOs\\DocumentMedicalDTO.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\DTOs\\DocumentMedicalDTO.cs",
+              "RelativeToolTip": "Consultation.Application\\DTOs\\DocumentMedicalDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T10:34:32.822Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ConsultationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Infrastructure\\Data\\ConsultationDbContext.cs",
+              "RelativeDocumentMoniker": "Consultation.Infrastructure\\Data\\ConsultationDbContext.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Infrastructure\\Data\\ConsultationDbContext.cs",
+              "RelativeToolTip": "Consultation.Infrastructure\\Data\\ConsultationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T10:32:38.435Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 11,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Clinic.API\\appsettings.json",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Clinic.API\\appsettings.json",
               "RelativeDocumentMoniker": "Clinic.API\\appsettings.json",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Clinic.API\\appsettings.json",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Clinic.API\\appsettings.json",
               "RelativeToolTip": "Clinic.API\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-19T10:29:44.333Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-19T10:29:44.333Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 13,
               "Title": "Consultation.Infrastructure.csproj",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Infrastructure\\Consultation.Infrastructure.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Infrastructure\\Consultation.Infrastructure.csproj",
               "RelativeDocumentMoniker": "Consultation.Infrastructure\\Consultation.Infrastructure.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Infrastructure\\Consultation.Infrastructure.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Infrastructure\\Consultation.Infrastructure.csproj",
               "RelativeToolTip": "Consultation.Infrastructure\\Consultation.Infrastructure.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-19T10:10:05.518Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-19T10:10:05.518Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
               "Title": "Consultation.Application.csproj",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\Consultation.Application.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\Consultation.Application.csproj",
               "RelativeDocumentMoniker": "Consultation.Application\\Consultation.Application.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Application\\Consultation.Application.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Application\\Consultation.Application.csproj",
               "RelativeToolTip": "Consultation.Application\\Consultation.Application.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-19T10:10:29.204Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-19T10:10:29.204Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 14,
               "Title": "Consultation.Domain.csproj",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj",
               "RelativeDocumentMoniker": "Consultation.Domain\\Consultation.Domain.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Consultation.Domain\\Consultation.Domain.csproj",
               "RelativeToolTip": "Consultation.Domain\\Consultation.Domain.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-19T10:10:16.708Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-19T10:10:16.708Z"
             }
           ]
         }

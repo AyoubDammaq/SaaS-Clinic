@@ -12,6 +12,8 @@ namespace ConsultationManagementService.Repositories
         Task<bool> DeleteConsultationAsync(Guid id);
         Task<IEnumerable<Consultation>> GetConsultationsByPatientIdAsync(Guid patientId);
         Task<IEnumerable<Consultation>> GetConsultationsByDoctorIdAsync(Guid doctorId);
+        Task<int> CountConsultationsAsync(DateTime dateDebut, DateTime dateFin);
+        Task<int> CountByMedecinIdsAsync(List<Guid> medecinIds);
 
         // Méthodes pour la gestion des documents médicaux
         Task<DocumentMedical?> GetDocumentMedicalByIdAsync(Guid id);

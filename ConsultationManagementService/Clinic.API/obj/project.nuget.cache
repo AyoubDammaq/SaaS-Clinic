@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2EcvFVVw8mA=",
+  "dgSpecHash": "7eamloWC3t4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\USER\\Desktop\\ConsultationManagementService\\Clinic.API\\Consultation.API.csproj",
+  "projectFilePath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ConsultationManagementService\\Clinic.API\\Consultation.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

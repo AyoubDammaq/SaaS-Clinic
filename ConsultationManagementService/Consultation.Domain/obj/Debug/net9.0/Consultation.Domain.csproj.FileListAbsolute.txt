@@ -9,3 +9,15 @@ C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Domain\obj\Debu
 C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Domain\obj\Debug\net9.0\refint\Consultation.Domain.dll
 C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Domain\obj\Debug\net9.0\Consultation.Domain.pdb
 C:\Users\USER\Desktop\ConsultationManagementService\Consultation.Domain\obj\Debug\net9.0\ref\Consultation.Domain.dll
+C:\Users\USER\Desktop\SaaS-Clinic\ConsultationManagementService\Consultation.Domain\bin\Debug\net9.0\Consultation.Domain.deps.json
+C:\Users\USER\Desktop\SaaS-Clinic\ConsultationManagementService\Consultation.Domain\bin\Debug\net9.0\Consultation.Domain.dll
+C:\Users\USER\Desktop\SaaS-Clinic\ConsultationManagementService\Consultation.Domain\bin\Debug\net9.0\Consultation.Domain.pdb
+C:\Users\USER\Desktop\SaaS-Clinic\ConsultationManagementService\Consultation.Domain\obj\Debug\net9.0\Consultation.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Desktop\SaaS-Clinic\ConsultationManagementService\Consultation.Domain\obj\Debug\net9.0\Consultation.Domain.AssemblyInfoInputs.cache
+C:\Users\USER\Desktop\SaaS-Clinic\ConsultationManagementService\Consultation.Domain\obj\Debug\net9.0\Consultation.Domain.AssemblyInfo.cs
+C:\Users\USER\Desktop\SaaS-Clinic\ConsultationManagementService\Consultation.Domain\obj\Debug\net9.0\Consultation.Domain.csproj.CoreCompileInputs.cache
+C:\Users\USER\Desktop\SaaS-Clinic\ConsultationManagementService\Consultation.Domain\obj\Debug\net9.0\Consultation.Domain.sourcelink.json
+C:\Users\USER\Desktop\SaaS-Clinic\ConsultationManagementService\Consultation.Domain\obj\Debug\net9.0\Consultation.Domain.dll
+C:\Users\USER\Desktop\SaaS-Clinic\ConsultationManagementService\Consultation.Domain\obj\Debug\net9.0\refint\Consultation.Domain.dll
+C:\Users\USER\Desktop\SaaS-Clinic\ConsultationManagementService\Consultation.Domain\obj\Debug\net9.0\Consultation.Domain.pdb
+C:\Users\USER\Desktop\SaaS-Clinic\ConsultationManagementService\Consultation.Domain\obj\Debug\net9.0\ref\Consultation.Domain.dll

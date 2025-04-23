@@ -123,6 +123,22 @@ namespace ConsultationManagementService.Services
             return await _consultationRepository.GetConsultationsByDoctorIdAsync(doctorId);
         }
 
+        public Task<int> GetNombreConsultationsAsync(DateTime dateDebut, DateTime dateFin)
+        {
+            return _consultationRepository.CountConsultationsAsync(dateDebut, dateFin);
+        }
+
+        public async Task<int> CountByMedecinIds(List<Guid> medecinIds)
+        {
+            if (medecinIds == null || !medecinIds.Any())
+            {
+                throw new ArgumentException("La liste des identifiants de médecins ne peut pas être vide.", nameof(medecinIds));
+            }
+            return await _consultationRepository.CountByMedecinIdsAsync(medecinIds);
+        }
+
+
+
         public async Task<DocumentMedical?> GetDocumentMedicalByIdAsync(Guid id)
         {
             if (id == Guid.Empty)
