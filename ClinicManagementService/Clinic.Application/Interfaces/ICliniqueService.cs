@@ -1,4 +1,5 @@
-﻿using Clinic.Domain.Entities;
+﻿using Clinic.Application.DTOs;
+using Clinic.Domain.Entities;
 
 namespace Clinic.Application.Interfaces
 {
@@ -11,5 +12,12 @@ namespace Clinic.Application.Interfaces
         Task<List<Clinique>> ListerCliniqueAsync();
         Task<IEnumerable<Clinique>> ListerCliniquesParNomAsync(string nom);
         Task<IEnumerable<Clinique>> ListerCliniquesParAdresseAsync(string adresse);
+
+        //Statistques des cliniques
+        Task<int> GetNombreCliniques();
+        Task<int> GetNombreNouvellesCliniquesDuMois();
+        Task<IEnumerable<StatistiqueDTO>> GetNombreNouvellesCliniquesParMois();
+
+        Task<StatistiqueCliniqueDTO> GetStatistiquesDesCliniquesAsync(Guid cliniqueId);
     }
 }

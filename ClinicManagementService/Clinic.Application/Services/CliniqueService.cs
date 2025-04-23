@@ -1,6 +1,8 @@
-﻿using Clinic.Application.Interfaces;
+﻿using Clinic.Application.DTOs;
+using Clinic.Application.Interfaces;
 using Clinic.Domain.Entities;
 using Clinic.Domain.Interfaces;
+using Clinic.Domain.ValueObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,6 +108,47 @@ namespace Clinic.Application.Services
                 throw new KeyNotFoundException($"Aucune clinique trouvée avec l'adresse '{adresse}'.");
 
             return cliniques.Where(c => c != null).Cast<Clinique>();
+        }
+
+        public async Task<int> GetNombreCliniques()
+        {
+            return await _repository.GetNombreCliniquesAsync();
+        }
+
+        public async Task<int> GetNombreNouvellesCliniquesDuMois()
+        {
+            return await _repository.GetNombreNouvellesCliniquesDuMoisAsync();
+        }
+
+        public async Task<IEnumerable<StatistiqueDTO>> GetNombreNouvellesCliniquesParMois()
+        {
+            var cliniques = await _repository.GetNombreNouvellesCliniquesParMoisAsync();
+            var stats = cliniques.Select(c => new StatistiqueDTO
+            {
+                Cle = c.Cle,
+                Nombre = c.Nombre
+            }).ToList();
+            return stats;
+        }
+
+        public async Task<StatistiqueCliniqueDTO> GetStatistiquesDesCliniquesAsync(Guid cliniqueId)
+        {
+            if (cliniqueId == Guid.Empty)
+                throw new ArgumentException("L'identifiant de la clinique est requis.", nameof(cliniqueId));
+            var statistique = await _repository.GetStatistiquesDesCliniquesAsync(cliniqueId);
+            if (statistique == null)
+                throw new KeyNotFoundException($"Aucune statistique trouvée pour la clinique avec l'identifiant {cliniqueId}.");
+            var dto = new StatistiqueCliniqueDTO
+            {
+                CliniqueId = statistique.CliniqueId,
+                Nom = statistique.Nom,
+                NombreMedecins = statistique.NombreMedecins,
+                NombreConsultations = statistique.NombreConsultations,
+                NombreRendezVous = statistique.NombreRendezVous,
+                NombrePatients = statistique.NombrePatients
+            };
+            return dto;
+
         }
     }
 }

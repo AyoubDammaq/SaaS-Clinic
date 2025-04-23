@@ -28,6 +28,7 @@ builder.Services.AddScoped<ICliniqueRepository, CliniqueRepository>();
 //builder.Services.AddScoped(provider => Guid.NewGuid().ToString());
 //builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ICliniqueService, CliniqueService>();
+builder.Services.AddHttpClient<ICliniqueRepository, CliniqueRepository>();
 
 builder.Services.AddAuthentication(options =>
 {
