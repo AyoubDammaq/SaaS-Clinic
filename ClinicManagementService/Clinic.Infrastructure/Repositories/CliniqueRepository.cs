@@ -20,6 +20,7 @@ namespace Clinic.Infrastructure.Repositories
             _httpClient = httpClient;
         }
 
+        // CRUD operations
         public Task<List<Clinique>> GetAllAsync()
         {
             return _context.Cliniques.ToListAsync();
@@ -52,6 +53,7 @@ namespace Clinic.Infrastructure.Repositories
             }
         }
 
+        // Search operations
         public async Task<List<Clinique?>> GetByNameAsync(string name)
         {
             return await _context.Cliniques.Where(c => c.Nom.ToLower().Contains(name)).ToListAsync();
@@ -62,8 +64,9 @@ namespace Clinic.Infrastructure.Repositories
             return await _context.Cliniques.Where(c => c.Adresse.ToLower().Contains(address)).ToListAsync();
         }
 
-        //Statistiques des cliniques
 
+
+        //Statistiques des cliniques
         public async Task<int> GetNombreCliniquesAsync()
         {
             return await _context.Cliniques.CountAsync();
@@ -89,7 +92,6 @@ namespace Clinic.Infrastructure.Repositories
 
         public async Task<StatistiqueClinique> GetStatistiquesDesCliniquesAsync(Guid cliniqueId)
         {
-            // Étape 1 : Récupérer les IDs des médecins de la clinique
             var responseMedecin = await _httpClient.GetAsync($"http://localhost:5050/api/Medecin/medecinsIds/clinique/{cliniqueId}");
             if (!responseMedecin.IsSuccessStatusCode)
                 throw new Exception("Erreur lors de la récupération des médecins");
@@ -97,7 +99,6 @@ namespace Clinic.Infrastructure.Repositories
             var medecinIds = await responseMedecin.Content.ReadFromJsonAsync<List<Guid>>();
             if (medecinIds == null || !medecinIds.Any())
             {
-                // Aucun médecin, on retourne 0 pour tout
                 var clinique = await _context.Cliniques.FindAsync(cliniqueId);
                 return new StatistiqueClinique
                 {
@@ -112,7 +113,6 @@ namespace Clinic.Infrastructure.Repositories
 
             string queryString = string.Join("&", medecinIds.Select(id => $"medecinIds={id}"));
 
-            // Étape 2 : Appels vers les autres services
             var responseConsultation = await _httpClient.GetAsync($"http://localhost:5015/api/Consultation/countByMedecinIds?{queryString}");
             var responseRDV = await _httpClient.GetAsync($"http://localhost:5133/api/RendezVous/count?{queryString}");
             var responsePatient = await _httpClient.GetAsync($"http://localhost:5133/api/RendezVous/distinct/patients?{queryString}");
@@ -139,7 +139,5 @@ namespace Clinic.Infrastructure.Repositories
                 NombrePatients = nbPatients
             };
         }
-
-
     }
 }

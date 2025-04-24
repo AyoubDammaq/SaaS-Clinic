@@ -2,31 +2,19 @@
 using Clinic.Application.Interfaces;
 using Clinic.Domain.Entities;
 using Clinic.Domain.Interfaces;
-using Clinic.Domain.ValueObject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clinic.Application.Services
 {
     public class CliniqueService : ICliniqueService
     {
         private readonly ICliniqueRepository _repository;
-        private readonly Guid _tenantId;
 
-        public CliniqueService(ICliniqueRepository repository /*, IHttpContextAccessor httpContextAccessor*/)
+        public CliniqueService(ICliniqueRepository repository)
         {
             _repository = repository;
-            // Récupération du TenantId depuis le contexte HTTP  
-            /*
-            _tenantId = httpContextAccessor.HttpContext?.Items["TenantId"] is Guid tenantId
-                ? tenantId
-                : throw new UnauthorizedAccessException("Tenant non identifié");
-            */
         }
 
+        // CRUD operations
         public async Task<Clinique> AjouterCliniqueAsync(Clinique clinique)
         {
             if (clinique == null)
@@ -38,7 +26,6 @@ namespace Clinic.Application.Services
             if (string.IsNullOrWhiteSpace(clinique.Adresse))
                 throw new ArgumentException("L'adresse de la clinique est requise.", nameof(clinique.Adresse));
 
-            //clinique.TenantId = _tenantId;
             await _repository.AddAsync(clinique);
             return clinique;
         }
@@ -86,6 +73,7 @@ namespace Clinic.Application.Services
             return cliniques;
         }
 
+        // Rechercher des cliniques par nom ou adresse
         public async Task<IEnumerable<Clinique>> ListerCliniquesParNomAsync(string nom)
         {
             if (string.IsNullOrWhiteSpace(nom))
@@ -110,6 +98,7 @@ namespace Clinic.Application.Services
             return cliniques.Where(c => c != null).Cast<Clinique>();
         }
 
+        // Statistiques des cliniques
         public async Task<int> GetNombreCliniques()
         {
             return await _repository.GetNombreCliniquesAsync();

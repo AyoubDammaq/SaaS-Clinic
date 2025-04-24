@@ -2,12 +2,10 @@
 using Clinic.Application.Interfaces;
 using Clinic.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Clinic.API.Controllers
 {
-    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CliniqueController : ControllerBase
@@ -19,6 +17,7 @@ namespace Clinic.API.Controllers
             _cliniqueService = cliniqueService;
         }
 
+        // CRUD operations
         [HttpPost]
         [Authorize(Roles = "SuperAdmin, ClinicAdmin")]
         public async Task<ActionResult<Clinique>> AjouterClinique(Clinique clinique)
@@ -95,6 +94,7 @@ namespace Clinic.API.Controllers
             }
         }
 
+        // Recherche des cliniques
         [HttpGet("nom/{nom}")]
         public async Task<ActionResult<IEnumerable<Clinique>>> ListerCliniquesParNom(string nom)
         {
@@ -122,8 +122,7 @@ namespace Clinic.API.Controllers
         }
 
 
-        //Statistiques des cliniques
-
+        // Statistiques des cliniques
         [HttpGet("nombre-cliniques")]
         public async Task<ActionResult<int>> GetNombreDeCliniques()
         {

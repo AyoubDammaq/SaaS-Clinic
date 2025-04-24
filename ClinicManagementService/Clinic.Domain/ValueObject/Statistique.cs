@@ -1,6 +1,4 @@
-﻿
-
-namespace Clinic.Domain.ValueObject
+﻿namespace Clinic.Domain.ValueObject
 {
     public class Statistique
     {

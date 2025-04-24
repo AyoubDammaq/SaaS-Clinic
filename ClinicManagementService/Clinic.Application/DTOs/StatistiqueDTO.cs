@@ -1,6 +1,4 @@
-﻿
-
-namespace Clinic.Application.DTOs
+﻿namespace Clinic.Application.DTOs
 {
     public class StatistiqueDTO
     {
