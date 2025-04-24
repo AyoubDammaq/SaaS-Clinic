@@ -1,41 +1,62 @@
+using Microsoft.EntityFrameworkCore;
+using Notification.Application.Services;
+using Notification.Infrastructure.Data;
+using Notification.Infrastructure.Repositories;
+using Notification.Application.Interfaces;
+using Notification.Domain.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+//  1. Configuration de la DB (ex: SQL Server / PostgreSQL / SQLite)
+builder.Services.AddDbContext<NotificationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("NotificationDatabase"))
+// ou .UseNpgsql(...) / .UseSqlite(...) selon la DB
+);
+
+//  2. Injection des dépendances
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+
+//  3. Controllers & JSON options
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = null; // PascalCase si tu préfères
+    });
+
+//  4. Swagger / OpenAPI
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+//  5. CORS (optionnel)
+/*
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+*/
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+//  Middleware
+//app.UseCors("AllowAll");
+
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+// app.UseAuthentication(); // Si tu as l’auth plus tard
+// app.UseAuthorization();
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.MapControllers();
 
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USER\\Desktop\\NotificationService\\Notification.Infrastructure\\Notification.Infrastructure.csproj": {}
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Infrastructure\\Notification.Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USER\\Desktop\\NotificationService\\Notification.Domain\\Notification.Domain.csproj": {
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Notification.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Desktop\\NotificationService\\Notification.Domain\\Notification.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Notification.Domain.csproj",
         "projectName": "Notification.Domain",
-        "projectPath": "C:\\Users\\USER\\Desktop\\NotificationService\\Notification.Domain\\Notification.Domain.csproj",
+        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Notification.Domain.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Desktop\\NotificationService\\Notification.Domain\\obj\\",
+        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -71,14 +71,14 @@
         }
       }
     },
-    "C:\\Users\\USER\\Desktop\\NotificationService\\Notification.Infrastructure\\Notification.Infrastructure.csproj": {
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Infrastructure\\Notification.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Desktop\\NotificationService\\Notification.Infrastructure\\Notification.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Infrastructure\\Notification.Infrastructure.csproj",
         "projectName": "Notification.Infrastructure",
-        "projectPath": "C:\\Users\\USER\\Desktop\\NotificationService\\Notification.Infrastructure\\Notification.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Infrastructure\\Notification.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Desktop\\NotificationService\\Notification.Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -101,8 +101,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\USER\\Desktop\\NotificationService\\Notification.Domain\\Notification.Domain.csproj": {
-                "projectPath": "C:\\Users\\USER\\Desktop\\NotificationService\\Notification.Domain\\Notification.Domain.csproj"
+              "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Notification.Domain.csproj": {
+                "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Notification.Domain.csproj"
               }
             }
           }
@@ -122,6 +122,28 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.4, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

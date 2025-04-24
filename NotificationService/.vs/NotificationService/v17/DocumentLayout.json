@@ -1,7 +1,84 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\NotificationService\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5C23D90E-DBEC-4836-AE0E-40735E9DC129}|Notification.Application\\Notification.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.application\\services\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C23D90E-DBEC-4836-AE0E-40735E9DC129}|Notification.Application\\Notification.Application.csproj|solutionrelative:notification.application\\services\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34E09374-7FB1-4CD1-A5A2-6C1A3C0A3A21}|Notification.API\\Notification.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.api\\controllers\\notificationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34E09374-7FB1-4CD1-A5A2-6C1A3C0A3A21}|Notification.API\\Notification.API.csproj|solutionrelative:notification.api\\controllers\\notificationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B52CA2C0-E39D-4518-8EF5-7E98A2839548}|Notification.Infrastructure\\Notification.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.infrastructure\\repositories\\notificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B52CA2C0-E39D-4518-8EF5-7E98A2839548}|Notification.Infrastructure\\Notification.Infrastructure.csproj|solutionrelative:notification.infrastructure\\repositories\\notificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C23D90E-DBEC-4836-AE0E-40735E9DC129}|Notification.Application\\Notification.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.application\\interfaces\\inotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C23D90E-DBEC-4836-AE0E-40735E9DC129}|Notification.Application\\Notification.Application.csproj|solutionrelative:notification.application\\interfaces\\inotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF894968-B670-4CDF-93C6-2A905F625173}|Notification.Domain\\Notification.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.domain\\entities\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF894968-B670-4CDF-93C6-2A905F625173}|Notification.Domain\\Notification.Domain.csproj|solutionrelative:notification.domain\\entities\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF894968-B670-4CDF-93C6-2A905F625173}|Notification.Domain\\Notification.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.domain\\interfaces\\inotificationrepository;cs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF894968-B670-4CDF-93C6-2A905F625173}|Notification.Domain\\Notification.Domain.csproj|solutionrelative:notification.domain\\interfaces\\inotificationrepository;cs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF894968-B670-4CDF-93C6-2A905F625173}|Notification.Domain\\Notification.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.domain\\enums\\statutnotification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF894968-B670-4CDF-93C6-2A905F625173}|Notification.Domain\\Notification.Domain.csproj|solutionrelative:notification.domain\\enums\\statutnotification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF894968-B670-4CDF-93C6-2A905F625173}|Notification.Domain\\Notification.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.domain\\enums\\typenotification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF894968-B670-4CDF-93C6-2A905F625173}|Notification.Domain\\Notification.Domain.csproj|solutionrelative:notification.domain\\enums\\typenotification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF894968-B670-4CDF-93C6-2A905F625173}|Notification.Domain\\Notification.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.domain\\enums\\canalnotification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF894968-B670-4CDF-93C6-2A905F625173}|Notification.Domain\\Notification.Domain.csproj|solutionrelative:notification.domain\\enums\\canalnotification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34E09374-7FB1-4CD1-A5A2-6C1A3C0A3A21}|Notification.API\\Notification.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{34E09374-7FB1-4CD1-A5A2-6C1A3C0A3A21}|Notification.API\\Notification.API.csproj|solutionrelative:notification.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34E09374-7FB1-4CD1-A5A2-6C1A3C0A3A21}|Notification.API\\Notification.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34E09374-7FB1-4CD1-A5A2-6C1A3C0A3A21}|Notification.API\\Notification.API.csproj|solutionrelative:notification.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B52CA2C0-E39D-4518-8EF5-7E98A2839548}|Notification.Infrastructure\\Notification.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.infrastructure\\migrations\\notificationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B52CA2C0-E39D-4518-8EF5-7E98A2839548}|Notification.Infrastructure\\Notification.Infrastructure.csproj|solutionrelative:notification.infrastructure\\migrations\\notificationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34E09374-7FB1-4CD1-A5A2-6C1A3C0A3A21}|Notification.API\\Notification.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.api\\notification.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{34E09374-7FB1-4CD1-A5A2-6C1A3C0A3A21}|Notification.API\\Notification.API.csproj|solutionrelative:notification.api\\notification.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B52CA2C0-E39D-4518-8EF5-7E98A2839548}|Notification.Infrastructure\\Notification.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.infrastructure\\notification.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{B52CA2C0-E39D-4518-8EF5-7E98A2839548}|Notification.Infrastructure\\Notification.Infrastructure.csproj|solutionrelative:notification.infrastructure\\notification.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B52CA2C0-E39D-4518-8EF5-7E98A2839548}|Notification.Infrastructure\\Notification.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.infrastructure\\data\\notificationdbcontext .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B52CA2C0-E39D-4518-8EF5-7E98A2839548}|Notification.Infrastructure\\Notification.Infrastructure.csproj|solutionrelative:notification.infrastructure\\data\\notificationdbcontext .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C23D90E-DBEC-4836-AE0E-40735E9DC129}|Notification.Application\\Notification.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.application\\dtos\\notificationtemplaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C23D90E-DBEC-4836-AE0E-40735E9DC129}|Notification.Application\\Notification.Application.csproj|solutionrelative:notification.application\\dtos\\notificationtemplaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C23D90E-DBEC-4836-AE0E-40735E9DC129}|Notification.Application\\Notification.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.application\\notification.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{5C23D90E-DBEC-4836-AE0E-40735E9DC129}|Notification.Application\\Notification.Application.csproj|solutionrelative:notification.application\\notification.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF894968-B670-4CDF-93C6-2A905F625173}|Notification.Domain\\Notification.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.domain\\notification.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{CF894968-B670-4CDF-93C6-2A905F625173}|Notification.Domain\\Notification.Domain.csproj|solutionrelative:notification.domain\\notification.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF894968-B670-4CDF-93C6-2A905F625173}|Notification.Domain\\Notification.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\notificationservice\\notification.domain\\entities\\preferencenotification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF894968-B670-4CDF-93C6-2A905F625173}|Notification.Domain\\Notification.Domain.csproj|solutionrelative:notification.domain\\entities\\preferencenotification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +86,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -18,6 +95,253 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NotificationRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Infrastructure\\Repositories\\NotificationRepository.cs",
+              "RelativeDocumentMoniker": "Notification.Infrastructure\\Repositories\\NotificationRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Infrastructure\\Repositories\\NotificationRepository.cs",
+              "RelativeToolTip": "Notification.Infrastructure\\Repositories\\NotificationRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T13:53:52.89Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "INotificationService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Application\\Interfaces\\INotificationService.cs",
+              "RelativeDocumentMoniker": "Notification.Application\\Interfaces\\INotificationService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Application\\Interfaces\\INotificationService.cs",
+              "RelativeToolTip": "Notification.Application\\Interfaces\\INotificationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T14:04:48.113Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "NotificationService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Application\\Services\\NotificationService.cs",
+              "RelativeDocumentMoniker": "Notification.Application\\Services\\NotificationService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Application\\Services\\NotificationService.cs",
+              "RelativeToolTip": "Notification.Application\\Services\\NotificationService.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwEAAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T14:07:26.03Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "NotificationsController.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.API\\Controllers\\NotificationsController.cs",
+              "RelativeDocumentMoniker": "Notification.API\\Controllers\\NotificationsController.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.API\\Controllers\\NotificationsController.cs",
+              "RelativeToolTip": "Notification.API\\Controllers\\NotificationsController.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAwwA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T14:17:37.438Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Notification.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Entities\\Notification.cs",
+              "RelativeDocumentMoniker": "Notification.Domain\\Entities\\Notification.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Entities\\Notification.cs",
+              "RelativeToolTip": "Notification.Domain\\Entities\\Notification.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAcAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T13:47:55.702Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "INotificationRepository;CS.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Interfaces\\INotificationRepository;CS.cs",
+              "RelativeDocumentMoniker": "Notification.Domain\\Interfaces\\INotificationRepository;CS.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Interfaces\\INotificationRepository;CS.cs",
+              "RelativeToolTip": "Notification.Domain\\Interfaces\\INotificationRepository;CS.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAUAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T14:02:54.351Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "StatutNotification.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Enums\\StatutNotification.cs",
+              "RelativeDocumentMoniker": "Notification.Domain\\Enums\\StatutNotification.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Enums\\StatutNotification.cs",
+              "RelativeToolTip": "Notification.Domain\\Enums\\StatutNotification.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T13:47:34.203Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TypeNotification.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Enums\\TypeNotification.cs",
+              "RelativeDocumentMoniker": "Notification.Domain\\Enums\\TypeNotification.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Enums\\TypeNotification.cs",
+              "RelativeToolTip": "Notification.Domain\\Enums\\TypeNotification.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T13:46:08.155Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CanalNotification.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Enums\\CanalNotification.cs",
+              "RelativeDocumentMoniker": "Notification.Domain\\Enums\\CanalNotification.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Enums\\CanalNotification.cs",
+              "RelativeToolTip": "Notification.Domain\\Enums\\CanalNotification.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T13:46:53.448Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.API\\appsettings.json",
+              "RelativeDocumentMoniker": "Notification.API\\appsettings.json",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.API\\appsettings.json",
+              "RelativeToolTip": "Notification.API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-24T08:13:38.31Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.API\\Program.cs",
+              "RelativeDocumentMoniker": "Notification.API\\Program.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.API\\Program.cs",
+              "RelativeToolTip": "Notification.API\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T14:31:48.875Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "NotificationDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Infrastructure\\Migrations\\NotificationDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "Notification.Infrastructure\\Migrations\\NotificationDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Infrastructure\\Migrations\\NotificationDbContextModelSnapshot.cs",
+              "RelativeToolTip": "Notification.Infrastructure\\Migrations\\NotificationDbContextModelSnapshot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-24T08:25:12.068Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "NotificationDbContext .cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Infrastructure\\Data\\NotificationDbContext .cs",
+              "RelativeDocumentMoniker": "Notification.Infrastructure\\Data\\NotificationDbContext .cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Infrastructure\\Data\\NotificationDbContext .cs",
+              "RelativeToolTip": "Notification.Infrastructure\\Data\\NotificationDbContext .cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T13:50:50.92Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Notification.API",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.API\\Notification.API.csproj",
+              "RelativeDocumentMoniker": "Notification.API\\Notification.API.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.API\\Notification.API.csproj",
+              "RelativeToolTip": "Notification.API\\Notification.API.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-23T14:16:52.595Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Notification.Infrastructure",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Infrastructure\\Notification.Infrastructure.csproj",
+              "RelativeDocumentMoniker": "Notification.Infrastructure\\Notification.Infrastructure.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Infrastructure\\Notification.Infrastructure.csproj",
+              "RelativeToolTip": "Notification.Infrastructure\\Notification.Infrastructure.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-23T13:52:27.082Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "NotificationTemplateRequest.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Application\\DTOs\\NotificationTemplateRequest.cs",
+              "RelativeDocumentMoniker": "Notification.Application\\DTOs\\NotificationTemplateRequest.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Application\\DTOs\\NotificationTemplateRequest.cs",
+              "RelativeToolTip": "Notification.Application\\DTOs\\NotificationTemplateRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T14:05:39.133Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Notification.Application",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Application\\Notification.Application.csproj",
+              "RelativeDocumentMoniker": "Notification.Application\\Notification.Application.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Application\\Notification.Application.csproj",
+              "RelativeToolTip": "Notification.Application\\Notification.Application.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-23T14:03:56.551Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Notification.Domain.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Notification.Domain.csproj",
+              "RelativeDocumentMoniker": "Notification.Domain\\Notification.Domain.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Notification.Domain.csproj",
+              "RelativeToolTip": "Notification.Domain\\Notification.Domain.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-23T13:52:43.656Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "PreferenceNotification.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Entities\\PreferenceNotification.cs",
+              "RelativeDocumentMoniker": "Notification.Domain\\Entities\\PreferenceNotification.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\NotificationService\\Notification.Domain\\Entities\\PreferenceNotification.cs",
+              "RelativeToolTip": "Notification.Domain\\Entities\\PreferenceNotification.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T13:48:18.045Z",
+              "EditorCaption": ""
             }
           ]
         }
