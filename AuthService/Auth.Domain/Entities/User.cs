@@ -7,6 +7,10 @@ namespace AuthentificationService.Entities
         [Key]
         public Guid Id { get; set; }
 
+        [Required]
+        [MaxLength(100)]
+        public string FullName { get; set; } = string.Empty;
+
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
 

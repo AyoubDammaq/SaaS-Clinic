@@ -1,4 +1,5 @@
-﻿using AuthentificationService.Entities;
+﻿using Auth.Application.DTOs;
+using AuthentificationService.Entities;
 using AuthentificationService.Models;
 
 namespace AuthentificationService.Services
@@ -6,7 +7,7 @@ namespace AuthentificationService.Services
     public interface IAuthService
     {
         Task<User?> RegisterAsync(UserDto request);
-        Task<TokenResponseDto?> LoginAsync(UserDto request);
+        Task<TokenResponseDto?> LoginAsync(LoginRequestDTO request);
         Task<TokenResponseDto?> RefreshTokensAsync(RefreshTokenRequestDto request);
         Task<bool> LogoutAsync(Guid userId);
         Task<bool> ChangePasswordAsync(ChangePasswordDto request);

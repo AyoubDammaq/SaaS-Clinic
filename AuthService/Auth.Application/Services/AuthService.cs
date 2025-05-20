@@ -1,4 +1,5 @@
-﻿using AuthentificationService.Data;
+﻿using Auth.Application.DTOs;
+using AuthentificationService.Data;
 using AuthentificationService.Entities;
 using AuthentificationService.Models;
 using Microsoft.AspNetCore.Identity;
@@ -18,15 +19,15 @@ namespace AuthentificationService.Services
     {
         public async Task<User?> RegisterAsync(UserDto request)
         {
-            if (await context.Users.AnyAsync(u => u.Email == request.Email))
-            {
+            var existingUser = await context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+            if (existingUser != null)
                 return null;
-            }
 
             var user = new User();
             var hashedPassword = new PasswordHasher<User>()
                 .HashPassword(user, request.Password);
 
+            user.FullName = request.FullName;
             user.Email = request.Email;
             user.PasswordHashed = hashedPassword;
             user.Role = UserRole.Patient;
@@ -53,7 +54,7 @@ namespace AuthentificationService.Services
         }
 
 
-        public async Task<TokenResponseDto?> LoginAsync(UserDto request)
+        public async Task<TokenResponseDto?> LoginAsync(LoginRequestDTO request)
         {
             var user = await context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
             if (user is null)

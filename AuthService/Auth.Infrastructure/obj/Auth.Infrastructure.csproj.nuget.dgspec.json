@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Infrastructure\\Auth.Infrastructure.csproj": {}
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Infrastructure\\Auth.Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Domain\\Auth.Domain.csproj": {
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Domain\\Auth.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Domain\\Auth.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Domain\\Auth.Domain.csproj",
         "projectName": "Auth.Domain",
-        "projectPath": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Domain\\Auth.Domain.csproj",
+        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Domain\\Auth.Domain.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Domain\\obj\\",
+        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -81,14 +81,14 @@
         }
       }
     },
-    "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Infrastructure\\Auth.Infrastructure.csproj": {
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Infrastructure\\Auth.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Infrastructure\\Auth.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Infrastructure\\Auth.Infrastructure.csproj",
         "projectName": "Auth.Infrastructure",
-        "projectPath": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Infrastructure\\Auth.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Infrastructure\\Auth.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -111,8 +111,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Domain\\Auth.Domain.csproj": {
-                "projectPath": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Domain\\Auth.Domain.csproj"
+              "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Domain\\Auth.Domain.csproj": {
+                "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Domain\\Auth.Domain.csproj"
               }
             }
           }

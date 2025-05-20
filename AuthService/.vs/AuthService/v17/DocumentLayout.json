@@ -1,73 +1,61 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\AuthService\\",
+  "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|c:\\users\\user\\desktop\\authservice\\auth.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|solutionrelative:auth.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|c:\\users\\user\\desktop\\authservice\\auth.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|solutionrelative:auth.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|c:\\users\\user\\desktop\\authservice\\auth.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|solutionrelative:auth.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|c:\\users\\user\\desktop\\authservice\\auth.application\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|solutionrelative:auth.application\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|c:\\users\\user\\desktop\\authservice\\auth.application\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|solutionrelative:auth.application\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|c:\\users\\user\\desktop\\authservice\\auth.application\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|solutionrelative:auth.application\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|c:\\users\\user\\desktop\\authservice\\auth.application\\dtos\\tokenresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|solutionrelative:auth.application\\dtos\\tokenresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|c:\\users\\user\\desktop\\authservice\\auth.application\\dtos\\resetpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|solutionrelative:auth.application\\dtos\\resetpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|c:\\users\\user\\desktop\\authservice\\auth.application\\dtos\\refreshtokenrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|solutionrelative:auth.application\\dtos\\refreshtokenrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|c:\\users\\user\\desktop\\authservice\\auth.application\\dtos\\forgotpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|solutionrelative:auth.application\\dtos\\forgotpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|c:\\users\\user\\desktop\\authservice\\auth.application\\dtos\\changerolerequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|solutionrelative:auth.application\\dtos\\changerolerequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|c:\\users\\user\\desktop\\authservice\\auth.application\\dtos\\changepassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|solutionrelative:auth.application\\dtos\\changepassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B2C63876-5243-4D9B-B6ED-F60BD1C5C7C0}|Auth.Infrastructure\\Auth.Infrastructure.csproj|c:\\users\\user\\desktop\\authservice\\auth.infrastructure\\data\\userdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2C63876-5243-4D9B-B6ED-F60BD1C5C7C0}|Auth.Infrastructure\\Auth.Infrastructure.csproj|solutionrelative:auth.infrastructure\\data\\userdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BC7C26F6-AD90-4995-801E-5C94FE3A25DA}|Auth.Domain\\Auth.Domain.csproj|c:\\users\\user\\desktop\\authservice\\auth.domain\\enums\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{BC7C26F6-AD90-4995-801E-5C94FE3A25DA}|Auth.Domain\\Auth.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\authservice\\auth.domain\\enums\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BC7C26F6-AD90-4995-801E-5C94FE3A25DA}|Auth.Domain\\Auth.Domain.csproj|solutionrelative:auth.domain\\enums\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BC7C26F6-AD90-4995-801E-5C94FE3A25DA}|Auth.Domain\\Auth.Domain.csproj|c:\\users\\user\\desktop\\authservice\\auth.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\authservice\\auth.application\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|solutionrelative:auth.application\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\authservice\\auth.application\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|solutionrelative:auth.application\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\authservice\\auth.application\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|solutionrelative:auth.application\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BC7C26F6-AD90-4995-801E-5C94FE3A25DA}|Auth.Domain\\Auth.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\authservice\\auth.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BC7C26F6-AD90-4995-801E-5C94FE3A25DA}|Auth.Domain\\Auth.Domain.csproj|solutionrelative:auth.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B2C63876-5243-4D9B-B6ED-F60BD1C5C7C0}|Auth.Infrastructure\\Auth.Infrastructure.csproj|c:\\users\\user\\desktop\\authservice\\auth.infrastructure\\auth.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\authservice\\auth.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|solutionrelative:auth.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\authservice\\auth.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|solutionrelative:auth.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\authservice\\auth.application\\dtos\\loginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC469792-5B19-4CC4-9CFE-B155095EE012}|Auth.Application\\Auth.Application.csproj|solutionrelative:auth.application\\dtos\\loginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\authservice\\auth.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|solutionrelative:auth.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\authservice\\auth.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|solutionrelative:auth.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\authservice\\auth.api\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|solutionrelative:auth.api\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\authservice\\auth.api\\extensions\\migrationextenxions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|solutionrelative:auth.api\\extensions\\migrationextenxions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2C63876-5243-4D9B-B6ED-F60BD1C5C7C0}|Auth.Infrastructure\\Auth.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\authservice\\auth.infrastructure\\auth.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{B2C63876-5243-4D9B-B6ED-F60BD1C5C7C0}|Auth.Infrastructure\\Auth.Infrastructure.csproj|solutionrelative:auth.infrastructure\\auth.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|c:\\users\\user\\desktop\\authservice\\auth.api\\auth.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\authservice\\auth.api\\auth.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{EF5D6479-AC61-4ABA-B5F2-E560F09C3251}|Auth.API\\Auth.API.csproj|solutionrelative:auth.api\\auth.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
@@ -78,8 +66,60 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 6,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.API\\Program.cs",
+              "RelativeDocumentMoniker": "Auth.API\\Program.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.API\\Program.cs",
+              "RelativeToolTip": "Auth.API\\Program.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAcwF0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T11:59:52.358Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Dockerfile",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.API\\Dockerfile",
+              "RelativeDocumentMoniker": "Auth.API\\Dockerfile",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.API\\Dockerfile",
+              "RelativeToolTip": "Auth.API\\Dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-05-04T13:13:18.074Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.API\\appsettings.json",
+              "RelativeDocumentMoniker": "Auth.API\\appsettings.json",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.API\\appsettings.json",
+              "RelativeToolTip": "Auth.API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAACLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-19T11:59:32.975Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.API\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Auth.API\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.API\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Auth.API\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-04T13:32:40.424Z",
+              "IsPinned": true
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -91,223 +131,125 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.API\\Program.cs",
-              "RelativeDocumentMoniker": "Auth.API\\Program.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.API\\Program.cs",
-              "RelativeToolTip": "Auth.API\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "UserRole.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Domain\\Enums\\UserRole.cs",
+              "RelativeDocumentMoniker": "Auth.Domain\\Enums\\UserRole.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Domain\\Enums\\UserRole.cs",
+              "RelativeToolTip": "Auth.Domain\\Enums\\UserRole.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T11:59:52.358Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.API\\appsettings.json",
-              "RelativeDocumentMoniker": "Auth.API\\appsettings.json",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.API\\appsettings.json",
-              "RelativeToolTip": "Auth.API\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-19T11:59:32.975Z",
+              "WhenOpened": "2025-05-10T11:30:31.783Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.API\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "Auth.API\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.API\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "Auth.API\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T11:59:11.286Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AuthService.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\Services\\AuthService.cs",
-              "RelativeDocumentMoniker": "Auth.Application\\Services\\AuthService.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\Services\\AuthService.cs",
-              "RelativeToolTip": "Auth.Application\\Services\\AuthService.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAQwBQAAABMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T11:57:31.435Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "IAuthService.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\Interfaces\\IAuthService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Application\\Interfaces\\IAuthService.cs",
               "RelativeDocumentMoniker": "Auth.Application\\Interfaces\\IAuthService.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\Interfaces\\IAuthService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Application\\Interfaces\\IAuthService.cs",
               "RelativeToolTip": "Auth.Application\\Interfaces\\IAuthService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T11:57:22.63Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "UserDto.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\DTOs\\UserDto.cs",
-              "RelativeDocumentMoniker": "Auth.Application\\DTOs\\UserDto.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\DTOs\\UserDto.cs",
-              "RelativeToolTip": "Auth.Application\\DTOs\\UserDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T11:57:21.814Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "TokenResponseDto.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\DTOs\\TokenResponseDto.cs",
-              "RelativeDocumentMoniker": "Auth.Application\\DTOs\\TokenResponseDto.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\DTOs\\TokenResponseDto.cs",
-              "RelativeToolTip": "Auth.Application\\DTOs\\TokenResponseDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T11:57:20.957Z",
+              "WhenOpened": "2025-05-10T11:24:30.715Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "ResetPasswordDto.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\DTOs\\ResetPasswordDto.cs",
-              "RelativeDocumentMoniker": "Auth.Application\\DTOs\\ResetPasswordDto.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\DTOs\\ResetPasswordDto.cs",
-              "RelativeToolTip": "Auth.Application\\DTOs\\ResetPasswordDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "LoginRequestDTO.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Application\\DTOs\\LoginRequestDTO.cs",
+              "RelativeDocumentMoniker": "Auth.Application\\DTOs\\LoginRequestDTO.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Application\\DTOs\\LoginRequestDTO.cs",
+              "RelativeToolTip": "Auth.Application\\DTOs\\LoginRequestDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T11:57:20.183Z",
+              "WhenOpened": "2025-05-10T11:23:20.961Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Application\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "Auth.Application\\Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Application\\Services\\AuthService.cs",
+              "RelativeToolTip": "Auth.Application\\Services\\AuthService.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAQwEQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-10T10:33:33.622Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "RefreshTokenRequestDto.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\DTOs\\RefreshTokenRequestDto.cs",
-              "RelativeDocumentMoniker": "Auth.Application\\DTOs\\RefreshTokenRequestDto.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\DTOs\\RefreshTokenRequestDto.cs",
-              "RelativeToolTip": "Auth.Application\\DTOs\\RefreshTokenRequestDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Domain\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "Auth.Domain\\Entities\\User.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Domain\\Entities\\User.cs",
+              "RelativeToolTip": "Auth.Domain\\Entities\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T11:57:19.174Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-10T10:19:09.87Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ForgotPasswordDto.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\DTOs\\ForgotPasswordDto.cs",
-              "RelativeDocumentMoniker": "Auth.Application\\DTOs\\ForgotPasswordDto.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\DTOs\\ForgotPasswordDto.cs",
-              "RelativeToolTip": "Auth.Application\\DTOs\\ForgotPasswordDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "UserDto.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Application\\DTOs\\UserDto.cs",
+              "RelativeDocumentMoniker": "Auth.Application\\DTOs\\UserDto.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Application\\DTOs\\UserDto.cs",
+              "RelativeToolTip": "Auth.Application\\DTOs\\UserDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T11:57:18.34Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-10T10:19:01.75Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ChangeRoleRequestDto.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\DTOs\\ChangeRoleRequestDto.cs",
-              "RelativeDocumentMoniker": "Auth.Application\\DTOs\\ChangeRoleRequestDto.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\DTOs\\ChangeRoleRequestDto.cs",
-              "RelativeToolTip": "Auth.Application\\DTOs\\ChangeRoleRequestDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.API\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Auth.API\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.API\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Auth.API\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAgwCMAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T11:57:17.23Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-10T10:18:47.532Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
-              "Title": "ChangePasswordDto.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\DTOs\\ChangePasswordDto.cs",
-              "RelativeDocumentMoniker": "Auth.Application\\DTOs\\ChangePasswordDto.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Application\\DTOs\\ChangePasswordDto.cs",
-              "RelativeToolTip": "Auth.Application\\DTOs\\ChangePasswordDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "MigrationExtenxions.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.API\\Extensions\\MigrationExtenxions.cs",
+              "RelativeDocumentMoniker": "Auth.API\\Extensions\\MigrationExtenxions.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.API\\Extensions\\MigrationExtenxions.cs",
+              "RelativeToolTip": "Auth.API\\Extensions\\MigrationExtenxions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T11:57:14.888Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-06T08:12:11.078Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
-              "Title": "UserDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Infrastructure\\Data\\UserDbContext.cs",
-              "RelativeDocumentMoniker": "Auth.Infrastructure\\Data\\UserDbContext.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Infrastructure\\Data\\UserDbContext.cs",
-              "RelativeToolTip": "Auth.Infrastructure\\Data\\UserDbContext.cs",
+              "Title": "Auth.Infrastructure.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Infrastructure\\Auth.Infrastructure.csproj",
+              "RelativeDocumentMoniker": "Auth.Infrastructure\\Auth.Infrastructure.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.Infrastructure\\Auth.Infrastructure.csproj",
+              "RelativeToolTip": "Auth.Infrastructure\\Auth.Infrastructure.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T11:57:09.111Z",
-              "EditorCaption": ""
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-06T09:01:48.815Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 13,
-              "Title": "UserRole.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Domain\\Enums\\UserRole.cs",
-              "RelativeDocumentMoniker": "Auth.Domain\\Enums\\UserRole.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Domain\\Enums\\UserRole.cs",
-              "RelativeToolTip": "Auth.Domain\\Enums\\UserRole.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T11:57:06.893Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Domain\\Entities\\User.cs",
-              "RelativeDocumentMoniker": "Auth.Domain\\Entities\\User.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Domain\\Entities\\User.cs",
-              "RelativeToolTip": "Auth.Domain\\Entities\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T11:57:04.109Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Auth.Infrastructure",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Infrastructure\\Auth.Infrastructure.csproj",
-              "RelativeDocumentMoniker": "Auth.Infrastructure\\Auth.Infrastructure.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.Infrastructure\\Auth.Infrastructure.csproj",
-              "RelativeToolTip": "Auth.Infrastructure\\Auth.Infrastructure.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-19T11:51:17.888Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Auth.API",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.API\\Auth.API.csproj",
+              "Title": "Auth.API.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.API\\Auth.API.csproj",
               "RelativeDocumentMoniker": "Auth.API\\Auth.API.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\AuthService\\Auth.API\\Auth.API.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\AuthService\\Auth.API\\Auth.API.csproj",
               "RelativeToolTip": "Auth.API\\Auth.API.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAABUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-19T11:50:52.509Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T17:25:22.768Z"
             }
           ]
         }
