@@ -25,7 +25,7 @@ namespace Doctor.Application.Services
             await _medecinRepository.AddAsync(medecin);
         }
 
-        public async Task<MedecinDto> GetDoctorById(Guid id)
+        public async Task<GetMedecinRequestDto> GetDoctorById(Guid id)
         {
             if (id == Guid.Empty)
             {
@@ -38,8 +38,9 @@ namespace Doctor.Application.Services
                 throw new KeyNotFoundException("Médecin introuvable.");
             }
 
-            return new MedecinDto
+            return new GetMedecinRequestDto
             {
+                Id = medecin.Id,
                 Prenom = medecin.Prenom,
                 Nom = medecin.Nom,
                 Specialite = medecin.Specialite,
@@ -51,7 +52,7 @@ namespace Doctor.Application.Services
             };
         }
 
-        public async Task<IEnumerable<MedecinDto>> GetAllDoctors()
+        public async Task<IEnumerable<GetMedecinRequestDto>> GetAllDoctors()
         {
             var medecins = await _medecinRepository.GetAllAsync();
             if (medecins == null || !medecins.Any())
@@ -59,8 +60,9 @@ namespace Doctor.Application.Services
                 throw new InvalidOperationException("Aucun médecin trouvé.");
             }
 
-            return medecins.Select(m => new MedecinDto
+            return medecins.Select(m => new GetMedecinRequestDto
             {
+                Id = m.Id,
                 Prenom = m.Prenom,
                 Nom = m.Nom,
                 Specialite = m.Specialite,
@@ -118,7 +120,7 @@ namespace Doctor.Application.Services
             await _medecinRepository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<MedecinDto>> FilterDoctorsBySpecialite(string specialite)
+        public async Task<IEnumerable<GetMedecinRequestDto>> FilterDoctorsBySpecialite(string specialite)
         {
             if (string.IsNullOrWhiteSpace(specialite))
             {
@@ -131,8 +133,9 @@ namespace Doctor.Application.Services
                 throw new InvalidOperationException("Aucun médecin trouvé pour la spécialité spécifiée.");
             }
 
-            return medecins.Select(m => new MedecinDto
+            return medecins.Select(m => new GetMedecinRequestDto
             {
+                Id = m.Id,
                 Prenom = m.Prenom,
                 Nom = m.Nom,
                 Specialite = m.Specialite,
@@ -144,7 +147,7 @@ namespace Doctor.Application.Services
             });
         }
 
-        public async Task<IEnumerable<MedecinDto>> FilterDoctorsByName(string name, string prenom)
+        public async Task<IEnumerable<GetMedecinRequestDto>> FilterDoctorsByName(string name, string prenom)
         {
             if (string.IsNullOrWhiteSpace(name) && string.IsNullOrWhiteSpace(prenom))
             {
@@ -157,8 +160,9 @@ namespace Doctor.Application.Services
                 throw new InvalidOperationException("Aucun médecin trouvé pour les critères spécifiés.");
             }
 
-            return medecins.Select(m => new MedecinDto
+            return medecins.Select(m => new GetMedecinRequestDto
             {
+                Id = m.Id,
                 Prenom = m.Prenom,
                 Nom = m.Nom,
                 Specialite = m.Specialite,
@@ -170,7 +174,7 @@ namespace Doctor.Application.Services
             });
         }
 
-        public async Task<IEnumerable<MedecinDto>> GetMedecinByClinique(Guid cliniqueId)
+        public async Task<IEnumerable<GetMedecinRequestDto>> GetMedecinByClinique(Guid cliniqueId)
         {
             if (cliniqueId == Guid.Empty)
             {
@@ -183,8 +187,9 @@ namespace Doctor.Application.Services
                 throw new InvalidOperationException("Aucun médecin trouvé pour la clinique spécifiée.");
             }
 
-            return medecins.Select(m => new MedecinDto
+            return medecins.Select(m => new GetMedecinRequestDto
             {
+                Id = m.Id,
                 Prenom = m.Prenom,
                 Nom = m.Nom,
                 Specialite = m.Specialite,
