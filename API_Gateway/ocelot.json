@@ -1,0 +1,243 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Auth/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "authapi",
+          "Port": 8081
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Auth/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "usersregion"
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 30
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Clinique/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "clinicservice",
+          "Port": 8083
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/clinics/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "clinicsregion"
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 30
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Medecin/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "doctorservice",
+          "Port": 8085
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/doctors/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "doctorsregion"
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 30
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Patients/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "patientservice",
+          "Port": 8087
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/patients/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "patientsregion"
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 30
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/DossierMedical/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "patientservice",
+          "Port": 8087
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/medical-records/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "dossiersregion"
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 30
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Consultation/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "consultationservice",
+          "Port": 8091
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/consultations/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "consultationsregion"
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 30
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/RendezVous/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "rdvservice",
+          "Port": 8089
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/appointments/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "appointmentsregion"
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 30
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Facture/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "facturationservice",
+          "Port": 8093
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/billing/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "paymentsregion"
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 30
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Reporting/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "reportingservice",
+          "Port": 8095
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/reports/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "reportsregion"
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 30
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Notification/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "notificationservice",
+          "Port": 8097
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/notifications/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "notificationsregion"
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 30
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:8000",
+    "RequestIdKey": "RequestId",
+    "RateLimitOptions": {
+      "DisableRateLimitHeaders": false,
+      "QuotaExceededMessage": "Limite de requêtes atteinte",
+      "HttpStatusCode": 429
+    }
+  }
+}
