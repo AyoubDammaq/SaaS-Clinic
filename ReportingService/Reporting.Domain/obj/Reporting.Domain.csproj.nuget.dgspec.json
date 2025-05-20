@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj": {}
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj": {
+    "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj",
         "projectName": "Reporting.Domain",
-        "projectPath": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj",
+        "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\obj\\",
+        "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

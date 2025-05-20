@@ -1,129 +1,137 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\ReportingService\\",
+  "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E22209B6-DE76-4E9C-8DC2-2E2FFD520CEE}|Reporting.Infrastructure\\Reporting.Infrastructure.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.infrastructure\\repositories\\reportingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E22209B6-DE76-4E9C-8DC2-2E2FFD520CEE}|Reporting.Infrastructure\\Reporting.Infrastructure.csproj|solutionrelative:reporting.infrastructure\\repositories\\reportingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.api\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|solutionrelative:reporting.api\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.application\\services\\reportingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\services\\reportingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|solutionrelative:reporting.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.api\\controllers\\reportingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|solutionrelative:reporting.api\\controllers\\reportingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.application\\dtos\\statistiquecliniquedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\dtos\\statistiquecliniquedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.application\\interfaces\\ireportingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\interfaces\\ireportingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.domain\\interfaces\\ireportingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\interfaces\\ireportingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.application\\dtos\\activitemedecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\dtos\\activitemedecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.domain\\valueobject\\activitemedecin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\valueobject\\activitemedecin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.application\\dtos\\statistiquedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\dtos\\statistiquedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.domain\\valueobject\\statistiqueclinique.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\valueobject\\statistiqueclinique.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E22209B6-DE76-4E9C-8DC2-2E2FFD520CEE}|Reporting.Infrastructure\\Reporting.Infrastructure.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.infrastructure\\reporting.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{E22209B6-DE76-4E9C-8DC2-2E2FFD520CEE}|Reporting.Infrastructure\\Reporting.Infrastructure.csproj|solutionrelative:reporting.infrastructure\\reporting.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.domain\\valueobject\\statistique.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\valueobject\\statistique.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|solutionrelative:reporting.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.domain\\interfaces\\iconsultationstaterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\interfaces\\iconsultationstaterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.api\\controllers\\reportingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|solutionrelative:reporting.api\\controllers\\reportingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.application\\dtos\\facturestatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\dtos\\facturestatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E22209B6-DE76-4E9C-8DC2-2E2FFD520CEE}|Reporting.Infrastructure\\Reporting.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.infrastructure\\repositories\\reportingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E22209B6-DE76-4E9C-8DC2-2E2FFD520CEE}|Reporting.Infrastructure\\Reporting.Infrastructure.csproj|solutionrelative:reporting.infrastructure\\repositories\\reportingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.domain\\valueobject\\facturestats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\valueobject\\facturestats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|solutionrelative:reporting.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.application\\dtos\\doctorstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\dtos\\doctorstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.domain\\valueobject\\doctorstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\valueobject\\doctorstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.application\\dtos\\rendezvousstatdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\dtos\\rendezvousstatdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.domain\\valueobject\\rendezvousstat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\valueobject\\rendezvousstat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.domain\\entities\\rendezvous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\entities\\rendezvous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.domain\\valueobject\\consultationstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\valueobject\\consultationstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.application\\dtos\\consultationstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\dtos\\consultationstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.api\\reporting.api.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "AbsoluteMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.api\\reporting.api.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
       "RelativeMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|solutionrelative:reporting.api\\reporting.api.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.domain\\valueobject\\dashboardstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|solutionrelative:reporting.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.application\\services\\reportingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\services\\reportingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.application\\dtos\\statistiquecliniquedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\dtos\\statistiquecliniquedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.application\\interfaces\\ireportingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\interfaces\\ireportingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.domain\\interfaces\\ireportingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\interfaces\\ireportingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.application\\dtos\\activitemedecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\dtos\\activitemedecindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.domain\\valueobject\\activitemedecin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\valueobject\\activitemedecin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.application\\dtos\\statistiquedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\dtos\\statistiquedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.domain\\valueobject\\statistiqueclinique.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\valueobject\\statistiqueclinique.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E22209B6-DE76-4E9C-8DC2-2E2FFD520CEE}|Reporting.Infrastructure\\Reporting.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.infrastructure\\reporting.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{E22209B6-DE76-4E9C-8DC2-2E2FFD520CEE}|Reporting.Infrastructure\\Reporting.Infrastructure.csproj|solutionrelative:reporting.infrastructure\\reporting.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.domain\\valueobject\\statistique.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\valueobject\\statistique.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.domain\\interfaces\\iconsultationstaterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\interfaces\\iconsultationstaterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.application\\dtos\\facturestatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\dtos\\facturestatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.domain\\valueobject\\facturestats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\valueobject\\facturestats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.application\\dtos\\doctorstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\dtos\\doctorstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.domain\\valueobject\\doctorstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\valueobject\\doctorstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.application\\dtos\\rendezvousstatdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\dtos\\rendezvousstatdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.domain\\valueobject\\rendezvousstat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\valueobject\\rendezvousstat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.domain\\entities\\rendezvous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\entities\\rendezvous.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.domain\\valueobject\\consultationstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\valueobject\\consultationstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.application\\dtos\\consultationstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\dtos\\consultationstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.domain\\valueobject\\dashboardstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\valueobject\\dashboardstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.application\\dtos\\dashboardstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.application\\dtos\\dashboardstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F839FD67-F904-42BC-BFB0-1810112F044D}|Reporting.Application\\Reporting.Application.csproj|solutionrelative:reporting.application\\dtos\\dashboardstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.domain\\reporting.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.domain\\reporting.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\reporting.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.domain\\entities\\consultationdatamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.domain\\entities\\consultationdatamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A6DC628D-651F-41F9-BA86-031B55BF800A}|Reporting.Domain\\Reporting.Domain.csproj|solutionrelative:reporting.domain\\entities\\consultationdatamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.api\\reporting.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.api\\reporting.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{D3B35818-02DF-433E-8795-45CCBF3F8B2F}|Reporting.API\\Reporting.API.csproj|solutionrelative:reporting.api\\reporting.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E22209B6-DE76-4E9C-8DC2-2E2FFD520CEE}|Reporting.Infrastructure\\Reporting.Infrastructure.csproj|c:\\users\\user\\desktop\\reportingservice\\reporting.infrastructure\\repositories\\consultationstaterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E22209B6-DE76-4E9C-8DC2-2E2FFD520CEE}|Reporting.Infrastructure\\Reporting.Infrastructure.csproj|c:\\users\\user\\desktop\\saas-clinic\\reportingservice\\reporting.infrastructure\\repositories\\consultationstaterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E22209B6-DE76-4E9C-8DC2-2E2FFD520CEE}|Reporting.Infrastructure\\Reporting.Infrastructure.csproj|solutionrelative:reporting.infrastructure\\repositories\\consultationstaterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -134,7 +142,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -146,154 +154,210 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ReportingService.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\Services\\ReportingService.cs",
-              "RelativeDocumentMoniker": "Reporting.Application\\Services\\ReportingService.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\Services\\ReportingService.cs",
-              "RelativeToolTip": "Reporting.Application\\Services\\ReportingService.cs",
-              "ViewState": "AgIAAIwAAAAAAAAAAAAuwJQAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-20T19:01:16.31Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ReportingController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.API\\Controllers\\ReportingController.cs",
-              "RelativeDocumentMoniker": "Reporting.API\\Controllers\\ReportingController.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.API\\Controllers\\ReportingController.cs",
-              "RelativeToolTip": "Reporting.API\\Controllers\\ReportingController.cs",
-              "ViewState": "AgIAAHMAAAAAAAAAAAAQwIkAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-20T14:44:50.228Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Dockerfile",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\Dockerfile",
+              "RelativeDocumentMoniker": "Reporting.API\\Dockerfile",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\Dockerfile",
+              "RelativeToolTip": "Reporting.API\\Dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-05-06T10:05:20.877Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Reporting.API\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Reporting.API\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-06T09:52:18.331Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ReportingRepository.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Infrastructure\\Repositories\\ReportingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Infrastructure\\Repositories\\ReportingRepository.cs",
               "RelativeDocumentMoniker": "Reporting.Infrastructure\\Repositories\\ReportingRepository.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Infrastructure\\Repositories\\ReportingRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Infrastructure\\Repositories\\ReportingRepository.cs",
               "RelativeToolTip": "Reporting.Infrastructure\\Repositories\\ReportingRepository.cs",
-              "ViewState": "AgIAAJAAAAAAAAAAAAAmwKgAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKYAAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-20T22:43:54.109Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "StatistiqueCliniqueDTO.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\StatistiqueCliniqueDTO.cs",
-              "RelativeDocumentMoniker": "Reporting.Application\\DTOs\\StatistiqueCliniqueDTO.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\StatistiqueCliniqueDTO.cs",
-              "RelativeToolTip": "Reporting.Application\\DTOs\\StatistiqueCliniqueDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-23T10:15:25.48Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "IReportingService.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\Interfaces\\IReportingService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\Interfaces\\IReportingService.cs",
               "RelativeDocumentMoniker": "Reporting.Application\\Interfaces\\IReportingService.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\Interfaces\\IReportingService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\Interfaces\\IReportingService.cs",
               "RelativeToolTip": "Reporting.Application\\Interfaces\\IReportingService.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAkwBkAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-20T14:45:26.875Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-20T14:45:26.875Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IReportingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Interfaces\\IReportingRepository.cs",
+              "RelativeDocumentMoniker": "Reporting.Domain\\Interfaces\\IReportingRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Interfaces\\IReportingRepository.cs",
+              "RelativeToolTip": "Reporting.Domain\\Interfaces\\IReportingRepository.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAwBgAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T22:43:17.006Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ActiviteMedecinDTO.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\ActiviteMedecinDTO.cs",
+              "RelativeDocumentMoniker": "Reporting.Application\\DTOs\\ActiviteMedecinDTO.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\ActiviteMedecinDTO.cs",
+              "RelativeToolTip": "Reporting.Application\\DTOs\\ActiviteMedecinDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T10:15:51.263Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ActiviteMedecin.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\ActiviteMedecin.cs",
+              "RelativeDocumentMoniker": "Reporting.Domain\\ValueObject\\ActiviteMedecin.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\ActiviteMedecin.cs",
+              "RelativeToolTip": "Reporting.Domain\\ValueObject\\ActiviteMedecin.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T10:12:28.428Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "IReportingRepository.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Interfaces\\IReportingRepository.cs",
-              "RelativeDocumentMoniker": "Reporting.Domain\\Interfaces\\IReportingRepository.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Interfaces\\IReportingRepository.cs",
-              "RelativeToolTip": "Reporting.Domain\\Interfaces\\IReportingRepository.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAwBgAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-20T22:43:17.006Z",
+              "Title": "Reporting.API.http",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\Reporting.API.http",
+              "RelativeDocumentMoniker": "Reporting.API\\Reporting.API.http",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\Reporting.API.http",
+              "RelativeToolTip": "Reporting.API\\Reporting.API.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-04-20T14:40:24.135Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ActiviteMedecinDTO.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\ActiviteMedecinDTO.cs",
-              "RelativeDocumentMoniker": "Reporting.Application\\DTOs\\ActiviteMedecinDTO.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\ActiviteMedecinDTO.cs",
-              "RelativeToolTip": "Reporting.Application\\DTOs\\ActiviteMedecinDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAxAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\Program.cs",
+              "RelativeDocumentMoniker": "Reporting.API\\Program.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\Program.cs",
+              "RelativeToolTip": "Reporting.API\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-23T10:15:51.263Z",
+              "WhenOpened": "2025-04-20T19:23:39.089Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ActiviteMedecin.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\ActiviteMedecin.cs",
-              "RelativeDocumentMoniker": "Reporting.Domain\\ValueObject\\ActiviteMedecin.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\ActiviteMedecin.cs",
-              "RelativeToolTip": "Reporting.Domain\\ValueObject\\ActiviteMedecin.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAxAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "ReportingController.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\Controllers\\ReportingController.cs",
+              "RelativeDocumentMoniker": "Reporting.API\\Controllers\\ReportingController.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\Controllers\\ReportingController.cs",
+              "RelativeToolTip": "Reporting.API\\Controllers\\ReportingController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIkAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-23T10:12:28.428Z",
+              "WhenOpened": "2025-04-20T14:44:50.228Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
+              "Title": "StatistiqueCliniqueDTO.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\StatistiqueCliniqueDTO.cs",
+              "RelativeDocumentMoniker": "Reporting.Application\\DTOs\\StatistiqueCliniqueDTO.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\StatistiqueCliniqueDTO.cs",
+              "RelativeToolTip": "Reporting.Application\\DTOs\\StatistiqueCliniqueDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T10:15:25.48Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\appsettings.json",
+              "RelativeDocumentMoniker": "Reporting.API\\appsettings.json",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\appsettings.json",
+              "RelativeToolTip": "Reporting.API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-20T19:42:23.69Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ReportingService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\Services\\ReportingService.cs",
+              "RelativeDocumentMoniker": "Reporting.Application\\Services\\ReportingService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\Services\\ReportingService.cs",
+              "RelativeToolTip": "Reporting.Application\\Services\\ReportingService.cs",
+              "ViewState": "AgIAAIwAAAAAAAAAAAAuwJQAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-20T19:01:16.31Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "StatistiqueDTO.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\StatistiqueDTO.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\StatistiqueDTO.cs",
               "RelativeDocumentMoniker": "Reporting.Application\\DTOs\\StatistiqueDTO.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\StatistiqueDTO.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\StatistiqueDTO.cs",
               "RelativeToolTip": "Reporting.Application\\DTOs\\StatistiqueDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-23T10:15:37.81Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-23T10:15:37.81Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 14,
               "Title": "StatistiqueClinique.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\StatistiqueClinique.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\StatistiqueClinique.cs",
               "RelativeDocumentMoniker": "Reporting.Domain\\ValueObject\\StatistiqueClinique.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\StatistiqueClinique.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\StatistiqueClinique.cs",
               "RelativeToolTip": "Reporting.Domain\\ValueObject\\StatistiqueClinique.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-23T10:14:24.022Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-23T10:14:24.022Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 16,
               "Title": "Statistique.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\Statistique.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\Statistique.cs",
               "RelativeDocumentMoniker": "Reporting.Domain\\ValueObject\\Statistique.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\Statistique.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\Statistique.cs",
               "RelativeToolTip": "Reporting.Domain\\ValueObject\\Statistique.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-23T10:14:16.807Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-23T10:14:16.807Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "Reporting.Infrastructure.csproj",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Infrastructure\\Reporting.Infrastructure.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Infrastructure\\Reporting.Infrastructure.csproj",
               "RelativeDocumentMoniker": "Reporting.Infrastructure\\Reporting.Infrastructure.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Infrastructure\\Reporting.Infrastructure.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Infrastructure\\Reporting.Infrastructure.csproj",
               "RelativeToolTip": "Reporting.Infrastructure\\Reporting.Infrastructure.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
@@ -302,102 +366,71 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "FactureStats.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\FactureStats.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\FactureStats.cs",
               "RelativeDocumentMoniker": "Reporting.Domain\\ValueObject\\FactureStats.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\FactureStats.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\FactureStats.cs",
               "RelativeToolTip": "Reporting.Domain\\ValueObject\\FactureStats.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T14:06:24.968Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.API\\Program.cs",
-              "RelativeDocumentMoniker": "Reporting.API\\Program.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.API\\Program.cs",
-              "RelativeToolTip": "Reporting.API\\Program.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-20T19:23:39.089Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "IConsultationStateRepository.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Interfaces\\IConsultationStateRepository.cs",
-              "RelativeDocumentMoniker": "Reporting.Domain\\Interfaces\\IConsultationStateRepository.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Interfaces\\IConsultationStateRepository.cs",
-              "RelativeToolTip": "Reporting.Domain\\Interfaces\\IConsultationStateRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAcAAABVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-20T19:07:05.274Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "FactureStatsDTO.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\FactureStatsDTO.cs",
-              "RelativeDocumentMoniker": "Reporting.Application\\DTOs\\FactureStatsDTO.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\FactureStatsDTO.cs",
-              "RelativeToolTip": "Reporting.Application\\DTOs\\FactureStatsDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T14:06:14.399Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.API\\appsettings.json",
-              "RelativeDocumentMoniker": "Reporting.API\\appsettings.json",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.API\\appsettings.json",
-              "RelativeToolTip": "Reporting.API\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-20T19:42:23.69Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T14:06:24.968Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 17,
-              "Title": "DoctorStatsDTO.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\DoctorStatsDTO.cs",
-              "RelativeDocumentMoniker": "Reporting.Application\\DTOs\\DoctorStatsDTO.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\DoctorStatsDTO.cs",
-              "RelativeToolTip": "Reporting.Application\\DTOs\\DoctorStatsDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Title": "IConsultationStateRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Interfaces\\IConsultationStateRepository.cs",
+              "RelativeDocumentMoniker": "Reporting.Domain\\Interfaces\\IConsultationStateRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Interfaces\\IConsultationStateRepository.cs",
+              "RelativeToolTip": "Reporting.Domain\\Interfaces\\IConsultationStateRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAcAAABVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T10:31:01.744Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-20T19:07:05.274Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 18,
-              "Title": "DoctorStats.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\DoctorStats.cs",
-              "RelativeDocumentMoniker": "Reporting.Domain\\ValueObject\\DoctorStats.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\DoctorStats.cs",
-              "RelativeToolTip": "Reporting.Domain\\ValueObject\\DoctorStats.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAIAAAAAAAAAA==",
+              "Title": "FactureStatsDTO.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\FactureStatsDTO.cs",
+              "RelativeDocumentMoniker": "Reporting.Application\\DTOs\\FactureStatsDTO.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\FactureStatsDTO.cs",
+              "RelativeToolTip": "Reporting.Application\\DTOs\\FactureStatsDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T10:25:22.396Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T14:06:14.399Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
+              "Title": "DoctorStatsDTO.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\DoctorStatsDTO.cs",
+              "RelativeDocumentMoniker": "Reporting.Application\\DTOs\\DoctorStatsDTO.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\DoctorStatsDTO.cs",
+              "RelativeToolTip": "Reporting.Application\\DTOs\\DoctorStatsDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T10:31:01.744Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "DoctorStats.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\DoctorStats.cs",
+              "RelativeDocumentMoniker": "Reporting.Domain\\ValueObject\\DoctorStats.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\DoctorStats.cs",
+              "RelativeToolTip": "Reporting.Domain\\ValueObject\\DoctorStats.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T10:25:22.396Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
               "Title": "RendezVousStatDTO.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\RendezVousStatDTO.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\RendezVousStatDTO.cs",
               "RelativeDocumentMoniker": "Reporting.Application\\DTOs\\RendezVousStatDTO.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\RendezVousStatDTO.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\RendezVousStatDTO.cs",
               "RelativeToolTip": "Reporting.Application\\DTOs\\RendezVousStatDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -405,23 +438,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "Reporting.API.http",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.API\\Reporting.API.http",
-              "RelativeDocumentMoniker": "Reporting.API\\Reporting.API.http",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.API\\Reporting.API.http",
-              "RelativeToolTip": "Reporting.API\\Reporting.API.http",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-04-20T14:40:24.135Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 23,
               "Title": "RendezVousStat.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\RendezVousStat.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\RendezVousStat.cs",
               "RelativeDocumentMoniker": "Reporting.Domain\\ValueObject\\RendezVousStat.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\RendezVousStat.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\RendezVousStat.cs",
               "RelativeToolTip": "Reporting.Domain\\ValueObject\\RendezVousStat.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -429,11 +450,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 24,
               "Title": "RendezVous.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Entities\\RendezVous.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Entities\\RendezVous.cs",
               "RelativeDocumentMoniker": "Reporting.Domain\\Entities\\RendezVous.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Entities\\RendezVous.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Entities\\RendezVous.cs",
               "RelativeToolTip": "Reporting.Domain\\Entities\\RendezVous.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -441,11 +462,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 26,
               "Title": "ConsultationStatsDto.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\ConsultationStatsDto.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\ConsultationStatsDto.cs",
               "RelativeDocumentMoniker": "Reporting.Application\\DTOs\\ConsultationStatsDto.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\ConsultationStatsDto.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\ConsultationStatsDto.cs",
               "RelativeToolTip": "Reporting.Application\\DTOs\\ConsultationStatsDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -453,11 +474,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "ConsultationStats.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\ConsultationStats.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\ConsultationStats.cs",
               "RelativeDocumentMoniker": "Reporting.Domain\\ValueObject\\ConsultationStats.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\ConsultationStats.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\ConsultationStats.cs",
               "RelativeToolTip": "Reporting.Domain\\ValueObject\\ConsultationStats.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -465,11 +486,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 28,
               "Title": "DashboardStatsDTO.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\DashboardStatsDTO.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\DashboardStatsDTO.cs",
               "RelativeDocumentMoniker": "Reporting.Application\\DTOs\\DashboardStatsDTO.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\DTOs\\DashboardStatsDTO.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\DTOs\\DashboardStatsDTO.cs",
               "RelativeToolTip": "Reporting.Application\\DTOs\\DashboardStatsDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -477,11 +498,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 27,
               "Title": "DashboardStats.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\DashboardStats.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\DashboardStats.cs",
               "RelativeDocumentMoniker": "Reporting.Domain\\ValueObject\\DashboardStats.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\ValueObject\\DashboardStats.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\ValueObject\\DashboardStats.cs",
               "RelativeToolTip": "Reporting.Domain\\ValueObject\\DashboardStats.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -489,23 +510,24 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 29,
               "Title": "Reporting.Domain.csproj",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj",
               "RelativeDocumentMoniker": "Reporting.Domain\\Reporting.Domain.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj",
               "RelativeToolTip": "Reporting.Domain\\Reporting.Domain.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-21T14:47:30.736Z"
+              "WhenOpened": "2025-04-21T14:47:30.736Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 30,
               "Title": "ConsultationDataModel.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Entities\\ConsultationDataModel.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Entities\\ConsultationDataModel.cs",
               "RelativeDocumentMoniker": "Reporting.Domain\\Entities\\ConsultationDataModel.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Entities\\ConsultationDataModel.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Entities\\ConsultationDataModel.cs",
               "RelativeToolTip": "Reporting.Domain\\Entities\\ConsultationDataModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -513,23 +535,24 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 31,
               "Title": "Reporting.API.csproj",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.API\\Reporting.API.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\Reporting.API.csproj",
               "RelativeDocumentMoniker": "Reporting.API\\Reporting.API.csproj",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.API\\Reporting.API.csproj",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\Reporting.API.csproj",
               "RelativeToolTip": "Reporting.API\\Reporting.API.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-20T19:38:30.138Z"
+              "WhenOpened": "2025-04-20T19:38:30.138Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 32,
               "Title": "ConsultationStateRepository.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Infrastructure\\Repositories\\ConsultationStateRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Infrastructure\\Repositories\\ConsultationStateRepository.cs",
               "RelativeDocumentMoniker": "Reporting.Infrastructure\\Repositories\\ConsultationStateRepository.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Infrastructure\\Repositories\\ConsultationStateRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Infrastructure\\Repositories\\ConsultationStateRepository.cs",
               "RelativeToolTip": "Reporting.Infrastructure\\Repositories\\ConsultationStateRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

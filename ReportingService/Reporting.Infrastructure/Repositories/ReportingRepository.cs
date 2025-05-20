@@ -16,7 +16,7 @@ namespace Reporting.Infrastructure.Repositories
 
         public async Task<int> GetNombreConsultationsAsync(DateTime dateDebut, DateTime dateFin)
         {
-            var url = $"http://localhost:5015/api/Consultation/count?start={dateDebut:yyyy-MM-ddTHH:mm:ss}&end={dateFin:yyyy-MM-ddTHH:mm:ss}";
+            var url = $"http://localhost:5011/api/Consultation/count?start={dateDebut:yyyy-MM-ddTHH:mm:ss}&end={dateFin:yyyy-MM-ddTHH:mm:ss}";
             var response = await _httpClient.GetAsync(url);
 
             if (!response.IsSuccessStatusCode)
@@ -33,7 +33,7 @@ namespace Reporting.Infrastructure.Repositories
 
         public async Task<IEnumerable<RendezVousStat>> GetStatistiquesRendezVousAsync(DateTime dateDebut, DateTime dateFin)
         {
-            var url = $"http://localhost:5133/api/RendezVous/period?start={dateDebut:yyyy-MM-ddTHH:mm:ss}&end={dateFin:yyyy-MM-ddTHH:mm:ss}"; 
+            var url = $"http://localhost:5010/api/RendezVous/period?start={dateDebut:yyyy-MM-ddTHH:mm:ss}&end={dateFin:yyyy-MM-ddTHH:mm:ss}"; 
             var response = await _httpClient.GetAsync(url);
 
             if (!response.IsSuccessStatusCode)
@@ -55,7 +55,7 @@ namespace Reporting.Infrastructure.Repositories
 
         public async Task<int> GetNombreNouveauxPatientsAsync(DateTime dateDebut, DateTime dateFin)
         {
-            var url = $"http://localhost:5269/api/Patients/statistiques?start={dateDebut:yyyy-MM-dd}&end={dateFin:yyyy-MM-dd}";
+            var url = $"http://localhost:5009/api/Patients/statistiques?start={dateDebut:yyyy-MM-dd}&end={dateFin:yyyy-MM-dd}";
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             return int.Parse(await response.Content.ReadAsStringAsync());
@@ -63,7 +63,7 @@ namespace Reporting.Infrastructure.Repositories
 
         public async Task<List<DoctorStats>> GetNombreMedecinParSpecialiteAsync()
         {
-            var url = "http://localhost:5050/api/Medecin/statistiques/specialite";
+            var url = "http://localhost:5005/api/Medecin/statistiques/specialite";
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
@@ -73,7 +73,7 @@ namespace Reporting.Infrastructure.Repositories
 
         public async Task<List<DoctorStats>> GetNombreMedecinByCliniqueAsync()
         {
-            var url = "http://localhost:5050/api/Medecin/statistiques/clinique";
+            var url = "http://localhost:5005/api/Medecin/statistiques/clinique";
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
@@ -82,7 +82,7 @@ namespace Reporting.Infrastructure.Repositories
 
         public async Task<List<DoctorStats>> GetNombreMedecinBySpecialiteDansUneCliniqueAsync(Guid cliniqueId)
         {
-            var url = $"http://localhost:5050/api/Medecin/statistiques/specialite/clinique/{cliniqueId}";
+            var url = $"http://localhost:5005/api/Medecin/statistiques/specialite/clinique/{cliniqueId}";
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
@@ -91,7 +91,7 @@ namespace Reporting.Infrastructure.Repositories
 
         public async Task<List<FactureStats>> GetNombreDeFactureByStatusAsync()
         {
-            var url = "http://localhost:5135/api/Facture/stats/status";
+            var url = "http://localhost:5013/api/Facture/stats/status";
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
@@ -100,7 +100,7 @@ namespace Reporting.Infrastructure.Repositories
 
         public async Task<List<FactureStats>> GetNombreDeFactureParCliniqueAsync()
         {
-            var url = "http://localhost:5135/api/Facture/stats/clinic";
+            var url = "http://localhost:5013/api/Facture/stats/clinic";
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
@@ -109,7 +109,7 @@ namespace Reporting.Infrastructure.Repositories
 
         public async Task<List<FactureStats>> GetNombreDeFacturesByStatusParCliniqueAsync()
         {
-            var url = "http://localhost:5135/api/Facture/stats/status/clinic";
+            var url = "http://localhost:5013/api/Facture/stats/status/clinic";
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
@@ -118,7 +118,7 @@ namespace Reporting.Infrastructure.Repositories
 
         public async Task<List<FactureStats>> GetNombreDeFacturesByStatusDansUneCliniqueAsync(Guid cliniqueId)
         {
-            var url = $"http://localhost:5135/api/Facture/stats/status/clinic/{cliniqueId}";
+            var url = $"http://localhost:5013/api/Facture/stats/status/clinic/{cliniqueId}";
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
@@ -127,7 +127,7 @@ namespace Reporting.Infrastructure.Repositories
 
         public async Task<int> GetNombreDeCliniquesAsync()
         {
-            var url = "http://localhost:5210/api/Clinique/nombre-cliniques"; 
+            var url = "http://localhost:5003/api/Clinique/nombre-cliniques"; 
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             return int.Parse(await response.Content.ReadAsStringAsync());
@@ -135,7 +135,7 @@ namespace Reporting.Infrastructure.Repositories
 
         public async Task<int> GetNombreNouvellesCliniquesDuMoisAsync()
         {
-            var url = "http://localhost:5210/api/Clinique/nouvelles-cliniques-mois";
+            var url = "http://localhost:5003/api/Clinique/nouvelles-cliniques-mois";
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             return int.Parse(await response.Content.ReadAsStringAsync());
@@ -143,7 +143,7 @@ namespace Reporting.Infrastructure.Repositories
 
         public async Task<IEnumerable<Statistique>> GetNombreNouvellesCliniquesParMoisAsync()
         {
-            var url = "http://localhost:5210/api/Clinique/nouvelles-cliniques-par-mois";
+            var url = "http://localhost:5003/api/Clinique/nouvelles-cliniques-par-mois";
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
 
@@ -153,7 +153,7 @@ namespace Reporting.Infrastructure.Repositories
 
         public async Task<StatistiqueClinique> GetStatistiquesCliniqueAsync(Guid cliniqueId)
         {
-            var url = $"http://localhost:5210/api/Clinique/statistiques/{cliniqueId}";
+            var url = $"http://localhost:5003/api/Clinique/statistiques/{cliniqueId}";
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
 
@@ -164,7 +164,7 @@ namespace Reporting.Infrastructure.Repositories
 
         public async Task<IEnumerable<ActiviteMedecin>> GetActivitesMedecinAsync(Guid medecinId)
         {
-            var url = $"http://localhost:5050/api/Medecin/activites/{medecinId}";
+            var url = $"http://localhost:5005/api/Medecin/activites/{medecinId}";
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
 

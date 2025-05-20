@@ -176,6 +176,22 @@
           }
         }
       },
+      "Scalar.AspNetCore/2.2.7": {
+        "type": "package",
+        "compile": {
+          "lib/net9.0/Scalar.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/Scalar.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Swashbuckle.AspNetCore/8.1.1": {
         "type": "package",
         "dependencies": {
@@ -889,6 +905,23 @@
         "packageIcon.png"
       ]
     },
+    "Scalar.AspNetCore/2.2.7": {
+      "sha512": "28RhQGPl842ynbFYtpA68HcyhZMxbDBpu7fr2tRjol1jysA8quOh3NTpB+MVtquqbPeDHXxgV9CqCHjpnYXWng==",
+      "type": "package",
+      "path": "scalar.aspnetcore/2.2.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "icon.png",
+        "lib/net8.0/Scalar.AspNetCore.dll",
+        "lib/net8.0/Scalar.AspNetCore.xml",
+        "lib/net9.0/Scalar.AspNetCore.dll",
+        "lib/net9.0/Scalar.AspNetCore.xml",
+        "scalar.aspnetcore.2.2.7.nupkg.sha512",
+        "scalar.aspnetcore.nuspec"
+      ]
+    },
     "Swashbuckle.AspNetCore/8.1.1": {
       "sha512": "HJHexmU0PiYevgTLvKjYkxEtclF2w4O7iTd3Ef3p6KeT0kcYLpkFVgCw6glpGS57h8769anv8G+NFi9Kge+/yw==",
       "type": "package",
@@ -989,6 +1022,7 @@
       "Reporting.Application >= 1.0.0",
       "Reporting.Domain >= 1.0.0",
       "Reporting.Infrastructure >= 1.0.0",
+      "Scalar.AspNetCore >= 2.2.7",
       "Swashbuckle.AspNetCore >= 8.1.1"
     ]
   },
@@ -1000,11 +1034,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.API\\Reporting.API.csproj",
+      "projectUniqueName": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\Reporting.API.csproj",
       "projectName": "Reporting.API",
-      "projectPath": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.API\\Reporting.API.csproj",
+      "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\Reporting.API.csproj",
       "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.API\\obj\\",
+      "outputPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -1027,14 +1061,14 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\Reporting.Application.csproj": {
-              "projectPath": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Application\\Reporting.Application.csproj"
+            "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\Reporting.Application.csproj": {
+              "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Application\\Reporting.Application.csproj"
             },
-            "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj": {
-              "projectPath": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj"
+            "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj": {
+              "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Domain\\Reporting.Domain.csproj"
             },
-            "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Infrastructure\\Reporting.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\USER\\Desktop\\ReportingService\\Reporting.Infrastructure\\Reporting.Infrastructure.csproj"
+            "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Infrastructure\\Reporting.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\USER\\Desktop\\SaaS-Clinic\\ReportingService\\Reporting.Infrastructure\\Reporting.Infrastructure.csproj"
             }
           }
         }
@@ -1062,6 +1096,10 @@
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
             "target": "Package",
             "version": "[1.21.0, )"
+          },
+          "Scalar.AspNetCore": {
+            "target": "Package",
+            "version": "[2.2.7, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
