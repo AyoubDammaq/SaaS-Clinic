@@ -175,7 +175,6 @@ C:\Users\USER\Desktop\SaaS-Clinic\FacturationService\Facturation.API\obj\Debug\n
 C:\Users\USER\Desktop\SaaS-Clinic\FacturationService\Facturation.API\obj\Debug\net9.0\Facturation.API.pdb
 C:\Users\USER\Desktop\SaaS-Clinic\FacturationService\Facturation.API\obj\Debug\net9.0\Facturation.API.genruntimeconfig.cache
 C:\Users\USER\Desktop\SaaS-Clinic\FacturationService\Facturation.API\obj\Debug\net9.0\ref\Facturation.API.dll
-C:\Users\USER\Desktop\SaaS-Clinic\FacturationService\Facturation.API\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\USER\Desktop\SaaS-Clinic\FacturationService\Facturation.API\bin\Debug\net9.0\itext.barcodes.dll
 C:\Users\USER\Desktop\SaaS-Clinic\FacturationService\Facturation.API\bin\Debug\net9.0\itext.bouncy-castle-connector.dll
 C:\Users\USER\Desktop\SaaS-Clinic\FacturationService\Facturation.API\bin\Debug\net9.0\itext.forms.dll
@@ -190,3 +189,4 @@ C:\Users\USER\Desktop\SaaS-Clinic\FacturationService\Facturation.API\bin\Debug\n
 C:\Users\USER\Desktop\SaaS-Clinic\FacturationService\Facturation.API\bin\Debug\net9.0\itext.commons.dll
 C:\Users\USER\Desktop\SaaS-Clinic\FacturationService\Facturation.API\bin\Debug\net9.0\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\USER\Desktop\SaaS-Clinic\FacturationService\Facturation.API\bin\Debug\net9.0\BouncyCastle.Crypto.dll
+C:\Users\USER\Desktop\SaaS-Clinic\FacturationService\Facturation.API\bin\Debug\net9.0\Scalar.AspNetCore.dll
