@@ -13,26 +13,26 @@ namespace ConsultationManagementService.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<Consultation?> GetConsultationByIdAsync(Guid id)
+        public async Task<Models.Consultation?> GetConsultationByIdAsync(Guid id)
         {
             return await _context.Consultations
                 .Include(c => c.Documents)
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<IEnumerable<Consultation>> GetAllConsultationsAsync()
+        public async Task<IEnumerable<Models.Consultation>> GetAllConsultationsAsync()
         {
             return await _context.Consultations
                 .Include(c => c.Documents)
                 .ToListAsync();
         }
 
-        public async Task CreateConsultationAsync(Consultation consultationDto)
+        public async Task CreateConsultationAsync(Models.Consultation consultationDto)
         {
             if (consultationDto == null)
                 throw new ArgumentNullException(nameof(consultationDto));
 
-            var consultation = new Consultation
+            var consultation = new Models.Consultation
             {
                 Id = consultationDto.Id,
                 DateConsultation = consultationDto.DateConsultation,
@@ -46,7 +46,7 @@ namespace ConsultationManagementService.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateConsultationAsync(Consultation consultationDto)
+        public async Task UpdateConsultationAsync(Models.Consultation consultationDto)
         {
             if (consultationDto == null)
                 throw new ArgumentNullException(nameof(consultationDto));
@@ -82,7 +82,7 @@ namespace ConsultationManagementService.Repositories
             return true;
         }
 
-        public async Task<IEnumerable<Consultation>> GetConsultationsByPatientIdAsync(Guid patientId)
+        public async Task<IEnumerable<Models.Consultation>> GetConsultationsByPatientIdAsync(Guid patientId)
         {
             return await _context.Consultations
                 .Include(c => c.Documents)
@@ -90,7 +90,7 @@ namespace ConsultationManagementService.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Consultation>> GetConsultationsByDoctorIdAsync(Guid doctorId)
+        public async Task<IEnumerable<Models.Consultation>> GetConsultationsByDoctorIdAsync(Guid doctorId)
         {
             return await _context.Consultations
                 .Include(c => c.Documents)

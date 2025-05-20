@@ -7,7 +7,7 @@ namespace ConsultationManagementService.Data
     {
         public ConsultationDbContext(DbContextOptions<ConsultationDbContext> options) : base(options) { }
 
-        public DbSet<Consultation> Consultations { get; set; } = null!;
+        public DbSet<Models.Consultation> Consultations { get; set; } = null!;
         public DbSet<DocumentMedical> DocumentsMedicaux { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -17,14 +17,14 @@ namespace ConsultationManagementService.Data
                 throw new ArgumentNullException(nameof(modelBuilder));
             }
 
-            modelBuilder.Entity<Consultation>()
+            modelBuilder.Entity<Models.Consultation>()
                 .HasMany(c => c.Documents)
                 .WithOne(d => d.Consultation)
                 .HasForeignKey(d => d.ConsultationId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Ajout des configurations de clés primaires
-            modelBuilder.Entity<Consultation>()
+            modelBuilder.Entity<Models.Consultation>()
                 .HasKey(c => c.Id);
 
             modelBuilder.Entity<DocumentMedical>()

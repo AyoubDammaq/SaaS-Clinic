@@ -1,15 +1,25 @@
+using Consultation.API.Extensions;
 using ConsultationManagementService.Data;
 using ConsultationManagementService.Repositories;
 using ConsultationManagementService.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore;
 using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(8091);
+    serverOptions.ListenAnyIP(8092);
+});
+
+
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -17,8 +27,8 @@ builder.Services.AddControllers()
     });
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddOpenApi();
+
 
 // Vérifier que la chaîne de connexion existe
 if (string.IsNullOrEmpty(builder.Configuration.GetConnectionString("ConsultationDatabase")))
@@ -28,7 +38,13 @@ if (string.IsNullOrEmpty(builder.Configuration.GetConnectionString("Consultation
 
 // Configuration de la base de données
 builder.Services.AddDbContext<ConsultationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ConsultationDatabase")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("ConsultationDatabase"),
+        sqlOptions =>
+        {
+            sqlOptions.CommandTimeout(180); // Timeout in seconds (3 minutes)
+        }));
+
 
 // Injection des dépendances
 builder.Services.AddScoped<IConsultationRepository, ConsultationRepository>();
@@ -54,19 +70,37 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new System.IO.DirectoryInfo(@"C:\keys"))
+    .SetApplicationName("MyApp");
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+    app.ApplyMigrations();
 }
 
-// Middleware de sécurité et routage
-app.UseHttpsRedirection();
+app.UseCors("AllowAllOrigins");
+
 app.UseAuthentication(); // Ajout du middleware d'authentification
+
 app.UseAuthorization();
+
 app.MapControllers();
 
 // Démarrage de l'application

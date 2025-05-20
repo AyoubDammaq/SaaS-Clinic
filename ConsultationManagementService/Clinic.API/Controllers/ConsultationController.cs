@@ -19,10 +19,10 @@ namespace ConsultationManagementService.Controllers
 
         // GET: api/Consultation/{id}
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Consultation))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Models.Consultation))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Consultation>> GetConsultationByIdAsync(Guid id)
+        public async Task<ActionResult<Models.Consultation>> GetConsultationByIdAsync(Guid id)
         {
             try
             {
@@ -47,9 +47,9 @@ namespace ConsultationManagementService.Controllers
 
         // GET: api/Consultation
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Consultation>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Models.Consultation>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<Consultation>>> GetAllConsultationsAsync()
+        public async Task<ActionResult<IEnumerable<Models.Consultation>>> GetAllConsultationsAsync()
         {
             try
             {
@@ -161,11 +161,11 @@ namespace ConsultationManagementService.Controllers
 
         // GET: api/Consultation/Patient/{patientId}
         [HttpGet("Patient/{patientId}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Consultation>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Models.Consultation>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<Consultation>>> GetConsultationsByPatientIdAsync(Guid patientId)
+        public async Task<ActionResult<IEnumerable<Models.Consultation>>> GetConsultationsByPatientIdAsync(Guid patientId)
         {
             try
             {
@@ -190,11 +190,11 @@ namespace ConsultationManagementService.Controllers
 
         // GET: api/Consultation/Doctor/{doctorId}
         [HttpGet("Doctor/{doctorId}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Consultation>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Models.Consultation>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<Consultation>>> GetConsultationsByDoctorIdAsync(Guid doctorId)
+        public async Task<ActionResult<IEnumerable<Models.Consultation>>> GetConsultationsByDoctorIdAsync(Guid doctorId)
         {
             try
             {
