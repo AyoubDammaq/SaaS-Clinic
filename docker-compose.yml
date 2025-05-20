@@ -1,0 +1,301 @@
+services:
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: ./API_Gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - mynetwork
+    depends_on:
+      - authapi
+      - clinicservice
+      - doctorservice
+      - patientservice
+      - rdvservice
+      - consultationservice
+      - facturationservice
+      - reportingservice
+      - notificationservice
+  authapi:
+    container_name: authapi
+    image: ${DOCKER_REGISTRY-}authapi
+    build:
+      context: ./AuthService
+      dockerfile: Auth.API/Dockerfile
+    ports:
+      - "5001:8081"
+      - "5002:8082"
+    depends_on:
+      - auth.database
+    networks:
+      - mynetwork
+
+  auth.database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: auth.database
+    user: "0"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+      - MSSQL_PID=Express
+      - MSSQL_MEMORY_LIMIT_MB=800
+      - TZ=Europe/Paris
+    command: >
+      bash -c "mkdir -p /var/opt/mssql/data /var/opt/mssql/log /var/opt/mssql/backup &&
+      chown -R mssql:mssql /var/opt/mssql &&
+      /opt/mssql/bin/sqlservr"
+    volumes:
+      - sqlvolume_auth_data:/var/opt/mssql/data
+      - sqlvolume_auth_log:/var/opt/mssql/log
+      - sqlvolume_auth_backup:/var/opt/mssql/backup
+    ports:
+      - "1434:1433"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+    networks:
+      - mynetwork
+    restart: unless-stopped
+
+  clinicservice:
+    container_name: clinicservice
+    image: ${DOCKER_REGISTRY-}clinicapi
+    build:
+      context: ./ClinicManagementService
+      dockerfile: Clinic.API/Dockerfile
+    ports:
+      - "5003:8083"
+      - "5004:8084"
+    depends_on:
+      - clinic.database
+    networks:
+      - mynetwork
+
+  clinic.database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: clinic.database
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+      - MSSQL_PID=Express
+    command: /opt/mssql/bin/sqlservr
+    ports:
+      - "1435:1433"
+    networks:
+      - mynetwork
+    volumes:
+      - sqlvolume_clinic:/var/opt/mssql
+    restart: unless-stopped
+
+  doctorservice:
+    container_name: doctorservice
+    image: ${DOCKER_REGISTRY-}doctorapi
+    build:
+      context: ./DoctorManagementService
+      dockerfile: Doctor.API/Dockerfile
+    ports:
+      - "5005:8085"
+      - "5006:8086"
+    depends_on:
+      - doctor.database
+    networks:
+      - mynetwork
+
+  doctor.database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: doctor.database
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+      - MSSQL_PID=Express
+    command: /opt/mssql/bin/sqlservr
+    ports:
+      - "1436:1433"
+    networks:
+      - mynetwork
+    volumes:
+      - sqlvolume_doctor:/var/opt/mssql
+    restart: unless-stopped
+
+  patientservice:
+    container_name: patientservice
+    image: ${DOCKER_REGISTRY-}patientapi
+    build:
+      context: ./PatientManagementService
+      dockerfile: PatientManagementService.API/Dockerfile
+    ports:
+      - "5007:8087"
+      - "5008:8088"
+    depends_on:
+      - patient.database
+    networks:
+      - mynetwork
+
+  patient.database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: patient.database
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+      - MSSQL_PID=Express
+    command: /opt/mssql/bin/sqlservr
+    ports:
+      - "1437:1433"
+    networks:
+      - mynetwork
+    volumes:
+      - sqlvolume_patient:/var/opt/mssql
+    restart: unless-stopped
+
+  rdvservice:
+    container_name: rdvservice
+    image: ${DOCKER_REGISTRY-}rdvapi
+    build:
+      context: ./RDVManagementService
+      dockerfile: RDV.API/Dockerfile
+    ports:
+      - "5009:8089"
+      - "5010:8090"
+    depends_on:
+      - rdv.database
+    networks:
+      - mynetwork
+
+  rdv.database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: rdv.database
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+      - MSSQL_PID=Express
+    command: /opt/mssql/bin/sqlservr
+    ports:
+      - "1438:1433"
+    networks:
+      - mynetwork
+    volumes:
+      - sqlvolume_rdv:/var/opt/mssql
+    restart: unless-stopped
+
+  consultationservice:
+    container_name: consultationservice
+    image: ${DOCKER_REGISTRY-}consultationapi
+    build:
+      context: ./ConsultationManagementService
+      dockerfile: Clinic.API/Dockerfile
+    ports:
+      - "5011:8091"
+      - "5012:8092"
+    depends_on:
+      - consultation.database
+    networks:
+      - mynetwork
+
+  consultation.database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: consultation.database
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+      - MSSQL_PID=Express
+    command: /opt/mssql/bin/sqlservr
+    ports:
+      - "1439:1433"
+    networks:
+      - mynetwork
+    volumes:
+      - sqlvolume_consultation:/var/opt/mssql
+    restart: unless-stopped
+
+  facturationservice:
+    container_name: facturationservice
+    image: ${DOCKER_REGISTRY-}facturationapi
+    build:
+      context: ./FacturationService
+      dockerfile: Facturation.API/Dockerfile
+    ports:
+      - "5013:8093"
+      - "5014:8094"
+    depends_on:
+      - facturation.database
+    networks:
+      - mynetwork
+
+  facturation.database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: facturation.database
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+      - MSSQL_PID=Express
+    command: /opt/mssql/bin/sqlservr
+    ports:
+      - "1440:1433"
+    networks:
+      - mynetwork
+    volumes:
+      - sqlvolume_facture:/var/opt/mssql
+    restart: unless-stopped
+
+  reportingservice:
+    container_name: reportingservice
+    image: ${DOCKER_REGISTRY-}reportingapi
+    build:
+      context: ./ReportingService
+      dockerfile: Reporting.API/Dockerfile
+    ports:
+      - "5015:8095"
+      - "5016:8096"
+    networks:
+      - mynetwork
+
+  notificationservice:
+    container_name: notificationservice
+    image: ${DOCKER_REGISTRY-}notificationapi
+    build:
+      context: ./NotificationService
+      dockerfile: Notification.API/Dockerfile
+    ports:
+      - "5017:8097"
+      - "5018:8098"
+    depends_on:
+      - notification.database
+    networks:
+      - mynetwork
+
+  notification.database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: notification.database
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+      - MSSQL_PID=Express
+    command: /opt/mssql/bin/sqlservr
+    ports:
+      - "1441:1433"
+    networks:
+      - mynetwork
+    volumes:
+      - sqlvolume_notification:/var/opt/mssql
+    restart: unless-stopped
+
+volumes:
+  sqlvolume_auth_data:
+  sqlvolume_auth_log:
+  sqlvolume_auth_backup:
+  sqlvolume_clinic:
+  sqlvolume_doctor:
+  sqlvolume_patient:
+  sqlvolume_rdv:
+  sqlvolume_consultation:
+  sqlvolume_facture:
+  sqlvolume_notification:
+
+networks:
+  mynetwork:
