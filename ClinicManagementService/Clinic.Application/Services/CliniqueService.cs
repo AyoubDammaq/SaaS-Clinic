@@ -1,6 +1,7 @@
 ﻿using Clinic.Application.DTOs;
 using Clinic.Application.Interfaces;
 using Clinic.Domain.Entities;
+using Clinic.Domain.Enums;
 using Clinic.Domain.Interfaces;
 
 namespace Clinic.Application.Services
@@ -11,21 +12,32 @@ namespace Clinic.Application.Services
 
         public CliniqueService(ICliniqueRepository repository)
         {
-            _repository = repository;
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository), "Le dépôt de clinique ne peut pas être null.");
         }
 
         // CRUD operations
-        public async Task<Clinique> AjouterCliniqueAsync(Clinique clinique)
+        public async Task<Clinique> AjouterCliniqueAsync(CliniqueDto cliniqueDto)
         {
-            if (clinique == null)
-                throw new ArgumentNullException(nameof(clinique), "La clinique ne peut pas être null.");
+            if (cliniqueDto == null)
+                throw new ArgumentNullException(nameof(cliniqueDto), "La clinique ne peut pas être null.");
 
-            if (string.IsNullOrWhiteSpace(clinique.Nom))
-                throw new ArgumentException("Le nom de la clinique est requis.", nameof(clinique.Nom));
+            if (string.IsNullOrWhiteSpace(cliniqueDto.Nom))
+                throw new ArgumentException("Le nom de la clinique est requis.", nameof(cliniqueDto.Nom));
 
-            if (string.IsNullOrWhiteSpace(clinique.Adresse))
-                throw new ArgumentException("L'adresse de la clinique est requise.", nameof(clinique.Adresse));
+            if (string.IsNullOrWhiteSpace(cliniqueDto.Adresse))
+                throw new ArgumentException("L'adresse de la clinique est requise.", nameof(cliniqueDto.Adresse));
 
+            var clinique = new Clinique
+            {
+                Nom = cliniqueDto.Nom,
+                Adresse = cliniqueDto.Adresse,
+                NumeroTelephone = cliniqueDto.NumeroTelephone,
+                Email = cliniqueDto.Email,
+                SiteWeb = cliniqueDto.SiteWeb,
+                Description = cliniqueDto.Description,
+                TypeClinique = cliniqueDto.TypeClinique,
+                Statut = cliniqueDto.Statut,
+            };
             await _repository.AddAsync(clinique);
             return clinique;
         }
@@ -67,10 +79,7 @@ namespace Clinic.Application.Services
         public async Task<List<Clinique>> ListerCliniqueAsync()
         {
             var cliniques = await _repository.GetAllAsync();
-            if (cliniques == null || !cliniques.Any())
-                throw new InvalidOperationException("Aucune clinique disponible.");
-
-            return cliniques;
+            return cliniques ?? new List<Clinique>();
         }
 
         // Rechercher des cliniques par nom ou adresse
@@ -80,10 +89,7 @@ namespace Clinic.Application.Services
                 throw new ArgumentException("Le nom de la clinique est requis.", nameof(nom));
 
             var cliniques = await _repository.GetByNameAsync(nom);
-            if (cliniques == null || !cliniques.Any())
-                throw new KeyNotFoundException($"Aucune clinique trouvée avec le nom '{nom}'.");
-
-            return cliniques.Where(c => c != null).Cast<Clinique>();
+            return cliniques?.Where(c => c != null) ?? Enumerable.Empty<Clinique>();
         }
 
         public async Task<IEnumerable<Clinique>> ListerCliniquesParAdresseAsync(string adresse)
@@ -92,32 +98,49 @@ namespace Clinic.Application.Services
                 throw new ArgumentException("L'adresse de la clinique est requise.", nameof(adresse));
 
             var cliniques = await _repository.GetByAddressAsync(adresse);
-            if (cliniques == null || !cliniques.Any())
-                throw new KeyNotFoundException($"Aucune clinique trouvée avec l'adresse '{adresse}'.");
-
-            return cliniques.Where(c => c != null).Cast<Clinique>();
+            return cliniques?.Where(c => c != null) ?? Enumerable.Empty<Clinique>();
         }
+
+        public async Task<IEnumerable<Clinique>> ListerCliniquesParTypeAsync(TypeClinique type)
+        {
+            var cliniques = await _repository.GetByTypeAsync(type);
+            return cliniques?.Where(c => c != null) ?? Enumerable.Empty<Clinique>();
+        }
+
+        public async Task<IEnumerable<Clinique>> ListerCliniquesParStatutAsync(StatutClinique statut)
+        {
+            var cliniques = await _repository.GetByStatusAsync(statut);
+            return cliniques?.Where(c => c != null) ?? Enumerable.Empty<Clinique>();
+        }
+
 
         // Statistiques des cliniques
         public async Task<int> GetNombreCliniques()
         {
-            return await _repository.GetNombreCliniquesAsync();
+            var nombre = await _repository.GetNombreCliniquesAsync();
+            if (nombre < 0)
+                throw new InvalidOperationException("Le nombre de cliniques ne peut pas être négatif.");
+            return nombre;
         }
 
         public async Task<int> GetNombreNouvellesCliniquesDuMois()
         {
-            return await _repository.GetNombreNouvellesCliniquesDuMoisAsync();
+            var nombre = await _repository.GetNombreNouvellesCliniquesDuMoisAsync();
+            if (nombre < 0)
+                throw new InvalidOperationException("Le nombre de nouvelles cliniques ne peut pas être négatif.");
+            return nombre;
         }
 
         public async Task<IEnumerable<StatistiqueDTO>> GetNombreNouvellesCliniquesParMois()
         {
-            var cliniques = await _repository.GetNombreNouvellesCliniquesParMoisAsync();
-            var stats = cliniques.Select(c => new StatistiqueDTO
+            var statistiques = await _repository.GetNombreNouvellesCliniquesParMoisAsync();
+            if (statistiques == null || !statistiques.Any())
+                throw new InvalidOperationException("Aucune statistique trouvée.");
+            return statistiques.Select(s => new StatistiqueDTO
             {
-                Cle = c.Cle,
-                Nombre = c.Nombre
+                Cle = s.Cle,
+                Nombre = s.Nombre
             }).ToList();
-            return stats;
         }
 
         public async Task<StatistiqueCliniqueDTO> GetStatistiquesDesCliniquesAsync(Guid cliniqueId)

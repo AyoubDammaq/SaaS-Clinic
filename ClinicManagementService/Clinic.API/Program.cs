@@ -1,32 +1,36 @@
+using Clinic.API.Extensions;
 using Clinic.Application.Interfaces;
 using Clinic.Application.Services;
 using Clinic.Domain.Interfaces;
 using Clinic.Infrastructure.Data;
 using Clinic.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(8083);
+    serverOptions.ListenAnyIP(8084);
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
+builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<CliniqueDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CliniqueDatabase")));
 
-// Remove the duplicate AddAuthentication call
-// builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//     .AddJwtBearer();
 
 builder.Services.AddScoped<ICliniqueRepository, CliniqueRepository>();
-//builder.Services.AddScoped(provider => Guid.NewGuid().ToString());
-//builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ICliniqueService, CliniqueService>();
 builder.Services.AddHttpClient<ICliniqueRepository, CliniqueRepository>();
 
@@ -49,16 +53,32 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new System.IO.DirectoryInfo(@"C:\keys"))
+    .SetApplicationName("MyApp");
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+    app.ApplyMigrations();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("AllowAllOrigins");
 
 app.UseAuthentication();
 

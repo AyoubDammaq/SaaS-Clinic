@@ -1,4 +1,5 @@
 ﻿using Clinic.Domain.Entities;
+using Clinic.Domain.Enums;
 using Clinic.Domain.ValueObject;
 
 namespace Clinic.Domain.Interfaces
@@ -15,6 +16,8 @@ namespace Clinic.Domain.Interfaces
         /// Search operations
         Task<List<Clinique?>> GetByNameAsync(string name);
         Task<List<Clinique?>> GetByAddressAsync(string address);
+        Task<List<Clinique?>> GetByTypeAsync(TypeClinique type);
+        Task<List<Clinique?>> GetByStatusAsync(StatutClinique status);
 
         /// Statistics operations
         Task<int> GetNombreCliniquesAsync();

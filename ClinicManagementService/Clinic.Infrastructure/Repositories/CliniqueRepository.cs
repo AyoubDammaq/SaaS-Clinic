@@ -1,4 +1,5 @@
 ﻿using Clinic.Domain.Entities;
+using Clinic.Domain.Enums;
 using Clinic.Domain.Interfaces;
 using Clinic.Domain.ValueObject;
 using Clinic.Infrastructure.Data;
@@ -21,14 +22,14 @@ namespace Clinic.Infrastructure.Repositories
         }
 
         // CRUD operations
-        public Task<List<Clinique>> GetAllAsync()
+        public async Task<List<Clinique>> GetAllAsync()
         {
-            return _context.Cliniques.ToListAsync();
+            return await _context.Cliniques.ToListAsync();
         }
 
-        public Task<Clinique?> GetByIdAsync(Guid id)
+        public async Task<Clinique?> GetByIdAsync(Guid id)
         {
-            return _context.Cliniques.FirstOrDefaultAsync(m => m.Id == id);
+            return await _context.Cliniques.FirstOrDefaultAsync(m => m.Id == id);
         }
 
         public async Task AddAsync(Clinique clinique)
@@ -64,7 +65,15 @@ namespace Clinic.Infrastructure.Repositories
             return await _context.Cliniques.Where(c => c.Adresse.ToLower().Contains(address)).ToListAsync();
         }
 
+        public async Task<List<Clinique?>> GetByTypeAsync(TypeClinique type)
+        {
+            return await _context.Cliniques.Where(c => c.TypeClinique == type).ToListAsync();
+        }
 
+        public async Task<List<Clinique?>> GetByStatusAsync(StatutClinique statut)
+        {
+            return await _context.Cliniques.Where(c => c.Statut == statut).ToListAsync();
+        }
 
         //Statistiques des cliniques
         public async Task<int> GetNombreCliniquesAsync()
@@ -92,7 +101,7 @@ namespace Clinic.Infrastructure.Repositories
 
         public async Task<StatistiqueClinique> GetStatistiquesDesCliniquesAsync(Guid cliniqueId)
         {
-            var responseMedecin = await _httpClient.GetAsync($"http://localhost:5050/api/Medecin/medecinsIds/clinique/{cliniqueId}");
+            var responseMedecin = await _httpClient.GetAsync($"http://api-gateway:8080/gateway/doctors/medecinsIds/clinique/{cliniqueId}");
             if (!responseMedecin.IsSuccessStatusCode)
                 throw new Exception("Erreur lors de la récupération des médecins");
 
@@ -113,9 +122,9 @@ namespace Clinic.Infrastructure.Repositories
 
             string queryString = string.Join("&", medecinIds.Select(id => $"medecinIds={id}"));
 
-            var responseConsultation = await _httpClient.GetAsync($"http://localhost:5015/api/Consultation/countByMedecinIds?{queryString}");
-            var responseRDV = await _httpClient.GetAsync($"http://localhost:5133/api/RendezVous/count?{queryString}");
-            var responsePatient = await _httpClient.GetAsync($"http://localhost:5133/api/RendezVous/distinct/patients?{queryString}");
+            var responseConsultation = await _httpClient.GetAsync($"http://api-gateway:8080/gateway/consultations/countByMedecinIds?{queryString}");
+            var responseRDV = await _httpClient.GetAsync($"http://api-gateway:8080/gateway/appointments/count?{queryString}");
+            var responsePatient = await _httpClient.GetAsync($"http://api-gateway:8080/gateway/appointments/distinct/patients?{queryString}");
 
             if (!responseConsultation.IsSuccessStatusCode || !responseRDV.IsSuccessStatusCode || !responsePatient.IsSuccessStatusCode)
                 throw new Exception("Erreur lors de la récupération des statistiques externes");
