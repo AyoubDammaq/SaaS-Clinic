@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\RDV.API.props" />
-</Project>

@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\Consultation.API.props" />
-</Project>

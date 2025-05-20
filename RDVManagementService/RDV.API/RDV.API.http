@@ -1,6 +1,0 @@
-@RDV.API_HostAddress = http://localhost:5133
-
-GET {{RDV.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
