@@ -11,6 +11,8 @@ namespace PatientManagementService.Application.Services
         Task DeleteDossierMedicalAsync(Guid dossierMedicalId);
         Task<IEnumerable<DossierMedical>> GetAllDossiersMedicalsAsync();
         Task<DossierMedical?> GetDossierMedicalByIdAsync(Guid Id);
-        Task AttacherDocumentAsync(Guid dossierMedicalId, Document document);
+        Task AttacherDocumentAsync(Guid dossierMedicalId, DocumentDTO document);
+        Task<Document?> GetDocumentByIdAsync(Guid documentId);
+        Task RemoveDocumentAsync(Guid documentId);
     }
 }

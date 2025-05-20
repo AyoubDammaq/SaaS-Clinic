@@ -36,13 +36,27 @@ namespace PatientManagementService.Infrastructure.Repositories
         }
         public async Task DeleteDossierMedicalAsync(Guid dossierMedicalId)
         {
-            var dossierMedical = await _context.DossiersMedicaux.FindAsync(dossierMedicalId);
-            if (dossierMedical != null)
+            var dossierMedical = await _context.DossiersMedicaux
+                .AsTracking() 
+                .FirstOrDefaultAsync(dm => dm.Id == dossierMedicalId);
+
+            if (dossierMedical == null)
+                return;
+
+            var patient = await _context.Patients
+                .FirstOrDefaultAsync(p => p.Id == dossierMedical.PatientId);
+
+            if (patient != null)
             {
-                _context.DossiersMedicaux.Remove(dossierMedical);
-                await _context.SaveChangesAsync();
+                patient.DossierMedicalId = null;
+                patient.DossierMedical = null;
             }
+
+            _context.DossiersMedicaux.Remove(dossierMedical);
+
+            await _context.SaveChangesAsync();
         }
+
         public async Task<IEnumerable<DossierMedical>> GetAllDossiersMedicalsAsync()
         {
             return await _context.DossiersMedicaux
@@ -63,6 +77,26 @@ namespace PatientManagementService.Infrastructure.Repositories
             {
                 document.DossierMedicalId = dossierMedicalId;
                 _context.Documents.Add(document);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        // ✅ NEW: Get a document by its ID
+        public async Task<Document?> GetDocumentByIdAsync(Guid documentId)
+        {
+            return await _context.Documents
+                .FirstOrDefaultAsync(doc => doc.Id == documentId);
+        }
+
+        // ✅ NEW: Remove a document by its ID
+        public async Task RemoveDocumentAsync(Guid documentId)
+        {
+            var document = await _context.Documents
+                .FirstOrDefaultAsync(doc => doc.Id == documentId);
+
+            if (document != null)
+            {
+                _context.Documents.Remove(document);
                 await _context.SaveChangesAsync();
             }
         }

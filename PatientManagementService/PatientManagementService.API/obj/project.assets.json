@@ -1011,6 +1011,22 @@
           "buildTransitive/Mono.TextTemplating.targets": {}
         }
       },
+      "Scalar.AspNetCore/2.2.7": {
+        "type": "package",
+        "compile": {
+          "lib/net9.0/Scalar.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/Scalar.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Swashbuckle.AspNetCore/8.1.1": {
         "type": "package",
         "dependencies": {
@@ -1674,6 +1690,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.4",
           "PatientManagementService.Domain": "1.0.0"
         },
         "compile": {
@@ -3860,6 +3877,23 @@
         "readme.md"
       ]
     },
+    "Scalar.AspNetCore/2.2.7": {
+      "sha512": "28RhQGPl842ynbFYtpA68HcyhZMxbDBpu7fr2tRjol1jysA8quOh3NTpB+MVtquqbPeDHXxgV9CqCHjpnYXWng==",
+      "type": "package",
+      "path": "scalar.aspnetcore/2.2.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "icon.png",
+        "lib/net8.0/Scalar.AspNetCore.dll",
+        "lib/net8.0/Scalar.AspNetCore.xml",
+        "lib/net9.0/Scalar.AspNetCore.dll",
+        "lib/net9.0/Scalar.AspNetCore.xml",
+        "scalar.aspnetcore.2.2.7.nupkg.sha512",
+        "scalar.aspnetcore.nuspec"
+      ]
+    },
     "Swashbuckle.AspNetCore/8.1.1": {
       "sha512": "HJHexmU0PiYevgTLvKjYkxEtclF2w4O7iTd3Ef3p6KeT0kcYLpkFVgCw6glpGS57h8769anv8G+NFi9Kge+/yw==",
       "type": "package",
@@ -4988,6 +5022,7 @@
       "PatientManagementService.Application >= 1.0.0",
       "PatientManagementService.Domain >= 1.0.0",
       "PatientManagementService.Infrastructure >= 1.0.0",
+      "Scalar.AspNetCore >= 2.2.7",
       "Swashbuckle.AspNetCore >= 8.1.1"
     ]
   },
@@ -5071,6 +5106,10 @@
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
             "target": "Package",
             "version": "[1.21.0, )"
+          },
+          "Scalar.AspNetCore": {
+            "target": "Package",
+            "version": "[2.2.7, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

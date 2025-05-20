@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PatientManagementService.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddDateCreationToPatientClass : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +21,7 @@ namespace PatientManagementService.Infrastructure.Migrations
                     DateNaissance = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Sexe = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Adresse = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NumeroTelephone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Telephone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DossierMedicalId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)

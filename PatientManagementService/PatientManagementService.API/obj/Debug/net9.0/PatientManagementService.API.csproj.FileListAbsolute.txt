@@ -1,3 +1,4 @@
+C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\appsettings.json
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\PatientManagementService.API.staticwebassets.endpoints.json
@@ -13,7 +14,6 @@ C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementServ
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\Microsoft.Build.Locator.dll
-C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.dll
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.dll
@@ -47,6 +47,7 @@ C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementServ
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\Microsoft.SqlServer.Server.dll
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\Mono.TextTemplating.dll
+C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\Scalar.AspNetCore.dll
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -174,4 +175,3 @@ C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementServ
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\obj\Debug\net9.0\PatientManagementService.API.pdb
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\obj\Debug\net9.0\PatientManagementService.API.genruntimeconfig.cache
 C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\obj\Debug\net9.0\ref\PatientManagementService.API.dll
-C:\Users\USER\Desktop\SaaS-Clinic\PatientManagementService\PatientManagementService.API\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

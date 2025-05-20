@@ -1,38 +1,37 @@
 ﻿using PatientManagementService.Application.DTOs;
 using PatientManagementService.Domain.Entities;
 using PatientManagementService.Domain.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace PatientManagementService.Application.Services
 {
     public class PatientService : IPatientService
     {
         private readonly IPatientRepository _patientRepository;
-        public PatientService(IPatientRepository patientRepository)
+        private readonly ILogger<PatientService> _logger;
+
+        public PatientService(IPatientRepository patientRepository, ILogger<PatientService> logger)
         {
             _patientRepository = patientRepository;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<Patient>> GetAllPatientsAsync()
         {
-            var patients = await _patientRepository.GetAllPatientsAsync();
-            if (patients == null || !patients.Any())
-            {
-                throw new Exception("Aucun patient trouvé.");
-            }
-            return patients;
+            return await _patientRepository.GetAllPatientsAsync() ?? new List<Patient>();
         }
 
-        public async Task<Patient> GetPatientByIdAsync(Guid id)
+        public async Task<Patient?> GetPatientByIdAsync(Guid id)
         {
-            var patient = await _patientRepository.GetPatientByIdAsync(id) ?? throw new Exception($"Aucun patient trouvé avec l'ID {id}.");
-            return patient;
+            return await _patientRepository.GetPatientByIdAsync(id);
         }
 
-        public async Task AddPatientAsync(PatientDTO patient)
+        public async Task<bool> AddPatientAsync(PatientDTO patient)
         {
             if (patient == null)
             {
-                throw new ArgumentNullException(nameof(patient), "Les informations du patient ne peuvent pas être nulles.");
+                _logger.LogWarning("Tentative d'ajouter un patient null.");
+                return false;
             }
 
             var newPatient = new Patient
@@ -43,56 +42,64 @@ namespace PatientManagementService.Application.Services
                 DateNaissance = patient.DateNaissance,
                 Sexe = patient.Sexe,
                 Adresse = patient.Adresse,
-                NumeroTelephone = patient.NumeroTelephone,
+                Telephone = patient.Telephone,
                 Email = patient.Email
             };
 
             await _patientRepository.AddPatientAsync(newPatient);
+            return true;
         }
 
-        public async Task UpdatePatientAsync(PatientDTO patient)
+        public async Task<bool> UpdatePatientAsync(PatientDTO patient)
         {
             if (patient == null)
             {
-                throw new ArgumentNullException(nameof(patient), "Les informations du patient ne peuvent pas être nulles.");
+                _logger.LogWarning("Mise à jour échouée : patient null.");
+                return false;
             }
 
-            var existingPatient = await _patientRepository.GetPatientByIdAsync(patient.Id)
-                ?? throw new Exception($"Aucun patient trouvé avec l'ID {patient.Id} pour mise à jour.");
+            var existingPatient = await _patientRepository.GetPatientByIdAsync(patient.Id);
+            if (existingPatient == null)
+            {
+                _logger.LogWarning($"Patient introuvable pour mise à jour (ID : {patient.Id}).");
+                return false;
+            }
 
             existingPatient.Nom = patient.Nom;
             existingPatient.Prenom = patient.Prenom;
             existingPatient.DateNaissance = patient.DateNaissance;
             existingPatient.Sexe = patient.Sexe;
             existingPatient.Adresse = patient.Adresse;
-            existingPatient.NumeroTelephone = patient.NumeroTelephone;
+            existingPatient.Telephone = patient.Telephone;
             existingPatient.Email = patient.Email;
 
             await _patientRepository.UpdatePatientAsync(existingPatient);
+            return true;
         }
 
-        public async Task DeletePatientAsync(Guid id)
+        public async Task<bool> DeletePatientAsync(Guid id)
         {
-            var existingPatient = await _patientRepository.GetPatientByIdAsync(id) ?? throw new Exception($"Aucun patient trouvé avec l'ID {id} pour suppression.");
+            var existingPatient = await _patientRepository.GetPatientByIdAsync(id);
+            if (existingPatient == null)
+            {
+                _logger.LogWarning($"Patient introuvable pour suppression (ID : {id}).");
+                return false;
+            }
+
             await _patientRepository.DeletePatientAsync(id);
+            return true;
         }
 
         public async Task<IEnumerable<Patient>> GetPatientsByNameAsync(string? name, string? lastname)
         {
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(lastname))
             {
-                throw new ArgumentException("Le nom et le prénom doivent être fournis.");
+                _logger.LogWarning("Requête invalide : nom ou prénom manquant.");
+                return Enumerable.Empty<Patient>();
             }
 
-            var patients = await _patientRepository.GetPatientsByNameAsync(name, lastname);
-            if (patients == null || !patients.Any())
-            {
-                throw new Exception($"Aucun patient trouvé avec le nom {name} et le prénom {lastname}.");
-            }
-
-            return patients;
+            return await _patientRepository.GetPatientsByNameAsync(name, lastname) ?? Enumerable.Empty<Patient>();
         }
-
 
         public async Task<int> GetStatistiquesAsync(DateTime dateDebut, DateTime dateFin)
         {

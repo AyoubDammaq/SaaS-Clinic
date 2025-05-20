@@ -17,7 +17,9 @@ namespace PatientManagementService.Domain.Entities
         public string Type { get; set; } = string.Empty;// e.g., PDF, Image, etc.
 
         [Required]
-        public required byte[] Contenu { get; set; } // File content as binary data
+        public required string Url { get; set; } // File url
+
+        public DateTime DateCreation { get; set; } = DateTime.UtcNow;
 
         [JsonIgnore]
         public Guid DossierMedicalId { get; set; } // Foreign key to DossierMedical

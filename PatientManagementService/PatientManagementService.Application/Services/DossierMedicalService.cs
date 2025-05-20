@@ -79,10 +79,34 @@ namespace PatientManagementService.Application.Services
             return dossierMedical;
         }
 
-        public async Task AttacherDocumentAsync(Guid dossierMedicalId, Document document)
+        public async Task AttacherDocumentAsync(Guid dossierMedicalId, DocumentDTO document)
         {
             var dossierMedical = await _dossierMedicalRepository.GetDossierMedicalByIdAsync(dossierMedicalId) ?? throw new InvalidOperationException("Dossier médical not found.");
-            await _dossierMedicalRepository.AttacherDocumentAsync(dossierMedicalId, document);
+            var newDucument = new Document
+            {
+                Nom = document.Nom,
+                Url = document.Url,
+                Type = document.Type
+            };
+            await _dossierMedicalRepository.AttacherDocumentAsync(dossierMedicalId, newDucument);
         }
+        public async Task<Document?> GetDocumentByIdAsync(Guid documentId)
+        {
+            var document = await _dossierMedicalRepository.GetDocumentByIdAsync(documentId);
+            if (document == null)
+                throw new Exception("Document not found");
+
+            return document;
+        }
+
+        public async Task RemoveDocumentAsync(Guid documentId)
+        {
+            var document = await _dossierMedicalRepository.GetDocumentByIdAsync(documentId);
+            if (document == null)
+                throw new Exception("Document not found");
+
+            await _dossierMedicalRepository.RemoveDocumentAsync(documentId);
+        }
+
     }
 }

@@ -80,6 +80,10 @@
               "target": "Package",
               "version": "[1.21.0, )"
             },
+            "Scalar.AspNetCore": {
+              "target": "Package",
+              "version": "[2.2.7, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[8.1.1, )"
@@ -159,6 +163,12 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

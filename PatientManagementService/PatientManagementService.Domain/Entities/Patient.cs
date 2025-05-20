@@ -23,7 +23,7 @@ namespace PatientManagementService.Domain.Entities
 
         public string Adresse { get; set; } = string.Empty;
 
-        public string NumeroTelephone { get; set; } = string.Empty;
+        public string Telephone { get; set; } = string.Empty;
 
         public string Email { get; set; } = string.Empty;
 

@@ -12,8 +12,8 @@ using PatientManagementService.Infrastructure.Data;
 namespace PatientManagementService.Infrastructure.Migrations
 {
     [DbContext(typeof(PatientDbContext))]
-    [Migration("20250422091734_AddDateCreationToPatientClass")]
-    partial class AddDateCreationToPatientClass
+    [Migration("20250513140813_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -124,15 +124,15 @@ namespace PatientManagementService.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NumeroTelephone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Prenom")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sexe")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telephone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
