@@ -1,0 +1,8 @@
+CREATE TABLE Users (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Email NVARCHAR(MAX) NOT NULL,
+    PasswordHashed NVARCHAR(100) NOT NULL,
+    Role INT NOT NULL,
+    RefreshToken NVARCHAR(MAX) NULL,
+    RefreshTokenExpiryTime DATETIME2 NULL
+);

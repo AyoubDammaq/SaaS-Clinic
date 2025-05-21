@@ -1,0 +1,23 @@
+CREATE TABLE Medecins (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Prenom NVARCHAR(MAX) NOT NULL,
+    Nom NVARCHAR(MAX) NOT NULL,
+    Specialite NVARCHAR(MAX) NOT NULL,
+    Email NVARCHAR(MAX) NOT NULL,
+    Telephone NVARCHAR(MAX) NOT NULL,
+    CliniqueId UNIQUEIDENTIFIER NULL,
+    PhotoUrl NVARCHAR(MAX) NOT NULL,
+    DateCreation DATETIME2 NOT NULL
+);
+
+CREATE TABLE Disponibilites (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Jour INT NOT NULL,
+    HeureDebut TIME NOT NULL,
+    HeureFin TIME NOT NULL,
+    MedecinId UNIQUEIDENTIFIER NOT NULL,
+    CONSTRAINT FK_Disponibilites_Medecins_MedecinId FOREIGN KEY (MedecinId)
+        REFERENCES Medecins (Id) ON DELETE CASCADE
+);
+
+CREATE INDEX IX_Disponibilites_MedecinId ON Disponibilites (MedecinId);
