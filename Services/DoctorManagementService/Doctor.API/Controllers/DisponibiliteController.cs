@@ -15,13 +15,13 @@ namespace Doctor.API.Controllers
             _disponibiliteService = disponibiliteService;
         }
 
-        [HttpPost("{id}/disponibilites")]
+        [HttpPost]
         [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
-        public async Task<IActionResult> AjouterDisponibilites(Guid id, [FromBody] Disponibilite disponibilite)
+        public async Task<IActionResult> AjouterDisponibilites([FromBody] Disponibilite disponibilite)
         {
             try
             {
-                await _disponibiliteService.AjouterDisponibilite(id, disponibilite);
+                await _disponibiliteService.AjouterDisponibilite(disponibilite);
                 return Ok("Disponibilités ajoutées avec succès !");
             }
             catch (ArgumentException ex)
@@ -34,7 +34,31 @@ namespace Doctor.API.Controllers
             }
         }
 
-        [HttpDelete("disponibilites/{disponibiliteId}")]
+        [HttpPut("{disponibiliteId}")]
+        [Authorize(Roles = "SuperAdmin,ClinicAdmin,Doctor")]
+        public async Task<IActionResult> ModifierDisponibilite(Guid disponibiliteId, [FromBody] Disponibilite disponibilite)
+        {
+            try
+            {
+                if (disponibiliteId != disponibilite.Id)
+                {
+                    return BadRequest(new { Message = "L'identifiant de la disponibilité ne correspond pas." });
+                }
+                await _disponibiliteService.UpdateDisponibilite(disponibilite);
+                return Ok(new { Message = "Disponibilité mise à jour avec succès" });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur interne s'est produite.", Details = ex.Message });
+            }
+        }
+
+
+        [HttpDelete("{disponibiliteId}")]
         [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         public async Task<IActionResult> SupprimerDisponibilite(Guid disponibiliteId)
         {
@@ -53,25 +77,7 @@ namespace Doctor.API.Controllers
             }
         }
 
-        [HttpGet("disponibilites/{id}")]
-        public async Task<IActionResult> ObtenirDisponibilitesParMedecinId(Guid id)
-        {
-            try
-            {
-                var disponibilites = await _disponibiliteService.GetDisponibilitesByMedecinId(id);
-                if (disponibilites == null || !disponibilites.Any())
-                {
-                    return NotFound(new { Message = "Aucune disponibilité trouvée pour ce médecin" });
-                }
-                return Ok(disponibilites);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Une erreur interne s'est produite.", Details = ex.Message });
-            }
-        }
-
-        [HttpGet("disponibilites")]
+        [HttpGet]
         public async Task<IActionResult> ObtenirTousLesDisponibilites()
         {
             try
@@ -85,16 +91,12 @@ namespace Doctor.API.Controllers
             }
         }
 
-        [HttpGet("disponibilites/{id}/disponible")]
-        public async Task<IActionResult> ObtenirDisponibilitesParMedecinIdEtDate(Guid id, [FromQuery] DateTime date)
+        [HttpGet("medecins/{medecinId}")]
+        public async Task<IActionResult> ObtenirDisponibilitesParMedecinId(Guid medecinId)
         {
             try
             {
-                var disponibilites = await _disponibiliteService.ObtenirDisponibilitesParMedecinIdEtDate(id, date);
-                if (disponibilites == null || !disponibilites.Any())
-                {
-                    return NotFound(new { Message = "Aucune disponibilité trouvée pour ce médecin à cette date" });
-                }
+                var disponibilites = await _disponibiliteService.GetDisponibilitesByMedecinId(medecinId);
                 return Ok(disponibilites);
             }
             catch (Exception ex)
@@ -103,8 +105,22 @@ namespace Doctor.API.Controllers
             }
         }
 
-        [HttpGet("disponibilites/{date}/medecin")]
-        public async Task<IActionResult> ObtenirDisponibiliteAvecDate([FromRoute] DateTime date, [FromQuery] TimeSpan? heureDebut, [FromQuery] TimeSpan? heureFin)
+        [HttpGet("medecins/{medecinId}/jour/{jour}")]
+        public async Task<IActionResult> ObtenirDisponibilitesParMedecinIdEtJour(Guid medecinId, [FromRoute] DayOfWeek jour)
+        {
+            try
+            {
+                var disponibilites = await _disponibiliteService.GetDisponibilitesByMedecinIdAndJour(medecinId, jour);
+                return Ok(disponibilites);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur interne s'est produite.", Details = ex.Message });
+            }
+        }
+
+        [HttpGet("medecins-disponibles")]
+        public async Task<IActionResult> ObtenirMedecinsDisponible([FromQuery] DateTime date, [FromQuery] TimeSpan? heureDebut, [FromQuery] TimeSpan? heureFin)
         {
             try
             {
@@ -112,15 +128,64 @@ namespace Doctor.API.Controllers
                 {
                     return BadRequest(new { Message = "L'heure de début doit être inférieure à l'heure de fin." });
                 }
+                var medecins = await _disponibiliteService.GetMedecinsDisponibles(date, heureDebut, heureFin);
+                return Ok(medecins);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur interne s'est produite.", Details = ex.Message });
+            }
+        }
 
-                var disponibilite = await _disponibiliteService.ObtenirDisponibiliteAvecDate(date, heureDebut, heureFin);
+        [HttpGet("disponibilites/{medecinId}/disponible")]
+        public async Task<IActionResult> EstDisponible(Guid medecinId, DateTime dateTime)
+        {
+            try
+            {
+                var estDisponible = await _disponibiliteService.IsAvailable(medecinId, dateTime);
+                return Ok(new { Disponible = estDisponible });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur interne s'est produite.", Details = ex.Message });
+            }
+        }
 
-                if (disponibilite == null)
-                {
-                    return NotFound(new { Message = "Aucune disponibilité trouvée pour ce médecin." });
-                }
+        [HttpGet("medecins/{medecinId}/total-temps-disponible")]
+        public async Task<IActionResult> ObtenirTempsDisponible(Guid medecinId, DateTime dateDebut, DateTime dateFin)
+        {
+            try
+            {
+                var tempsDisponible = await _disponibiliteService.GetTotalAvailableTime(medecinId, dateDebut, dateFin);
+                return Ok(new { TotalAvailableTime = tempsDisponible });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur interne s'est produite.", Details = ex.Message });
+            }
+        }
 
-                return Ok(disponibilite);
+        [HttpGet("medecins/{medecinId}/intervalle")]
+        public async Task<ActionResult<List<Disponibilite>>> ObtenirIntervalleDisponibilite(Guid medecinId, DateTime start, DateTime end)
+        {
+            try
+            {
+                var disponibilites = await _disponibiliteService.ObtenirDisponibilitesDansIntervalle(medecinId, start, end);
+                return Ok(disponibilites);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur interne s'est produite.", Details = ex.Message });
+            }
+        }
+
+        [HttpDelete("medecins/{medecinId}")]
+        public async Task<IActionResult> SupprimerDisponibilitesParMedecinId(Guid medecinId)
+        {
+            try
+            {
+                await _disponibiliteService.SupprimerDisponibilitesParMedecinId(medecinId);
+                return Ok(new { Message = "Disponibilités supprimées avec succès" });
             }
             catch (Exception ex)
             {

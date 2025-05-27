@@ -1,11 +1,6 @@
 ﻿using Doctor.Application.Interfaces;
 using Doctor.Domain.Entities;
 using Doctor.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Doctor.Application.Services
 {
@@ -17,7 +12,7 @@ namespace Doctor.Application.Services
             _disponibiliteRepository = disponibiliteRepository;
         }
 
-        public async Task AjouterDisponibilite(Guid medecinId, Disponibilite nouvelleDispo)
+        public async Task AjouterDisponibilite(Disponibilite nouvelleDispo)
         {
             if (nouvelleDispo == null)
                 throw new ArgumentNullException(nameof(nouvelleDispo), "La disponibilité ne peut pas être null.");
@@ -25,7 +20,16 @@ namespace Doctor.Application.Services
             if (nouvelleDispo.HeureDebut >= nouvelleDispo.HeureFin)
                 throw new ArgumentException("L'heure de début doit être inférieure à l'heure de fin.");
 
-            await _disponibiliteRepository.AjouterDisponibiliteAsync(medecinId, nouvelleDispo);
+            await _disponibiliteRepository.AjouterDisponibiliteAsync(nouvelleDispo);
+        }
+
+        public async Task UpdateDisponibilite(Disponibilite disponibilite)
+        {
+            if (disponibilite == null)
+                throw new ArgumentNullException(nameof(disponibilite), "La disponibilité ne peut pas être null.");
+            if (disponibilite.HeureDebut >= disponibilite.HeureFin)
+                throw new ArgumentException("L'heure de début doit être inférieure à l'heure de fin.");
+            await _disponibiliteRepository.UpdateDisponibiliteAsync(disponibilite);
         }
 
         public async Task SupprimerDisponibilite(Guid disponibiliteId)
@@ -33,19 +37,11 @@ namespace Doctor.Application.Services
             if (disponibiliteId == Guid.Empty)
                 throw new ArgumentException("L'identifiant de la disponibilité ne peut pas être vide.", nameof(disponibiliteId));
 
-            var disponibilite = await _disponibiliteRepository.ObtenirDisponibiliteParId(disponibiliteId);
+            var disponibilite = await _disponibiliteRepository.ObtenirDisponibiliteParIdAsync(disponibiliteId);
             if (disponibilite == null)
                 throw new KeyNotFoundException("La disponibilité spécifiée n'existe pas.");
 
             await _disponibiliteRepository.SupprimerDisponibiliteAsync(disponibiliteId);
-        }
-
-        public async Task<List<Disponibilite>> GetDisponibilitesByMedecinId(Guid medecinId)
-        {
-            if (medecinId == Guid.Empty)
-                throw new ArgumentException("L'identifiant du médecin ne peut pas être vide.", nameof(medecinId));
-
-            return await _disponibiliteRepository.ObtenirDisponibilitesParMedecinId(medecinId);
         }
 
         public async Task<Disponibilite> GetDisponibiliteById(Guid disponibiliteId)
@@ -53,44 +49,89 @@ namespace Doctor.Application.Services
             if (disponibiliteId == Guid.Empty)
                 throw new ArgumentException("L'identifiant de la disponibilité ne peut pas être vide.", nameof(disponibiliteId));
 
-            var disponibilite = await _disponibiliteRepository.ObtenirDisponibiliteParId(disponibiliteId);
-            if (disponibilite == null)
-                throw new KeyNotFoundException("La disponibilité spécifiée n'existe pas.");
+            var disponibilite = await _disponibiliteRepository.ObtenirDisponibiliteParIdAsync(disponibiliteId);
+            //if (disponibilite == null)
+            //  throw new KeyNotFoundException("La disponibilité spécifiée n'existe pas.");
 
-            return disponibilite;
+            return disponibilite ?? new Disponibilite();
         }
 
         public async Task<List<Disponibilite>> GetDisponibilites()
         {
-            var disponibilites = await _disponibiliteRepository.ObtenirDisponibilites();
-            if (disponibilites == null || !disponibilites.Any())
-                throw new InvalidOperationException("Aucune disponibilité trouvée.");
+            var disponibilites = await _disponibiliteRepository.ObtenirToutesDisponibilitesAsync();
+            //if (disponibilites == null || !disponibilites.Any())
+            //  throw new InvalidOperationException("Aucune disponibilité trouvée.");
 
-            return disponibilites;
+            return disponibilites ?? new List<Disponibilite>();
         }
 
-        public async Task<List<Disponibilite>> ObtenirDisponibilitesParMedecinIdEtDate(Guid medecinId, DateTime date)
+        public async Task<List<Disponibilite>> GetDisponibilitesByMedecinId(Guid medecinId)
         {
             if (medecinId == Guid.Empty)
                 throw new ArgumentException("L'identifiant du médecin ne peut pas être vide.", nameof(medecinId));
 
-            var disponibilites = await _disponibiliteRepository.ObtenirDisponibilitesParMedecinId(medecinId);
-            if (disponibilites == null || !disponibilites.Any())
-                throw new KeyNotFoundException("Aucune disponibilité trouvée pour le médecin spécifié.");
+            var disponibilites = await _disponibiliteRepository.ObtenirDisponibilitesParMedecinIdAsync(medecinId);
 
-            return disponibilites.Where(d => d.Jour == date.DayOfWeek).ToList();
+            return disponibilites ?? new List<Disponibilite>();
         }
 
-        public async Task<Medecin> ObtenirDisponibiliteAvecDate(DateTime date, TimeSpan? heureDebut, TimeSpan? heureFin)
+        public async Task<List<Disponibilite>> GetDisponibilitesByMedecinIdAndJour(Guid medecinId, DayOfWeek jour)
         {
-            if (heureDebut.HasValue && heureFin.HasValue && heureDebut >= heureFin)
-                throw new ArgumentException("L'heure de début doit être inférieure à l'heure de fin.");
+            if (medecinId == Guid.Empty)
+                throw new ArgumentException("L'identifiant du médecin ne peut pas être vide.", nameof(medecinId));
+            var disponibilites =  await _disponibiliteRepository.ObtenirDisponibilitesParJourAsync(medecinId, jour);
 
-            var disponibilites = await _disponibiliteRepository.ObtenirMedecinsDisponiblesAsync(date, heureDebut, heureFin);
-            if (disponibilites == null || !disponibilites.Any())
-                throw new KeyNotFoundException("Aucun médecin disponible trouvé pour les critères spécifiés.");
+            return disponibilites ?? new List<Disponibilite>();
+        }
 
-            return disponibilites.FirstOrDefault();
+        public async Task<List<Medecin>> GetMedecinsDisponibles(DateTime date, TimeSpan? heureDebut, TimeSpan? heureFin)
+        {
+            if (date == default)
+                throw new ArgumentException("La date ne peut pas être vide.", nameof(date));
+            var medecins = await _disponibiliteRepository.ObtenirMedecinsDisponiblesAsync(date, heureDebut, heureFin);
+
+            return medecins ?? new List<Medecin>();
+        }
+
+        public async Task<bool> IsAvailable(Guid medecinId, DateTime dateTime)
+        {
+            if (medecinId == Guid.Empty)
+                throw new ArgumentException("L'identifiant du médecin ne peut pas être vide.", nameof(medecinId));
+            return await _disponibiliteRepository.EstDisponibleAsync(medecinId, dateTime);
+        }
+
+        public async Task<bool> CheckOverlap(Disponibilite dispo)
+        {
+            if (dispo == null)
+                throw new ArgumentNullException(nameof(dispo), "La disponibilité ne peut pas être null.");
+            return await _disponibiliteRepository.VerifieChevauchementAsync(dispo);
+        }
+
+        public async Task<TimeSpan> GetTotalAvailableTime(Guid medecinId, DateTime dateDebut, DateTime dateFin)
+        {
+            if (medecinId == Guid.Empty)
+                throw new ArgumentException("L'identifiant du médecin ne peut pas être vide.", nameof(medecinId));
+            if (dateDebut >= dateFin)
+                throw new ArgumentException("La date de début doit être inférieure à la date de fin.");
+            return await _disponibiliteRepository.ObtenirTempsTotalDisponibleAsync(medecinId, dateDebut, dateFin);
+        }
+
+        public async Task SupprimerDisponibilitesParMedecinId(Guid medecinId)
+        {
+            if (medecinId == Guid.Empty)
+                throw new ArgumentException("L'identifiant du médecin ne peut pas être vide.", nameof(medecinId));
+            await _disponibiliteRepository.SupprimerDisponibilitesParMedecinIdAsync(medecinId);
+        }
+
+        public async Task<List<Disponibilite>> ObtenirDisponibilitesDansIntervalle(Guid medecinId, DateTime start, DateTime end)
+        {
+            if (medecinId == Guid.Empty)
+                throw new ArgumentException("L'identifiant du médecin ne peut pas être vide.", nameof(medecinId));
+            if (start >= end)
+                throw new ArgumentException("La date de début doit être inférieure à la date de fin.");
+            var disponibilites = await _disponibiliteRepository.ObtenirDisponibilitesDansIntervalleAsync(medecinId, start, end);
+
+            return disponibilites ?? new List<Disponibilite>();
         }
     }
 }

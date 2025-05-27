@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 
@@ -7,6 +8,8 @@ namespace Doctor.Domain.Entities
     public class Disponibilite
     {
         [Key]
+        [JsonIgnore]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
@@ -18,7 +21,6 @@ namespace Doctor.Domain.Entities
         [Required]
         public TimeSpan HeureFin { get; set; }
 
-        [JsonIgnore]
         public Guid MedecinId { get; set; }
         [JsonIgnore]
         public Medecin? Medecin { get; set; }

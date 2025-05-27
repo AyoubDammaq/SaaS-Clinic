@@ -1,20 +1,34 @@
 ﻿using Doctor.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Doctor.Domain.Interfaces
 {
     public interface IDisponibiliteRepository
     {
-        Task AjouterDisponibiliteAsync(Guid medecinId, Disponibilite nouvelleDispo);
+        // 🔁 CRUD
+        Task AjouterDisponibiliteAsync(Disponibilite nouvelleDispo);
+        Task UpdateDisponibiliteAsync(Disponibilite disponibilite);
         Task SupprimerDisponibiliteAsync(Guid disponibiliteId);
-        Task<Disponibilite> ObtenirDisponibiliteParId(Guid disponibiliteId);
-        Task<List<Disponibilite>> ObtenirDisponibilites();
-        Task<List<Disponibilite>> ObtenirDisponibilitesParMedecinId(Guid medecinId);
-        Task<List<Medecin>> ObtenirMedecinsDisponiblesAsync(DateTime date, TimeSpan? heureDebut, TimeSpan? heureFin);
 
+        // 🔍 Single & All
+        Task<Disponibilite?> ObtenirDisponibiliteParIdAsync(Guid disponibiliteId);
+        Task<List<Disponibilite>> ObtenirToutesDisponibilitesAsync();
+
+        // 🔍 By Foreign Key
+        Task<List<Disponibilite>> ObtenirDisponibilitesParMedecinIdAsync(Guid medecinId);
+        Task<List<Disponibilite>> ObtenirDisponibilitesParJourAsync(Guid medecinId, DayOfWeek jour);
+
+        // 🔎 Availabilities Lookup
+        Task<List<Medecin>> ObtenirMedecinsDisponiblesAsync(DateTime date, TimeSpan? heureDebut, TimeSpan? heureFin);
+        Task<bool> EstDisponibleAsync(Guid medecinId, DateTime dateTime);
+
+        // 🔁 Logic Helpers
+        Task<bool> VerifieChevauchementAsync(Disponibilite dispo);
+        Task<TimeSpan> ObtenirTempsTotalDisponibleAsync(Guid medecinId, DateTime dateDebut, DateTime dateFin);
+
+        // Delete all availabilities for a doctor
+        Task SupprimerDisponibilitesParMedecinIdAsync(Guid medecinId);
+
+        // Get availabilities within a date range
+        Task<List<Disponibilite>> ObtenirDisponibilitesDansIntervalleAsync(Guid medecinId, DateTime start, DateTime end);
     }
 }
