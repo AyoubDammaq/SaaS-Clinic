@@ -5,7 +5,6 @@ namespace Clinic.Infrastructure.Data
 {
     public class CliniqueDbContext : DbContext
     {
-        private readonly Guid _tenantId;
         public CliniqueDbContext(DbContextOptions<CliniqueDbContext> options)
             : base(options){}
 

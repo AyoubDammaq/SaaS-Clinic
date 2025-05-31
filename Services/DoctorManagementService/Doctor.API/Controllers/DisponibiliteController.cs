@@ -1,5 +1,16 @@
-﻿using Doctor.Application.Interfaces;
+﻿using Doctor.Application.AvailibilityServices.Commands.AjouterDisponibilite;
+using Doctor.Application.AvailibilityServices.Commands.SupprimerDisponibilite;
+using Doctor.Application.AvailibilityServices.Commands.SupprimerDisponibilitesParMedecinId;
+using Doctor.Application.AvailibilityServices.Commands.UpdateDisponibilite;
+using Doctor.Application.AvailibilityServices.Queries.GetDisponibilites;
+using Doctor.Application.AvailibilityServices.Queries.GetDisponibilitesByMedecinId;
+using Doctor.Application.AvailibilityServices.Queries.GetDisponibilitesByMedecinIdAndJour;
+using Doctor.Application.AvailibilityServices.Queries.GetMedecinsDisponibles;
+using Doctor.Application.AvailibilityServices.Queries.GetTotalAvailableTime;
+using Doctor.Application.AvailibilityServices.Queries.IsAvailable;
+using Doctor.Application.AvailibilityServices.Queries.ObtenirDisponibilitesDansIntervalle;
 using Doctor.Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +20,10 @@ namespace Doctor.API.Controllers
     [Route("api/[controller]")]
     public class DisponibiliteController : ControllerBase
     {
-        private readonly IDisponibiliteService _disponibiliteService;
-        public DisponibiliteController(IDisponibiliteService disponibiliteService)
+        private readonly IMediator _mediator;
+        public DisponibiliteController(IMediator mediator)
         {
-            _disponibiliteService = disponibiliteService;
+            _mediator = mediator;
         }
 
         [HttpPost]
@@ -20,8 +31,8 @@ namespace Doctor.API.Controllers
         public async Task<IActionResult> AjouterDisponibilites([FromBody] Disponibilite disponibilite)
         {
             try
-            {
-                await _disponibiliteService.AjouterDisponibilite(disponibilite);
+            { 
+                await _mediator.Send(new AjouterDisponibiliteCommand(disponibilite));
                 return Ok("Disponibilités ajoutées avec succès !");
             }
             catch (ArgumentException ex)
@@ -40,11 +51,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                if (disponibiliteId != disponibilite.Id)
-                {
-                    return BadRequest(new { Message = "L'identifiant de la disponibilité ne correspond pas." });
-                }
-                await _disponibiliteService.UpdateDisponibilite(disponibilite);
+                await _mediator.Send(new UpdateDisponibiliteCommand(disponibiliteId, disponibilite));
                 return Ok(new { Message = "Disponibilité mise à jour avec succès" });
             }
             catch (KeyNotFoundException ex)
@@ -64,7 +71,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                await _disponibiliteService.SupprimerDisponibilite(disponibiliteId);
+                await _mediator.Send(new SupprimerDisponibiliteCommand(disponibiliteId));
                 return Ok(new { Message = "Disponibilité supprimée avec succès" });
             }
             catch (KeyNotFoundException ex)
@@ -82,7 +89,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var disponibilites = await _disponibiliteService.GetDisponibilites();
+                var disponibilites = await _mediator.Send(new GetDisponibilitesQuery());
                 return Ok(disponibilites);
             }
             catch (Exception ex)
@@ -96,7 +103,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var disponibilites = await _disponibiliteService.GetDisponibilitesByMedecinId(medecinId);
+                var disponibilites = await _mediator.Send(new GetDisponibilitesByMedecinIdQuery(medecinId));
                 return Ok(disponibilites);
             }
             catch (Exception ex)
@@ -110,7 +117,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var disponibilites = await _disponibiliteService.GetDisponibilitesByMedecinIdAndJour(medecinId, jour);
+                var disponibilites = await _mediator.Send(new GetDisponibilitesByMedecinIdAndJourQuery(medecinId, jour)); 
                 return Ok(disponibilites);
             }
             catch (Exception ex)
@@ -128,7 +135,7 @@ namespace Doctor.API.Controllers
                 {
                     return BadRequest(new { Message = "L'heure de début doit être inférieure à l'heure de fin." });
                 }
-                var medecins = await _disponibiliteService.GetMedecinsDisponibles(date, heureDebut, heureFin);
+                var medecins = await _mediator.Send(new GetMedecinsDisponiblesQuery(date, heureDebut, heureFin));
                 return Ok(medecins);
             }
             catch (Exception ex)
@@ -142,7 +149,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var estDisponible = await _disponibiliteService.IsAvailable(medecinId, dateTime);
+                var estDisponible = await _mediator.Send(new IsAvailableQuery(medecinId, dateTime));
                 return Ok(new { Disponible = estDisponible });
             }
             catch (Exception ex)
@@ -156,7 +163,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var tempsDisponible = await _disponibiliteService.GetTotalAvailableTime(medecinId, dateDebut, dateFin);
+                var tempsDisponible = await _mediator.Send(new GetTotalAvailableTimeQuery(medecinId, dateDebut, dateFin));
                 return Ok(new { TotalAvailableTime = tempsDisponible });
             }
             catch (Exception ex)
@@ -170,7 +177,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var disponibilites = await _disponibiliteService.ObtenirDisponibilitesDansIntervalle(medecinId, start, end);
+                var disponibilites = await _mediator.Send(new ObtenirDisponibilitesDansIntervalleQuery(medecinId, start, end));
                 return Ok(disponibilites);
             }
             catch (Exception ex)
@@ -184,7 +191,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                await _disponibiliteService.SupprimerDisponibilitesParMedecinId(medecinId);
+                await _mediator.Send(new SupprimerDisponibilitesParMedecinIdCommand(medecinId));
                 return Ok(new { Message = "Disponibilités supprimées avec succès" });
             }
             catch (Exception ex)

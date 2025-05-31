@@ -20,9 +20,9 @@ namespace Doctor.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateDisponibiliteAsync(Disponibilite disponibilite)
+        public async Task UpdateDisponibiliteAsync(Guid disponibiliteId, Disponibilite disponibilite)
         {
-            var existingDisponibilite = await ObtenirDisponibiliteParIdAsync(disponibilite.Id);
+            var existingDisponibilite = await ObtenirDisponibiliteParIdAsync(disponibiliteId);
             if (existingDisponibilite != null)
             {
                 existingDisponibilite.Jour = disponibilite.Jour;

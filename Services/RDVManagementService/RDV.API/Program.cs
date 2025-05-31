@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RDV.API.Extensions;
-using RDV.Application.Interfaces;
-using RDV.Application.Services;
+using RDV.Application.Commands.CreateRendezVous;
 using RDV.Domain.Interfaces;
 using RDV.Infrastructure.Data;
 using RDV.Infrastructure.Repositories;
@@ -28,7 +27,9 @@ builder.Services.AddDbContext<RendezVousDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("RDVDatabase")));
 
 builder.Services.AddScoped<IRendezVousRepository, RendezVousRepository>();
-builder.Services.AddScoped<IRendezVousService, RendezVousService>();
+
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssemblies(typeof(CreateRendezVousCommand).Assembly));
 
 // Configuration de l'authentification JWT
 builder.Services.AddAuthentication(options =>

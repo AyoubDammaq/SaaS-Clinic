@@ -1,6 +1,21 @@
-﻿using Doctor.Application.DTOs;
-using Doctor.Application.Interfaces;
+﻿using Doctor.Application.DoctorServices.Commands.AddDoctor;
+using Doctor.Application.DoctorServices.Commands.AttribuerMedecinAUneClinique;
+using Doctor.Application.DoctorServices.Commands.DeleteDoctor;
+using Doctor.Application.DoctorServices.Commands.DesabonnerMedecinDeClinique;
+using Doctor.Application.DoctorServices.Commands.UpdateDoctor;
+using Doctor.Application.DoctorServices.Queries.FilterDoctorsByName;
+using Doctor.Application.DoctorServices.Queries.FilterDoctorsBySpecialite;
+using Doctor.Application.DoctorServices.Queries.GetActivitesMedecin;
+using Doctor.Application.DoctorServices.Queries.GetAllDoctors;
+using Doctor.Application.DoctorServices.Queries.GetDoctorById;
+using Doctor.Application.DoctorServices.Queries.GetMedecinByClinique;
+using Doctor.Application.DoctorServices.Queries.GetMedecinsIdsByCliniqueId;
+using Doctor.Application.DoctorServices.Queries.GetNombreMedecinByClinique;
+using Doctor.Application.DoctorServices.Queries.GetNombreMedecinBySpecialite;
+using Doctor.Application.DoctorServices.Queries.GetNombreMedecinBySpecialiteDansUneClinique;
+using Doctor.Application.DTOs;
 using Doctor.Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +25,10 @@ namespace Doctor.API.Controllers
     [Route("api/[controller]")]
     public class MedecinController : ControllerBase
     {
-        private readonly IMedecinService _medecinService;
-        public MedecinController(IMedecinService medecinService)
+        private readonly IMediator _mediator;
+        public MedecinController(IMediator mediator)
         {
-            _medecinService = medecinService;
+            _mediator = mediator;
         }
 
         [HttpPost]
@@ -44,7 +59,7 @@ namespace Doctor.API.Controllers
                     DateCreation = DateTime.UtcNow
                 };
 
-                await _medecinService.AddDoctor(medecin);
+                await _mediator.Send(new AddDoctorCommand(medecin));
                 return Ok(new { Message = "Médecin ajouté avec succès" });
             }
             catch (Exception ex)
@@ -58,11 +73,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var medecin = await _medecinService.GetDoctorById(id);
-                if (medecin == null)
-                {
-                    return NotFound(new { Message = "Médecin non trouvé" });
-                }
+                var medecin = await _mediator.Send(new GetDoctorByIdQuery(id));
                 return Ok(medecin);
             }
             catch (Exception ex)
@@ -76,7 +87,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var medecins = await _medecinService.GetAllDoctors();
+                var medecins = await _mediator.Send(new GetAllDoctorsQuery());
                 return Ok(medecins);
             }
             catch (Exception ex)
@@ -91,12 +102,12 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var medecin = await _medecinService.GetDoctorById(id);
+                var medecin = await _mediator.Send(new GetDoctorByIdQuery(id));
                 if (medecin == null)
                 {
                     return NotFound(new { Message = "Médecin non trouvé" });
                 }
-                await _medecinService.UpdateDoctor(id, medecinDto);
+                await _mediator.Send(new UpdateDoctorCommand(id, medecinDto));
                 return Ok(new { Message = "Médecin mis à jour avec succès" });
             }
             catch (Exception ex)
@@ -111,12 +122,12 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var medecin = await _medecinService.GetDoctorById(id);
+                var medecin = await _mediator.Send(new GetDoctorByIdQuery(id));
                 if (medecin == null)
                 {
                     return NotFound(new { Message = "Médecin non trouvé" });
                 }
-                await _medecinService.DeleteDoctor(id);
+                await _mediator.Send(new DeleteDoctorCommand(id));
                 return Ok(new { Message = "Médecin supprimé avec succès" });
             }
             catch (Exception ex)
@@ -130,7 +141,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var medecins = await _medecinService.FilterDoctorsBySpecialite(specialite);
+                var medecins = await _mediator.Send(new FilterDoctorsBySpecialiteQuery(specialite));
                 return Ok(medecins);
             }
             catch (Exception ex)
@@ -144,7 +155,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var medecins = await _medecinService.FilterDoctorsByName(name ?? string.Empty, prenom ?? string.Empty);
+                var medecins = await _mediator.Send(new FilterDoctorsByNameQuery(name ?? string.Empty, prenom ?? string.Empty));
                 return Ok(medecins);
             }
             catch (Exception ex)
@@ -169,7 +180,7 @@ namespace Doctor.API.Controllers
                     }
                 }
 
-                var medecins = await _medecinService.GetMedecinByClinique(cliniqueId);
+                var medecins = await _mediator.Send(new GetMedecinByCliniqueQuery(cliniqueId));
                 if (medecins == null || !medecins.Any())
                 {
                     return NotFound(new { Message = "Aucun médecin trouvé pour cette clinique" });
@@ -188,7 +199,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var medecin = await _medecinService.GetDoctorById(attribuerMedecinDto.MedecinId);
+                var medecin = await _mediator.Send(new GetDoctorByIdQuery(attribuerMedecinDto.MedecinId));
                 if (medecin == null)
                 {
                     return NotFound(new { Message = "Médecin non trouvé" });
@@ -205,7 +216,7 @@ namespace Doctor.API.Controllers
                     }
                 }
 
-                await _medecinService.AttribuerMedecinAUneClinique(attribuerMedecinDto.MedecinId, attribuerMedecinDto.CliniqueId);
+                await _mediator.Send(new AttribuerMedecinAUneCliniqueCommand(attribuerMedecinDto.MedecinId, attribuerMedecinDto.CliniqueId));
                 return Ok(new { Message = "Médecin attribué à la clinique avec succès" });
             }
             catch (Exception ex)
@@ -220,12 +231,13 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var medecin = await _medecinService.GetDoctorById(medecinId);
+                var medecin = await _mediator.Send(new GetDoctorByIdQuery(medecinId));
                 if (medecin == null)
                 {
                     return NotFound(new { Message = "Médecin non trouvé" });
                 }
-                await _medecinService.DesabonnerMedecinDeClinique(medecinId);
+
+                await _mediator.Send(new DesabonnerMedecinDeCliniqueCommand(medecinId));
                 return Ok(new { Message = "Médecin désabonné de la clinique avec succès" });
             }
             catch (Exception ex)
@@ -239,7 +251,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var statistiques = await _medecinService.GetNombreMedecinBySpecialite();
+                var statistiques = await _mediator.Send(new GetNombreMedecinBySpecialiteQuery());
                 return Ok(statistiques);
             }
             catch (Exception ex)
@@ -253,7 +265,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var statistiques = await _medecinService.GetNombreMedecinByClinique();
+                var statistiques = await _mediator.Send(new GetNombreMedecinByCliniqueQuery());
                 return Ok(statistiques);
             }
             catch (Exception ex)
@@ -267,7 +279,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var statistiques = await _medecinService.GetNombreMedecinBySpecialiteDansUneClinique(cliniqueId);
+                var statistiques = await _mediator.Send(new GetNombreMedecinBySpecialiteDansUneCliniqueQuery(cliniqueId));
                 return Ok(statistiques);
             }
             catch (Exception ex)
@@ -281,7 +293,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var medecinsIds = await _medecinService.GetMedecinsIdsByCliniqueId(cliniqueId);
+                var medecinsIds = await _mediator.Send(new GetMedecinsIdsByCliniqueIdQuery(cliniqueId));
                 return Ok(medecinsIds);
             }
             catch (Exception ex)
@@ -295,7 +307,7 @@ namespace Doctor.API.Controllers
         {
             try
             {
-                var activites = await _medecinService.GetActivitesMedecin(medecinId);
+                var activites = await _mediator.Send(new GetActivitesMedecinQuery(medecinId));
                 if (activites == null || !activites.Any())
                 {
                     return NotFound(new { Message = "Aucune activité trouvée pour ce médecin" });

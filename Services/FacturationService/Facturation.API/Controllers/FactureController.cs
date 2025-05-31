@@ -1,7 +1,21 @@
 ﻿using Facturation.Application.DTOs;
-using Facturation.Application.Interfaces;
+using Facturation.Application.FactureService.Commands.AddFacture;
+using Facturation.Application.FactureService.Commands.DeleteFacture;
+using Facturation.Application.FactureService.Commands.ExportToPdf;
+using Facturation.Application.FactureService.Commands.UpdateFacture;
+using Facturation.Application.FactureService.Queries.GetAllFactures;
+using Facturation.Application.FactureService.Queries.GetAllFacturesByClinicId;
+using Facturation.Application.FactureService.Queries.GetAllFacturesByPatientId;
+using Facturation.Application.FactureService.Queries.GetAllFacturesByRangeOfDate;
+using Facturation.Application.FactureService.Queries.GetAllFacturesByState;
+using Facturation.Application.FactureService.Queries.GetFactureById;
+using Facturation.Application.FactureService.Queries.GetNombreDeFactureByStatus;
+using Facturation.Application.FactureService.Queries.GetNombreDeFactureParClinique;
+using Facturation.Application.FactureService.Queries.GetNombreDeFacturesByStatusDansUneClinique;
+using Facturation.Application.FactureService.Queries.GetNombreDeFacturesByStatusParClinique;
 using Facturation.Domain.Entities;
 using Facturation.Domain.Enums;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Facturation.API.Controllers
@@ -10,11 +24,11 @@ namespace Facturation.API.Controllers
     [ApiController]
     public class FactureController : ControllerBase
     {
-        private readonly IFactureService _factureService;
+        private readonly IMediator _mediator;
 
-        public FactureController(IFactureService facturationService)
+        public FactureController(IMediator mediator)
         {
-            _factureService = facturationService ?? throw new ArgumentNullException(nameof(facturationService));
+            _mediator = mediator;
         }
 
         [HttpGet("{id}")]
@@ -22,11 +36,7 @@ namespace Facturation.API.Controllers
         {
             try
             {
-                var facture = await _factureService.GetFactureByIdAsync(id);
-                if (facture == null)
-                {
-                    return NotFound($"Facture with ID {id} not found.");
-                }
+                var facture = await _mediator.Send(new GetFactureByIdQuery(id));    
                 return Ok(facture);
             }
             catch (Exception ex)
@@ -40,7 +50,7 @@ namespace Facturation.API.Controllers
         {
             try
             {
-                var factures = await _factureService.GetAllFacturesAsync();
+                var factures = await _mediator.Send(new GetAllFacturesQuery());
                 return Ok(factures);
             }
             catch (Exception ex)
@@ -64,7 +74,7 @@ namespace Facturation.API.Controllers
 
             try
             {
-                await _factureService.AddFactureAsync(facture);
+                await _mediator.Send(new AddFactureCommand(facture));
                 return StatusCode(201, "Facture créée avec succès.");
             }
             catch (Exception ex)
@@ -88,7 +98,7 @@ namespace Facturation.API.Controllers
 
             try
             {
-                await _factureService.UpdateFactureAsync(facture);
+                await _mediator.Send(new UpdateFactureCommand(facture));
                 return NoContent();
             }
             catch (Exception ex)
@@ -102,13 +112,13 @@ namespace Facturation.API.Controllers
         {
             try
             {
-                var facture = await _factureService.GetFactureByIdAsync(id);
+                var facture = await _mediator.Send(new GetFactureByIdQuery(id));
                 if (facture == null)
                 {
                     return NotFound($"Facture with ID {id} not found.");
                 }
 
-                await _factureService.DeleteFactureAsync(id);
+                await _mediator.Send(new DeleteFactureCommand(id));
                 return NoContent();
             }
             catch (Exception ex)
@@ -127,7 +137,7 @@ namespace Facturation.API.Controllers
 
             try
             {
-                var factures = await _factureService.GetAllFacturesByRangeOfDateAsync(startDate, endDate);
+                var factures = await _mediator.Send(new GetAllFacturesByRangeOfDateQuery(startDate, endDate));
                 return Ok(factures);
             }
             catch (Exception ex)
@@ -141,7 +151,7 @@ namespace Facturation.API.Controllers
         {
             try
             {
-                var factures = await _factureService.GetAllFacturesByStateAsync(status);
+                var factures = await _mediator.Send(new GetAllFacturesByStateQuery(status));
                 return Ok(factures);
             }
             catch (Exception ex)
@@ -155,7 +165,7 @@ namespace Facturation.API.Controllers
         {
             try
             {
-                var factures = await _factureService.GetAllFacturesByPatientIdAsync(patientId);
+                var factures = await _mediator.Send(new GetAllFacturesByPatientIdQuery(patientId));
                 return Ok(factures);
             }
             catch (Exception ex)
@@ -169,7 +179,7 @@ namespace Facturation.API.Controllers
         {
             try
             {
-                var factures = await _factureService.GetAllFacturesByClinicIdAsync(clinicId);
+                var factures = await _mediator.Send(new GetAllFacturesByClinicIdQuery(clinicId));
                 return Ok(factures);
             }
             catch (Exception ex)
@@ -181,7 +191,7 @@ namespace Facturation.API.Controllers
         [HttpGet("export/{id}")]
         public async Task<IActionResult> ExportFacture(Guid id)
         {
-            var facture = await _factureService.GetFactureByIdAsync(id);
+            var facture = await _mediator.Send(new GetFactureByIdQuery(id));
             if (facture == null)
                 return NotFound("Facture introuvable.");
 
@@ -197,7 +207,7 @@ namespace Facturation.API.Controllers
 
             try
             {
-                var pdfBytes = await _factureService.ExportToPdfAsync(pdfFacture);
+                var pdfBytes = await _mediator.Send(new ExportToPdfCommand(pdfFacture));
                 return File(pdfBytes, "application/pdf", $"Facture_{id}.pdf");
             }
             catch (Exception)
@@ -211,7 +221,7 @@ namespace Facturation.API.Controllers
         {
             try
             {
-                var stats = await _factureService.GetNombreDeFactureByStatus();
+                var stats = await _mediator.Send(new GetNombreDeFactureByStatusQuery());
                 return Ok(stats);
             }
             catch (Exception ex)
@@ -225,7 +235,7 @@ namespace Facturation.API.Controllers
         {
             try
             {
-                var stats = await _factureService.GetNombreDeFactureParClinique();
+                var stats = await _mediator.Send(new GetNombreDeFactureParCliniqueQuery());
                 return Ok(stats);
             }
             catch (Exception ex)
@@ -239,7 +249,7 @@ namespace Facturation.API.Controllers
         {
             try
             {
-                var stats = await _factureService.GetNombreDeFacturesByStatusParClinique();
+                var stats = await _mediator.Send(new GetNombreDeFacturesByStatusParCliniqueQuery());
                 return Ok(stats);
             }
             catch (Exception ex)
@@ -253,7 +263,7 @@ namespace Facturation.API.Controllers
         {
             try
             {
-                var stats = await _factureService.GetNombreDeFacturesByStatusDansUneClinique(clinicId);
+                var stats = await _mediator.Send(new GetNombreDeFacturesByStatusDansUneCliniqueQuery(clinicId));
                 return Ok(stats);
             }
             catch (Exception ex)

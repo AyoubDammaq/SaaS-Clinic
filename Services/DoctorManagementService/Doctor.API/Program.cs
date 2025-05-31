@@ -1,6 +1,5 @@
 using Doctor.API.Extensions;
-using Doctor.Application.Interfaces;
-using Doctor.Application.Services;
+using Doctor.Application.AvailibilityServices.Commands.AjouterDisponibilite;
 using Doctor.Domain.Interfaces;
 using Doctor.Infrastructure.Data;
 using Doctor.Infrastructure.Repositories;
@@ -30,12 +29,12 @@ builder.Services.AddDbContext<MedecinDbContext>(options =>
 
 builder.Services.AddScoped<IMedecinRepository, MedecinRepository>();
 builder.Services.AddScoped<IDisponibiliteRepository, DisponibiliteRepository>();
-builder.Services.AddScoped<IMedecinService, MedecinService>();
-builder.Services.AddScoped<IDisponibiliteService, DisponibiliteService>();
 
 
 builder.Services.AddHttpClient<IMedecinRepository, MedecinRepository>();
 
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(AjouterDisponibiliteCommand).Assembly));
 
 builder.Services.AddAuthentication(options =>
 {

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PatientManagementService.API.Extensions;
+using PatientManagementService.Application.PatientService.Commands.AddPatient;
 using PatientManagementService.Application.Services;
 using PatientManagementService.Domain.Interfaces;
 using PatientManagementService.Infrastructure.Data;
@@ -35,6 +36,9 @@ builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IDossierMedicalRepository, DossierMedicalRepository>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<IDossierMedicalService, DossierMedicalService>();
+
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(AddPatientCommand).Assembly));
 
 // Configuration de l'authentification JWT
 builder.Services.AddAuthentication(options =>

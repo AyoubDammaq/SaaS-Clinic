@@ -1,7 +1,19 @@
-﻿using Clinic.Application.DTOs;
-using Clinic.Application.Interfaces;
+﻿using Clinic.Application.Commands.AjouterClinique;
+using Clinic.Application.Commands.SupprimerClinique;
+using Clinic.Application.DTOs;
+using Clinic.Application.Queries.GetNombreCliniques;
+using Clinic.Application.Queries.GetNombreNouvellesCliniquesDuMois;
+using Clinic.Application.Queries.GetNombreNouvellesCliniquesParMois;
+using Clinic.Application.Queries.GetStatistiquesDesCliniques;
+using Clinic.Application.Queries.ListerClinique;
+using Clinic.Application.Queries.ObtenirCliniqueParId;
+using Clinic.Application.Queries.RechercherCliniqueParAdresse;
+using Clinic.Application.Queries.RechercherCliniqueParNom;
+using Clinic.Application.Queries.RechercherCliniqueParStatut;
+using Clinic.Application.Queries.RechercherCliniqueParType;
 using Clinic.Domain.Entities;
 using Clinic.Domain.Enums;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,11 +23,11 @@ namespace Clinic.API.Controllers
     [Route("api/[controller]")]
     public class CliniqueController : ControllerBase
     {
-        private readonly ICliniqueService _cliniqueService;
+        private readonly IMediator _mediator;
 
-        public CliniqueController(ICliniqueService cliniqueService)
+        public CliniqueController(IMediator mediator)
         {
-            _cliniqueService = cliniqueService ?? throw new ArgumentNullException(nameof(cliniqueService), "Le service de clinique ne peut pas être null.");
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         // CRUD operations
@@ -28,7 +40,7 @@ namespace Clinic.API.Controllers
         {
             try
             {
-                var result = await _cliniqueService.AjouterCliniqueAsync(clinique);
+                var result = await _mediator.Send(new AjouterCliniqueCommand(clinique));
                 return CreatedAtAction(nameof(ObtenirClinique), new { id = result.Id }, result);
             }
             catch (Exception ex)
@@ -46,7 +58,7 @@ namespace Clinic.API.Controllers
         {
             try
             {
-                await _cliniqueService.ModifierCliniqueAsync(id, clinique);
+                await _mediator.Send(ModifierClinique(id, clinique));
                 return NoContent();
             }
             catch (KeyNotFoundException)
@@ -68,7 +80,7 @@ namespace Clinic.API.Controllers
         {
             try
             {
-                var result = await _cliniqueService.SupprimerCliniqueAsync(id);
+                var result = await _mediator.Send(new SupprimerCliniqueCommand(id));
                 return result ? NoContent() : NotFound($"Clinique avec l'ID {id} introuvable.");
             }
             catch (Exception ex)
@@ -85,7 +97,7 @@ namespace Clinic.API.Controllers
         {
             try
             {
-                var clinique = await _cliniqueService.ObtenirCliniqueParIdAsync(id);
+                var clinique = await _mediator.Send(new ObtenirCliniqueParIdQuery(id));
                 return clinique == null ? NotFound($"Clinique avec l'ID {id} introuvable.") : Ok(clinique);
             }
             catch (Exception ex)
@@ -102,7 +114,7 @@ namespace Clinic.API.Controllers
         {
             try
             {
-                var cliniques = await _cliniqueService.ListerCliniqueAsync();
+                var cliniques = await _mediator.Send(new ListerCliniquesQuery());
                 return Ok(cliniques);
             }
             catch (Exception ex)
@@ -120,7 +132,7 @@ namespace Clinic.API.Controllers
         {
             try
             {
-                var cliniques = await _cliniqueService.ListerCliniquesParNomAsync(nom);
+                var cliniques = await _mediator.Send(new RechercherCliniqueParNomQuery(nom));
                 return Ok(cliniques);
             }
             catch (Exception ex)
@@ -137,7 +149,7 @@ namespace Clinic.API.Controllers
         {
             try
             {
-                var cliniques = await _cliniqueService.ListerCliniquesParAdresseAsync(adresse);
+                var cliniques = await _mediator.Send(new RechercherCliniqueParAdresseQuery(adresse));
                 return Ok(cliniques);
             }
             catch (Exception ex)
@@ -154,7 +166,7 @@ namespace Clinic.API.Controllers
         {
             try
             {
-                var cliniques = await _cliniqueService.ListerCliniquesParTypeAsync(type);
+                var cliniques = await _mediator.Send(new RechercherCliniqueParTypeQuery(type));
                 return Ok(cliniques);
             }
             catch (Exception ex)
@@ -171,7 +183,7 @@ namespace Clinic.API.Controllers
         {
             try
             {
-                var cliniques = await _cliniqueService.ListerCliniquesParStatutAsync(statut);
+                var cliniques = await _mediator.Send(new RechercherCliniqueParStatusQuery(statut));
                 return Ok(cliniques);
             }
             catch (Exception ex)
@@ -189,7 +201,7 @@ namespace Clinic.API.Controllers
         {
             try
             {
-                var nombreCliniques = await _cliniqueService.GetNombreCliniques();
+                var nombreCliniques = await _mediator.Send(new GetNombreCliniquesQuery());
                 return Ok(nombreCliniques);
             }
             catch (Exception ex)
@@ -206,7 +218,7 @@ namespace Clinic.API.Controllers
         {
             try
             {
-                return Ok(await _cliniqueService.GetNombreNouvellesCliniquesDuMois());
+                return Ok(await _mediator.Send(new GetNombreNouvellesCliniquesDuMoisQuery()));
             }
             catch (Exception ex)
             {
@@ -220,7 +232,7 @@ namespace Clinic.API.Controllers
         {
             try
             {
-                return Ok(await _cliniqueService.GetNombreNouvellesCliniquesParMois());
+                return Ok(await _mediator.Send(new GetNombreNouvellesCliniquesParMoisQuery()));
             }
             catch (Exception ex)
             {
@@ -236,7 +248,7 @@ namespace Clinic.API.Controllers
         {
             try
             {
-                var statistiques = await _cliniqueService.GetStatistiquesDesCliniquesAsync(cliniqueId);
+                var statistiques = await _mediator.Send(new GetStatistiquesDesCliniquesQuery(cliniqueId));
                 return statistiques == null ? NotFound($"Aucune statistique trouvée pour la clinique avec l'ID {cliniqueId}.") : Ok(statistiques);
             }
             catch (Exception ex)

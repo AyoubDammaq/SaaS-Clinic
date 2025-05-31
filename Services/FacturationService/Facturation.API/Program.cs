@@ -1,12 +1,11 @@
-using Facturation.Application.Services;
 using Facturation.Domain.Interfaces;
 using Facturation.Infrastructure.Repositories;
 using Facturation.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Facturation.Application.Interfaces;
 using Facturation.API.Extensions;
 using Microsoft.AspNetCore.DataProtection;
 using Scalar.AspNetCore;
+using Facturation.Application.FactureService.Commands.AddFacture;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,10 +24,12 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<FacturationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("FactureDatabase")));
 
-builder.Services.AddScoped<IFactureService, FactureService>();
 builder.Services.AddScoped<IFactureRepository, FactureRepository>();
 builder.Services.AddScoped<IPaiementRepository, PaiementRepository>();
-builder.Services.AddScoped<IPaiementService, PaiementService>();
+
+
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssemblies(typeof(AddFactureCommand).Assembly));
 
 
 builder.Services.AddDataProtection()

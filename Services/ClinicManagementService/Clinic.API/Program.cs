@@ -1,5 +1,4 @@
 using Clinic.API.Extensions;
-using Clinic.Application.Interfaces;
 using Clinic.Application.Services;
 using Clinic.Domain.Interfaces;
 using Clinic.Infrastructure.Data;
@@ -29,9 +28,11 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<CliniqueDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CliniqueDatabase")));
 
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssemblies(typeof(CliniqueService).Assembly));
+
 
 builder.Services.AddScoped<ICliniqueRepository, CliniqueRepository>();
-builder.Services.AddScoped<ICliniqueService, CliniqueService>();
 builder.Services.AddHttpClient<ICliniqueRepository, CliniqueRepository>();
 
 builder.Services.AddAuthentication(options =>

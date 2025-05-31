@@ -1,7 +1,21 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RDV.Application.Commands.AnnulerRendezVous;
+using RDV.Application.Commands.AnnulerRendezVousParMedecin;
+using RDV.Application.Commands.ConfirmerRendezVousParMedecin;
+using RDV.Application.Commands.CreateRendezVous;
+using RDV.Application.Commands.UpdateRendezVous;
 using RDV.Application.DTOs;
-using RDV.Application.Interfaces;
+using RDV.Application.Queries.CountByMedecinIds;
+using RDV.Application.Queries.CountDistinctPatientsByMedecinIds;
+using RDV.Application.Queries.GetAllRendezVous;
+using RDV.Application.Queries.GetRendezVousByDate;
+using RDV.Application.Queries.GetRendezVousById;
+using RDV.Application.Queries.GetRendezVousByMedecinId;
+using RDV.Application.Queries.GetRendezVousByPatientId;
+using RDV.Application.Queries.GetRendezVousByStatut;
+using RDV.Application.Queries.GetStatistiques;
 using RDV.Domain.Entities;
 using RDV.Domain.Enums;
 
@@ -11,11 +25,11 @@ namespace RDVManagementService.Controllers
     [Route("api/[controller]")]
     public class RendezVousController : ControllerBase
     {
-        private readonly IRendezVousService _rendezVousService;
+        private readonly IMediator _mediator;
 
-        public RendezVousController(IRendezVousService rendezVousService)
+        public RendezVousController(IMediator mediator)
         {
-            _rendezVousService = rendezVousService;
+            _mediator = mediator;
         }
 
         //[Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
@@ -27,11 +41,7 @@ namespace RDVManagementService.Controllers
         {
             try
             {
-                var rendezVous = await _rendezVousService.GetAllRendezVousAsync();
-                if (rendezVous == null || !rendezVous.Any())
-                {
-                    return NotFound("Rendez-vous not found");
-                }
+                var rendezVous = await _mediator.Send(new GetAllRendezVousQuery());
                 return Ok(rendezVous);
             }
             catch (Exception ex)
@@ -54,11 +64,7 @@ namespace RDVManagementService.Controllers
                     return BadRequest("Invalid rendez-vous ID");
                 }
 
-                var rendezVous = await _rendezVousService.GetRendezVousByIdAsync(id);
-                if (rendezVous == null)
-                {
-                    return NotFound("Rendez-vous non trouvé");
-                }
+                var rendezVous = await _mediator.Send(new GetRendezVousByIdQuery(id));
                 return Ok(rendezVous);
             }
             catch (Exception ex)
@@ -83,7 +89,7 @@ namespace RDVManagementService.Controllers
                 {
                     return BadRequest("Rendez-vous ne peut pas être nul");
                 }
-                await _rendezVousService.CreateRendezVousAsync(rendezVous);
+                await _mediator.Send(new CreateRendezVousCommand(rendezVous));
                 return CreatedAtAction(nameof(GetRendezVousById), new { id = rendezVous.Id }, rendezVous);
             }
             catch (Exception ex)
@@ -112,7 +118,7 @@ namespace RDVManagementService.Controllers
                 {
                     return BadRequest("Rendez-vous ne peut pas être nul");
                 }
-                await _rendezVousService.UpdateRendezVousAsync(id, rendezVous);
+                await _mediator.Send(new UpdateRendezVousCommand(id, rendezVous));
                 return NoContent();
             }
             catch (Exception ex)
@@ -134,7 +140,7 @@ namespace RDVManagementService.Controllers
                     return BadRequest("Invalid rendez-vous ID");
                 }
 
-                var result = await _rendezVousService.AnnulerRendezVousAsync(id);
+                var result = await _mediator.Send(new AnnulerRendezVousCommand(id));
                 if (!result)
                 {
                     return NotFound("Rendez-vous non trouvé ou déjà annulé");
@@ -161,11 +167,7 @@ namespace RDVManagementService.Controllers
                     return BadRequest("Invalid patient ID");
                 }
 
-                var rendezVous = await _rendezVousService.GetRendezVousByPatientIdAsync(patientId);
-                if (rendezVous == null || !rendezVous.Any())
-                {
-                    return NotFound("Rendez-vous non trouvé");
-                }
+                var rendezVous = await _mediator.Send(new GetRendezVousByPatientIdQuery(patientId));
                 return Ok(rendezVous);
             }
             catch (Exception ex)
@@ -189,11 +191,7 @@ namespace RDVManagementService.Controllers
                     return BadRequest("Invalid medecin ID");
                 }
 
-                var rendezVous = await _rendezVousService.GetRendezVousByMedecinIdAsync(medecinId);
-                if (rendezVous == null || !rendezVous.Any())
-                {
-                    return NotFound("Rendez-vous non trouvé");
-                }
+                var rendezVous = await _mediator.Send(new GetRendezVousByMedecinIdQuery(medecinId));
                 return Ok(rendezVous);
             }
             catch (Exception ex)
@@ -212,11 +210,7 @@ namespace RDVManagementService.Controllers
         {
             try
             {
-                var rendezVous = await _rendezVousService.GetRendezVousByDateAsync(date);
-                if (rendezVous == null || !rendezVous.Any())
-                {
-                    return NotFound("Rendez-vous non trouvé");
-                }
+                var rendezVous = await _mediator.Send(new GetRendezVousByDateQuery(date));
                 return Ok(rendezVous);
             }
             catch (Exception ex)
@@ -235,11 +229,7 @@ namespace RDVManagementService.Controllers
         {
             try
             {
-                var rendezVous = await _rendezVousService.GetRendezVousByStatutAsync(statut);
-                if (rendezVous == null || !rendezVous.Any())
-                {
-                    return NotFound("Rendez-vous non trouvé");
-                }
+                var rendezVous = await _mediator.Send(new GetRendezVousByStatutQuery(statut));
                 return Ok(rendezVous);
             }
             catch (Exception ex)
@@ -262,7 +252,7 @@ namespace RDVManagementService.Controllers
                     return BadRequest("Invalid rendez-vous ID");
                 }
 
-                await _rendezVousService.ConfirmerRendezVousParMedecin(rendezVousId);
+                await _mediator.Send(new ConfirmerRendezVousParMedecinCommand(rendezVousId));
                 return NoContent();
             }
             catch (Exception ex)
@@ -285,7 +275,7 @@ namespace RDVManagementService.Controllers
                     return BadRequest("Invalid rendez-vous ID");
                 }
 
-                await _rendezVousService.AnnulerRendezVousParMedecin(rendezVousId, justification);
+                await _mediator.Send(new AnnulerRendezVousParMedecinCommand(rendezVousId, justification));
                 return NoContent();
             }
             catch (Exception ex)
@@ -300,11 +290,7 @@ namespace RDVManagementService.Controllers
         {
             try
             {
-                var rendezVous = await _rendezVousService.GetStatistiquesAsync(start, end);
-                if (rendezVous == null || !rendezVous.Any())
-                {
-                    return NotFound("Rendez-vous non trouvé");
-                }
+                var rendezVous = await _mediator.Send(new GetStatistiquesQuery(start,end));
                 return Ok(rendezVous);
             }
             catch (Exception ex)
@@ -318,7 +304,7 @@ namespace RDVManagementService.Controllers
         {
             try
             {
-                var count = await _rendezVousService.CountByMedecinIdsAsync(medecinIds);
+                var count = await _mediator.Send(new CountByMedecinIdsQuery(medecinIds));
                 return Ok(count);
             }
             catch (Exception ex)
@@ -332,7 +318,7 @@ namespace RDVManagementService.Controllers
         {
             try
             {
-                var count = await _rendezVousService.CountDistinctPatientsByMedecinIdsAsync(medecinIds);
+                var count = await _mediator.Send(new CountDistinctPatientsByMedecinIdsQuery(medecinIds));
                 return Ok(count);
             }
             catch (Exception ex)

@@ -1,7 +1,7 @@
 using Consultation.API.Extensions;
+using Consultation.Application.Commands.CreateConsultation;
 using ConsultationManagementService.Data;
 using ConsultationManagementService.Repositories;
-using ConsultationManagementService.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
@@ -48,7 +48,9 @@ builder.Services.AddDbContext<ConsultationDbContext>(options =>
 
 // Injection des dépendances
 builder.Services.AddScoped<IConsultationRepository, ConsultationRepository>();
-builder.Services.AddScoped<IConsultationService, ConsultationService>();
+
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssemblies(typeof(CreateConsultationCommand).Assembly));
 
 // Configuration de l'authentification JWT
 builder.Services.AddAuthentication(options =>

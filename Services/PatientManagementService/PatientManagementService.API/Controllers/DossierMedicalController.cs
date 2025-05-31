@@ -3,6 +3,16 @@ using Microsoft.AspNetCore.Authorization;
 using PatientManagementService.Application.Services;
 using PatientManagementService.Application.DTOs;
 using PatientManagementService.Domain.Entities;
+using MediatR;
+using PatientManagementService.Application.DossierMedicalService.Queries.GetDossierMedicalByPatientId;
+using PatientManagementService.Application.DossierMedicalService.Commands.AddDossierMedical;
+using PatientManagementService.Application.DossierMedicalService.Commands.UpdateDossierMedical;
+using PatientManagementService.Application.DossierMedicalService.Queries.GetDossierMedicalById;
+using PatientManagementService.Application.DossierMedicalService.Commands.DeleteDossierMedical;
+using PatientManagementService.Application.DossierMedicalService.Queries.GetAllDossiersMedicals;
+using PatientManagementService.Application.DossierMedicalService.Commands.AttacherDocument;
+using PatientManagementService.Application.DossierMedicalService.Queries.GetDocumentById;
+using PatientManagementService.Application.DossierMedicalService.Commands.RemoveDocument;
 
 namespace PatientManagementService.API.Controllers
 {
@@ -10,11 +20,11 @@ namespace PatientManagementService.API.Controllers
     [Route("api/[controller]")]
     public class DossierMedicalController : ControllerBase
     {
-        private readonly IDossierMedicalService _dossierMedicalService;
+        private readonly IMediator _mediator;
 
-        public DossierMedicalController(IDossierMedicalService dossierMedicalService)
+        public DossierMedicalController(IMediator mediator)
         {
-            _dossierMedicalService = dossierMedicalService;
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         [HttpGet("{patientId}")]
@@ -22,7 +32,7 @@ namespace PatientManagementService.API.Controllers
         {
             try
             {
-                var dossierMedical = await _dossierMedicalService.GetDossierMedicalByPatientIdAsync(patientId);
+                var dossierMedical = await _mediator.Send(new GetDossierMedicalByPatientIdQuery(patientId));
 
                 return Ok(new
                 {
@@ -57,7 +67,7 @@ namespace PatientManagementService.API.Controllers
                     return BadRequest(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors) });
 
                 dossierMedical.Id = Guid.NewGuid();
-                await _dossierMedicalService.AddDossierMedicalAsync(dossierMedical);
+                await _mediator.Send(new AddDossierMedicalCommand(dossierMedical));
 
                 return CreatedAtAction(nameof(GetDossierMedicalByPatientId), new { patientId = dossierMedical.PatientId }, new
                 {
@@ -89,7 +99,7 @@ namespace PatientManagementService.API.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors) });
 
-                await _dossierMedicalService.UpdateDossierMedicalAsync(dossierMedical);
+                await _mediator.Send(new UpdateDossierMedicalCommand(dossierMedical));
                 return Ok(new { success = true, message = "Dossier médical mis à jour avec succès." });
             }
             catch (Exception ex)
@@ -109,11 +119,11 @@ namespace PatientManagementService.API.Controllers
         {
             try
             {
-                var dossierMedical = await _dossierMedicalService.GetDossierMedicalByIdAsync(dossierMedicalId);
+                var dossierMedical = await _mediator.Send(new GetDossierMedicalByIdQuery(dossierMedicalId));
                 if (dossierMedical == null)
                     return NotFound(new { success = false, message = "Dossier médical introuvable." });
 
-                await _dossierMedicalService.DeleteDossierMedicalAsync(dossierMedicalId);
+                await _mediator.Send(new DeleteDossierMedicalCommand(dossierMedicalId));
                 return Ok(new { success = true, message = "Dossier médical supprimé avec succès." });
             }
             catch (Exception ex)
@@ -133,7 +143,7 @@ namespace PatientManagementService.API.Controllers
         {
             try
             {
-                var dossiersMedicals = await _dossierMedicalService.GetAllDossiersMedicalsAsync();
+                var dossiersMedicals = await _mediator.Send(new GetAllDossiersMedicalsQuery());
                 return Ok(new
                 {
                     success = true,
@@ -158,11 +168,11 @@ namespace PatientManagementService.API.Controllers
         {
             try
             {
-                var dossierMedical = await _dossierMedicalService.GetDossierMedicalByIdAsync(dossierId);
+                var dossierMedical = await _mediator.Send(new GetDossierMedicalByIdQuery(dossierId));
                 if (dossierMedical == null)
                     return NotFound(new { success = false, message = "Dossier médical introuvable." });
 
-                await _dossierMedicalService.AttacherDocumentAsync(dossierId, document);
+                await _mediator.Send(new AttacherDocumentCommand(dossierId, document));
 
                 return Ok(new { success = true, message = "Document attaché avec succès." });
             }
@@ -183,7 +193,7 @@ namespace PatientManagementService.API.Controllers
         {
             try
             {
-                var dossierMedical = await _dossierMedicalService.GetDocumentByIdAsync(dossierMedicalId);
+                var dossierMedical = await _mediator.Send(new GetDossierMedicalByIdQuery(dossierMedicalId));
                 return Ok(new
                 {
                     success = true,
@@ -208,10 +218,10 @@ namespace PatientManagementService.API.Controllers
         {
             try
             {
-                var document = await _dossierMedicalService.GetDocumentByIdAsync(documentId);
+                var document = await _mediator.Send(new GetDocumentByIdQuery(documentId));
                 if (document == null)
                     return NotFound(new { success = false, message = "Document introuvable." });
-                await _dossierMedicalService.RemoveDocumentAsync(documentId);
+                await _mediator.Send(new RemoveDocumentCommand(documentId));
                 return Ok(new { success = true, message = "Document supprimé avec succès." });
             }
             catch (Exception ex)

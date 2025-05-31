@@ -1,8 +1,20 @@
 ﻿using ConsultationManagementService.DTOs;
 using ConsultationManagementService.Models;
-using ConsultationManagementService.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using MediatR;
+using Consultation.Application.Queries.GetConsultationById;
+using Consultation.Application.Queries.GetAllConsultations;
+using Consultation.Application.Commands.CreateConsultation;
+using Consultation.Application.Commands.UpdateConsultation;
+using Consultation.Application.Commands.DeleteConsultation;
+using Consultation.Application.Queries.GetConsultationsByPatientId;
+using Consultation.Application.Queries.GetConsultationsByDoctorId;
+using Consultation.Application.Queries.GetDocumentMedicalById;
+using Consultation.Application.Commands.UploadDocumentMedical;
+using Consultation.Application.Commands.DeleteDocumentMedical;
+using Consultation.Application.Queries.GetNombreConsultations;
+using Consultation.Application.Queries.CountByMedecinIds;
 
 namespace ConsultationManagementService.Controllers
 {
@@ -10,11 +22,11 @@ namespace ConsultationManagementService.Controllers
     [Route("api/[controller]")]
     public class ConsultationController : ControllerBase
     {
-        private readonly IConsultationService _consultationService;
+        private readonly IMediator _mediator;
 
-        public ConsultationController(IConsultationService consultationService)
+        public ConsultationController(IMediator mediator)
         {
-            _consultationService = consultationService ?? throw new ArgumentNullException(nameof(consultationService));
+            _mediator = mediator;
         }
 
         // GET: api/Consultation/{id}
@@ -31,11 +43,7 @@ namespace ConsultationManagementService.Controllers
                     return BadRequest("Invalid consultation ID");
                 }
 
-                var consultation = await _consultationService.GetConsultationByIdAsync(id);
-                if (consultation == null)
-                {
-                    return NotFound("Consultation not found");
-                }
+                var consultation = await _mediator.Send(new GetConsultationByIdQuery(id));
 
                 return Ok(consultation);
             }
@@ -53,7 +61,7 @@ namespace ConsultationManagementService.Controllers
         {
             try
             {
-                var consultations = await _consultationService.GetAllConsultationsAsync();
+                var consultations = await _mediator.Send(new GetAllConsultationsQuery());
                 return Ok(consultations);
             }
             catch (Exception ex)
@@ -81,7 +89,7 @@ namespace ConsultationManagementService.Controllers
                     return BadRequest(ModelState);
                 }
 
-                await _consultationService.CreateConsultationAsync(consultationDto);
+                await _mediator.Send(new CreateConsultationCommand(consultationDto));
                 return Ok("Consultation créée avec succès");
             }
             catch (ArgumentException ex) // Ajout de la gestion spécifique des erreurs de validation
@@ -113,7 +121,7 @@ namespace ConsultationManagementService.Controllers
                     return BadRequest(ModelState);
                 }
 
-                await _consultationService.UpdateConsultationAsync(consultationDto);
+                await _mediator.Send(new UpdateConsultationCommand(consultationDto));
                 return NoContent();
             }
             catch (ArgumentException ex) // Ajout de la gestion spécifique des erreurs de validation
@@ -145,7 +153,7 @@ namespace ConsultationManagementService.Controllers
                     return BadRequest("Invalid consultation ID");
                 }
 
-                var result = await _consultationService.DeleteConsultationAsync(id);
+                var result = await _mediator.Send(new DeleteConsultationCommand(id));
                 if (!result)
                 {
                     return NotFound("Consultation not found");
@@ -174,11 +182,7 @@ namespace ConsultationManagementService.Controllers
                     return BadRequest("Invalid patient ID");
                 }
 
-                var consultations = await _consultationService.GetConsultationsByPatientIdAsync(patientId);
-                if (!consultations.Any())
-                {
-                    return NotFound($"No consultations found for patient with ID {patientId}");
-                }
+                var consultations = await _mediator.Send(new GetConsultationsByPatientIdQuery(patientId));
 
                 return Ok(consultations);
             }
@@ -203,11 +207,7 @@ namespace ConsultationManagementService.Controllers
                     return BadRequest("Invalid doctor ID");
                 }
 
-                var consultations = await _consultationService.GetConsultationsByDoctorIdAsync(doctorId);
-                if (!consultations.Any())
-                {
-                    return NotFound($"No consultations found for doctor with ID {doctorId}");
-                }
+                var consultations = await _mediator.Send(new GetConsultationsByDoctorIdQuery(doctorId));
 
                 return Ok(consultations);
             }
@@ -233,11 +233,7 @@ namespace ConsultationManagementService.Controllers
                     return BadRequest("Invalid document ID");
                 }
 
-                var documentMedical = await _consultationService.GetDocumentMedicalByIdAsync(id);
-                if (documentMedical == null)
-                {
-                    return NotFound("Document médical not found");
-                }
+                var documentMedical = await _mediator.Send(new GetDocumentMedicalByIdQuery(id));
 
                 return Ok(documentMedical);
             }
@@ -266,7 +262,7 @@ namespace ConsultationManagementService.Controllers
                     return BadRequest(ModelState);
                 }
 
-                await _consultationService.UploadDocumentMedicalAsync(documentMedicalDto);
+                await _mediator.Send(new UploadDocumentMedicalCommand(documentMedicalDto));
                 return Ok("Document Médical uploadé avec succès");
             }
             catch (ArgumentException ex) // Ajout de la gestion spécifique des erreurs de validation
@@ -294,7 +290,7 @@ namespace ConsultationManagementService.Controllers
                     return BadRequest("Invalid document ID");
                 }
 
-                var result = await _consultationService.DeleteDocumentMedicalAsync(id);
+                var result = await _mediator.Send(new DeleteDocumentMedicalCommand(id));
                 if (!result)
                 {
                     return NotFound("Document médical not found");
@@ -311,7 +307,7 @@ namespace ConsultationManagementService.Controllers
         [HttpGet("count")]
         public async Task<IActionResult> GetNombreConsultations([FromQuery] DateTime start, [FromQuery] DateTime end)
         {
-            var count = await _consultationService.GetNombreConsultationsAsync(start, end);
+            var count = await _mediator.Send(new GetNombreConsultationsQuery(start, end));
             return Ok(count);
         }
 
@@ -322,9 +318,9 @@ namespace ConsultationManagementService.Controllers
             {
                 return BadRequest("La liste des identifiants de médecins ne peut pas être vide.");
             }
-            var count = await _consultationService.CountByMedecinIds(medecinIds);
+
+            var count = await _mediator.Send(new CountByMedecinIdsQuery(medecinIds));
             return Ok(count);
         }
-
     }
 }

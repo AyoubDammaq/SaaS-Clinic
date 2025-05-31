@@ -10,6 +10,21 @@
   <ItemGroup>
     <ProjectReference Include="..\Doctor.Domain\Doctor.Domain.csproj" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="AvailibilityServices\Commands\" />
+    <Folder Include="DoctorServices\Commands\" />
+    <Folder Include="DoctorServices\Queries\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+  </ItemGroup>
   
   
 </Project>

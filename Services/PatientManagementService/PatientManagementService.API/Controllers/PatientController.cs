@@ -1,8 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PatientManagementService.Application.DTOs;
-using PatientManagementService.Application.Services;
-using PatientManagementService.Domain.Entities;
+using PatientManagementService.Application.PatientService.Commands.AddPatient;
+using PatientManagementService.Application.PatientService.Commands.DeletePatient;
+using PatientManagementService.Application.PatientService.Commands.UpdatePatient;
+using PatientManagementService.Application.PatientService.Queries.GetAllPatients;
+using PatientManagementService.Application.PatientService.Queries.GetPatientById;
+using PatientManagementService.Application.PatientService.Queries.GetPatientsByName;
+using PatientManagementService.Application.PatientService.Queries.GetStatistiques;
 
 namespace PatientManagementService.API.Controllers
 {
@@ -10,11 +16,11 @@ namespace PatientManagementService.API.Controllers
     [ApiController]
     public class PatientsController : ControllerBase
     {
-        private readonly IPatientService _patientService;
+        private readonly IMediator _mediator;   
 
-        public PatientsController(IPatientService patientService)
+        public PatientsController(IMediator mediator)
         {
-            _patientService = patientService;
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         // GET: api/Patients
@@ -24,7 +30,7 @@ namespace PatientManagementService.API.Controllers
         {
             try
             {
-                var patients = await _patientService.GetAllPatientsAsync();
+                var patients = await _mediator.Send(new GetAllPatientsQuery());
                 return Ok(patients);
             }
             catch (Exception ex)
@@ -40,7 +46,7 @@ namespace PatientManagementService.API.Controllers
         {
             try
             {
-                var patient = await _patientService.GetPatientByIdAsync(id);
+                var patient = await _mediator.Send(new GetPatientByIdQuery(id));
                 if (patient == null)
                     return NotFound("Patient non trouvé.");
 
@@ -63,7 +69,7 @@ namespace PatientManagementService.API.Controllers
                     return BadRequest(ModelState);
 
                 patientDto.Id = Guid.NewGuid();
-                await _patientService.AddPatientAsync(patientDto);
+                await _mediator.Send(new AddPatientCommand(patientDto));
                 return CreatedAtAction(nameof(GetPatientById), new { id = patientDto.Id }, patientDto);
             }
             catch (Exception ex)
@@ -82,11 +88,11 @@ namespace PatientManagementService.API.Controllers
                 if (id != patientDto.Id)
                     return BadRequest("L'ID fourni ne correspond pas à celui du patient.");
 
-                var existingPatient = await _patientService.GetPatientByIdAsync(id);
+                var existingPatient = await _mediator.Send(new GetPatientByIdQuery(id));
                 if (existingPatient == null)
                     return NotFound("Patient non trouvé.");
 
-                await _patientService.UpdatePatientAsync(patientDto);
+                await _mediator.Send(new UpdatePatientCommand(patientDto));
                 return NoContent();
             }
             catch (Exception ex)
@@ -102,11 +108,11 @@ namespace PatientManagementService.API.Controllers
         {
             try
             {
-                var existingPatient = await _patientService.GetPatientByIdAsync(id);
+                var existingPatient = await _mediator.Send(new GetPatientByIdQuery(id));
                 if (existingPatient == null)
                     return NotFound("Patient non trouvé.");
 
-                await _patientService.DeletePatientAsync(id);
+                await _mediator.Send(new DeletePatientCommand(id));
                 return NoContent();
             }
             catch (Exception ex)
@@ -122,7 +128,7 @@ namespace PatientManagementService.API.Controllers
         {
             try
             {
-                var patients = await _patientService.GetPatientsByNameAsync(name, lastname);
+                var patients = await _mediator.Send(new GetPatientsByNameQuery(name, lastname));
                 return Ok(patients);
             }
             catch (Exception ex)
@@ -137,7 +143,7 @@ namespace PatientManagementService.API.Controllers
             if (dateDebut > dateFin)
                 return BadRequest("La date de début doit être antérieure à la date de fin.");
 
-            var result = await _patientService.GetStatistiquesAsync(dateDebut, dateFin);
+            var result = await _mediator.Send(new GetStatistiquesQuery(dateDebut, dateFin));
             return Ok(result);
         }
     }

@@ -1,5 +1,8 @@
-﻿using Facturation.Application.Interfaces;
+﻿using Facturation.Application.PaiementService.Commands.ImprimerRecuDePaiement;
+using Facturation.Application.PaiementService.Commands.PayerFacture;
+using Facturation.Application.PaiementService.Queries.GetPaiementByFactureId;
 using Facturation.Domain.Enums;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Facturation.API.Controllers
@@ -8,11 +11,11 @@ namespace Facturation.API.Controllers
     [Route("api/[controller]")]
     public class PaiementController : Controller
     {
-        private readonly IPaiementService _paiementService;
+        private readonly IMediator _mediator;
 
-        public PaiementController(IPaiementService paiementService)
+        public PaiementController(IMediator mediator)
         {
-            _paiementService = paiementService;
+            _mediator = mediator;
         }
 
         [HttpPost("payer/{factureId}")]
@@ -26,8 +29,7 @@ namespace Facturation.API.Controllers
 
             try
             {
-                var success = await _paiementService.PayerFactureAsync(factureId, moyenPaiement);
-
+                var success = await _mediator.Send(new PayerFactureCommand(factureId, moyenPaiement));
                 if (!success)
                     return BadRequest("Paiement échoué : facture introuvable ou déjà payée.");
 
@@ -48,12 +50,12 @@ namespace Facturation.API.Controllers
 
             try
             {
-                var paiement = await _paiementService.GetPaiementByFactureIdAsync(factureId);
+                var paiement = await _mediator.Send(new GetPaiementByFactureIdQuery(factureId));
 
                 if (paiement == null)
                     return NotFound("Aucun paiement trouvé pour cette facture.");
 
-                var pdfBytes = await _paiementService.ImprimerRecuDePaiement(paiement);
+                var pdfBytes = await _mediator.Send(new ImprimerRecuDePaiementCommand(paiement));
 
                 var nomFichier = $"recu_paiement_{paiement.DatePaiement:yyyyMMdd}.pdf";
 

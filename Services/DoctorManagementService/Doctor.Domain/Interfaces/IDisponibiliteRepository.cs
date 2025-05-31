@@ -6,7 +6,7 @@ namespace Doctor.Domain.Interfaces
     {
         // 🔁 CRUD
         Task AjouterDisponibiliteAsync(Disponibilite nouvelleDispo);
-        Task UpdateDisponibiliteAsync(Disponibilite disponibilite);
+        Task UpdateDisponibiliteAsync(Guid disponibiliteId, Disponibilite disponibilite);
         Task SupprimerDisponibiliteAsync(Guid disponibiliteId);
 
         // 🔍 Single & All

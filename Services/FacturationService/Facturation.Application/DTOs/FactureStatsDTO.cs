@@ -1,5 +1,4 @@
-﻿
-namespace Facturation.Application.DTOs
+﻿namespace Facturation.Application.DTOs
 {
     public class FactureStatsDTO
     {

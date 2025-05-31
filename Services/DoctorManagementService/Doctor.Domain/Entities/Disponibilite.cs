@@ -8,7 +8,6 @@ namespace Doctor.Domain.Entities
     public class Disponibilite
     {
         [Key]
-        [JsonIgnore]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; } = Guid.NewGuid();
 
