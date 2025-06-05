@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using RDV.Domain.Enums;
+using RDV.Domain.Common;
 
 namespace RDV.Domain.Entities
 {
-    public class RendezVous
+    public class RendezVous : BaseEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -29,5 +30,31 @@ namespace RDV.Domain.Entities
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime DateCreation { get; set; } = DateTime.Now;
+
+        public void CreerRendezVousEvent()
+        {
+            AddDomainEvent(new Events.RendezVousCree(this));
+        }
+
+        public void ModifierRendezVousEvent()
+        {
+            AddDomainEvent(new Events.RendezVousModifie(this));
+        }
+
+        public void AnnulerRendezVousEvent()
+        {
+            AddDomainEvent(new Events.RendezVousAnnule(this.Id));
+        }
+
+        public void ConfirmerRendezVousEvent()
+        {
+            AddDomainEvent(new Events.RendezVousConfirme(this.Id));
+        }
+
+        public void RejeterRendezVousParMedecinEvent(string raison)
+        {
+            AddDomainEvent(new Events.RendezVousAnnuleParMedecin(this.Id, raison));
+
+        }
     }
 }

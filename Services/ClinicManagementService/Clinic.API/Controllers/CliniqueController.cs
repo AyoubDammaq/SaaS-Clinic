@@ -1,4 +1,5 @@
 ﻿using Clinic.Application.Commands.AjouterClinique;
+using Clinic.Application.Commands.ModifierClinique;
 using Clinic.Application.Commands.SupprimerClinique;
 using Clinic.Application.DTOs;
 using Clinic.Application.Queries.GetNombreCliniques;
@@ -58,7 +59,7 @@ namespace Clinic.API.Controllers
         {
             try
             {
-                await _mediator.Send(ModifierClinique(id, clinique));
+                await _mediator.Send(new UpdateCliniqueCommand(id, clinique));
                 return NoContent();
             }
             catch (KeyNotFoundException)

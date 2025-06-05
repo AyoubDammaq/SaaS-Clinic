@@ -1,4 +1,5 @@
 ﻿
+using Doctor.Domain.Entities;
 using Doctor.Domain.Interfaces;
 using MediatR;
 
@@ -19,6 +20,9 @@ namespace Doctor.Application.DoctorServices.Commands.AddDoctor
             {
                 throw new ArgumentNullException(nameof(request.medecin), "Le médecin ne peut pas être nul.");
             }
+
+            request.medecin.AddDoctorEvent();
+
             await _medecinRepository.AddAsync(request.medecin);
         }
     }

@@ -39,6 +39,10 @@ namespace PatientManagementService.Application.DossierMedicalService.Commands.Ad
             };
 
             patient.DossierMedicalId = request.dossierMedical.Id;
+
+            dossierMedicalEntity.CreerDossierMedicalEvent();
+            patient.ModifierPatientEvent();
+
             await _dossierMedicalRepository.AddDossierMedicalAsync(dossierMedicalEntity);
             await _patientRepository.UpdatePatientAsync(patient);
         }

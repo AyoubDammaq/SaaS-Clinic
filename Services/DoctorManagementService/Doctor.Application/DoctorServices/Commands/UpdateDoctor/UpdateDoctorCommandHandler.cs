@@ -37,6 +37,8 @@ namespace Doctor.Application.DoctorServices.Commands.UpdateDoctor
             medecin.PhotoUrl = request.medecinDto.PhotoUrl;
             medecin.Disponibilites = request.medecinDto.Disponibilites;
 
+            medecin.UpdateDoctorEvent();
+
             await _medecinRepository.UpdateAsync(medecin);
         }
     }

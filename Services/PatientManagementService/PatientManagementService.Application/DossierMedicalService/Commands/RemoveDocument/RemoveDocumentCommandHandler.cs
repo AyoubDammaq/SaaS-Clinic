@@ -16,6 +16,8 @@ namespace PatientManagementService.Application.DossierMedicalService.Commands.Re
             if (document == null)
                 throw new Exception("Document not found");
 
+            document.DetacherDocumentEvent(document);
+
             await _dossierMedicalRepository.RemoveDocumentAsync(request.documentId);
         }
     }

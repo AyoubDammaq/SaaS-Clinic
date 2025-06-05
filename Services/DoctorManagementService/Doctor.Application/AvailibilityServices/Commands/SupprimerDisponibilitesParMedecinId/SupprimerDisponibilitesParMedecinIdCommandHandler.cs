@@ -1,4 +1,6 @@
-﻿using Doctor.Domain.Interfaces;
+﻿using Doctor.Domain.Entities;
+using Doctor.Domain.Events.DisponibilityEvents;
+using Doctor.Domain.Interfaces;
 using MediatR;
 
 namespace Doctor.Application.AvailibilityServices.Commands.SupprimerDisponibilitesParMedecinId
@@ -14,6 +16,11 @@ namespace Doctor.Application.AvailibilityServices.Commands.SupprimerDisponibilit
         {
             if (request.medecinId == Guid.Empty)
                 throw new ArgumentException("L'identifiant du médecin ne peut pas être vide.", nameof(request.medecinId));
+
+            var disponibilites = await _disponibiliteRepository.ObtenirDisponibilitesParMedecinIdAsync(request.medecinId);
+
+            Disponibilite.SupprimerToutesPourMedecinEvent(request.medecinId);
+
             await _disponibiliteRepository.SupprimerDisponibilitesParMedecinIdAsync(request.medecinId);
         }
     }

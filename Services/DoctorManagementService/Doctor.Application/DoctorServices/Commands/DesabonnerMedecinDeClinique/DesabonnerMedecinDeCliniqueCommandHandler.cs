@@ -16,6 +16,17 @@ namespace Doctor.Application.DoctorServices.Commands.DesabonnerMedecinDeClinique
             {
                 throw new ArgumentException("L'identifiant du médecin ne peut pas être vide.", nameof(request.medecinId));
             }
+
+            var medecin = await _medecinRepository.GetByIdAsync(request.medecinId);
+            if (medecin.CliniqueId is Guid cliniqueId)
+            {
+                medecin.DesabonnerDeCliniqueEvent(cliniqueId);
+            }
+            else
+            {
+                throw new InvalidOperationException("Le médecin n'est abonné à aucune clinique.");
+            }
+
             await _medecinRepository.DesabonnerMedecinDeCliniqueAsync(request.medecinId);
         }
     }

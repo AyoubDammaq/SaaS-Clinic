@@ -23,6 +23,8 @@ namespace PatientManagementService.Application.PatientService.Commands.DeletePat
                 return false;
             }
 
+            existingPatient.SupprimerPatientEvent();
+
             await _patientRepository.DeletePatientAsync(request.PatientId);
             return true;
         }

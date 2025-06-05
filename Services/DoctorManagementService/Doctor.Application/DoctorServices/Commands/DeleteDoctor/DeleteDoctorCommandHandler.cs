@@ -16,6 +16,11 @@ namespace Doctor.Application.DoctorServices.Commands.DeleteDoctor
             {
                 throw new ArgumentException("L'identifiant du médecin ne peut pas être vide.", nameof(request.id));
             }
+
+            var medecin = await _medecinRepository.GetByIdAsync(request.id);
+
+            medecin.RemoveDoctorEvent();
+
             await _medecinRepository.DeleteAsync(request.id);
         }
     }

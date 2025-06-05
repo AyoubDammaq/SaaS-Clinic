@@ -31,6 +31,8 @@ namespace Facturation.Application.FactureService.Commands.AddFacture
                 Status = FactureStatus.EN_ATTENTE
             };
 
+            facture.CreateFactureEvent();
+
             await _factureRepository.AddFactureAsync(facture);
         }
     }

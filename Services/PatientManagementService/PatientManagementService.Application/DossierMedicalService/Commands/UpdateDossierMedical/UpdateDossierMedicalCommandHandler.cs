@@ -22,6 +22,8 @@ namespace PatientManagementService.Application.DossierMedicalService.Commands.Up
             existingDossier.AntécédentsPersonnels = request.dossierMedical.AntécédentsPersonnels;
             existingDossier.GroupeSanguin = request.dossierMedical.GroupeSanguin;
 
+            existingDossier.ModifierDossierMedicalEvent();
+
             await _dossierMedicalRepository.UpdateDossierMedicalAsync(existingDossier);
         }
 

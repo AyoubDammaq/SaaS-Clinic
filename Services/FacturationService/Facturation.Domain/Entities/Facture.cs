@@ -1,10 +1,10 @@
-﻿using Facturation.Domain.Enums;
+﻿using Facturation.Domain.Common;
+using Facturation.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Facturation.Domain.Entities
 {
-    public class Facture 
+    public class Facture : BaseEntity
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
@@ -28,5 +28,20 @@ namespace Facturation.Domain.Entities
         public FactureStatus Status { get; set; }
 
         public virtual Paiement? Paiement { get; set; }
+
+        public void CreateFactureEvent()
+        {
+            AddDomainEvent(new Events.FactureCreated(this));
+        }
+
+        public void UpdateFactureEvent()
+        {
+            AddDomainEvent(new Events.FactureUpdated(this));
+        }
+
+        public void DeleteFactureEvent()
+        {
+            AddDomainEvent(new Events.FactureDeleted(this.Id));
+        }
     }
 }

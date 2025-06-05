@@ -19,6 +19,8 @@ namespace Facturation.Application.FactureService.Commands.DeleteFacture
             if (existingFacture == null)
                 throw new KeyNotFoundException($"Aucune facture trouvée avec l'identifiant {request.id}.");
 
+            existingFacture.DeleteFactureEvent();
+
             await _factureRepository.DeleteFactureAsync(request.id);
         }
     }

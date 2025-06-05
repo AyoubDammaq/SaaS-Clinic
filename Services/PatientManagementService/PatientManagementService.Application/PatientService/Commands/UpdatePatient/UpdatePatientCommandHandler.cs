@@ -38,6 +38,8 @@ namespace PatientManagementService.Application.PatientService.Commands.UpdatePat
             existingPatient.Telephone = request.patient.Telephone;
             existingPatient.Email = request.patient.Email;
 
+            existingPatient.ModifierPatientEvent();
+
             await _patientRepository.UpdatePatientAsync(existingPatient);
             return true;
         }

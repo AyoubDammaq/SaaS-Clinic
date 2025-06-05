@@ -16,6 +16,9 @@ namespace RDV.Application.Commands.CreateRendezVous
             {
                 throw new ArgumentNullException(nameof(request.rendezVous), "Le rendez-vous ne peut pas être nul.");
             }
+
+            request.rendezVous.CreerRendezVousEvent();
+
             await _rendezVousRepository.CreateRendezVousAsync(request.rendezVous);
         }
     }

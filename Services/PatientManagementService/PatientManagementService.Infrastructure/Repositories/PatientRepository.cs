@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PatientManagementService.Domain.Entities;
 using PatientManagementService.Domain.Interfaces;
-using PatientManagementService.Domain.ValueObject;
 using PatientManagementService.Infrastructure.Data;
 
 
@@ -16,7 +15,7 @@ namespace PatientManagementService.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Domain.Entities.Patient>> GetAllPatientsAsync()
+        public async Task<IEnumerable<Patient>> GetAllPatientsAsync()
         {
             return await _context.Patients
                 .Include(p => p.DossierMedical)
@@ -25,25 +24,25 @@ namespace PatientManagementService.Infrastructure.Repositories
         }
 
 
-        public async Task<Domain.Entities.Patient?> GetPatientByIdAsync(Guid id)
+        public async Task<Patient?> GetPatientByIdAsync(Guid id)
         {
             return await _context.Patients
                 .Include(p => p.DossierMedical)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task AddPatientAsync(Domain.Entities.Patient patient)
+        public async Task AddPatientAsync(Patient patient)
         {  
             await _context.Patients.AddAsync(patient);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdatePatientAsync(Domain.Entities.Patient patient)
+        public async Task UpdatePatientAsync(Patient patient)
         {
             var patientUpdated = await _context.Patients.FindAsync(patient.Id);
             if (patientUpdated != null)
             {
-                _context.Patients.Update(patientUpdated);
+                _context.Patients.Update(patient);
                 await _context.SaveChangesAsync();
             }
         }
@@ -58,7 +57,7 @@ namespace PatientManagementService.Infrastructure.Repositories
             }
         }
 
-        public async Task<IEnumerable<Domain.Entities.Patient>> GetPatientsByNameAsync(string? name, string? lastname)
+        public async Task<IEnumerable<Patient>> GetPatientsByNameAsync(string? name, string? lastname)
         {
             name = name?.Trim().ToLower();
             lastname = lastname?.Trim().ToLower();

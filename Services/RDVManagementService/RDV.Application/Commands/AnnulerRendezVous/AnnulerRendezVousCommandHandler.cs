@@ -16,6 +16,10 @@ namespace RDV.Application.Commands.AnnulerRendezVous
             {
                 throw new ArgumentException("L'identifiant du rendez-vous ne peut pas être vide.", nameof(request.id));
             }
+
+            var rendezvous = await _rendezVousRepository.GetRendezVousByIdAsync(request.id);
+            rendezvous.AnnulerRendezVousEvent();
+
             return await _rendezVousRepository.AnnulerRendezVousAsync(request.id);
         }
     }

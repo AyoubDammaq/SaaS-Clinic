@@ -1,10 +1,11 @@
-﻿using Clinic.Domain.Enums;
+﻿using Clinic.Domain.Common;
+using Clinic.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Clinic.Domain.Entities
 {
-    public class Clinique
+    public class Clinique : BaseEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -37,6 +38,21 @@ namespace Clinic.Domain.Entities
         public TypeClinique TypeClinique { get; set; } = TypeClinique.Generale;
 
         public DateTime DateCreation { get; set; } = DateTime.UtcNow;
-    }
 
+        // ✳️ Méthode pour déclencher un Domain Event
+        public void AjouterCliniqueEvent()
+        {
+            AddDomainEvent(new Events.CliniqueCreated(this));
+        }
+
+        public void ModifierCliniqueEvent()
+        {
+            AddDomainEvent(new Events.CliniqueUpdated(this));
+        }
+
+        public void SupprimerCliniqueEvent()
+        {
+            AddDomainEvent(new Events.CliniqueDeleted(this));
+        }
+    }
 }

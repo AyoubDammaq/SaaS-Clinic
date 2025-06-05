@@ -20,6 +20,10 @@ namespace RDV.Application.Commands.AnnulerRendezVousParMedecin
             {
                 throw new ArgumentException("La justification ne peut pas être vide.", nameof(request.justification));
             }
+
+            var rendezVous = await _rendezVousRepository.GetRendezVousByIdAsync(request.rendezVousId);
+            rendezVous.RejeterRendezVousParMedecinEvent(request.justification);
+
             await _rendezVousRepository.AnnulerRendezVousParMedecin(request.rendezVousId, request.justification);
         }
     }

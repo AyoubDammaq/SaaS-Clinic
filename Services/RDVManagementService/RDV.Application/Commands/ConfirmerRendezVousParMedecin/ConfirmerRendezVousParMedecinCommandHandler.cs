@@ -16,6 +16,11 @@ namespace RDV.Application.Commands.ConfirmerRendezVousParMedecin
             {
                 throw new ArgumentException("L'identifiant du rendez-vous ne peut pas être vide.", nameof(request.rendezVousId));
             }
+
+            var rendezVous = await _rendezVousRepository.GetRendezVousByIdAsync(request.rendezVousId);
+
+            rendezVous.ConfirmerRendezVousEvent();
+
             await _rendezVousRepository.ConfirmerRendezVousParMedecin(request.rendezVousId);
         }
     }

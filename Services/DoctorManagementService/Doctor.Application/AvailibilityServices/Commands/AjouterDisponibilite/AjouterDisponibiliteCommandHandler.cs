@@ -18,6 +18,8 @@ namespace Doctor.Application.AvailibilityServices.Commands.AjouterDisponibilite
             if (request.nouvelleDispo.HeureDebut >= request.nouvelleDispo.HeureFin)
                 throw new ArgumentException("L'heure de début doit être inférieure à l'heure de fin.");
 
+            request.nouvelleDispo.AjouterDisponibiliteEvent();
+
             await _disponibiliteRepository.AjouterDisponibiliteAsync(request.nouvelleDispo);
         }
     }

@@ -15,6 +15,9 @@ namespace PatientManagementService.Application.DossierMedicalService.Commands.De
         public async Task Handle(DeleteDossierMedicalCommand request, CancellationToken cancellationToken)
         {
             var dossierMedical = await _dossierMedicalRepository.GetDossierMedicalByIdAsync(request.dossierMedicalId) ?? throw new Exception("Dossier médical not found");
+
+            dossierMedical.SupprimerDossierMedicalEvent();
+
             await _dossierMedicalRepository.DeleteDossierMedicalAsync(request.dossierMedicalId);
         }
     }

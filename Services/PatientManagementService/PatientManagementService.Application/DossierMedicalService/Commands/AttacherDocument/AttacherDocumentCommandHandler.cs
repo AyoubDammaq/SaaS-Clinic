@@ -16,13 +16,16 @@ namespace PatientManagementService.Application.DossierMedicalService.Commands.At
         public async Task Handle(AttacherDocumentCommand request, CancellationToken cancellationToken)
         {
             var dossierMedical = await _dossierMedicalRepository.GetDossierMedicalByIdAsync(request.dossierMedicalId) ?? throw new InvalidOperationException("Dossier médical not found.");
-            var newDucument = new Document
+            var newDocument = new Document
             {
                 Nom = request.document.Nom,
                 Url = request.document.Url,
                 Type = request.document.Type
             };
-            await _dossierMedicalRepository.AttacherDocumentAsync(request.dossierMedicalId, newDucument);
+
+            newDocument.AttacherDocumentEvent(newDocument);
+
+            await _dossierMedicalRepository.AttacherDocumentAsync(request.dossierMedicalId, newDocument);
         }
     }
 }

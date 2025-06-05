@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using PatientManagementService.Application.Services;
 using PatientManagementService.Application.DTOs;
-using PatientManagementService.Domain.Entities;
 using MediatR;
 using PatientManagementService.Application.DossierMedicalService.Queries.GetDossierMedicalByPatientId;
 using PatientManagementService.Application.DossierMedicalService.Commands.AddDossierMedical;

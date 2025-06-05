@@ -20,6 +20,9 @@ namespace RDV.Application.Commands.UpdateRendezVous
             {
                 throw new ArgumentNullException(nameof(request.rendezVous), "Le rendez-vous ne peut pas être nul.");
             }
+
+            request.rendezVous.ModifierRendezVousEvent();   
+
             await _rendezVousRepository.UpdateRendezVousAsync(request.id, request.rendezVous);
         }
     }

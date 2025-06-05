@@ -31,6 +31,9 @@ namespace Facturation.Application.PaiementService.Commands.PayerFacture
 
             facture.Status = FactureStatus.PAYEE;
 
+            paiement.PayerFactureEvent();
+            facture.UpdateFactureEvent();
+
             await _paiementRepository.AddAsync(paiement);
             await _factureRepository.UpdateFactureAsync(facture);
 

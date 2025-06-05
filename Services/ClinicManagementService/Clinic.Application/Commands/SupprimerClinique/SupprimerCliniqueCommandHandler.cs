@@ -1,5 +1,4 @@
-﻿
-using Clinic.Domain.Interfaces;
+﻿using Clinic.Domain.Interfaces;
 using MediatR;
 
 namespace Clinic.Application.Commands.SupprimerClinique
@@ -17,6 +16,12 @@ namespace Clinic.Application.Commands.SupprimerClinique
         {
             if (request.Id == Guid.Empty)
                 throw new ArgumentException("L'identifiant de la clinique est requis.", nameof(request.Id));
+
+            var clinique = await _repository.GetByIdAsync(request.Id);
+            if (clinique == null)
+                throw new InvalidOperationException("Clinique non trouvée.");
+
+            clinique.SupprimerCliniqueEvent();
 
             await _repository.DeleteAsync(request.Id);
             return true;

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PatientManagementService.API.Extensions;
 using PatientManagementService.Application.PatientService.Commands.AddPatient;
-using PatientManagementService.Application.Services;
 using PatientManagementService.Domain.Interfaces;
 using PatientManagementService.Infrastructure.Data;
 using PatientManagementService.Infrastructure.Repositories;
@@ -34,8 +33,6 @@ builder.Services.AddDbContext<PatientDbContext>(options =>
 
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IDossierMedicalRepository, DossierMedicalRepository>();
-builder.Services.AddScoped<IPatientService, PatientService>();
-builder.Services.AddScoped<IDossierMedicalService, DossierMedicalService>();
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(AddPatientCommand).Assembly));

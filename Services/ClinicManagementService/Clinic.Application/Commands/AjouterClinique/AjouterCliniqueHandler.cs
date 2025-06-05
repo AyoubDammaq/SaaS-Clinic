@@ -33,6 +33,7 @@ namespace Clinic.Application.Commands.AjouterClinique
                 TypeClinique = dto.TypeClinique,
                 Statut = dto.Statut
             };
+            clinique.AjouterCliniqueEvent();
 
             await _repository.AddAsync(clinique);
             return clinique;

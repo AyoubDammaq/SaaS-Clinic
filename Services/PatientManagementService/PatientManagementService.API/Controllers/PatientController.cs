@@ -9,6 +9,7 @@ using PatientManagementService.Application.PatientService.Queries.GetAllPatients
 using PatientManagementService.Application.PatientService.Queries.GetPatientById;
 using PatientManagementService.Application.PatientService.Queries.GetPatientsByName;
 using PatientManagementService.Application.PatientService.Queries.GetStatistiques;
+using PatientManagementService.Domain.Entities;
 
 namespace PatientManagementService.API.Controllers
 {
@@ -26,7 +27,7 @@ namespace PatientManagementService.API.Controllers
         // GET: api/Patients
         [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Domain.Entities.Patient>>> GetAllPatients()
+        public async Task<ActionResult<IEnumerable<Patient>>> GetAllPatients()
         {
             try
             {
@@ -42,7 +43,7 @@ namespace PatientManagementService.API.Controllers
         // GET: api/Patients/5
         [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Domain.Entities.Patient>> GetPatientById(Guid id)
+        public async Task<ActionResult<Patient>> GetPatientById(Guid id)
         {
             try
             {
@@ -124,7 +125,7 @@ namespace PatientManagementService.API.Controllers
         // GET: api/Patients/search?name=John&lastname=Doe
         [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
         [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<Domain.Entities.Patient>>> SearchPatients([FromQuery] string? name, [FromQuery] string? lastname)
+        public async Task<ActionResult<IEnumerable<Patient>>> SearchPatients([FromQuery] string? name, [FromQuery] string? lastname)
         {
             try
             {

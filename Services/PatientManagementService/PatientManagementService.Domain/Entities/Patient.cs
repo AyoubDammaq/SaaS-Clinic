@@ -1,12 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using PatientManagementService.Domain.Common;
+using PatientManagementService.Domain.Events;
 
 namespace PatientManagementService.Domain.Entities
 {
-    public class Patient
+    public class Patient : BaseEntity
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
@@ -31,6 +31,16 @@ namespace PatientManagementService.Domain.Entities
 
         public Guid? DossierMedicalId { get; set; }
 
-        public DossierMedical? DossierMedical { get; set; }
+        public virtual DossierMedical? DossierMedical { get; set; }
+
+        // Domain event methods
+        public void AjouterPatientEvent() =>
+            AddDomainEvent(new PatientAdded(Id, Nom, Prenom));
+
+        public void ModifierPatientEvent() =>
+            AddDomainEvent(new PatientUpdated(this));
+
+        public void SupprimerPatientEvent() =>
+            AddDomainEvent(new PatientDeleted(Id));
     }
 }

@@ -16,6 +16,9 @@ namespace Doctor.Application.AvailibilityServices.Commands.UpdateDisponibilite
                 throw new ArgumentNullException(nameof(request.disponibilite), "La disponibilité ne peut pas être null.");
             if (request.disponibilite.HeureDebut >= request.disponibilite.HeureFin)
                 throw new ArgumentException("L'heure de début doit être inférieure à l'heure de fin.");
+
+            request.disponibilite.ModifierDisponibiliteEvent();
+
             await _disponibiliteRepository.UpdateDisponibiliteAsync(request.disponibiliteId, request.disponibilite);
         }
     }

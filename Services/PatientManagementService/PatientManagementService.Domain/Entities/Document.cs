@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PatientManagementService.Domain.Common;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace PatientManagementService.Domain.Entities
 {
-    public class Document
+    public class Document : BaseEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -25,5 +26,16 @@ namespace PatientManagementService.Domain.Entities
         public Guid DossierMedicalId { get; set; } // Foreign key to DossierMedical
         [JsonIgnore]
         public DossierMedical? DossierMedical { get; set; } // Navigation property
+
+        public void AttacherDocumentEvent(Document document)
+        {
+            AddDomainEvent(new Events.DocumentAttacheAuDossier(this, DossierMedicalId));
+        }
+
+        public void DetacherDocumentEvent(Document document)
+        {
+            AddDomainEvent(new Events.DocumentDetacheAUnDossier(this, DossierMedicalId));
+
+        }
     }
 }

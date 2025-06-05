@@ -29,30 +29,13 @@ namespace RDV.Infrastructure.Repositories
 
         public async Task CreateRendezVousAsync(RendezVous rendezVous)
         {
-            var rendezVousEntity = new RendezVous
-            {
-                Id = rendezVous.Id,
-                PatientId = rendezVous.PatientId,
-                MedecinId = rendezVous.MedecinId,
-                DateHeure = rendezVous.DateHeure,
-                Statut = RDVstatus.EN_ATTENTE,
-                Commentaire = rendezVous.Commentaire
-            };
-            await _context.RendezVous.AddAsync(rendezVousEntity);
+            await _context.RendezVous.AddAsync(rendezVous);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateRendezVousAsync(Guid id, RendezVous rendezVous)
         {
-            var existingRendezVous = await _context.RendezVous.FindAsync(id);
-            if (existingRendezVous == null)
-            {
-                throw new Exception("Rendez-vous non trouvé");
-            }
-            existingRendezVous.PatientId = rendezVous.PatientId;
-            existingRendezVous.MedecinId = rendezVous.MedecinId;
-            existingRendezVous.DateHeure = rendezVous.DateHeure;
-            existingRendezVous.Commentaire = rendezVous.Commentaire;
+            _context.RendezVous.Update(rendezVous);
             await _context.SaveChangesAsync();
         }
 

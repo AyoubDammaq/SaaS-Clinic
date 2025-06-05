@@ -37,6 +37,8 @@ namespace Facturation.Application.FactureService.Commands.UpdateFacture
             existingFacture.ClinicId = request.request.ClinicId;
             existingFacture.MontantTotal = request.request.MontantTotal;
 
+            existingFacture.UpdateFactureEvent();
+
             await _factureRepository.UpdateFactureAsync(existingFacture);
         }
     }

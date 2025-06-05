@@ -16,6 +16,10 @@ namespace Doctor.Application.DoctorServices.Commands.AttribuerMedecinAUneCliniqu
             {
                 throw new ArgumentException("Les identifiants du médecin et de la clinique ne peuvent pas être vides.");
             }
+
+            var medecin = await _medecinRepository.GetByIdAsync(request.medecinId);
+            medecin.AssignerCliniqueEvent(request.cliniqueId);
+
             await _medecinRepository.AttribuerMedecinAUneCliniqueAsync(request.medecinId, request.cliniqueId);
         }
     }

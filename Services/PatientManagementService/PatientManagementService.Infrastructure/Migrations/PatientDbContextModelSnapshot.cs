@@ -22,7 +22,7 @@ namespace PatientManagementService.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("PatientManagementService.Domain.Entities.Document", b =>
+            modelBuilder.Entity("Document", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,7 +53,7 @@ namespace PatientManagementService.Infrastructure.Migrations
                     b.ToTable("Documents");
                 });
 
-            modelBuilder.Entity("PatientManagementService.Domain.Entities.DossierMedical", b =>
+            modelBuilder.Entity("DossierMedical", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,7 +97,7 @@ namespace PatientManagementService.Infrastructure.Migrations
                     b.ToTable("DossiersMedicaux");
                 });
 
-            modelBuilder.Entity("PatientManagementService.Domain.Entities.Patient", b =>
+            modelBuilder.Entity("Patient", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -141,9 +141,9 @@ namespace PatientManagementService.Infrastructure.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("PatientManagementService.Domain.Entities.Document", b =>
+            modelBuilder.Entity("Document", b =>
                 {
-                    b.HasOne("PatientManagementService.Domain.Entities.DossierMedical", "DossierMedical")
+                    b.HasOne("DossierMedical", "DossierMedical")
                         .WithMany("Documents")
                         .HasForeignKey("DossierMedicalId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -152,23 +152,23 @@ namespace PatientManagementService.Infrastructure.Migrations
                     b.Navigation("DossierMedical");
                 });
 
-            modelBuilder.Entity("PatientManagementService.Domain.Entities.DossierMedical", b =>
+            modelBuilder.Entity("DossierMedical", b =>
                 {
-                    b.HasOne("PatientManagementService.Domain.Entities.Patient", "Patient")
+                    b.HasOne("Patient", "Patient")
                         .WithOne("DossierMedical")
-                        .HasForeignKey("PatientManagementService.Domain.Entities.DossierMedical", "PatientId")
+                        .HasForeignKey("DossierMedical", "PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("PatientManagementService.Domain.Entities.DossierMedical", b =>
+            modelBuilder.Entity("DossierMedical", b =>
                 {
                     b.Navigation("Documents");
                 });
 
-            modelBuilder.Entity("PatientManagementService.Domain.Entities.Patient", b =>
+            modelBuilder.Entity("Patient", b =>
                 {
                     b.Navigation("DossierMedical");
                 });

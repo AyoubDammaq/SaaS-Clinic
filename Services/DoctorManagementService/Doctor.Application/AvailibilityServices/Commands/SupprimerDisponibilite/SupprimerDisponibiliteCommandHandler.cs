@@ -19,6 +19,8 @@ namespace Doctor.Application.AvailibilityServices.Commands.SupprimerDisponibilit
             if (disponibilite == null)
                 throw new KeyNotFoundException("La disponibilité spécifiée n'existe pas.");
 
+            disponibilite.SupprimerDisponibiliteEvent();
+
             await _disponibiliteRepository.SupprimerDisponibiliteAsync(request.disponibiliteId);
         }
     }

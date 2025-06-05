@@ -36,6 +36,8 @@ namespace PatientManagementService.Application.PatientService.Commands.AddPatien
                 Email = request.patient.Email
             };
 
+            newPatient.AjouterPatientEvent();
+
             await _patientRepository.AddPatientAsync(newPatient);
             return true;
         }

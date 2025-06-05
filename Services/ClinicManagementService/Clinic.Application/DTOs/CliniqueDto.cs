@@ -1,5 +1,4 @@
 ﻿using Clinic.Domain.Enums;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 namespace Clinic.Application.DTOs
