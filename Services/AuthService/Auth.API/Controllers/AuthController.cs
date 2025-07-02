@@ -4,6 +4,7 @@ using AuthentificationService.Models;
 using AuthentificationService.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Web;
 
 
@@ -14,10 +15,12 @@ namespace AuthentificationService.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, ILogger<AuthController> logger)
         {
             _authService = authService;
+            _logger = logger;
         }
 
 
@@ -82,7 +85,7 @@ namespace AuthentificationService.Controllers
             return Ok("Password changed successfully.");
         }
 
-        //[Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin")]
         [HttpGet("users")]
         public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
         {
@@ -91,9 +94,9 @@ namespace AuthentificationService.Controllers
         }
 
         [HttpGet("users/{id}")]
-        public async Task<ActionResult<User>> GetUserDetailsById([FromRoute] Guid userId)
+        public async Task<ActionResult<User>> GetUserDetailsById([FromRoute] Guid id)
         {
-            var user = await _authService.GetUserDetailsByIdAsync(userId);
+            var user = await _authService.GetUserDetailsByIdAsync(id);
             if (user == null)
             {
                 return NotFound("User not found.");
@@ -141,21 +144,29 @@ namespace AuthentificationService.Controllers
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto model)
         {
             if (!ModelState.IsValid)
+            {
+                _logger.LogWarning("ModelState invalide : {@ModelState}", ModelState);
                 return BadRequest(ModelState);
+            }
+
+            _logger.LogInformation("Réinitialisation demandée via API pour l'email : {Email}, token : {Token}", model.Email, model.Token);
 
             var user = await _authService.FindByEmailAsync(model.Email);
             if (user == null)
+            {
+                _logger.LogWarning("Aucun utilisateur trouvé avec l'email : {Email}", model.Email);
                 return NotFound("User not found.");
+            }
 
-            var decodedToken = HttpUtility.UrlDecode(model.Token);
-
-            var resetResult = await _authService.ResetPasswordAsync(user, decodedToken, model.NewPassword);
+            var resetResult = await _authService.ResetPasswordAsync(model.Email, model.Token, model.NewPassword);
             if (!resetResult)
             {
+                _logger.LogWarning("Échec de la réinitialisation du mot de passe pour l'email : {Email}", model.Email);
                 return BadRequest("Password reset failed.");
             }
 
             return Ok(new { message = "Password has been reset successfully." });
         }
+
     }
 }

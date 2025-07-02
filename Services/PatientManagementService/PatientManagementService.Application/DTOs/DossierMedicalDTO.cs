@@ -10,6 +10,7 @@
         public string AntécédentsFamiliaux { get; set; } = string.Empty;
         public string AntécédentsPersonnels { get; set; } = string.Empty;
         public string GroupeSanguin { get; set; } = string.Empty;
+        public List<DocumentDTO>? Documents { get; set; }
     }
-        
+
 }

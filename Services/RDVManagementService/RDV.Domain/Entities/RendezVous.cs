@@ -43,17 +43,17 @@ namespace RDV.Domain.Entities
 
         public void AnnulerRendezVousEvent()
         {
-            AddDomainEvent(new Events.RendezVousAnnule(this.Id));
+            AddDomainEvent(new Events.RendezVousAnnule(this));
         }
 
         public void ConfirmerRendezVousEvent()
         {
-            AddDomainEvent(new Events.RendezVousConfirme(this.Id));
+            AddDomainEvent(new Events.RendezVousConfirmed(this));
         }
 
         public void RejeterRendezVousParMedecinEvent(string raison)
         {
-            AddDomainEvent(new Events.RendezVousAnnuleParMedecin(this.Id, raison));
+            AddDomainEvent(new Events.RendezVousAnnuleParMedecin(this, raison));
 
         }
     }

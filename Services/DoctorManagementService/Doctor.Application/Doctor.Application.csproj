@@ -13,7 +13,6 @@
 
 
   <ItemGroup>
-    <Folder Include="AvailibilityServices\Commands\" />
     <Folder Include="DoctorServices\Commands\" />
     <Folder Include="DoctorServices\Queries\" />
     <Folder Include="Interfaces\" />
@@ -22,6 +21,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.0.0" />
     <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />

@@ -1,24 +1,27 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using RDV.Domain.Events;
+using RDV.Domain.Interfaces.Messaging;
 
 namespace RDV.Application.EventHandlers
 {
     public class RendezVousAnnuleParMedecinHandler : INotificationHandler<RendezVousAnnuleParMedecin>
     {
+        private readonly IKafkaProducer _producer;
         private readonly ILogger<RendezVousAnnuleParMedecinHandler> _logger;
 
-        public RendezVousAnnuleParMedecinHandler(ILogger<RendezVousAnnuleParMedecinHandler> logger)
+        public RendezVousAnnuleParMedecinHandler(IKafkaProducer producer, ILogger<RendezVousAnnuleParMedecinHandler> logger)
         {
+            _producer = producer;
             _logger = logger;
         }
 
-        public Task Handle(RendezVousAnnuleParMedecin notification, CancellationToken cancellationToken)
+        public async Task Handle(RendezVousAnnuleParMedecin notification, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"❌📎 Rendez-vous annulé : {notification.RendezVousId}, Raison: {notification.Raison}");
+            // Publier l'événement PatientAdded sur le topic Kafka
+            await _producer.PublishAsync("rdv-cancelled-by-doctor", notification, cancellationToken);
 
-            // Ex: Envoyer une alerte email/SMS
-            return Task.CompletedTask;
+            _logger.LogInformation($"❌📎 Rendez-vous annulé : {notification.RendezVous.Id}, Raison: {notification.Raison}");
         }
     }
 }

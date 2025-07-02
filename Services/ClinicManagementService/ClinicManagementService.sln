@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clinic.Application", "Clini
 		{64005F53-25A2-4E1C-9907-B74FFB76BF89} = {64005F53-25A2-4E1C-9907-B74FFB76BF89}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clinic.Tests", "Clinic.Tests\Clinic.Tests.csproj", "{3775FF79-2292-49B0-AF97-2CB11C591CCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{66401E17-DBCF-4DD0-ADA3-05D74AC61D9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66401E17-DBCF-4DD0-ADA3-05D74AC61D9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66401E17-DBCF-4DD0-ADA3-05D74AC61D9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3775FF79-2292-49B0-AF97-2CB11C591CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3775FF79-2292-49B0-AF97-2CB11C591CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3775FF79-2292-49B0-AF97-2CB11C591CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3775FF79-2292-49B0-AF97-2CB11C591CCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

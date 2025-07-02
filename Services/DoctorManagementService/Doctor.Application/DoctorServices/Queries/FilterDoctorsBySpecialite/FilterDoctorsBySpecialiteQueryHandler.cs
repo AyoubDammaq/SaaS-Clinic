@@ -18,7 +18,7 @@ namespace Doctor.Application.DoctorServices.Queries.FilterDoctorsBySpecialite
             {
                 throw new ArgumentException("La spécialité doit être spécifiée.");
             }
-            var medecins = await _medecinRepository.FilterBySpecialiteAsync(request.specialite);
+            var medecins = await _medecinRepository.FilterBySpecialiteAsync(request.specialite, request.page, request.pageSize);
 
             return medecins.Select(m => new GetMedecinRequestDto
             {
@@ -30,7 +30,7 @@ namespace Doctor.Application.DoctorServices.Queries.FilterDoctorsBySpecialite
                 Email = m.Email,
                 Telephone = m.Telephone,
                 PhotoUrl = m.PhotoUrl,
-                Disponibilites = (List<Disponibilite>)m.Disponibilites
+                Disponibilites = m.Disponibilites.ToList()
             });
         }
     }

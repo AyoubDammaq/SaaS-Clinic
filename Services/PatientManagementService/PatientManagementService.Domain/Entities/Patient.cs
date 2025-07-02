@@ -34,13 +34,13 @@ namespace PatientManagementService.Domain.Entities
         public virtual DossierMedical? DossierMedical { get; set; }
 
         // Domain event methods
-        public void AjouterPatientEvent() =>
+        public virtual void AjouterPatientEvent() =>
             AddDomainEvent(new PatientAdded(Id, Nom, Prenom));
 
-        public void ModifierPatientEvent() =>
+        public virtual void ModifierPatientEvent() =>
             AddDomainEvent(new PatientUpdated(this));
 
-        public void SupprimerPatientEvent() =>
+        public virtual void SupprimerPatientEvent() =>
             AddDomainEvent(new PatientDeleted(Id));
     }
 }

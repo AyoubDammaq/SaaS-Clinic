@@ -41,7 +41,7 @@ namespace PatientManagementService.API.Controllers
         }
 
         // GET: api/Patients/5
-        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
+        //[Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
         [HttpGet("{id}")]
         public async Task<ActionResult<Patient>> GetPatientById(Guid id)
         {
@@ -60,7 +60,7 @@ namespace PatientManagementService.API.Controllers
         }
 
         // POST: api/Patients
-        [Authorize]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor, Patient")]
         [HttpPost]
         public async Task<ActionResult> AddPatient([FromBody] PatientDTO patientDto)
         {
@@ -80,7 +80,7 @@ namespace PatientManagementService.API.Controllers
         }
 
         // PUT: api/Patients/5
-        [Authorize]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor, Patient")]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdatePatient(Guid id, [FromBody] PatientDTO patientDto)
         {

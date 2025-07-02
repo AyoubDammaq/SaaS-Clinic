@@ -4,6 +4,8 @@ using Clinic.Domain.Interfaces;
 using Clinic.Domain.ValueObject;
 using Clinic.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System.Globalization;
 using System.Net.Http.Json;
 
@@ -14,11 +16,15 @@ namespace Clinic.Infrastructure.Repositories
     {
         private readonly CliniqueDbContext _context;
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
+        private readonly ILogger<CliniqueRepository> _logger;
 
-        public CliniqueRepository(CliniqueDbContext context, HttpClient httpClient)
+        public CliniqueRepository(CliniqueDbContext context, HttpClient httpClient, IConfiguration configuration, ILogger<CliniqueRepository> logger)
         {
             _context = context;
             _httpClient = httpClient;
+            _configuration = configuration;
+            _logger = logger;
         }
 
         // CRUD operations
@@ -101,18 +107,32 @@ namespace Clinic.Infrastructure.Repositories
 
         public async Task<StatistiqueClinique> GetStatistiquesDesCliniquesAsync(Guid cliniqueId)
         {
-            var responseMedecin = await _httpClient.GetAsync($"http://api-gateway:8080/gateway/doctors/medecinsIds/clinique/{cliniqueId}");
-            if (!responseMedecin.IsSuccessStatusCode)
-                throw new Exception("Erreur lors de la récupération des médecins");
+            var gatewayBaseUrl = _configuration["ServiceUrls:Gateway"];
+            if (string.IsNullOrEmpty(gatewayBaseUrl))
+                throw new InvalidOperationException("La configuration de l'URL du gateway est manquante.");
 
-            var medecinIds = await responseMedecin.Content.ReadFromJsonAsync<List<Guid>>();
+            // 1. Vérifier si la clinique existe
+            var clinique = await _context.Cliniques.FindAsync(cliniqueId);
+            if (clinique == null)
+                throw new KeyNotFoundException($"Clinique avec l'ID {cliniqueId} introuvable.");
+
+            // 2. Récupération des IDs des médecins de cette clinique
+            var medecinResponse = await _httpClient.GetAsync($"{gatewayBaseUrl}/doctors/medecinsIds/clinique/{cliniqueId}");
+
+            if (!medecinResponse.IsSuccessStatusCode)
+            {
+                var error = await medecinResponse.Content.ReadAsStringAsync();
+                _logger.LogError("Erreur récupération médecins: {Error}", error);
+                throw new HttpRequestException("Erreur lors de la récupération des médecins", null, medecinResponse.StatusCode);
+            }
+
+            var medecinIds = await medecinResponse.Content.ReadFromJsonAsync<List<Guid>>();
             if (medecinIds == null || !medecinIds.Any())
             {
-                var clinique = await _context.Cliniques.FindAsync(cliniqueId);
                 return new StatistiqueClinique
                 {
                     CliniqueId = cliniqueId,
-                    Nom = clinique?.Nom ?? "Inconnu",
+                    Nom = clinique.Nom,
                     NombreMedecins = 0,
                     NombreConsultations = 0,
                     NombreRendezVous = 0,
@@ -120,28 +140,33 @@ namespace Clinic.Infrastructure.Repositories
                 };
             }
 
-            string queryString = string.Join("&", medecinIds.Select(id => $"medecinIds={id}"));
+            var queryString = string.Join("&", medecinIds.Select(id => $"medecinIds={id}"));
 
-            var responseConsultation = await _httpClient.GetAsync($"http://api-gateway:8080/gateway/consultations/countByMedecinIds?{queryString}");
-            var responseRDV = await _httpClient.GetAsync($"http://api-gateway:8080/gateway/appointments/count?{queryString}");
-            var responsePatient = await _httpClient.GetAsync($"http://api-gateway:8080/gateway/appointments/distinct/patients?{queryString}");
+            // 3. Exécution parallèle des requêtes
+            var consultationTask = _httpClient.GetAsync($"{gatewayBaseUrl}/consultations/countByMedecinIds?{queryString}");
+            var rdvTask = _httpClient.GetAsync($"{gatewayBaseUrl}/appointments/count?{queryString}");
+            var patientTask = _httpClient.GetAsync($"{gatewayBaseUrl}/appointments/distinct/patients?{queryString}");
 
-            if (!responseConsultation.IsSuccessStatusCode || !responseRDV.IsSuccessStatusCode || !responsePatient.IsSuccessStatusCode)
-                throw new Exception("Erreur lors de la récupération des statistiques externes");
+            await Task.WhenAll(consultationTask, rdvTask, patientTask);
 
-            var nbConsultations = await responseConsultation.Content.ReadFromJsonAsync<int>();
-            var nbRDV = await responseRDV.Content.ReadFromJsonAsync<int>();
-            var nbPatients = await responsePatient.Content.ReadFromJsonAsync<int>();
+            if (!consultationTask.Result.IsSuccessStatusCode || !rdvTask.Result.IsSuccessStatusCode || !patientTask.Result.IsSuccessStatusCode)
+            {
+                _logger.LogError("Une ou plusieurs requêtes ont échoué : consultations ({Status1}), rdv ({Status2}), patients ({Status3})",
+                    consultationTask.Result.StatusCode,
+                    rdvTask.Result.StatusCode,
+                    patientTask.Result.StatusCode);
 
-            var cliniqueNom = await _context.Cliniques
-                .Where(c => c.Id == cliniqueId)
-                .Select(c => c.Nom)
-                .FirstOrDefaultAsync();
+                throw new Exception("Erreur lors de la récupération des statistiques externes.");
+            }
+
+            int nbConsultations = await consultationTask.Result.Content.ReadFromJsonAsync<int>();
+            int nbRDV = await rdvTask.Result.Content.ReadFromJsonAsync<int>();
+            int nbPatients = await patientTask.Result.Content.ReadFromJsonAsync<int>();
 
             return new StatistiqueClinique
             {
                 CliniqueId = cliniqueId,
-                Nom = cliniqueNom ?? "Inconnu",
+                Nom = clinique.Nom,
                 NombreMedecins = medecinIds.Count,
                 NombreConsultations = nbConsultations,
                 NombreRendezVous = nbRDV,

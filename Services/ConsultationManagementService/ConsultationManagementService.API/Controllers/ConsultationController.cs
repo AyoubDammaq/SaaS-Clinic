@@ -30,6 +30,7 @@ namespace ConsultationManagementService.Controllers
         }
 
         // GET: api/Consultation/{id}
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor, Patient")]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Consultation))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -54,14 +55,15 @@ namespace ConsultationManagementService.Controllers
         }
 
         // GET: api/Consultation
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Consultation>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<Consultation>>> GetAllConsultationsAsync()
+        public async Task<ActionResult<IEnumerable<Consultation>>> GetAllConsultationsAsync([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             try
             {
-                var consultations = await _mediator.Send(new GetAllConsultationsQuery());
+                var consultations = await _mediator.Send(new GetAllConsultationsQuery(pageNumber, pageSize));
                 return Ok(consultations);
             }
             catch (Exception ex)
@@ -168,6 +170,7 @@ namespace ConsultationManagementService.Controllers
         }
 
         // GET: api/Consultation/Patient/{patientId}
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor, Patient")]
         [HttpGet("Patient/{patientId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Consultation>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -193,6 +196,7 @@ namespace ConsultationManagementService.Controllers
         }
 
         // GET: api/Consultation/Doctor/{doctorId}
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpGet("Doctor/{doctorId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Consultation>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -217,9 +221,8 @@ namespace ConsultationManagementService.Controllers
             }
         }
 
-        
-      
         // GET: api/Consultation/Document/{id}
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor, Patient")]
         [HttpGet("Document/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DocumentMedical))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -304,6 +307,7 @@ namespace ConsultationManagementService.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpGet("count")]
         public async Task<IActionResult> GetNombreConsultations([FromQuery] DateTime start, [FromQuery] DateTime end)
         {
@@ -311,6 +315,7 @@ namespace ConsultationManagementService.Controllers
             return Ok(count);
         }
 
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpGet("countByMedecinIds")]
         public async Task<IActionResult> GetCountByMedecinIds([FromQuery] List<Guid> medecinIds)
         {

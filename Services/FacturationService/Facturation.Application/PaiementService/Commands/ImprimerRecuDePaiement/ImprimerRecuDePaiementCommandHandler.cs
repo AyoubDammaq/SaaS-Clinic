@@ -1,54 +1,88 @@
-﻿using Aspose.Pdf.Text;
-using Facturation.Domain.Interfaces;
+﻿using Facturation.Domain.Interfaces;
 using MediatR;
-using Aspose.Pdf;
+using Microsoft.Extensions.Logging;
+using QuestPDF.Fluent;
+using QuestPDF.Infrastructure;
+using QuestPDF.Helpers;
 
 namespace Facturation.Application.PaiementService.Commands.ImprimerRecuDePaiement
 {
     public class ImprimerRecuDePaiementCommandHandler : IRequestHandler<ImprimerRecuDePaiementCommand, byte[]>
     {
         private readonly IPaiementRepository _paiementRepository;
-        public ImprimerRecuDePaiementCommandHandler(IPaiementRepository paiementRepository)
+        private readonly ILogger<ImprimerRecuDePaiementCommandHandler> _logger;
+        public ImprimerRecuDePaiementCommandHandler(IPaiementRepository paiementRepository, ILogger<ImprimerRecuDePaiementCommandHandler> logger)
         {
             _paiementRepository = paiementRepository ?? throw new ArgumentNullException(nameof(paiementRepository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-        public async Task<byte[]> Handle(ImprimerRecuDePaiementCommand request, CancellationToken cancellationToken)
+        public Task<byte[]> Handle(ImprimerRecuDePaiementCommand request, CancellationToken cancellationToken)
         {
-            using (var ms = new MemoryStream())
+            try
             {
-                // Créer un nouveau document PDF
-                var document = new Document();
-                var page = document.Pages.Add();
+                QuestPDF.Settings.License = LicenseType.Community;
 
-                // Définir une police en gras
-                var titleFont = FontRepository.FindFont("Helvetica");
-                var titleTextState = new TextState
+                if (request.paiement == null)
+                    throw new ArgumentNullException(nameof(request.paiement), "Le paiement à imprimer est null.");
+
+                var document = QuestPDF.Fluent.Document.Create(container =>
                 {
-                    Font = titleFont,
-                    FontSize = 20,
-                    FontStyle = FontStyles.Bold
-                };
+                    container.Page(page =>
+                    {
+                        page.Margin(30);
+                        page.Size(PageSizes.A5);
+                        page.DefaultTextStyle(x => x.FontSize(12));
 
-                // Ajouter un titre centré
-                var title = new TextFragment("Reçu de Paiement");
-                title.TextState.Font = FontRepository.FindFont("Helvetica");
-                title.TextState.FontSize = 20;
-                title.TextState.FontStyle = FontStyles.Bold;
-                title.HorizontalAlignment = HorizontalAlignment.Center;
-                page.Paragraphs.Add(title);
+                        page.Header()
+                            .Text("REÇU DE PAIEMENT")
+                            .FontSize(20)
+                            .Bold()
+                            .AlignCenter();
 
-                // Ajouter les informations de paiement
-                page.Paragraphs.Add(new TextFragment($"Date du paiement : {request.paiement.DatePaiement:dd/MM/yyyy}"));
-                page.Paragraphs.Add(new TextFragment($"Montant : {request.paiement.Montant} TND"));
-                page.Paragraphs.Add(new TextFragment($"Mode de paiement : {request.paiement.Mode}"));
-                page.Paragraphs.Add(new TextFragment($"Facture ID : {request.paiement.FactureId}"));
+                        page.Content().Column(column =>
+                        {
+                            column.Spacing(15);
 
-                // Ajouter le message final
-                page.Paragraphs.Add(new TextFragment("Merci pour votre paiement."));
+                            column.Item().Text(txt =>
+                            {
+                                txt.Span("Date du paiement : ").SemiBold();
+                                txt.Span($"{request.paiement.DatePaiement:dd/MM/yyyy}");
+                            });
 
-                // Sauvegarder dans le MemoryStream
-                document.Save(ms);
-                return await Task.FromResult(ms.ToArray());
+                            column.Item().Text(txt =>
+                            {
+                                txt.Span("Montant payé : ").SemiBold();
+                                txt.Span($"{request.paiement.Montant:N2} TND").FontColor(Colors.Green.Medium);
+                            });
+
+                            column.Item().Text(txt =>
+                            {
+                                txt.Span("Mode de paiement : ").SemiBold();
+                                txt.Span($"{request.paiement.Mode}");
+                            });
+
+                            column.Item().Text(txt =>
+                            {
+                                txt.Span("Facture ID : ").SemiBold();
+                                txt.Span($"{request.paiement.FactureId}");
+                            });
+
+                            column.Item().PaddingTop(20).AlignCenter().Text("Merci pour votre paiement.")
+                                .Italic().FontSize(11).FontColor(Colors.Grey.Darken2);
+                        });
+
+                        page.Footer().AlignCenter().Text("Généré automatiquement - QuestPDF").FontSize(9).Italic().FontColor(Colors.Grey.Medium);
+                    });
+                });
+
+                using var stream = new MemoryStream();
+                document.GeneratePdf(stream);
+                return Task.FromResult(stream.ToArray());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erreur lors de l'impression du reçu de paiement pour la facture {FactureId}", request.paiement?.FactureId);
+                throw new ApplicationException("Erreur lors de l'impression du reçu de paiement.");
             }
         }
     }

@@ -12,13 +12,21 @@ namespace PatientManagementService.Application.DossierMedicalService.Commands.Re
         }
         public async Task Handle(RemoveDocumentCommand request, CancellationToken cancellationToken)
         {
-            var document = await _dossierMedicalRepository.GetDocumentByIdAsync(request.documentId);
-            if (document == null)
-                throw new Exception("Document not found");
+            try
+            {
+                var document = await _dossierMedicalRepository.GetDocumentByIdAsync(request.documentId);
+                if (document == null)
+                    return;
 
-            document.DetacherDocumentEvent(document);
+                document.DetacherDocumentEvent(document);
 
-            await _dossierMedicalRepository.RemoveDocumentAsync(request.documentId);
+                await _dossierMedicalRepository.RemoveDocumentAsync(request.documentId);
+            }
+            catch (Exception ex)
+            {
+                // Vous pouvez logger l'exception ici si nécessaire
+                throw new ApplicationException("Erreur lors de la suppression du document.", ex);
+            }
         }
     }
 }

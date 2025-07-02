@@ -13,8 +13,7 @@ namespace PatientManagementService.Application.DossierMedicalService.Queries.Get
         }
         public async Task<DossierMedical> Handle(GetDossierMedicalByPatientIdQuery request, CancellationToken cancellationToken)
         {
-            var dossierMedical = await _dossierMedicalRepository.GetDossierMedicalByPatientIdAsync(request.patientId)
-                ?? throw new Exception("Dossier médical not found for the specified patient");
+            var dossierMedical = await _dossierMedicalRepository.GetDossierMedicalByPatientIdAsync(request.patientId);
             return dossierMedical;
         }
     }

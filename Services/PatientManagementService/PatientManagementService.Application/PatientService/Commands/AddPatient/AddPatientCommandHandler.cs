@@ -2,6 +2,7 @@
 using PatientManagementService.Domain.Entities;
 using PatientManagementService.Domain.Interfaces;
 using MediatR;
+using AutoMapper;
 
 namespace PatientManagementService.Application.PatientService.Commands.AddPatient
 {
@@ -9,11 +10,13 @@ namespace PatientManagementService.Application.PatientService.Commands.AddPatien
     {
         private readonly IPatientRepository _patientRepository;
         private readonly ILogger<AddPatientCommandHandler> _logger;
+        private readonly IMapper _mapper;
 
-        public AddPatientCommandHandler(IPatientRepository patientRepository, ILogger<AddPatientCommandHandler> logger)
+        public AddPatientCommandHandler(IPatientRepository patientRepository, ILogger<AddPatientCommandHandler> logger, IMapper mapper)
         {
             _patientRepository = patientRepository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         public async Task<bool> Handle(AddPatientCommand request, CancellationToken cancellationToken)
@@ -24,17 +27,8 @@ namespace PatientManagementService.Application.PatientService.Commands.AddPatien
                 return false;
             }
 
-            var newPatient = new Patient
-            {
-                Id = Guid.NewGuid(),
-                Nom = request.patient.Nom,
-                Prenom = request.patient.Prenom,
-                DateNaissance = request.patient.DateNaissance,
-                Sexe = request.patient.Sexe,
-                Adresse = request.patient.Adresse,
-                Telephone = request.patient.Telephone,
-                Email = request.patient.Email
-            };
+            var newPatient = _mapper.Map<Patient>(request.patient);
+            newPatient.Id = Guid.NewGuid();
 
             newPatient.AjouterPatientEvent();
 

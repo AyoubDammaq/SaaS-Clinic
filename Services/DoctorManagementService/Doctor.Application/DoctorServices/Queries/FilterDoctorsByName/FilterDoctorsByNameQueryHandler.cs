@@ -19,7 +19,7 @@ namespace Doctor.Application.DoctorServices.Queries.FilterDoctorsByName
                 throw new ArgumentException("Le nom ou le prénom doit être spécifié.");
             }
 
-            var medecins = await _medecinRepository.FilterByNameOrPrenomAsync(request.name, request.prenom);
+            var medecins = await _medecinRepository.FilterByNameOrPrenomAsync(request.name, request.prenom, request.page, request.pageSize);
 
             return medecins.Select(m => new GetMedecinRequestDto
             {
@@ -31,7 +31,7 @@ namespace Doctor.Application.DoctorServices.Queries.FilterDoctorsByName
                 Email = m.Email,
                 Telephone = m.Telephone,
                 PhotoUrl = m.PhotoUrl,
-                Disponibilites = (List<Disponibilite>)m.Disponibilites
+                Disponibilites = m.Disponibilites.ToList()
             });
         }
     }

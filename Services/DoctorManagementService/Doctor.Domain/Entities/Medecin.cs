@@ -49,7 +49,7 @@ namespace Doctor.Domain.Entities
             AddDomainEvent(new Events.DoctorRemoved(this));
         }
 
-        public void AssignerCliniqueEvent(Guid cliniqueId)
+        public virtual void AssignerCliniqueEvent(Guid cliniqueId)
         {
             AddDomainEvent(new Events.DoctorAssignedToClinique(this.Id, cliniqueId));
         }

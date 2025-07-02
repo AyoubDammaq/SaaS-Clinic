@@ -70,6 +70,29 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/api/Disponibilite/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "doctorservice",
+          "Port": 8085
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/availibility/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "avalibilitiesregion"
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 30
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/Patients/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [

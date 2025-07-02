@@ -1,5 +1,4 @@
 ﻿using Reporting.Application.DTOs;
-using Reporting.Infrastructure.Repositories;
 
 namespace Reporting.Application.Interfaces
 {
@@ -29,8 +28,8 @@ namespace Reporting.Application.Interfaces
 
 
         Task<decimal> GetMontantPaiementsAsync(string statut, DateTime dateDebut, DateTime dateFin);
-        Task<int> GetNombreFacturesAsync(DateTime dateDebut, DateTime dateFin);
-        Task<decimal> GetMontantFacturesAsync(string statut, DateTime dateDebut, DateTime dateFin);
+        Task<StatistiquesFactureDto> GetStatistiquesFacturesAsync(DateTime dateDebut, DateTime dateFin);
+        Task<List<ComparaisonCliniqueDTO>> ComparerCliniquesAsync(List<Guid> cliniqueIds);
         Task<DashboardStatsDTO> GetDashboardStatsAsync(DateTime dateDebut, DateTime dateFin);
     }
 }

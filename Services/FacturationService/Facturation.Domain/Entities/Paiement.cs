@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Facturation.Domain.Common;
 
-
 namespace Facturation.Domain.Entities
 {
     public class Paiement : BaseEntity

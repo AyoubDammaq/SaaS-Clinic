@@ -4,12 +4,13 @@ using Microsoft.IdentityModel.Tokens;
 using PatientManagementService.API.Extensions;
 using PatientManagementService.Application.PatientService.Commands.AddPatient;
 using PatientManagementService.Domain.Interfaces;
+using PatientManagementService.Domain.Interfaces.Messaging;
 using PatientManagementService.Infrastructure.Data;
+using PatientManagementService.Infrastructure.Messaging;
 using PatientManagementService.Infrastructure.Repositories;
 using Scalar.AspNetCore;
 using System.Text;
 using System.Text.Json.Serialization;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,9 @@ builder.Services.AddDbContext<PatientDbContext>(options =>
 
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IDossierMedicalRepository, DossierMedicalRepository>();
+builder.Services.AddSingleton<IKafkaProducer, KafkaProducer>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(AddPatientCommand).Assembly));
@@ -87,6 +91,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 app.UseCors("AllowAllOrigins");
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -8,8 +8,8 @@ namespace PatientManagementService.Application.PatientService.Commands.DeletePat
     public class DeletePatientCommandHandler : IRequestHandler<DeletePatientCommand, bool>
     {
         private readonly IPatientRepository _patientRepository;
-        private readonly ILogger<AddPatientCommandHandler> _logger;
-        public DeletePatientCommandHandler(IPatientRepository patientRepository, ILogger<AddPatientCommandHandler> logger)
+        private readonly ILogger<DeletePatientCommandHandler> _logger;
+        public DeletePatientCommandHandler(IPatientRepository patientRepository, ILogger<DeletePatientCommandHandler> logger)
         {
             _patientRepository = patientRepository;
             _logger = logger;

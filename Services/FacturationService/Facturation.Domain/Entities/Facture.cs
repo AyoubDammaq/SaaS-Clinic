@@ -24,6 +24,8 @@ namespace Facturation.Domain.Entities
         [Required]
         public decimal MontantTotal { get; set; }
 
+        public decimal MontantPaye { get; set; } = 0;
+
         [Required]
         public FactureStatus Status { get; set; }
 

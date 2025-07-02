@@ -4,8 +4,6 @@ using RDV.Domain.Enums;
 using RDV.Domain.Interfaces;
 using RDV.Infrastructure.Data;
 
-
-
 namespace RDV.Infrastructure.Repositories
 {
     public class RendezVousRepository : IRendezVousRepository
@@ -117,5 +115,10 @@ namespace RDV.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<bool> ExisteRendezVousPourMedecinEtDate(Guid medecinId, DateTime dateHeure)
+        {
+            return await _context.RendezVous
+                .AnyAsync(r => r.MedecinId == medecinId && r.DateHeure == dateHeure);
+        }
     }
 }

@@ -20,10 +20,13 @@ namespace ConsultationManagementService.Repositories
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<IEnumerable<Consultation>> GetAllConsultationsAsync()
+        public async Task<IEnumerable<Consultation>> GetAllConsultationsAsync(int pageNumber, int pageSize)
         {
             return await _context.Consultations
                 .Include(c => c.Documents)
+                .OrderByDescending(c => c.DateConsultation)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
         }
 
@@ -122,6 +125,11 @@ namespace ConsultationManagementService.Repositories
             _context.DocumentsMedicaux.Remove(document);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<bool> ExistsAsync(Guid consultationId)
+        {
+            return await _context.Consultations.AnyAsync(c => c.Id == consultationId);
         }
     }
 }

@@ -6,6 +6,11 @@ using Facturation.API.Extensions;
 using Microsoft.AspNetCore.DataProtection;
 using Scalar.AspNetCore;
 using Facturation.Application.FactureService.Commands.AddFacture;
+using Facturation.Domain.Interfaces.Messaging;
+using Facturation.Infrastructure.Messaging;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +31,8 @@ builder.Services.AddDbContext<FacturationDbContext>(options =>
 
 builder.Services.AddScoped<IFactureRepository, FactureRepository>();
 builder.Services.AddScoped<IPaiementRepository, PaiementRepository>();
+builder.Services.AddSingleton<IKafkaProducer, KafkaProducer>();
+
 
 
 builder.Services.AddMediatR(cfg =>
@@ -35,6 +42,26 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new System.IO.DirectoryInfo(@"C:\keys"))
     .SetApplicationName("MyApp");
+
+// Configuration de l'authentification JWT
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+}); 
 
 builder.Services.AddCors(options =>
 {

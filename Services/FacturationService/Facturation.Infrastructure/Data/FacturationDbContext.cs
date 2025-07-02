@@ -22,6 +22,9 @@ namespace Facturation.Infrastructure.Data
             modelBuilder.Entity<Facture>()
                 .Property(f => f.MontantTotal)
                 .HasColumnType("decimal(18,2)");
+            modelBuilder.Entity<Facture>()
+                .Property(f => f.MontantPaye)
+                .HasPrecision(18, 2);
             modelBuilder.Entity<Paiement>()
                 .HasOne(p => p.Facture)
                 .WithOne(f => f.Paiement)

@@ -4,18 +4,18 @@ using Facturation.Application.FactureService.Commands.DeleteFacture;
 using Facturation.Application.FactureService.Commands.ExportToPdf;
 using Facturation.Application.FactureService.Commands.UpdateFacture;
 using Facturation.Application.FactureService.Queries.GetAllFactures;
-using Facturation.Application.FactureService.Queries.GetAllFacturesByClinicId;
-using Facturation.Application.FactureService.Queries.GetAllFacturesByPatientId;
 using Facturation.Application.FactureService.Queries.GetAllFacturesByRangeOfDate;
-using Facturation.Application.FactureService.Queries.GetAllFacturesByState;
 using Facturation.Application.FactureService.Queries.GetFactureById;
+using Facturation.Application.FactureService.Queries.GetFacturesByFilter;
 using Facturation.Application.FactureService.Queries.GetNombreDeFactureByStatus;
 using Facturation.Application.FactureService.Queries.GetNombreDeFactureParClinique;
 using Facturation.Application.FactureService.Queries.GetNombreDeFacturesByStatusDansUneClinique;
 using Facturation.Application.FactureService.Queries.GetNombreDeFacturesByStatusParClinique;
+using Facturation.Application.FactureService.Queries.GetStatistiquesFacturesParPeriode;
 using Facturation.Domain.Entities;
 using Facturation.Domain.Enums;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Facturation.API.Controllers
@@ -32,11 +32,12 @@ namespace Facturation.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "SuperAdmin,ClinicAdmin,Doctor,Patient")]
         public async Task<IActionResult> GetFactureById(Guid id)
         {
             try
             {
-                var facture = await _mediator.Send(new GetFactureByIdQuery(id));    
+                var facture = await _mediator.Send(new GetFactureByIdQuery(id));
                 return Ok(facture);
             }
             catch (Exception ex)
@@ -46,6 +47,7 @@ namespace Facturation.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin,ClinicAdmin,Doctor")]
         public async Task<IActionResult> GetAllFactures()
         {
             try
@@ -60,6 +62,7 @@ namespace Facturation.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin,ClinicAdmin,Doctor")]
         public async Task<IActionResult> AddFacture([FromBody] CreateFactureRequest facture)
         {
             if (facture == null)
@@ -84,6 +87,7 @@ namespace Facturation.API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "SuperAdmin,ClinicAdmin,Doctor")]
         public async Task<IActionResult> UpdateFacture([FromBody] UpdateFactureRequest facture)
         {
             if (facture == null)
@@ -108,6 +112,7 @@ namespace Facturation.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "SuperAdmin,ClinicAdmin")]
         public async Task<IActionResult> DeleteFacture(Guid id)
         {
             try
@@ -128,6 +133,7 @@ namespace Facturation.API.Controllers
         }
 
         [HttpGet("range")]
+        [Authorize(Roles = "SuperAdmin,ClinicAdmin,Doctor")]
         public async Task<IActionResult> GetAllFacturesByRangeOfDate(DateTime startDate, DateTime endDate)
         {
             if (startDate > endDate)
@@ -146,49 +152,16 @@ namespace Facturation.API.Controllers
             }
         }
 
-        [HttpGet("state")]
-        public async Task<IActionResult> GetAllFacturesByState(FactureStatus status)
+        [Authorize(Roles = "SuperAdmin,ClinicAdmin,Doctor,Patient")]
+        [HttpGet("filtrer")]
+        public async Task<IActionResult> FiltrerFactures([FromQuery] Guid? clinicId, [FromQuery] Guid? patientId, [FromQuery] FactureStatus? status)
         {
-            try
-            {
-                var factures = await _mediator.Send(new GetAllFacturesByStateQuery(status));
-                return Ok(factures);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
-
-        [HttpGet("patient/{patientId}")]
-        public async Task<IActionResult> GetAllFacturesByPatientId(Guid patientId)
-        {
-            try
-            {
-                var factures = await _mediator.Send(new GetAllFacturesByPatientIdQuery(patientId));
-                return Ok(factures);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
-
-        [HttpGet("clinic/{clinicId}")]
-        public async Task<IActionResult> GetAllFacturesByClinicId(Guid clinicId)
-        {
-            try
-            {
-                var factures = await _mediator.Send(new GetAllFacturesByClinicIdQuery(clinicId));
-                return Ok(factures);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+            var result = await _mediator.Send(new GetFacturesByFilterQuery(clinicId, patientId, status));
+            return Ok(result);
         }
 
         [HttpGet("export/{id}")]
+        [Authorize(Roles = "SuperAdmin,ClinicAdmin,Doctor,Patient")]
         public async Task<IActionResult> ExportFacture(Guid id)
         {
             var facture = await _mediator.Send(new GetFactureByIdQuery(id));
@@ -210,13 +183,14 @@ namespace Facturation.API.Controllers
                 var pdfBytes = await _mediator.Send(new ExportToPdfCommand(pdfFacture));
                 return File(pdfBytes, "application/pdf", $"Facture_{id}.pdf");
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return StatusCode(500, "Error generating the PDF.");
+                return StatusCode(500, "Error generating the PDF." + e);
             }
         }
 
         [HttpGet("stats/status")]
+        [Authorize(Roles = "SuperAdmin,ClinicAdmin")]
         public async Task<IActionResult> GetNombreDeFactureByStatus()
         {
             try
@@ -231,6 +205,7 @@ namespace Facturation.API.Controllers
         }
 
         [HttpGet("stats/clinic")]
+        [Authorize(Roles = "SuperAdmin,ClinicAdmin")]
         public async Task<IActionResult> GetNombreDeFactureParClinique()
         {
             try
@@ -245,6 +220,7 @@ namespace Facturation.API.Controllers
         }
 
         [HttpGet("stats/status/clinic")]
+        [Authorize(Roles = "SuperAdmin,ClinicAdmin")]
         public async Task<IActionResult> GetNombreDeFacturesByStatusParClinique()
         {
             try
@@ -259,6 +235,7 @@ namespace Facturation.API.Controllers
         }
 
         [HttpGet("stats/status/clinic/{clinicId}")]
+        [Authorize(Roles = "SuperAdmin,ClinicAdmin")]
         public async Task<IActionResult> GetNombreDeFacturesByStatusDansUneClinique(Guid clinicId)
         {
             try
@@ -270,6 +247,14 @@ namespace Facturation.API.Controllers
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
+        }
+
+        [Authorize(Roles = "SuperAdmin,ClinicAdmin")]
+        [HttpGet("statistiques")]
+        public async Task<IActionResult> GetStatistiques([FromQuery] DateTime debut, [FromQuery] DateTime fin)
+        {
+            var result = await _mediator.Send(new GetStatistiquesFacturesParPeriodeQuery(debut, fin));
+            return Ok(result);
         }
     }
 }

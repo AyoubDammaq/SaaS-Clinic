@@ -1,8 +1,14 @@
 using Doctor.API.Extensions;
 using Doctor.Application.AvailibilityServices.Commands.AjouterDisponibilite;
+using Doctor.Application.AvailibilityServices.Commands.UpdateDisponibilite;
+using Doctor.Application.Behaviors;
 using Doctor.Domain.Interfaces;
+using Doctor.Domain.Interfaces.Messaging;
 using Doctor.Infrastructure.Data;
+using Doctor.Infrastructure.Messaging;
 using Doctor.Infrastructure.Repositories;
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
@@ -29,12 +35,20 @@ builder.Services.AddDbContext<MedecinDbContext>(options =>
 
 builder.Services.AddScoped<IMedecinRepository, MedecinRepository>();
 builder.Services.AddScoped<IDisponibiliteRepository, DisponibiliteRepository>();
+builder.Services.AddSingleton<IKafkaProducer, KafkaProducer>();
 
 
 builder.Services.AddHttpClient<IMedecinRepository, MedecinRepository>();
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(AjouterDisponibiliteCommand).Assembly));
+// FluentValidation
+builder.Services.AddValidatorsFromAssemblyContaining<AjouterDisponibiliteCommandValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UpdateDisponibiliteCommandValidator>();
+
+// Ajout du comportement de validation
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
 
 builder.Services.AddAuthentication(options =>
 {

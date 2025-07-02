@@ -30,8 +30,7 @@ namespace Reporting.Domain.Interfaces
 
 
         Task<decimal> GetMontantPaiementsAsync(string statut, DateTime dateDebut, DateTime dateFin);
-        Task<int> GetNombreFacturesAsync(DateTime dateDebut, DateTime dateFin);
-        Task<decimal> GetMontantFacturesAsync(string statut, DateTime dateDebut, DateTime dateFin);
+        Task<StatistiquesFacture> GetStatistiquesFacturesAsync(DateTime dateDebut, DateTime dateFin);
         Task<DashboardStats> GetDashboardStatsAsync(DateTime dateDebut, DateTime dateFin);
     }
 }

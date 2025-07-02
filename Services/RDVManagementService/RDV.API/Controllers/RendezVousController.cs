@@ -32,7 +32,7 @@ namespace RDVManagementService.Controllers
             _mediator = mediator;
         }
 
-        //[Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RendezVous>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -73,6 +73,7 @@ namespace RDVManagementService.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor, Patient")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -98,6 +99,7 @@ namespace RDVManagementService.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor, Patient")]
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -127,6 +129,7 @@ namespace RDVManagementService.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor, Patient")]
         [HttpPost("annuler/patient/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -153,6 +156,7 @@ namespace RDVManagementService.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor, Patient")]
         [HttpGet("patient/{patientId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RendezVous>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -176,7 +180,7 @@ namespace RDVManagementService.Controllers
             }
         }
 
-        //[Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpGet("medecin/{medecinId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RendezVous>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -284,7 +288,7 @@ namespace RDVManagementService.Controllers
             }
         }
 
-
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpGet("period")]
         public async Task<ActionResult<IEnumerable<RendezVous>>> GetStats([FromQuery] DateTime start, [FromQuery] DateTime end)
         {
@@ -299,6 +303,7 @@ namespace RDVManagementService.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpGet("count")]
         public async Task<ActionResult<int>> CountRendezVous([FromQuery] List<Guid> medecinIds)
         {
@@ -313,6 +318,7 @@ namespace RDVManagementService.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpGet("distinct/patients")]
         public async Task<ActionResult<int>> CountDistinctPatients([FromQuery] List<Guid> medecinIds)
         {

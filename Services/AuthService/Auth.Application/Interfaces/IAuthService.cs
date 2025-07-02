@@ -17,6 +17,6 @@ namespace AuthentificationService.Services
         Task<bool> ChangeUserRoleAsync(ChangeUserRoleRequestDto request);
         Task<bool> ForgotPasswordAsync(ForgotPasswordDto request);
         Task<User?> FindByEmailAsync(string email);
-        Task<bool> ResetPasswordAsync(User user, string decodedToken, string newPassword);
+        Task<bool> ResetPasswordAsync(string email, string resetToken, string newPassword);
     }
 }

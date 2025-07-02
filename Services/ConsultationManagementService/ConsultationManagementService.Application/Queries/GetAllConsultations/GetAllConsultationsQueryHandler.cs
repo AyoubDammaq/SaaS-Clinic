@@ -13,7 +13,7 @@ namespace ConsultationManagementService.Application.Queries.GetAllConsultations
         }
         public async Task<IEnumerable<Consultation>> Handle(GetAllConsultationsQuery request, CancellationToken cancellationToken)
         {
-            return await _consultationRepository.GetAllConsultationsAsync();
+            return await _consultationRepository.GetAllConsultationsAsync(request.PageNumber, request.PageSize);
         }
     }
 }

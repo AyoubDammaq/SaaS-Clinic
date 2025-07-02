@@ -20,5 +20,4 @@ namespace Clinic.Application.Queries.GetNombreCliniques
             return nombre;
         }
     }
-
 }

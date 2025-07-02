@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PatientManagementService.Domain.Interfaces;
 
@@ -8,11 +9,13 @@ namespace PatientManagementService.Application.PatientService.Commands.UpdatePat
     {
         public readonly IPatientRepository _patientRepository;
         public readonly ILogger<UpdatePatientCommandHandler> _logger;
+        private readonly IMapper _mapper;
 
-        public UpdatePatientCommandHandler(IPatientRepository patientRepository, ILogger<UpdatePatientCommandHandler> logger)
+        public UpdatePatientCommandHandler(IPatientRepository patientRepository, ILogger<UpdatePatientCommandHandler> logger, IMapper mapper)
         {
             _patientRepository = patientRepository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         public async Task<bool> Handle(UpdatePatientCommand request, CancellationToken cancellationToken)
@@ -30,13 +33,7 @@ namespace PatientManagementService.Application.PatientService.Commands.UpdatePat
                 return false;
             }
 
-            existingPatient.Nom = request.patient.Nom;
-            existingPatient.Prenom = request.patient.Prenom;
-            existingPatient.DateNaissance = request.patient.DateNaissance;
-            existingPatient.Sexe = request.patient.Sexe;
-            existingPatient.Adresse = request.patient.Adresse;
-            existingPatient.Telephone = request.patient.Telephone;
-            existingPatient.Email = request.patient.Email;
+            _mapper.Map(request.patient, existingPatient);
 
             existingPatient.ModifierPatientEvent();
 

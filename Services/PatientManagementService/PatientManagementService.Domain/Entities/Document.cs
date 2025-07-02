@@ -27,12 +27,12 @@ namespace PatientManagementService.Domain.Entities
         [JsonIgnore]
         public DossierMedical? DossierMedical { get; set; } // Navigation property
 
-        public void AttacherDocumentEvent(Document document)
+        public virtual void AttacherDocumentEvent(Document document)
         {
             AddDomainEvent(new Events.DocumentAttacheAuDossier(this, DossierMedicalId));
         }
 
-        public void DetacherDocumentEvent(Document document)
+        public virtual void DetacherDocumentEvent(Document document)
         {
             AddDomainEvent(new Events.DocumentDetacheAUnDossier(this, DossierMedicalId));
 

@@ -1,5 +1,4 @@
 ﻿using Reporting.Domain.Interfaces;
-using Reporting.Domain.ValueObject;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 
@@ -34,5 +33,4 @@ namespace Reporting.Infrastructure.Repositories
             }) ?? new List<ConsultationDataModel>();
         }
     }
-
 }

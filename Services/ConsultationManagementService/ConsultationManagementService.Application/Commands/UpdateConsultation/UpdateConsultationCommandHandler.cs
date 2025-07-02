@@ -1,4 +1,5 @@
-﻿using ConsultationManagementService.Application.DTOs;
+﻿using AutoMapper;
+using ConsultationManagementService.Application.DTOs;
 using ConsultationManagementService.Domain.Entities;
 using ConsultationManagementService.Repositories;
 using MediatR;
@@ -8,10 +9,14 @@ namespace ConsultationManagementService.Application.Commands.UpdateConsultation
     public class UpdateConsultationCommandHandler : IRequestHandler<UpdateConsultationCommand>
     {
         private readonly IConsultationRepository _consultationRepository;
-        public UpdateConsultationCommandHandler(IConsultationRepository consultationRepository)
+        private readonly IMapper _mapper;
+
+        public UpdateConsultationCommandHandler(IConsultationRepository consultationRepository, IMapper mapper)
         {
             _consultationRepository = consultationRepository;
+            _mapper = mapper;
         }
+
         public async Task Handle(UpdateConsultationCommand request, CancellationToken cancellationToken)
         {
             if (request.consultation == null)
@@ -23,26 +28,10 @@ namespace ConsultationManagementService.Application.Commands.UpdateConsultation
                 throw new ArgumentException("L'identifiant de la consultation ne peut pas être vide.", nameof(request.consultation));
             }
 
-            ValidateConsultationData(request.consultation); // Added validation
+            ValidateConsultationData(request.consultation);
 
-            // Transformation du DTO vers l'entité du domaine
-            var consultationEntity = new Consultation
-            {
-                Id = request.consultation.Id,
-                PatientId = request.consultation.PatientId,
-                MedecinId = request.consultation.MedecinId,
-                DateConsultation = request.consultation.DateConsultation,
-                Diagnostic = request.consultation.Diagnostic ?? string.Empty,
-                Notes = request.consultation.Notes ?? string.Empty,
-                Documents = request.consultation.Documents?.Select(doc => new DocumentMedical
-                {
-                    Id = doc.Id,
-                    ConsultationId = doc.ConsultationId,
-                    Type = doc.Type ?? string.Empty,
-                    FichierURL = doc.FichierURL ?? string.Empty,
-                    DateAjout = doc.DateAjout
-                }).ToList() ?? new List<DocumentMedical>()
-            };
+            // Utilisation du mapper pour transformer le DTO en entité du domaine
+            var consultationEntity = _mapper.Map<Consultation>(request.consultation);
 
             consultationEntity.UpdateConsultationEvent();
 

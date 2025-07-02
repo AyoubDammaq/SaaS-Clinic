@@ -21,6 +21,15 @@ namespace RDV.Application.Commands.UpdateRendezVous
                 throw new ArgumentNullException(nameof(request.rendezVous), "Le rendez-vous ne peut pas être nul.");
             }
 
+            // 🔒 Règle métier : empêcher les doubles réservations
+            bool dejaPris = await _rendezVousRepository
+                .ExisteRendezVousPourMedecinEtDate(request.rendezVous.MedecinId, request.rendezVous.DateHeure);
+
+            if (dejaPris)
+            {
+                throw new InvalidOperationException("Un rendez-vous existe déjà à cette heure pour ce médecin.");
+            }
+
             request.rendezVous.ModifierRendezVousEvent();   
 
             await _rendezVousRepository.UpdateRendezVousAsync(request.id, request.rendezVous);

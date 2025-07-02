@@ -23,17 +23,17 @@ namespace PatientManagementService.Domain.Entities
         [JsonIgnore]
         public virtual Patient? Patient { get; set; } // Navigation property to Patient
 
-        public void CreerDossierMedicalEvent()
+        public virtual void CreerDossierMedicalEvent()
         {
             AddDomainEvent(new Events.DossierMedicalCree(this));
         }
 
-        public void ModifierDossierMedicalEvent()
+        public virtual void ModifierDossierMedicalEvent()
         {
             AddDomainEvent(new Events.DossierMedicalModifie(this));
         }
 
-        public void SupprimerDossierMedicalEvent()
+        public virtual void SupprimerDossierMedicalEvent()
         {
             AddDomainEvent(new Events.DossierMedicalSupprime(this.Id));
         }

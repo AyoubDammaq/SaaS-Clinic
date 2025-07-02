@@ -1,18 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Reporting.Application.DTOs;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Reporting.Application.Interfaces;
+using Reporting.Application.Utils;
 
 namespace Reporting.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ReportingController : ControllerBase
     {
         private readonly IReportingService _reportingService;
+        private readonly ILogger<ReportingController> _logger;
 
-        public ReportingController(IReportingService reportingService)
+        public ReportingController(IReportingService reportingService, ILogger<ReportingController> logger)
         {
             _reportingService = reportingService;
+            _logger = logger;
         }
 
         [HttpGet("consultations/count")]
@@ -29,9 +33,9 @@ namespace Reporting.API.Controllers
 
                 return Ok(result);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, $"Erreur interne du serveur : {ex.Message}");
+                return StatusCode(500, "Erreur interne du serveur.");
             }
         }
 
@@ -49,60 +53,62 @@ namespace Reporting.API.Controllers
 
                 return Ok(result);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, $"Erreur interne du serveur : {ex.Message}");
+                return StatusCode(500, "Erreur interne du serveur.");
             }
         }
 
-        [HttpGet("patients/nouveaux")]
+        [HttpGet("patients/nouveaux/count")]
         public async Task<IActionResult> GetNombreNouveauxPatients([FromQuery] DateTime start, [FromQuery] DateTime end)
         {
             var result = await _reportingService.GetNombreNouveauxPatientsAsync(start, end);
             return Ok(result);
         }
 
-        [HttpGet("medecins/specialite")]
+        [HttpGet("medecins/specialites/count")]
         public async Task<IActionResult> GetNombreMedecinParSpecialite()
         {
             var result = await _reportingService.GetNombreMedecinParSpecialite();
             return Ok(result);
         }
 
-        [HttpGet("medecins/clinique")]
+        [HttpGet("medecins/cliniques/count")]
         public async Task<IActionResult> GetNombreMedecinByClinique()
         {
             var result = await _reportingService.GetNombreMedecinByClinique();
             return Ok(result);
         }
 
-        [HttpGet("medecins/specialite/clinique/{cliniqueId}")]
+        [HttpGet("medecins/specialites/cliniques/{cliniqueId}/count")]
         public async Task<IActionResult> GetNombreMedecinBySpecialiteDansUneClinique(Guid cliniqueId)
         {
             var result = await _reportingService.GetNombreMedecinBySpecialiteDansUneClinique(cliniqueId);
             return Ok(result);
         }
 
-
-        [HttpGet("factures/status")]
+        [HttpGet("factures/status/count")]
         public async Task<IActionResult> GetNombreDeFactureByStatus()
         {
             var result = await _reportingService.GetNombreDeFactureByStatus();
             return Ok(result);
         }
-        [HttpGet("factures/clinique")]
+
+        [HttpGet("factures/cliniques/count")]
         public async Task<IActionResult> GetNombreDeFactureParClinique()
         {
             var result = await _reportingService.GetNombreDeFactureParClinique();
             return Ok(result);
         }
-        [HttpGet("factures/status/clinique")]
+
+        [HttpGet("factures/status/cliniques/count")]
         public async Task<IActionResult> GetNombreDeFactureParStatusParClinique()
         {
             var result = await _reportingService.GetNombreDeFactureParStatusParClinique();
             return Ok(result);
         }
-        [HttpGet("factures/status/clinique/{cliniqueId}")]
+
+        [HttpGet("factures/status/cliniques/{cliniqueId}/count")]
         public async Task<IActionResult> GetNombreDeFacturesByStatusDansUneClinique(Guid cliniqueId)
         {
             var result = await _reportingService.GetNombreDeFacturesByStatusDansUneClinique(cliniqueId);
@@ -116,7 +122,7 @@ namespace Reporting.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("cliniques/nouveaux")]
+        [HttpGet("cliniques/nouveaux/count")]
         public async Task<IActionResult> GetNombreNouveauxCliniques()
         {
             var result = await _reportingService.GetNombreNouvellesCliniquesDuMois();
@@ -144,11 +150,6 @@ namespace Reporting.API.Controllers
             return Ok(result);
         }
 
-
-
-
-
-
         [HttpGet("paiements/montant")]
         public async Task<IActionResult> GetMontantPaiements([FromQuery] string statut, [FromQuery] DateTime start, [FromQuery] DateTime end)
         {
@@ -156,25 +157,53 @@ namespace Reporting.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("factures/count")]
-        public async Task<IActionResult> GetNombreFactures([FromQuery] DateTime start, [FromQuery] DateTime end)
+        [HttpGet("factures/stats")]
+        public async Task<IActionResult> GetStatistiquesFactures([FromQuery] DateTime start, [FromQuery] DateTime end)
         {
-            var result = await _reportingService.GetNombreFacturesAsync(start, end);
+            var result = await _reportingService.GetStatistiquesFacturesAsync(start, end);
             return Ok(result);
         }
 
-        [HttpGet("factures/montant")]
-        public async Task<IActionResult> GetMontantFactures([FromQuery] string statut, [FromQuery] DateTime start, [FromQuery] DateTime end)
+        [HttpPost("cliniques/comparaison")]
+        public async Task<IActionResult> ComparerCliniques([FromBody] List<Guid> cliniqueIds)
         {
-            var result = await _reportingService.GetMontantFacturesAsync(statut, start, end);
+            if (cliniqueIds == null || !cliniqueIds.Any())
+                return BadRequest("Liste des cliniques vide.");
+
+            var result = await _reportingService.ComparerCliniquesAsync(cliniqueIds);
             return Ok(result);
         }
 
         [HttpGet("dashboard")]
-        public async Task<IActionResult> GetDashboardStats([FromQuery] DateTime start, [FromQuery] DateTime end)
+        public async Task<IActionResult> GetDashboardStats(DateTime start, DateTime end)
         {
-            var result = await _reportingService.GetDashboardStatsAsync(start, end);
-            return Ok(result);
+            try
+            {
+                var stats = await _reportingService.GetDashboardStatsAsync(start, end);
+                return Ok(stats);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erreur lors de l'appel à GetDashboardStats");
+                return StatusCode(500, "Erreur interne du serveur");
+            }
+        }
+        [HttpGet("dashboard/pdf")]
+        public async Task<IActionResult> ExportDashboardPdf([FromQuery] DateTime start, [FromQuery] DateTime end)
+        {
+            var stats = await _reportingService.GetDashboardStatsAsync(start, end);
+            if (stats == null)
+                return BadRequest("Impossible de générer le PDF : statistiques introuvables.");
+            var pdfBytes = DashboardPdfGenerator.Generate(stats);
+            return File(pdfBytes, "application/pdf", $"dashboard_{start:yyyyMMdd}_{end:yyyyMMdd}.pdf");
+        }
+
+        [HttpGet("dashboard/excel")]
+        public async Task<IActionResult> ExportDashboardExcel([FromQuery] DateTime start, [FromQuery] DateTime end)
+        {
+            var stats = await _reportingService.GetDashboardStatsAsync(start, end);
+            var excelBytes = DashboardExcelGenerator.Generate(stats);
+            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"dashboard_{start:yyyyMMdd}_{end:yyyyMMdd}.xlsx");
         }
     }
 

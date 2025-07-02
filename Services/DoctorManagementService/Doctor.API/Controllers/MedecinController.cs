@@ -26,25 +26,22 @@ namespace Doctor.API.Controllers
     public class MedecinController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public MedecinController(IMediator mediator)
+        private readonly IConfiguration _configuration;
+        public MedecinController(IMediator mediator, IConfiguration configuration)
         {
             _mediator = mediator;
+            _configuration = configuration;
         }
 
         [HttpPost]
         [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
-        public async Task<IActionResult> AjouterMedecin([FromBody] MedecinDto medecinDto)
+        public async Task<IActionResult> AjouterMedecin([FromBody] CreateMedecinDto medecinDto)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
-                }
-
-                if (medecinDto.CliniqueId == Guid.Empty)
-                {
-                    medecinDto.CliniqueId = null;
                 }
 
                 var medecin = new Medecin
@@ -54,12 +51,11 @@ namespace Doctor.API.Controllers
                     Specialite = medecinDto.Specialite,
                     Email = medecinDto.Email,
                     Telephone = medecinDto.Telephone,
-                    CliniqueId = medecinDto.CliniqueId ?? null,
                     PhotoUrl = medecinDto.PhotoUrl,
                     DateCreation = DateTime.UtcNow
                 };
 
-                await _mediator.Send(new AddDoctorCommand(medecin));
+                await _mediator.Send(new AddDoctorCommand(medecinDto));
                 return Ok(new { Message = "Médecin ajouté avec succès" });
             }
             catch (Exception ex)
@@ -207,7 +203,8 @@ namespace Doctor.API.Controllers
 
                 using (var httpClient = new HttpClient())
                 {
-                    var clinicServiceUrl = $"http://localhost:5291/api/Clinique/{attribuerMedecinDto.CliniqueId}";
+                    var clinicServiceBaseUrl = _configuration["Services:ClinicServiceBaseUrl"];
+                    var clinicServiceUrl = $"{clinicServiceBaseUrl}/api/Clinique/{attribuerMedecinDto.CliniqueId}";
                     var response = await httpClient.GetAsync(clinicServiceUrl);
 
                     if (!response.IsSuccessStatusCode)

@@ -21,5 +21,7 @@ namespace RDV.Domain.Interfaces
 
         Task ConfirmerRendezVousParMedecin(Guid rendezVousId);
         Task AnnulerRendezVousParMedecin(Guid rendezVousId, string justification);
+
+        Task<bool> ExisteRendezVousPourMedecinEtDate(Guid medecinId, DateTime dateHeure);
     }
 }

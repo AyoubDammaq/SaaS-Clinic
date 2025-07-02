@@ -88,6 +88,23 @@ namespace Facturation.Infrastructure.Repositories
                .ToListAsync();
         }
 
+        public async Task<List<Facture>> GetByFilterAsync(Guid? patientId, Guid? clinicId, FactureStatus? status)
+        {
+            var query = _context.Factures.AsQueryable();
+
+            if (patientId.HasValue)
+                query = query.Where(f => f.PatientId == patientId.Value);
+
+            if (clinicId.HasValue)
+                query = query.Where(f => f.ClinicId == clinicId.Value);
+
+            if (status.HasValue)
+                query = query.Where(f => f.Status == status.Value);
+
+            return await query.ToListAsync();
+        }
+
+
         public async Task<IEnumerable<FactureStats>> GetNombreDeFactureParCliniqueAsync()
         {
             return await _context.Factures
@@ -122,6 +139,13 @@ namespace Facturation.Infrastructure.Repositories
                     Cle = g.Key.ToString(),
                     Nombre = g.Count()
                 })
+                .ToListAsync();
+        }
+
+        public async Task<List<Facture>> GetFacturesParPeriode(DateTime dateDebut, DateTime dateFin)
+        {
+            return await _context.Factures
+                .Where(f => f.DateEmission >= dateDebut && f.DateEmission <= dateFin)
                 .ToListAsync();
         }
     }

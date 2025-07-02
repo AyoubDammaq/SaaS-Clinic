@@ -5,10 +5,15 @@ using Microsoft.IdentityModel.Tokens;
 using RDV.API.Extensions;
 using RDV.Application.Commands.CreateRendezVous;
 using RDV.Domain.Interfaces;
+using RDV.Domain.Interfaces.Messaging;
 using RDV.Infrastructure.Data;
+using RDV.Infrastructure.Messaging;
 using RDV.Infrastructure.Repositories;
 using Scalar.AspNetCore;
 using System.Text;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using RDV.Application.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +32,12 @@ builder.Services.AddDbContext<RendezVousDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("RDVDatabase")));
 
 builder.Services.AddScoped<IRendezVousRepository, RendezVousRepository>();
+builder.Services.AddSingleton<IKafkaProducer, KafkaProducer>();
+
+builder.Services.AddValidatorsFromAssemblyContaining<CreateRendezVousCommandValidator>();
+builder.Services.AddFluentValidationAutoValidation();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssemblies(typeof(CreateRendezVousCommand).Assembly));

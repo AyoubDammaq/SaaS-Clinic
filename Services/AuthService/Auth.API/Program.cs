@@ -55,8 +55,9 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireNonAlphanumeric = false;
 });
 
+var keysPath = Path.Combine(Directory.GetCurrentDirectory(), "keys");
 builder.Services.AddDataProtection()
-    .PersistKeysToFileSystem(new System.IO.DirectoryInfo(@"C:\keys"))
+    .PersistKeysToFileSystem(new DirectoryInfo(keysPath))
     .SetApplicationName("MyApp");
 
 builder.Services.AddCors(options =>

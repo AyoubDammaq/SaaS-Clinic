@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientManagementService.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientManagementService.Infrastructure", "PatientManagementService.Infrastructure\PatientManagementService.Infrastructure.csproj", "{64C6ACFF-5A4D-46CF-96E4-3DC4C6A37A96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientManagementService.Tests", "PatientManagementService.Tests\PatientManagementService.Tests.csproj", "{A4DED444-99B2-4F8F-9640-8A17B64B33CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,8 +71,23 @@ Global
 		{64C6ACFF-5A4D-46CF-96E4-3DC4C6A37A96}.Release|x64.Build.0 = Release|Any CPU
 		{64C6ACFF-5A4D-46CF-96E4-3DC4C6A37A96}.Release|x86.ActiveCfg = Release|Any CPU
 		{64C6ACFF-5A4D-46CF-96E4-3DC4C6A37A96}.Release|x86.Build.0 = Release|Any CPU
+		{A4DED444-99B2-4F8F-9640-8A17B64B33CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4DED444-99B2-4F8F-9640-8A17B64B33CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4DED444-99B2-4F8F-9640-8A17B64B33CD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A4DED444-99B2-4F8F-9640-8A17B64B33CD}.Debug|x64.Build.0 = Debug|Any CPU
+		{A4DED444-99B2-4F8F-9640-8A17B64B33CD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A4DED444-99B2-4F8F-9640-8A17B64B33CD}.Debug|x86.Build.0 = Debug|Any CPU
+		{A4DED444-99B2-4F8F-9640-8A17B64B33CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4DED444-99B2-4F8F-9640-8A17B64B33CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4DED444-99B2-4F8F-9640-8A17B64B33CD}.Release|x64.ActiveCfg = Release|Any CPU
+		{A4DED444-99B2-4F8F-9640-8A17B64B33CD}.Release|x64.Build.0 = Release|Any CPU
+		{A4DED444-99B2-4F8F-9640-8A17B64B33CD}.Release|x86.ActiveCfg = Release|Any CPU
+		{A4DED444-99B2-4F8F-9640-8A17B64B33CD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7FCDF459-BAF4-4A78-9BAF-4DA97A779C6E}
 	EndGlobalSection
 EndGlobal

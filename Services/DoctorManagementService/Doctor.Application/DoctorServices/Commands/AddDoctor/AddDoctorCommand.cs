@@ -1,7 +1,8 @@
-﻿using Doctor.Domain.Entities;
+﻿using Doctor.Application.DTOs;
+using Doctor.Domain.Entities;
 using MediatR;
 
 namespace Doctor.Application.DoctorServices.Commands.AddDoctor
 {
-    public record AddDoctorCommand(Medecin medecin) : IRequest;
+    public record AddDoctorCommand(CreateMedecinDto createMedecinDto) : IRequest;
 }

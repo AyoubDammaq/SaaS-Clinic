@@ -4,10 +4,10 @@ using PatientManagementService.Domain.Interfaces;
 
 namespace PatientManagementService.Application.DossierMedicalService.Queries.GetDocumentById
 {
-    public class GetDossierMedicalByIdQueryHandler : IRequestHandler<GetDocumentByIdQuery, Document>
+    public class GetDocumentByIdQueryHandler : IRequestHandler<GetDocumentByIdQuery, Document>
     {
         private readonly IDossierMedicalRepository _dossierMedicalRepository;
-        public GetDossierMedicalByIdQueryHandler(IDossierMedicalRepository dossierMedicalRepository)
+        public GetDocumentByIdQueryHandler(IDossierMedicalRepository dossierMedicalRepository)
         {
             _dossierMedicalRepository = dossierMedicalRepository;
         }

@@ -1,10 +1,5 @@
 ﻿using Doctor.Domain.Entities;
 using Doctor.Domain.ValueObject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Doctor.Domain.Interfaces
 {
@@ -15,8 +10,8 @@ namespace Doctor.Domain.Interfaces
         Task AddAsync(Medecin medecin);
         Task UpdateAsync(Medecin medecin);
         Task DeleteAsync(Guid id);
-        Task<List<Medecin>> FilterBySpecialiteAsync(string specialite);
-        Task<List<Medecin>> FilterByNameOrPrenomAsync(string name, string prenom);
+        Task<List<Medecin>> FilterBySpecialiteAsync(string specialite, int page = 1, int pageSize = 10);
+        Task<List<Medecin>> FilterByNameOrPrenomAsync(string name, string prenom, int page = 1, int pageSize = 10);
         Task<List<Medecin>> GetMedecinByCliniqueIdAsync(Guid cliniqueId);
         Task AttribuerMedecinAUneCliniqueAsync(Guid medecinId, Guid cliniqueId);
         Task DesabonnerMedecinDeCliniqueAsync(Guid medecinId);

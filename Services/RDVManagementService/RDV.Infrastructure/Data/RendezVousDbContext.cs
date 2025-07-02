@@ -45,7 +45,16 @@ namespace RDV.Infrastructure.Data
 
             foreach (var domainEvent in allEvents)
             {
-                await _mediator.Publish(domainEvent, cancellationToken);
+                try
+                {
+                    Console.WriteLine($"📤 Publishing DomainEvent: {domainEvent.GetType().Name}");
+                    await _mediator.Publish(domainEvent, cancellationToken);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"❌ Échec publication DomainEvent: {domainEvent.GetType().Name} → {ex.Message}");
+                    // Tu peux aussi logger ou persister l'erreur dans un journal système
+                }
             }
 
             // 2. Ensuite enregistrer les modifications

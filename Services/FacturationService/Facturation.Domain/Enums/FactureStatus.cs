@@ -3,8 +3,8 @@
     public enum FactureStatus
     {
         IMPAYEE,
+        PARTIELLEMENT_PAYEE,
         PAYEE,
-        EN_ATTENTE,
         ANNULEE
     }
 }

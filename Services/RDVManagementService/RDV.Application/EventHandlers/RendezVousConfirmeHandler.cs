@@ -1,24 +1,28 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using RDV.Domain.Events;
+using RDV.Domain.Interfaces.Messaging;
 
 namespace RDV.Application.EventHandlers
 {
-    public class RendezVousConfirmeHandler : INotificationHandler<RendezVousConfirme>
+    public class RendezVousConfirmeHandler : INotificationHandler<RendezVousConfirmed>
     {
+        private readonly IKafkaProducer _producer;
         private readonly ILogger<RendezVousConfirmeHandler> _logger;
 
-        public RendezVousConfirmeHandler(ILogger<RendezVousConfirmeHandler> logger)
+        public RendezVousConfirmeHandler(IKafkaProducer producer, ILogger<RendezVousConfirmeHandler> logger)
         {
+            _producer = producer;
             _logger = logger;
         }
 
-        public Task Handle(RendezVousConfirme notification, CancellationToken cancellationToken)
+        public async Task Handle(RendezVousConfirmed notification, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"✅ Rendez-vous confirmé : {notification.RendezVousId}");
+            // Publier l'événement PatientAdded sur le topic Kafka
+            await _producer.PublishAsync("rdv-confirmed", notification, cancellationToken);
 
-            // Ex: Mise à jour d’un calendrier partagé, envoi de mail de confirmation, etc.
-            return Task.CompletedTask;
+            _logger.LogInformation($"✅ Rendez-vous confirmé : {notification.RendezVous.Id}");
+
         }
     }
 }

@@ -1,6 +1,9 @@
 using ConsultationManagementService.API.Extensions;
 using ConsultationManagementService.Application.Commands.CreateConsultation;
+using ConsultationManagementService.Application.Mappings;
 using ConsultationManagementService.Data;
+using ConsultationManagementService.Domain.Interfaces.Messaging;
+using ConsultationManagementService.Infrastructure.Messaging;
 using ConsultationManagementService.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
@@ -48,6 +51,9 @@ builder.Services.AddDbContext<ConsultationDbContext>(options =>
 
 // Injection des dépendances
 builder.Services.AddScoped<IConsultationRepository, ConsultationRepository>();
+builder.Services.AddSingleton<IKafkaProducer, KafkaProducer>();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssemblies(typeof(CreateConsultationCommand).Assembly));

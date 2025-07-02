@@ -1,0 +1,59 @@
+﻿using ConsultationManagementService.Application.EventHandlers;
+using ConsultationManagementService.Domain.Entities;
+using ConsultationManagementService.Domain.Events;
+using ConsultationManagementService.Domain.Interfaces.Messaging;
+using Microsoft.Extensions.Logging;
+using Moq;
+
+namespace ConsultationManagementService.Tests.EventHandlers
+{
+    public class MedicalDocumentRemovedEventHandlerTests
+    {
+        private readonly Mock<IKafkaProducer> _producerMock;
+        private readonly Mock<ILogger<MedicalDocumentRemovedEventHandler>> _loggerMock;
+        private readonly MedicalDocumentRemovedEventHandler _handler;
+
+        public MedicalDocumentRemovedEventHandlerTests()
+        {
+            _producerMock = new Mock<IKafkaProducer>();
+            _loggerMock = new Mock<ILogger<MedicalDocumentRemovedEventHandler>>();
+            _handler = new MedicalDocumentRemovedEventHandler(_producerMock.Object, _loggerMock.Object);
+        }
+
+        [Fact]
+        public async Task Handle_Should_Publish_Message_And_Log_Info()
+        {
+            // Arrange
+            var document = new DocumentMedical
+            {
+                Id = Guid.NewGuid(),
+                ConsultationId = Guid.NewGuid(),
+                Type = "Ordonnance",
+                FichierURL = "http://test.fr/file.pdf",
+                DateAjout = DateTime.UtcNow
+            };
+            var evt = new MedicalDocumentRemoved(document);
+            var cancellationToken = CancellationToken.None;
+
+            _producerMock
+                .Setup(p => p.PublishAsync("medicalDocument-removed", evt, cancellationToken))
+                .Returns(Task.CompletedTask)
+                .Verifiable();
+
+            // Act
+            await _handler.Handle(evt, cancellationToken);
+
+            // Assert
+            _producerMock.Verify(p => p.PublishAsync("medicalDocument-removed", evt, cancellationToken), Times.Once);
+
+            _loggerMock.Verify(
+                x => x.Log(
+                    LogLevel.Information,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((v, t) => v.ToString().Contains($"🗑️ Document médical : {document.Id} supprimé pour la consultation : {document.ConsultationId}")),
+                    null,
+                    It.IsAny<Func<It.IsAnyType, Exception, string>>()),
+                Times.Once);
+        }
+    }
+}

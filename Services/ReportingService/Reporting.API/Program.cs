@@ -1,11 +1,21 @@
+using Polly;
+using Polly.Extensions.Http;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.IdentityModel.Tokens;
 using Reporting.Application.Interfaces;
+using Reporting.Application.Mapping;
 using Reporting.Application.Services;
 using Reporting.Domain.Interfaces;
+using Reporting.Infrastructure.Handlers;
 using Reporting.Infrastructure.Repositories;
 using Scalar.AspNetCore;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
+
 
 // Add services to the container.
 builder.WebHost.ConfigureKestrel(serverOptions =>
@@ -30,6 +40,43 @@ builder.Services.AddScoped<IReportingRepository, ReportingRepository>();
 builder.Services.AddScoped<IConsultationStateRepository, ConsultationStateRepository>();
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddMemoryCache();
+
+builder.Services.AddAutoMapper(typeof(ReportingMappingProfile).Assembly);
+
+
+builder.Services.AddTransient<HttpLoggingHandler>();
+builder.Services.AddTransient<BearerTokenHandler>();
+
+builder.Services.AddHttpClient<IReportingRepository, ReportingRepository>()
+    .AddHttpMessageHandler<HttpLoggingHandler>()
+    .AddHttpMessageHandler<BearerTokenHandler>();
+    //.AddPolicyHandler(GetRetryPolicy())
+    //.AddPolicyHandler(GetCircuitBreakerPolicy());
+
+
+var jwtKey = builder.Configuration["Jwt:Key"];
+if (string.IsNullOrEmpty(jwtKey))
+    throw new InvalidOperationException("La clé JWT (Jwt:Key) n'est pas configurée.");
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+    };
+});
 
 
 builder.Services.AddDataProtection()
@@ -58,9 +105,40 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 
 app.UseCors("AllowAllOrigins");
 
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
+static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+{
+    return HttpPolicyExtensions
+        .HandleTransientHttpError()
+        .WaitAndRetryAsync(
+            retryCount: 3,
+            sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), // 2s, 4s, 8s
+            onRetry: (outcome, timespan, retryAttempt, context) =>
+            {
+                Console.WriteLine($"Retry {retryAttempt} after {timespan.TotalSeconds}s due to {outcome.Exception?.Message ?? outcome.Result.StatusCode.ToString()}");
+            });
+}
+
+static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
+{
+    return HttpPolicyExtensions
+        .HandleTransientHttpError()
+        .CircuitBreakerAsync(
+            handledEventsAllowedBeforeBreaking: 5,
+            durationOfBreak: TimeSpan.FromSeconds(30),
+            onBreak: (outcome, timespan) =>
+            {
+                Console.WriteLine($"Circuit opened for {timespan.TotalSeconds}s due to {outcome.Exception?.Message ?? outcome.Result.StatusCode.ToString()}");
+            },
+            onReset: () => Console.WriteLine("Circuit closed - ready to send requests again"),
+            onHalfOpen: () => Console.WriteLine("Circuit half-open - testing health...")
+        );
+}
+
+public partial class Program { }

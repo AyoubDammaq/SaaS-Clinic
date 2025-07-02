@@ -1,10 +1,9 @@
-﻿
-using Doctor.Domain.Entities;
+﻿using Doctor.Domain.Entities;
 using Doctor.Domain.Interfaces;
 using Doctor.Domain.ValueObject;
 using Doctor.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.Json;
+using Microsoft.Extensions.Configuration;
 using System.Net.Http.Json;
 
 namespace Doctor.Infrastructure.Repositories
@@ -13,11 +12,13 @@ namespace Doctor.Infrastructure.Repositories
     {
         private readonly MedecinDbContext _context;
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _config;
 
-        public MedecinRepository(MedecinDbContext context, HttpClient httpClient)
+        public MedecinRepository(MedecinDbContext context, HttpClient httpClient, IConfiguration config)
         {
             _context = context;
             _httpClient = httpClient;
+            _config = config;
         }
         public async Task<Medecin> GetByIdAsync(Guid id)
         {
@@ -52,27 +53,51 @@ namespace Doctor.Infrastructure.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task<List<Medecin>> FilterBySpecialiteAsync(string specialite)
+        public async Task<List<Medecin>> FilterBySpecialiteAsync(string specialite, int page = 1, int pageSize = 10)
         {
-            return await _context.Medecins
+            specialite = specialite?.Trim().ToLower();
+
+            var query = _context.Medecins
                 .Include(m => m.Disponibilites)
-                .Where(m => (string.IsNullOrEmpty(specialite) || m.Specialite == specialite))
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(specialite))
+            {
+                query = query.Where(m => EF.Functions.Like(m.Specialite, $"%{specialite}%"));
+            }
+
+            return await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
         }
 
-        public async Task<List<Medecin>> FilterByNameOrPrenomAsync(string name, string prenom)
+
+        public async Task<List<Medecin>> FilterByNameOrPrenomAsync(string name, string prenom, int page = 1, int pageSize = 10)
         {
             name = name?.Trim().ToLower();
             prenom = prenom?.Trim().ToLower();
 
-            return await _context.Medecins
-                .Where(m =>
-                    (string.IsNullOrEmpty(name) || m.Nom.ToLower().Contains(name)) &&
-                    (string.IsNullOrEmpty(prenom) || m.Prenom.ToLower().Contains(prenom))
-                )
+            var query = _context.Medecins
                 .Include(m => m.Disponibilites)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(m => EF.Functions.Like(m.Nom, $"%{name}%"));
+            }
+
+            if (!string.IsNullOrEmpty(prenom))
+            {
+                query = query.Where(m => EF.Functions.Like(m.Prenom, $"%{prenom}%"));
+            }
+
+            return await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
         }
+
 
         public async Task<List<Medecin>> GetMedecinByCliniqueIdAsync(Guid cliniqueId)
         {
@@ -148,12 +173,14 @@ namespace Doctor.Infrastructure.Repositories
 
         public async Task<IEnumerable<ActiviteMedecin>> GetActivitesMedecinAsync(Guid medecinId)
         {
+            var baseUrl = _config["Services:Gateway"];
+
             // Récupérer le médecin par son ID
             var medecin = await GetByIdAsync(medecinId);
             if (medecin == null) return Enumerable.Empty<ActiviteMedecin>();
 
             // Récupérer les consultations du médecin
-            var responseConsultation = await _httpClient.GetAsync($"http://localhost:5015/api/Consultation/Doctor/{medecinId}");
+            var responseConsultation = await _httpClient.GetAsync($"{baseUrl}/consultations/Doctor/{medecinId}");
 
             // Vérifier si la réponse est réussie
             if (!responseConsultation.IsSuccessStatusCode)
@@ -162,7 +189,7 @@ namespace Doctor.Infrastructure.Repositories
             }
 
             // Récupérer les rendez-vous du médecin
-            var responseRendezVous = await _httpClient.GetAsync($"http://localhost:5133/api/RendezVous/medecin/{medecinId}");
+            var responseRendezVous = await _httpClient.GetAsync($"{baseUrl}/appointments/medecin/{medecinId}");
 
             // Vérifier si la réponse est réussie
             if (!responseRendezVous.IsSuccessStatusCode)

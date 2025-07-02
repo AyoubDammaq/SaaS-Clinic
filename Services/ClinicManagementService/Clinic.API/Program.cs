@@ -1,7 +1,10 @@
 using Clinic.API.Extensions;
+using Clinic.Application.Mapping;
 using Clinic.Application.Services;
 using Clinic.Domain.Interfaces;
+using Clinic.Domain.Interfaces.Messaging;
 using Clinic.Infrastructure.Data;
+using Clinic.Infrastructure.Messaging;
 using Clinic.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
@@ -34,6 +37,9 @@ builder.Services.AddMediatR(cfg =>
 
 builder.Services.AddScoped<ICliniqueRepository, CliniqueRepository>();
 builder.Services.AddHttpClient<ICliniqueRepository, CliniqueRepository>();
+builder.Services.AddSingleton<IKafkaProducer, KafkaProducer>();
+
+builder.Services.AddAutoMapper(typeof(CliniqueProfile).Assembly);
 
 builder.Services.AddAuthentication(options =>
 {

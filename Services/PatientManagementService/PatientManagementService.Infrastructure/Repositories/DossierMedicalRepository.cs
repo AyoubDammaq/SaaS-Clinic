@@ -94,11 +94,12 @@ namespace PatientManagementService.Infrastructure.Repositories
             var document = await _context.Documents
                 .FirstOrDefaultAsync(doc => doc.Id == documentId);
 
-            if (document != null)
+            if (document == null)
             {
-                _context.Documents.Remove(document);
-                await _context.SaveChangesAsync();
+                return;
             }
+            _context.Documents.Remove(document);
+            await _context.SaveChangesAsync();
         }
     }
 }

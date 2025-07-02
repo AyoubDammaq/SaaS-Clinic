@@ -1,4 +1,5 @@
-﻿using ConsultationManagementService.Application.DTOs;
+﻿using AutoMapper;
+using ConsultationManagementService.Application.DTOs;
 using ConsultationManagementService.Domain.Entities;
 using ConsultationManagementService.Repositories;
 using MediatR;
@@ -8,9 +9,11 @@ namespace ConsultationManagementService.Application.Commands.CreateConsultation
     public class CreateConsultationCommandHandler : IRequestHandler<CreateConsultationCommand>
     {
         private readonly IConsultationRepository _consultationRepository;
-        public CreateConsultationCommandHandler(IConsultationRepository consultationRepository)
+        private readonly IMapper _mapper;
+        public CreateConsultationCommandHandler(IConsultationRepository consultationRepository, IMapper mapper)
         {
             _consultationRepository = consultationRepository;
+            _mapper = mapper;
         }
         public async Task Handle(CreateConsultationCommand request, CancellationToken cancellationToken)
         {
@@ -22,25 +25,7 @@ namespace ConsultationManagementService.Application.Commands.CreateConsultation
             ValidateConsultationData(request.consultation); // Validation des données
 
             // Transformation de ConsultationDTO en Consultation
-            var consultationEntity = new Consultation
-            {
-                Id = request.consultation.Id != Guid.Empty ? request.consultation.Id : Guid.NewGuid(),
-                PatientId = request.consultation.PatientId,
-                MedecinId = request.consultation.MedecinId,
-                DateConsultation = request.consultation.DateConsultation,
-                Diagnostic = request.consultation.Diagnostic ?? string.Empty,
-                Notes = request.consultation.Notes ?? string.Empty,
-                Documents = request.consultation.Documents != null && request.consultation.Documents.Any()
-                    ? request.consultation.Documents.Select(doc => new DocumentMedical
-                    {
-                        Id = doc.Id != Guid.Empty ? doc.Id : Guid.NewGuid(),
-                        ConsultationId = doc.ConsultationId,
-                        Type = doc.Type ?? string.Empty,
-                        FichierURL = doc.FichierURL ?? string.Empty,
-                        DateAjout = doc.DateAjout
-                    }).ToList()
-                    : new List<DocumentMedical>()
-            };
+            var consultationEntity = _mapper.Map<Consultation>(request.consultation);
 
             consultationEntity.CreateConsultationEvent(); // Ajout de l'événement de création
 

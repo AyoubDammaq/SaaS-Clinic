@@ -1,4 +1,5 @@
-﻿using ConsultationManagementService.Application.DTOs;
+﻿using AutoMapper;
+using ConsultationManagementService.Application.DTOs;
 using ConsultationManagementService.Domain.Entities;
 using ConsultationManagementService.Repositories;
 using MediatR;
@@ -8,10 +9,14 @@ namespace ConsultationManagementService.Application.Commands.UploadDocumentMedic
     public class UploadDocumentMedicalCommandHandler : IRequestHandler<UploadDocumentMedicalCommand>
     {
         private readonly IConsultationRepository _consultationRepository;
-        public UploadDocumentMedicalCommandHandler(IConsultationRepository consultationRepository)
+        private readonly IMapper _mapper;
+
+        public UploadDocumentMedicalCommandHandler(IConsultationRepository consultationRepository, IMapper mapper)
         {
             _consultationRepository = consultationRepository;
+            _mapper = mapper;
         }
+
         public async Task Handle(UploadDocumentMedicalCommand request, CancellationToken cancellationToken)
         {
             if (request.documentMedical == null)
@@ -21,15 +26,19 @@ namespace ConsultationManagementService.Application.Commands.UploadDocumentMedic
 
             ValidateDocumentMedicalData(request.documentMedical); // Validation des données
 
-            // Transformation de DocumentMedicalDTO en DocumentMedical
-            var documentEntity = new DocumentMedical
+            // Vérifier que la consultation existe
+            var consultationExists = await _consultationRepository.ExistsAsync(request.documentMedical.ConsultationId);
+            if (!consultationExists)
             {
-                Id = request.documentMedical.Id != Guid.Empty ? request.documentMedical.Id : Guid.NewGuid(),
-                ConsultationId = request.documentMedical.ConsultationId,
-                Type = request.documentMedical.Type ?? string.Empty,
-                FichierURL = request.documentMedical.FichierURL ?? string.Empty,
-                DateAjout = request.documentMedical.DateAjout
-            };
+                throw new ArgumentException("La consultation associée au document n'existe pas.");
+            }
+
+            // Utilisation du mapper pour transformer le DTO en entité
+            var documentEntity = _mapper.Map<DocumentMedical>(request.documentMedical);
+            if (documentEntity.Id == Guid.Empty)
+            {
+                documentEntity.Id = Guid.NewGuid();
+            }
 
             documentEntity.UploadMedicalDocumentEvent();
 

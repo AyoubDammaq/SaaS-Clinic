@@ -33,7 +33,7 @@ namespace Doctor.Domain.Entities
         }
 
         // ✅ Ajouter un événement après suppression de la disponibilité
-        public void SupprimerDisponibiliteEvent()
+        public virtual void SupprimerDisponibiliteEvent()
         {
             AddDomainEvent(new DisponibiliteSupprimee(this.Id));
         }

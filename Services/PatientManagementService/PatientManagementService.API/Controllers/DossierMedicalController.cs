@@ -32,23 +32,11 @@ namespace PatientManagementService.API.Controllers
             {
                 var dossierMedical = await _mediator.Send(new GetDossierMedicalByPatientIdQuery(patientId));
 
-                return Ok(new
-                {
-                    success = true,
-                    message = dossierMedical == null
-                        ? "Le patient n'a pas encore de dossier médical."
-                        : "Dossier médical récupéré avec succès.",
-                    data = dossierMedical
-                });
+                return Ok(dossierMedical);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = "Une erreur interne est survenue.",
-                    error = ex.Message
-                });
+                return StatusCode(500, "Une erreur interne est survenue.");
             }
         }
 
@@ -142,12 +130,7 @@ namespace PatientManagementService.API.Controllers
             try
             {
                 var dossiersMedicals = await _mediator.Send(new GetAllDossiersMedicalsQuery());
-                return Ok(new
-                {
-                    success = true,
-                    message = "Liste des dossiers médicaux récupérée avec succès.",
-                    data = dossiersMedicals
-                });
+                return Ok(dossiersMedicals);
             }
             catch (Exception ex)
             {
@@ -162,7 +145,7 @@ namespace PatientManagementService.API.Controllers
 
         [Authorize(Roles = "SuperAdmin,ClinicAdmin,Doctor")]
         [HttpPost("{dossierId}/documents")]
-        public async Task<IActionResult> AttacherDocument(Guid dossierId, [FromBody] DocumentDTO document)
+        public async Task<IActionResult> AttacherDocument(Guid dossierId, [FromBody] CreateDocumentRequest document)
         {
             try
             {

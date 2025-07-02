@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Facturation.Application.PaiementService.Commands.PayerFacture
 {
-    public record PayerFactureCommand(Guid factureId, ModePaiement moyenPaiement) : IRequest<bool>;
+    public record PayerFactureCommand(Guid factureId, ModePaiement moyenPaiement, decimal montant) : IRequest<bool>;
 }

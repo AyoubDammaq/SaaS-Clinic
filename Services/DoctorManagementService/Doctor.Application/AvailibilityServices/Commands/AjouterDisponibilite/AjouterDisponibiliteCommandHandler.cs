@@ -16,7 +16,12 @@ namespace Doctor.Application.AvailibilityServices.Commands.AjouterDisponibilite
                 throw new ArgumentNullException(nameof(request.nouvelleDispo), "La disponibilité ne peut pas être null.");
 
             if (request.nouvelleDispo.HeureDebut >= request.nouvelleDispo.HeureFin)
-                throw new ArgumentException("L'heure de début doit être inférieure à l'heure de fin.");
+                throw new ArgumentException("HeureDebut must be before HeureFin.");
+
+            // 🛡️ Vérification centralisée du chevauchement
+            bool chevauche = await _disponibiliteRepository.VerifieChevauchementAsync(request.nouvelleDispo);
+            if (chevauche)
+                throw new InvalidOperationException("Ce créneau se chevauche avec une autre disponibilité existante.");
 
             request.nouvelleDispo.AjouterDisponibiliteEvent();
 

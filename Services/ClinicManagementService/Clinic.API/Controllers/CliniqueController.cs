@@ -195,6 +195,7 @@ namespace Clinic.API.Controllers
 
 
         // Statistiques des cliniques
+        [AllowAnonymous]
         [HttpGet("nombre-cliniques")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

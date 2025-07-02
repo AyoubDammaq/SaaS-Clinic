@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDV.Domain", "RDV.Domain\RD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDV.Infrastructure", "RDV.Infrastructure\RDV.Infrastructure.csproj", "{C041FB86-6848-40E2-B30E-48174C31A295}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDV.Tests", "RDV.Tests\RDV.Tests.csproj", "{DEC24A29-A1C2-4065-93AF-4D75788D43D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,18 @@ Global
 		{C041FB86-6848-40E2-B30E-48174C31A295}.Release|x64.Build.0 = Release|Any CPU
 		{C041FB86-6848-40E2-B30E-48174C31A295}.Release|x86.ActiveCfg = Release|Any CPU
 		{C041FB86-6848-40E2-B30E-48174C31A295}.Release|x86.Build.0 = Release|Any CPU
+		{DEC24A29-A1C2-4065-93AF-4D75788D43D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEC24A29-A1C2-4065-93AF-4D75788D43D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEC24A29-A1C2-4065-93AF-4D75788D43D2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DEC24A29-A1C2-4065-93AF-4D75788D43D2}.Debug|x64.Build.0 = Debug|Any CPU
+		{DEC24A29-A1C2-4065-93AF-4D75788D43D2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DEC24A29-A1C2-4065-93AF-4D75788D43D2}.Debug|x86.Build.0 = Debug|Any CPU
+		{DEC24A29-A1C2-4065-93AF-4D75788D43D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEC24A29-A1C2-4065-93AF-4D75788D43D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEC24A29-A1C2-4065-93AF-4D75788D43D2}.Release|x64.ActiveCfg = Release|Any CPU
+		{DEC24A29-A1C2-4065-93AF-4D75788D43D2}.Release|x64.Build.0 = Release|Any CPU
+		{DEC24A29-A1C2-4065-93AF-4D75788D43D2}.Release|x86.ActiveCfg = Release|Any CPU
+		{DEC24A29-A1C2-4065-93AF-4D75788D43D2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

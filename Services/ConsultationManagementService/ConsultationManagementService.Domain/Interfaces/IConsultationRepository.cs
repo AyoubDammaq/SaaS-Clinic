@@ -6,7 +6,7 @@ namespace ConsultationManagementService.Repositories
     {
         // Méthodes pour la gestion des consultations
         Task<Consultation?> GetConsultationByIdAsync(Guid id);
-        Task<IEnumerable<Consultation>> GetAllConsultationsAsync();
+        Task<IEnumerable<Consultation>> GetAllConsultationsAsync(int pageNumber, int pageSize);
         Task CreateConsultationAsync(Consultation consultation);
         Task UpdateConsultationAsync(Consultation consultation);
         Task<bool> DeleteConsultationAsync(Guid id);
@@ -19,5 +19,6 @@ namespace ConsultationManagementService.Repositories
         Task<DocumentMedical?> GetDocumentMedicalByIdAsync(Guid id);
         Task UploadDocumentMedicalAsync(DocumentMedical documentMedical);
         Task<bool> DeleteDocumentMedicalAsync(Guid id);
+        Task<bool> ExistsAsync(Guid consultationId);
     }
 }

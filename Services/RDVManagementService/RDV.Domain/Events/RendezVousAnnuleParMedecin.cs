@@ -1,15 +1,16 @@
 ﻿using RDV.Domain.Common;
+using RDV.Domain.Entities;
 
 namespace RDV.Domain.Events
 {
     public class RendezVousAnnuleParMedecin : BaseDomainEvent
     {
-        public Guid RendezVousId { get; }
+        public RendezVous RendezVous { get; }
         public string Raison { get; }
 
-        public RendezVousAnnuleParMedecin(Guid rendezVousId, string raison)
+        public RendezVousAnnuleParMedecin(RendezVous rendezVous, string raison)
         {
-            RendezVousId = rendezVousId;
+            RendezVous = rendezVous;
             Raison = raison;
         }
     }

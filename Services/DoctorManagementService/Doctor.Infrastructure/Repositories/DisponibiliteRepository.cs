@@ -106,25 +106,17 @@ namespace Doctor.Infrastructure.Repositories
 
         public async Task<TimeSpan> ObtenirTempsTotalDisponibleAsync(Guid medecinId, DateTime dateDebut, DateTime dateFin)
         {
-            // Calculate total available time for the doctor between dateDebut and dateFin (inclusive)
-            var total = TimeSpan.Zero;
-
-            // Get days in the range (weekdays)
-            var dates = Enumerable.Range(0, (dateFin - dateDebut).Days + 1)
+            var jours = Enumerable.Range(0, (dateFin - dateDebut).Days + 1)
                 .Select(offset => dateDebut.AddDays(offset).DayOfWeek)
                 .Distinct()
                 .ToList();
 
-            var disponibilites = await _context.Disponibilites
-                .Where(d => d.MedecinId == medecinId && dates.Contains(d.Jour))
-                .ToListAsync();
+            var totalMinutes = await _context.Disponibilites
+                .Where(d => d.MedecinId == medecinId && jours.Contains(d.Jour))
+                .Select(d => EF.Functions.DateDiffMinute(d.HeureDebut, d.HeureFin))
+                .SumAsync();
 
-            foreach (var dispo in disponibilites)
-            {
-                total += dispo.HeureFin - dispo.HeureDebut;
-            }
-
-            return total;
+            return TimeSpan.FromMinutes(totalMinutes);
         }
 
         public async Task SupprimerDisponibilitesParMedecinIdAsync(Guid medecinId)
@@ -139,6 +131,11 @@ namespace Doctor.Infrastructure.Repositories
 
         public async Task<List<Disponibilite>> ObtenirDisponibilitesDansIntervalleAsync(Guid medecinId, DateTime start, DateTime end)
         {
+            var jours = Enumerable.Range(0, (end - start).Days + 1)
+                .Select(offset => start.AddDays(offset).DayOfWeek)
+                .Distinct()
+                .ToList();
+
             return await _context.Disponibilites
                 .Where(d => d.MedecinId == medecinId && d.HeureDebut >= start.TimeOfDay && d.HeureFin <= end.TimeOfDay)
                 .ToListAsync();

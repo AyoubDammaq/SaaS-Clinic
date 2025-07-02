@@ -31,7 +31,7 @@ namespace Doctor.Application.DoctorServices.Commands.UpdateDoctor
             medecin.Prenom = request.medecinDto.Prenom;
             medecin.Nom = request.medecinDto.Nom;
             medecin.Specialite = request.medecinDto.Specialite;
-            medecin.CliniqueId = request.medecinDto.CliniqueId ?? Guid.Empty;
+            //medecin.CliniqueId = request.medecinDto.CliniqueId ?? Guid.Empty;
             medecin.Email = request.medecinDto.Email;
             medecin.Telephone = request.medecinDto.Telephone;
             medecin.PhotoUrl = request.medecinDto.PhotoUrl;

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using PatientManagementService.Domain.Entities;
 using PatientManagementService.Domain.Interfaces;
 
@@ -8,11 +9,13 @@ namespace PatientManagementService.Application.DossierMedicalService.Commands.Ad
     {
         private readonly IDossierMedicalRepository _dossierMedicalRepository;
         private readonly IPatientRepository _patientRepository;
+        private readonly IMapper _mapper;
 
-        public AddDossierMedicalCommandHandler(IDossierMedicalRepository repository, IPatientRepository patientRepository)
+        public AddDossierMedicalCommandHandler(IDossierMedicalRepository repository, IPatientRepository patientRepository, IMapper mapper)
         {
             _dossierMedicalRepository = repository;
             _patientRepository = patientRepository;
+            _mapper = mapper;
         }
 
         public async Task Handle(AddDossierMedicalCommand request, CancellationToken cancellationToken)
@@ -25,20 +28,10 @@ namespace PatientManagementService.Application.DossierMedicalService.Commands.Ad
                 throw new InvalidOperationException("Patient already has a dossier médical.");
             }
 
-            var dossierMedicalEntity = new DossierMedical
-            {
-                Id = request.dossierMedical.Id,
-                PatientId = request.dossierMedical.PatientId,
-                Allergies = request.dossierMedical.Allergies,
-                MaladiesChroniques = request.dossierMedical.MaladiesChroniques,
-                MedicamentsActuels = request.dossierMedical.MedicamentsActuels,
-                AntécédentsFamiliaux = request.dossierMedical.AntécédentsFamiliaux,
-                AntécédentsPersonnels = request.dossierMedical.AntécédentsPersonnels,
-                GroupeSanguin = request.dossierMedical.GroupeSanguin,
-                DateCreation = DateTime.UtcNow
-            };
+            var dossierMedicalEntity = _mapper.Map<DossierMedical>(request.dossierMedical);
+            dossierMedicalEntity.DateCreation = DateTime.UtcNow;
 
-            patient.DossierMedicalId = request.dossierMedical.Id;
+            patient.DossierMedicalId = dossierMedicalEntity.Id;
 
             dossierMedicalEntity.CreerDossierMedicalEvent();
             patient.ModifierPatientEvent();
