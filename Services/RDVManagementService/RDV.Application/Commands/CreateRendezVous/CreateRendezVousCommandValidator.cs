@@ -17,9 +17,6 @@ namespace RDV.Application.Commands.CreateRendezVous
 
             RuleFor(x => x.rendezVous.DateHeure)
                 .GreaterThan(DateTime.Now).WithMessage("La date du rendez-vous doit être ultérieure à maintenant.");
-
-            RuleFor(x => x.rendezVous.Statut)
-                .IsInEnum().WithMessage("Le statut du rendez-vous est invalide.");
         }
     }
 }

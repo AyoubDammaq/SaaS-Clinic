@@ -78,7 +78,7 @@ namespace RDVManagementService.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateRendezVous([FromBody] RendezVous rendezVous)
+        public async Task<IActionResult> CreateRendezVous([FromBody] CreateRendezVousDto rendezVous)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace RDVManagementService.Controllers
                     return BadRequest("Rendez-vous ne peut pas être nul");
                 }
                 await _mediator.Send(new CreateRendezVousCommand(rendezVous));
-                return CreatedAtAction(nameof(GetRendezVousById), new { id = rendezVous.Id }, rendezVous);
+                return StatusCode(StatusCodes.Status201Created);
             }
             catch (Exception ex)
             {

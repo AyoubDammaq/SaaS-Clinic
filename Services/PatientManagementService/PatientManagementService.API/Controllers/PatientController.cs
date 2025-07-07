@@ -25,7 +25,7 @@ namespace PatientManagementService.API.Controllers
         }
 
         // GET: api/Patients
-        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
+        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor,Patient"))]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Patient>>> GetAllPatients()
         {
@@ -41,7 +41,7 @@ namespace PatientManagementService.API.Controllers
         }
 
         // GET: api/Patients/5
-        //[Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor,Patient")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Patient>> GetPatientById(Guid id)
         {
@@ -62,16 +62,15 @@ namespace PatientManagementService.API.Controllers
         // POST: api/Patients
         [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor, Patient")]
         [HttpPost]
-        public async Task<ActionResult> AddPatient([FromBody] PatientDTO patientDto)
+        public async Task<ActionResult> AddPatient([FromBody] CreatePatientDTO patientDto)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                patientDto.Id = Guid.NewGuid();
-                await _mediator.Send(new AddPatientCommand(patientDto));
-                return CreatedAtAction(nameof(GetPatientById), new { id = patientDto.Id }, patientDto);
+                var createdPatient = await _mediator.Send(new AddPatientCommand(patientDto));
+                return CreatedAtAction(nameof(GetPatientById), new { id = createdPatient.Id }, createdPatient);
             }
             catch (Exception ex)
             {

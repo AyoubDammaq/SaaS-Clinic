@@ -9,7 +9,7 @@ namespace AuthentificationService.Services
         Task<User?> RegisterAsync(UserDto request);
         Task<TokenResponseDto?> LoginAsync(LoginRequestDTO request);
         Task<TokenResponseDto?> RefreshTokensAsync(RefreshTokenRequestDto request);
-        Task<bool> LogoutAsync(Guid userId);
+        Task<bool> LogoutAsync(string email);
         Task<bool> ChangePasswordAsync(ChangePasswordDto request);
         Task<List<User>> GetAllUsersAsync();
         Task<User> GetUserDetailsByIdAsync(Guid UserId);

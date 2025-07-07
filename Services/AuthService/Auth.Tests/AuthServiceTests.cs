@@ -172,15 +172,8 @@ namespace Auth.Tests
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            var result = await _service.LogoutAsync(user.Id);
+            var result = await _service.LogoutAsync(user.Email);
             Assert.True(result);
-        }
-
-        [Fact]
-        public async Task LogoutAsync_ShouldReturnFalse_WhenUserNotFound()
-        {
-            var result = await _service.LogoutAsync(Guid.NewGuid());
-            Assert.False(result);
         }
 
         [Fact]

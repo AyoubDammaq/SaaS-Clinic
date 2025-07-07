@@ -38,6 +38,7 @@ namespace Facturation.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("MontantPaye")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("MontantTotal")

@@ -139,8 +139,8 @@ namespace AuthentificationService.Services
         {
             var claims = new[]
             {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                    new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(ClaimTypes.Role, user.Role.ToString())
                 };
 
@@ -158,20 +158,20 @@ namespace AuthentificationService.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public async Task<bool> LogoutAsync(Guid userId)
+        public async Task<bool> LogoutAsync(string email)
         {
-            logger.LogInformation("Déconnexion demandée pour l'utilisateur {UserId}", userId);
-            var user = await context.Users.FindAsync(userId);
+            logger.LogInformation("Déconnexion demandée pour l'utilisateur {UserId}", email);
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (user is null)
             {
-                logger.LogWarning("Déconnexion échouée : utilisateur {UserId} non trouvé.", userId);
+                logger.LogWarning("Déconnexion échouée : utilisateur {UserId} non trouvé.", email);
                 return false;
             }
 
             user.RefreshToken = null;
             user.RefreshTokenExpiryTime = null;
             await context.SaveChangesAsync();
-            logger.LogInformation("Déconnexion réussie pour l'utilisateur {UserId}", userId);
+            logger.LogInformation("Déconnexion réussie pour l'utilisateur {UserId}", email);
 
             return true;
         }

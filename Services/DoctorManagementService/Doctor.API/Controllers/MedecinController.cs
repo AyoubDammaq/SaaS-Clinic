@@ -65,6 +65,7 @@ namespace Doctor.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor,Patient")]
         public async Task<IActionResult> ObtenirMedecinParId(Guid id)
         {
             try
@@ -79,6 +80,7 @@ namespace Doctor.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor,Patient")]
         public async Task<IActionResult> ObtenirTousLesMedecins()
         {
             try

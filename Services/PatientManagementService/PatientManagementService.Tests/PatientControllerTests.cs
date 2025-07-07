@@ -99,7 +99,7 @@ namespace PatientManagementService.Tests
         public async Task AddPatient_ReturnsBadRequest_WhenModelStateInvalid()
         {
             _controller.ModelState.AddModelError("Nom", "Requis");
-            var dto = new PatientDTO();
+            var dto = new CreatePatientDTO(); // Utilisez CreatePatientDTO
 
             var result = await _controller.AddPatient(dto);
 
@@ -108,30 +108,27 @@ namespace PatientManagementService.Tests
         }
 
         [Fact]
-        public async Task AddPatient_ReturnsCreatedAtAction_WhenSuccess()
+        public async Task AddPatient_Returns201_WhenSuccess()
         {
             // Arrange
-            var dto = new PatientDTO { Nom = "Test", Prenom = "User", DateNaissance = DateTime.Now, Sexe = "M" };
+            var dto = new CreatePatientDTO { Nom = "Test", Prenom = "User", DateNaissance = DateTime.Now, Sexe = "M", Adresse = "1 rue", Telephone = "0102030404", Email = "test@email.com" };
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<AddPatientCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(true); // Le handler retourne un bool
+                .ReturnsAsync((object?)true); // Cast en object? pour éviter CS1929
 
             // Act
             var result = await _controller.AddPatient(dto);
 
             // Assert
-            var created = result as CreatedAtActionResult;
-            created.Should().NotBeNull();
-            created!.ActionName.Should().Be(nameof(_controller.GetPatientById));
-            created.RouteValues.Should().ContainKey("id");
-            created.RouteValues!["id"].Should().Be(dto.Id);
-            created.Value.Should().BeEquivalentTo(dto);
+            var status = result as StatusCodeResult;
+            status.Should().NotBeNull();
+            status!.StatusCode.Should().Be(201);
         }
 
         [Fact]
         public async Task AddPatient_Returns500_OnException()
         {
-            var dto = new PatientDTO { Nom = "Test", Prenom = "User", DateNaissance = DateTime.Now, Sexe = "M" };
+            var dto = new CreatePatientDTO { Nom = "Test", Prenom = "User", DateNaissance = DateTime.Now, Sexe = "M", Adresse = "1 rue", Telephone = "0102030404", Email = "test@email.com" };
             _mediatorMock.Setup(m => m.Send(It.IsAny<AddPatientCommand>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new Exception("Erreur"));
 
@@ -141,6 +138,7 @@ namespace PatientManagementService.Tests
             status.Should().NotBeNull();
             status!.StatusCode.Should().Be(500);
         }
+
 
         [Fact]
         public async Task UpdatePatient_ReturnsBadRequest_WhenIdMismatch()

@@ -12,6 +12,8 @@ using Notif.Infrastructure.Messaging.Consumers;
 using Confluent.Kafka;
 using Notif.Infrastructure.Channels;
 using Notif.Infrastructure.Factories;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,9 +31,11 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 // ---------------------------------------------------
 builder.Services.AddDbContext<NotificationDbContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("NotificationDatabase")
+        builder.Configuration.GetConnectionString("NotificationDatabase"),
+        sqlOptions => sqlOptions.EnableRetryOnFailure()
     )
 );
+
 
 // ---------------------------------------------------
 // 3. Injection des dépendances (DI)

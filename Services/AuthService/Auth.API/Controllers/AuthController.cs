@@ -64,13 +64,32 @@ namespace AuthentificationService.Controllers
         }
 
         [HttpPost("logout")]
-        public async Task<IActionResult> Logout([FromBody] Guid userId)
+        public async Task<IActionResult> Logout([FromBody] LogoutRequest request)
         {
-            var result = await _authService.LogoutAsync(userId);
+            _logger.LogInformation("Logout called with: {@Request}", request);
+
+            if (!ModelState.IsValid)
+            {
+                foreach (var kvp in ModelState)
+                {
+                    foreach (var error in kvp.Value.Errors)
+                    {
+                        _logger.LogWarning("Validation error for {Key}: {Error}", kvp.Key, error.ErrorMessage);
+                    }
+                }
+
+                return BadRequest(ModelState);
+            }
+
+            var result = await _authService.LogoutAsync(request.Email);
+
             if (!result)
             {
+                _logger.LogError("Logout failed for user {UserId}", request.Email );
                 return BadRequest("Logout failed.");
             }
+
+            _logger.LogInformation("Logout successful for user {UserId}", request.Email);
             return Ok("Logout successful.");
         }
 

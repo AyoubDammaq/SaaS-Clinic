@@ -1,4 +1,5 @@
 ﻿using Doctor.Infrastructure.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Doctor.API.Extensions
@@ -7,10 +8,24 @@ namespace Doctor.API.Extensions
     {
         public static void ApplyMigrations(this WebApplication app)
         {
-            using (var scope = app.Services.CreateScope())
+            using var scope = app.Services.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<MedecinDbContext>();
+
+            var retryCount = 0;
+            const int maxRetry = 5;
+
+            while (retryCount < maxRetry)
             {
-                var dbContext = scope.ServiceProvider.GetRequiredService<MedecinDbContext>();
-                dbContext.Database.Migrate();
+                try
+                {
+                    db.Database.Migrate();
+                    break;
+                }
+                catch (SqlException)
+                {
+                    retryCount++;
+                    Thread.Sleep(5000); // attend 5 sec avant de réessayer
+                }
             }
         }
     }

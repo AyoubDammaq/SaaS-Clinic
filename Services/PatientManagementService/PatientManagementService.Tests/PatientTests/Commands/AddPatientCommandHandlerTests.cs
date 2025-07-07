@@ -28,7 +28,7 @@ namespace PatientManagementService.Tests.PatientTests.Commands
         public async Task Handle_ShouldReturnFalse_AndLogWarning_WhenPatientIsNull()
         {
             // Arrange
-            PatientDTO? patientDto = null; // Utilisez un type nullable
+            CreatePatientDTO? patientDto = null; // Utilisez un type nullable
             var command = new AddPatientCommand(patientDto);
 
             // Act
@@ -52,7 +52,7 @@ namespace PatientManagementService.Tests.PatientTests.Commands
         public async Task Handle_ShouldReturnTrue_AndCallRepository_WhenPatientIsValid()
         {
             // Arrange
-            var patientDto = new PatientDTO
+            var patientDto = new CreatePatientDTO
             {
                 Nom = "Dupont",
                 Prenom = "Jean",

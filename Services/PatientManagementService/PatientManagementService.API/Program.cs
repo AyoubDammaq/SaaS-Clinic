@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PatientManagementService.API.Extensions;
+using PatientManagementService.Application.Mappings;
 using PatientManagementService.Application.PatientService.Commands.AddPatient;
 using PatientManagementService.Domain.Interfaces;
 using PatientManagementService.Domain.Interfaces.Messaging;
@@ -36,7 +37,11 @@ builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IDossierMedicalRepository, DossierMedicalRepository>();
 builder.Services.AddSingleton<IKafkaProducer, KafkaProducer>();
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(PatientProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(DossierMedicalProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(DocumentProfile).Assembly);
+
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(AddPatientCommand).Assembly));

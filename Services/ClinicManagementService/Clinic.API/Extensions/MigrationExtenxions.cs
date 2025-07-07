@@ -1,4 +1,5 @@
 ﻿using Clinic.Infrastructure.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Clinic.API.Extensions
@@ -8,11 +9,23 @@ namespace Clinic.API.Extensions
         public static void ApplyMigrations(this WebApplication app)
         {
             using var scope = app.Services.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<CliniqueDbContext>();
+            var db = scope.ServiceProvider.GetRequiredService<CliniqueDbContext>();
 
-            if (dbContext.Database.GetPendingMigrations().Any())
+            var retryCount = 0;
+            const int maxRetry = 5;
+
+            while (retryCount < maxRetry)
             {
-                dbContext.Database.Migrate();
+                try
+                {
+                    db.Database.Migrate();
+                    break;
+                }
+                catch (SqlException)
+                {
+                    retryCount++;
+                    Thread.Sleep(5000); // attend 5 sec avant de réessayer
+                }
             }
         }
     }

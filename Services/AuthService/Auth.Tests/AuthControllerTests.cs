@@ -4,6 +4,7 @@ using AuthentificationService.Entities;
 using AuthentificationService.Models;
 using AuthentificationService.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace Auth.Tests
@@ -11,12 +12,14 @@ namespace Auth.Tests
     public class AuthControllerTests
     {
         private readonly Mock<IAuthService> _authServiceMock;
+        private readonly Mock<ILogger<AuthController>> _loggerMock;
         private readonly AuthController _controller;
 
         public AuthControllerTests()
         {
             _authServiceMock = new Mock<IAuthService>();
-            _controller = new AuthController(_authServiceMock.Object);
+            _loggerMock = new Mock<ILogger<AuthController>>();
+            _controller = new AuthController(_authServiceMock.Object, _loggerMock.Object);
         }
 
         [Fact]
@@ -93,10 +96,10 @@ namespace Auth.Tests
         [Fact]
         public async Task Logout_ReturnsOk_WhenSuccess()
         {
-            var userId = Guid.NewGuid();
-            _authServiceMock.Setup(s => s.LogoutAsync(userId)).ReturnsAsync(true);
+            var request = new LogoutRequest { Email = "test@test.com" };
+            _authServiceMock.Setup(s => s.LogoutAsync(request.Email)).ReturnsAsync(true);
 
-            var result = await _controller.Logout(userId);
+            var result = await _controller.Logout(request);
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             Assert.Equal("Logout successful.", okResult.Value);
@@ -105,10 +108,10 @@ namespace Auth.Tests
         [Fact]
         public async Task Logout_ReturnsBadRequest_WhenFail()
         {
-            var userId = Guid.NewGuid();
-            _authServiceMock.Setup(s => s.LogoutAsync(userId)).ReturnsAsync(false);
+            var request = new LogoutRequest { Email = "test@test.com" }; // Correction pour utiliser LogoutRequest
+            _authServiceMock.Setup(s => s.LogoutAsync(request.Email)).ReturnsAsync(false);
 
-            var result = await _controller.Logout(userId);
+            var result = await _controller.Logout(request);
 
             Assert.IsType<BadRequestObjectResult>(result);
         }

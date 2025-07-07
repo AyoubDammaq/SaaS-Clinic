@@ -19,7 +19,7 @@ namespace PatientManagementService.Application.EventHandlers
         public async Task Handle(PatientUpdated notification, CancellationToken cancellationToken)
         {
             await _producer.PublishAsync("patient-updated", notification, cancellationToken);
-            _logger.LogInformation("📝 Patient modifié : {Nom} {Prenom}", notification.Patient.Id, notification.Patient.Id);
+            _logger.LogInformation("📝 Patient modifié : {Nom} {Prenom}", notification.Patient.Nom, notification.Patient.Prenom);
         }
     }
 }

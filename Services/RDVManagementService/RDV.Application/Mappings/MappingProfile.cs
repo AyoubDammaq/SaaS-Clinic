@@ -9,8 +9,9 @@ namespace RDV.Application.Mappings
         public MappingProfile()
         {
             // Mapping DTO -> Entity
-            CreateMap<RendezVousDTO, RendezVous>()
-                .ForMember(dest => dest.DateCreation, opt => opt.Ignore());
+            CreateMap<CreateRendezVousDto, RendezVous>()
+                .ForMember(dest => dest.Statut, opt => opt.Ignore())        // sera défini manuellement
+                .ForMember(dest => dest.DateCreation, opt => opt.Ignore()); // défini par défaut
             // DateCreation est générée automatiquement côté entity
 
             // Optionnel : Mapping inverse Entity -> DTO

@@ -10,7 +10,7 @@ namespace Notif.Infrastructure.Data
             var optionsBuilder = new DbContextOptionsBuilder<NotificationDbContext>();
 
             // 🔁 Met ici ta vraie chaîne de connexion
-            optionsBuilder.UseSqlServer("Server=notification.database,1433;Database=NotificationDb;User Id=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Data Source=host.docker.internal,1435;Database=NotificationDb;User ID=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;");
 
             return new NotificationDbContext(optionsBuilder.Options);
         }
