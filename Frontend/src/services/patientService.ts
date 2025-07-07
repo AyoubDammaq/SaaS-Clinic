@@ -1,8 +1,8 @@
 import { toast } from 'sonner';
 import { API_ENDPOINTS } from '@/config/api';
 import { api } from '@/utils/apiClient';
-import { Patient, PatientDTO, DossierMedical, DossierMedicalDTO, Document, PatientStatistique } from '@/types/patient';
-import { ApiResponse } from '@/types/response';
+import { Patient, DossierMedical, DossierMedicalDTO, Document, PatientStatistique } from '@/types/patient';
+import { MedicalRecordDocument } from '@/components/patients/MedicalRecordView';
 
 export const patientService = {
   // Get all patients
@@ -85,9 +85,9 @@ export const patientService = {
 
 export const dossierMedicalService = {
   // Get medical record by patient ID
-  getDossierMedicalByPatientId: async (patientId: string): Promise<ApiResponse<DossierMedical> | null> => {
+  getDossierMedicalByPatientId: async (patientId: string): Promise<DossierMedical | null> => {
     try {
-      const response = await api.get<ApiResponse<DossierMedical>>(API_ENDPOINTS.MEDICAL_RECORDS.GET_BY_PATIENT(patientId));
+      const response = await api.get<DossierMedical>(API_ENDPOINTS.MEDICAL_RECORDS.GET_BY_PATIENT(patientId));
       return response; 
     } catch (error) {
       console.error(`Failed to fetch medical record for patient ID ${patientId}:`, error);
@@ -122,13 +122,31 @@ export const dossierMedicalService = {
   },
 
   // Add a document to a medical record
-  addDocumentToDossier: async (dossierId: string, document: Omit<Document, 'id'>): Promise<Document> => {
+  addDocumentToDossier: async (dossierId: string, document: Omit<MedicalRecordDocument, 'id' | "dateCreation">): Promise<MedicalRecordDocument> => {
     try {
-      const response = await api.post<Document>(API_ENDPOINTS.MEDICAL_RECORDS.ADD_DOCUMENT(dossierId), document);
+      const payloadBackend = {
+        Nom: document. nom,
+        Type: document.type,
+        Url: document.url,
+      };
+
+      console.log("[addDocumentToDossier] dossierId:", dossierId);
+      console.log("[addDocumentToDossier] Payload sent to API:", payloadBackend);
+
+      const response = await api.post<Document>(API_ENDPOINTS.MEDICAL_RECORDS.ADD_DOCUMENT(dossierId), payloadBackend);
+      console.log("[addDocumentToDossier] API response:", response);
+      const transformed: MedicalRecordDocument = {
+        id: response.id,
+        nom: response.nom || '', // fallback si besoin
+        type: response.type,
+        url: response.url,
+        dateCreation: response.dateCreation || new Date().toISOString(), // fallback
+      };
+
       toast.success('Document added successfully');
-      return response;
+      return transformed;
     } catch (error) {
-      console.error(`Failed to add document to medical record ${dossierId}:`, error);
+      console.error(`[addDocumentToDossier] Failed for dossier ${dossierId}:`, error);
       toast.error('Failed to add document');
       throw error;
     }

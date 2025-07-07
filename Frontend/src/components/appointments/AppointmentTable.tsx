@@ -52,6 +52,9 @@ export const AppointmentTable = ({
     startIndex + ITEMS_PER_PAGE
   );
 
+  console.log("Rendez-vous reçus dans AppointmentTable:", appointments);
+  console.log("Rendez-vous paginés:", paginatedAppointments);
+  
   // Handle row click
   const handleRowClick = (appointment: Appointment) => {
     if (onRowClick) {
@@ -91,7 +94,7 @@ export const AppointmentTable = ({
                   <div className="flex flex-col">
                     <div className="flex items-center">
                       <CalendarDays className="mr-1 h-3.5 w-3.5 text-muted-foreground" />
-                      <span>{appointment.date}</span>
+                      <span>{appointment.dateHeure}</span>
                     </div>
                     <div className="flex items-center text-muted-foreground">
                       <Clock className="mr-1 h-3.5 w-3.5" />

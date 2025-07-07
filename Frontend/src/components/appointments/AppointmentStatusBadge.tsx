@@ -1,60 +1,52 @@
-
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, XCircle, AlertTriangle } from "lucide-react";
+import { CheckCircle, Clock, XCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "@/hooks/useTranslation";
 
-export type AppointmentStatus = 'Scheduled' | 'Completed' | 'Cancelled' | 'No-show';
+export type AppointmentStatus = "CONFIRME" | "EN_ATTENTE" | "ANNULE";
 
 interface AppointmentStatusBadgeProps {
   status: AppointmentStatus;
   showIcon?: boolean;
 }
 
-export const AppointmentStatusBadge = ({ status, showIcon = true }: AppointmentStatusBadgeProps) => {
-  const { t } = useTranslation('appointments');
-  
-  const getStatusConfig = () => {
-    switch (status) {
-      case 'Scheduled':
-        return {
-          variant: "text-blue-600 bg-blue-50 border-blue-200",
-          icon: <Clock className="h-3.5 w-3.5 mr-1" />,
-          label: t('scheduled')
-        };
-      case 'Completed':
-        return {
-          variant: "text-green-600 bg-green-50 border-green-200",
-          icon: <CheckCircle className="h-3.5 w-3.5 mr-1" />,
-          label: t('completed')
-        };
-      case 'Cancelled':
-        return {
-          variant: "text-red-600 bg-red-50 border-red-200",
-          icon: <XCircle className="h-3.5 w-3.5 mr-1" />,
-          label: t('cancelled')
-        };
-      case 'No-show':
-        return {
-          variant: "text-amber-600 bg-amber-50 border-amber-200",
-          icon: <AlertTriangle className="h-3.5 w-3.5 mr-1" />,
-          label: t('noShow')
-        };
-      default:
-        return {
-          variant: "",
-          icon: null,
-          label: status
-        };
-    }
-  };
-  
-  const { variant, icon, label } = getStatusConfig();
-  
+const statusConfig: Record<AppointmentStatus, {
+  labelKey: string;
+  icon: JSX.Element;
+  className: string;
+}> = {
+  CONFIRME: {
+    labelKey: "Planifié",
+    icon: <CheckCircle className="h-3.5 w-3.5 mr-1" />,
+    className: "text-green-600 bg-green-50 border-green-200",
+  },
+  EN_ATTENTE: {
+    labelKey: "En Attente",
+    icon: <Clock className="h-3.5 w-3.5 mr-1" />,
+    className: "text-blue-600 bg-blue-50 border-blue-200",
+  },
+  ANNULE: {
+    labelKey: "Annulé",
+    icon: <XCircle className="h-3.5 w-3.5 mr-1" />,
+    className: "text-red-600 bg-red-50 border-red-200",
+  },
+};
+
+export const AppointmentStatusBadge = ({
+  status,
+  showIcon = true,
+}: AppointmentStatusBadgeProps) => {
+  const { t } = useTranslation("appointments");
+
+  const config = statusConfig[status];
+
   return (
-    <Badge variant="outline" className={cn(variant, "flex items-center font-medium")}>
-      {showIcon && icon}
-      <span>{label}</span>
+    <Badge
+      variant="outline"
+      className={cn(config.className, "flex items-center font-medium")}
+    >
+      {showIcon && config.icon}
+      <span>{t(config.labelKey)}</span>
     </Badge>
   );
 };

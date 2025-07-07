@@ -127,10 +127,9 @@ export const AppointmentFilters = ({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">{t('allStatuses')}</SelectItem>
-                <SelectItem value="Scheduled">{t('scheduled')}</SelectItem>
-                <SelectItem value="Completed">{t('completed')}</SelectItem>
-                <SelectItem value="Cancelled">{t('cancelled')}</SelectItem>
-                <SelectItem value="No-show">{t('noShow')}</SelectItem>
+                <SelectItem value="CONFIRME">{t('Planifié')}</SelectItem>
+                <SelectItem value="EN_ATTENTE">{t('En Attente')}</SelectItem>
+                <SelectItem value="ANNULE">{t('Annulé')}</SelectItem>
               </SelectContent>
             </Select>
           </div>

@@ -23,7 +23,7 @@ const doctorFormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
   telephone: z.string().min(5, { message: "Phone number must be at least 5 characters." }),
   specialite: z.string().min(1, { message: "Please select a specialty." }),
-  cliniqueId: z.string().optional(),
+  cliniqueId: z.string().nullable().optional(),
   photoUrl: z.string().url().or(z.literal("")).optional(),
   id: z.string().optional()
 });
@@ -73,6 +73,7 @@ export function DoctorForm({
   });
 
     useEffect(() => {
+      console.log("Resetting form with initialData:", initialData);
       form.reset({
         ...defaultValues,
         ...initialData,
@@ -80,6 +81,7 @@ export function DoctorForm({
     }, [initialData, form]);
 
   const handleSubmit = async (data: DoctorFormValues) => {
+    console.log("[DoctorForm] Submitting form with values:", data);
     setIsSubmitting(true);
     
     try {
@@ -94,6 +96,9 @@ export function DoctorForm({
         : API_ENDPOINTS.DOCTORS.CREATE;
 
       const method = isUpdating ? "PUT" : "POST";
+
+      console.log("Sending", method, "request to", url);
+
 
       const response = await fetch(url, {
         method,
@@ -226,7 +231,7 @@ export function DoctorForm({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Clinic</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select value={field.value} onValueChange={field.onChange}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select a clinic" />

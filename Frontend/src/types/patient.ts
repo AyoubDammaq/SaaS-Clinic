@@ -19,16 +19,11 @@ export interface Document {
   id: string;
   nom: string;
   type: string;
+  url: string;
   dateCreation: string;
-  contenu: string;
-  url?: string;
-  
-  // Add these fields to make it compatible with MedicalRecord Document
-  name?: string;
-  uploadDate?: string;
 }
 
-export interface DocumentDTO extends Document {
+export interface CreateDocumentRequest extends Document {
   nom: string;
   url: string;
   type: string;

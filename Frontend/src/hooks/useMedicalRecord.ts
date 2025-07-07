@@ -1,9 +1,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { dossierMedicalService } from '@/services/patientService';
-import { DossierMedical, DossierMedicalDTO, Document } from '@/types/patient';
+import { DossierMedical, DossierMedicalDTO, Document, CreateDocumentRequest } from '@/types/patient';
 import { toast } from 'sonner';
 import { ApiResponse } from '@/types/response';
+import { MedicalRecordDocument } from '@/components/patients/MedicalRecordView';
 
 interface UseMedicalRecordResult {
   medicalRecord: DossierMedical | null;
@@ -30,14 +31,14 @@ export function useMedicalRecord(patientId: string): UseMedicalRecordResult {
     setError(null);
 
     try {
-      const response : ApiResponse<DossierMedical> = await dossierMedicalService.getDossierMedicalByPatientId(patientId);
+      const dossier  = await dossierMedicalService.getDossierMedicalByPatientId(patientId);
+      console.log("Fetched dossier medical:", dossier);
 
-      if (response.success && response.data) {
-        setMedicalRecord(response.data);
-        return response.data;
+      if (dossier && dossier.id) {
+        setMedicalRecord(dossier);
+        return dossier;
       } else {
-        setError(response.message);
-        toast.error(response.message);
+        setMedicalRecord(null);
         return null;
       }
     } catch (err) {
@@ -83,6 +84,10 @@ export function useMedicalRecord(patientId: string): UseMedicalRecordResult {
     const newMedicalRecord = await dossierMedicalService.createDossierMedical(dossierMedicalDTO);
 
       setDossierMedicalDTO(newMedicalRecord); // Set the newly created medical record
+
+      // Ajoute cette ligne pour rafraîchir le state local :
+      await fetchMedicalRecord(patientId);
+      
       toast.success("Dossier médical créé avec succès");
     } catch (err) {
       console.error("Failed to create medical record:", err);
@@ -122,8 +127,14 @@ export function useMedicalRecord(patientId: string): UseMedicalRecordResult {
   };
 
   // Ajouter un document au dossier médical
-  const addDocument = async (document: Omit<Document, 'id'>): Promise<void> => {
-    if (!medicalRecord) return;
+  const addDocument = async (document: CreateDocumentRequest): Promise<void> => {
+    if (!medicalRecord) {
+      console.warn("[addDocument] medicalRecord is null");
+      return;
+    }
+
+    console.log("[addDocument] Medical Record ID:", medicalRecord.id);
+    console.log("[addDocument] Document to send:", document);
     
     setIsSubmitting(true);
     setError(null);
@@ -133,6 +144,7 @@ export function useMedicalRecord(patientId: string): UseMedicalRecordResult {
         medicalRecord.id,
         document
       );
+      console.log("[addDocument] Document returned from backend:", newDocument);
       
       setMedicalRecord(prev => {
         if (!prev) return null;
@@ -145,7 +157,7 @@ export function useMedicalRecord(patientId: string): UseMedicalRecordResult {
       
       toast.success('Document ajouté avec succès');
     } catch (err) {
-      console.error('Failed to add document:', err);
+      console.error("[addDocument] Failed to add document:", err);
       setError('Failed to add document');
       toast.error('Échec de l\'ajout du document');
       throw err;

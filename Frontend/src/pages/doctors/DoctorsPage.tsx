@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
@@ -37,10 +37,14 @@ function DoctorsPage() {
   const [selectedDoctorForProfile, setSelectedDoctorForProfile] = useState<Doctor | null>(null);
   const [filters, setFilters] = useState({ specialty: null as string | null, clinicId: null as string | null });
   const { cliniques } = useCliniques();
+  const hasFetchedRef = useRef(false);
 
   useEffect(() => {
-    fetchDoctors().catch(() => toast.error('Failed to fetch doctors'));
-  }, []);
+    if (!hasFetchedRef.current) {
+      fetchDoctors().catch(() => toast.error("Failed to fetch doctors"));
+      hasFetchedRef.current = true;
+    }
+  }, [fetchDoctors]);
 
   useEffect(() => {
     const results = doctors.filter((doctor) => {
@@ -66,21 +70,24 @@ function DoctorsPage() {
 
   const handleFormSubmit = async (data: Doctor) => {
     try {
-      if (selectedDoctor) {
-        const updatedDoctors = doctors.map((doctor) =>
-          doctor.id === selectedDoctor.id ? { ...doctor, ...data } : doctor
-        );
-        setDoctors(updatedDoctors);
-        toast.success('Doctor updated successfully');
-      } else {
-        const newDoctor = {
-          id: (doctors.length + 1).toString(),
-          ...data,
-          patients: 0,
-        };
-      setDoctors([...doctors, newDoctor]);
-      toast.success('Doctor added successfully');
-      }
+      // if (selectedDoctor) {
+      //   const updatedDoctors = doctors.map((doctor) =>
+      //     doctor.id === selectedDoctor.id ? { ...doctor, ...data } : doctor
+      //   );
+      //   setDoctors(updatedDoctors);
+      //   toast.success('Doctor updated successfully');
+      // } else {
+      //   const newDoctor = {
+      //     id: (doctors.length + 1).toString(),
+      //     ...data,
+      //     patients: 0,
+      //   };
+      // setDoctors([...doctors, newDoctor]);
+      // toast.success('Doctor added successfully');
+      // }
+      // setSelectedDoctor(null);
+      // setIsFormOpen(false);
+      // await fetchDoctors();
       setSelectedDoctor(null);
       setIsFormOpen(false);
       await fetchDoctors();
@@ -91,17 +98,32 @@ function DoctorsPage() {
   };
 
   const handleEditDoctor = (doctor: Doctor) => {
+    console.log("Editing doctor:", doctor);
     setSelectedDoctor(doctor);
     setIsFormOpen(true);
   };
 
   const handleDeleteDoctor = async (id: string) => {
     try {
-      await deleteDoctor(id);
+      if (user.role === 'SuperAdmin') {
+        await deleteDoctor(id);
+        toast.success('Médecin supprimé avec succès');
+      } else if (user.role === 'ClinicAdmin') {
+        await unassignDoctorFromClinic(id);
+        toast.success('Médecin désabonné de la clinique avec succès');
+      } else {
+        toast.error("Vous n'avez pas les droits pour effectuer cette action.");
+        return;
+      }
+
+      // Mettre à jour la liste après suppression/désabonnement
+      await fetchDoctors();
     } catch (error) {
-      console.error("Error deleting doctor:", error);
+      console.error('Erreur lors de la suppression ou désabonnement du médecin:', error);
+      toast.error("Une erreur est survenue lors de la suppression.");
     }
   };
+
 
   const handleFilterChange = (newFilters: { specialty: string | null; clinicId: string | null }) => {
     setFilters(newFilters);
@@ -274,3 +296,7 @@ function DoctorsPage() {
 }
 
 export default DoctorsPage;
+
+function unassignDoctorFromClinic(id: string) {
+  throw new Error('Function not implemented.');
+}

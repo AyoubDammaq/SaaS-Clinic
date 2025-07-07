@@ -90,29 +90,28 @@ function MedicalRecordPage() {
       id: medicalRecord.id,
       patientId: medicalRecord.patientId,
       allergies: medicalRecord.allergies || '',
-      chronicDiseases: medicalRecord.maladiesChroniques || '',
-      currentMedications: medicalRecord.medicamentsActuels || '',
-      bloodType:  medicalRecord.groupeSanguin || '',
+      chronicDiseases: medicalRecord.maladiesChroniques || '', // OK
+      currentMedications: medicalRecord.medicamentsActuels || '', // OK
+      bloodType:  medicalRecord.groupeSanguin || '', // OK
       creationDate: medicalRecord.dateCreation || '',
-      personalHistory: medicalRecord.antécédentsPersonnels || '',
-      familyHistory: medicalRecord.antécédentsFamiliaux || '',
+      personalHistory: medicalRecord.antécédentsPersonnels || '', // OK
+      familyHistory: medicalRecord.antécédentsFamiliaux || '', // OK
       documents: (medicalRecord.documents || []).map(doc => ({
         id: doc.id,
-        name: doc.nom || doc.name || '',
+        nom: doc.nom || '',
         type: doc.type,
-        uploadDate: doc.dateCreation || doc.uploadDate || '',
+        dateCreation: doc.dateCreation || '',
         url: doc.url || ''
       }))
     };
   };
 
-  const mapViewDocumentToAppDocument = (viewDocument: Omit<MedicalRecordDocument, "id">): Omit<Document, "id"> => {
+  const mapViewDocumentToAppDocument = (viewDocument: Omit<MedicalRecordDocument, "id" | "dateCreation">): Omit<Document, "id"> => {
     return {
-      nom: viewDocument.name,
+      nom: viewDocument.nom,
       type: viewDocument.type,
-      dateCreation: viewDocument.uploadDate,
-      contenu: viewDocument.url || '',
-      url: viewDocument.url || ''
+      url: viewDocument.url || '',
+      dateCreation: new Date().toISOString() 
     };
   };
 
@@ -156,7 +155,6 @@ function MedicalRecordPage() {
       toast.error("Failed to create medical record");
     }
   };
-
 
   return (
     <div className="space-y-6 pb-8">

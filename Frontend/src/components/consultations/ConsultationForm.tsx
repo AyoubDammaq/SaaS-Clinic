@@ -10,6 +10,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { toast } from 'sonner';
+import { Patient } from "@/types/patient";
+import { Doctor } from "@/types/doctor";
 
 const consultationFormSchema = z.object({
   patientId: z.string().min(1, { message: "Please select a patient." }),
@@ -21,17 +23,6 @@ const consultationFormSchema = z.object({
 });
 
 type ConsultationFormValues = z.infer<typeof consultationFormSchema>;
-
-interface Patient {
-  id: string;
-  name: string;
-}
-
-interface Doctor {
-  id: string;
-  name: string;
-  specialty: string;
-}
 
 interface ConsultationFormProps {
   isOpen: boolean;
@@ -102,7 +93,7 @@ export function ConsultationForm({
                     <SelectContent>
                       {patients.map((patient) => (
                         <SelectItem key={patient.id} value={patient.id}>
-                          {patient.name}
+                          {patient.prenom}{patient.nom}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -126,7 +117,7 @@ export function ConsultationForm({
                     <SelectContent>
                       {doctors.map((doctor) => (
                         <SelectItem key={doctor.id} value={doctor.id}>
-                          {doctor.name} - {doctor.specialty}
+                          {doctor.prenom} {doctor.nom} - {doctor.specialite}
                         </SelectItem>
                       ))}
                     </SelectContent>

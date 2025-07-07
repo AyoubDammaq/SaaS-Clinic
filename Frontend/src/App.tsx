@@ -1,4 +1,3 @@
-
 import { Routes, Route } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
 import DashboardPage from '@/pages/DashboardPage';
@@ -37,24 +36,48 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/role-form" element={<RoleFormRouter />} />
-                
-                {/* Private routes wrapped by PrivateRoute */}
-                <Route element={<PrivateRoute />}>
+
+                {/* Dashboard, accessible à tous */}
+                <Route element={<PrivateRoute allowedRoles={['SuperAdmin', 'ClinicAdmin', 'Doctor', 'Patient']} />}>
                   <Route path="/dashboard" element={<DashboardPage />} />
+                </Route>
+
+                {/* Patients (Admin + Doctor) */}
+                <Route element={<PrivateRoute allowedRoles={['SuperAdmin', 'ClinicAdmin', 'Doctor']} />}>
                   <Route path="/patients" element={<PatientsPage />} />
                   <Route path="/medical-record/:id" element={<MedicalRecordPage />} />
-                  <Route path="/appointments" element={<AppointmentsPage />} />
-                  <Route path="/consultations" element={<ConsultationsPage />} />
+                </Route>
+
+                {/* Doctors (Admins only) */}
+                <Route element={<PrivateRoute allowedRoles={['SuperAdmin', 'ClinicAdmin']} />}>
                   <Route path="/doctors" element={<DoctorsPage />} />
                   <Route path="/clinics" element={<ClinicsPage />} />
-                  <Route path="/billing" element={<BillingPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
+                </Route>
+
+                {/* Consultations, Appointments */}
+                <Route element={<PrivateRoute allowedRoles={['SuperAdmin', 'ClinicAdmin', 'Doctor', 'Patient']} />}>
+                  <Route path="/appointments" element={<AppointmentsPage />} />
+                  <Route path="/consultations" element={<ConsultationsPage />} />
+                </Route>
+
+                {/* Billing for Patients and Admins */}
+                <Route element={<PrivateRoute allowedRoles={['SuperAdmin', 'ClinicAdmin', 'Patient']} />}>
+                  <Route path="/billing" element={<BillingPage />} />
+                </Route>
+
+                {/* Notifications */}
+                <Route element={<PrivateRoute allowedRoles={['SuperAdmin', 'ClinicAdmin', 'Doctor', 'Patient']} />}>
                   <Route path="/notifications" element={<NotificationsPage />} />
+                </Route>
+
+                {/* Other placeholders (accessible à tous les rôles sauf Doctor/Patient si besoin) */}
+                <Route element={<PrivateRoute allowedRoles={['SuperAdmin', 'ClinicAdmin']} />}>
                   <Route path="/reports" element={<PlaceholderPage title="Reports" />} />
                   <Route path="/analytics" element={<PlaceholderPage title="Analytics" />} />
                   <Route path="/profile" element={<PlaceholderPage title="Profile" />} />
                 </Route>
-                
+
                 <Route path="*" element={<NotFound />} />
               </Routes>
               <Toaster />

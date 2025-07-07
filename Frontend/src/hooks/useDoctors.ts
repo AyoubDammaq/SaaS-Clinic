@@ -21,6 +21,8 @@ interface UseDoctorsState {
   addDoctor: (data: DoctorDto) => Promise<void>;
   updateDoctor: (id: string, data: DoctorDto) => Promise<void>;
   deleteDoctor: (id: string) => Promise<void>;
+  assignDoctorToClinic: (medecinId: string, cliniqueId: string) => Promise<void>;
+  unassignDoctorFromClinic: (medecinId: string) => Promise<void>;
   refetchDoctors: () => Promise<void>;
   fetchDoctors: () => Promise<void>; 
   setDoctors: React.Dispatch<React.SetStateAction<Doctor[]>>;
@@ -167,6 +169,38 @@ export function useDoctors(): UseDoctorsState {
     }
   };
 
+  // Assign doctor to clinic
+  const assignDoctorToClinic = async (medecinId: string, cliniqueId: string) => {
+    setIsSubmitting(true);
+    try {
+      await doctorService.assignDoctorToClinic(medecinId, cliniqueId);
+      toast.success('Médecin attribué à la clinique avec succès');
+      await refetchDoctors();
+    } catch (error) {
+      console.error('Erreur lors de l’attribution du médecin à la clinique :', error);
+      toast.error('Échec de l’attribution du médecin');
+      throw error;
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  const unassignDoctorFromClinic = async (medecinId: string) => {
+    setIsSubmitting(true);
+    try {
+      await doctorService.unassignDoctorFromClinic(medecinId);
+      toast.success('Médecin désabonné de la clinique avec succès');
+      await refetchDoctors();
+    } catch (error) {
+      console.error('Erreur lors du désabonnement du médecin de la clinique :', error);
+      toast.error('Échec du désabonnement du médecin');
+      throw error;
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+
+
   return {
     doctors,
     filteredDoctors,
@@ -178,6 +212,8 @@ export function useDoctors(): UseDoctorsState {
     addDoctor,
     updateDoctor,
     deleteDoctor,
+    assignDoctorToClinic,
+    unassignDoctorFromClinic,
     refetchDoctors: fetchDoctors,
     fetchDoctors,
     setDoctors,

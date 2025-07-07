@@ -65,6 +65,17 @@ export function PatientForm({ isOpen, onClose, onSubmit, initialData, isLoading 
         adresse: initialData.adresse || "",
         sexe: initialData.sexe || undefined,
       });
+    } else {
+      // Ajoute ce bloc pour vider le formulaire lors de l'ajout
+      form.reset({
+        prenom: "",
+        nom: "",
+        email: "",
+        telephone: "",
+        dateNaissance: "",
+        adresse: "",
+        sexe: undefined,
+      });
     }
   }, [initialData, form]);
 

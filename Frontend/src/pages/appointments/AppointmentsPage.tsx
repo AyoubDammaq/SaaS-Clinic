@@ -1,17 +1,41 @@
-import { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { AppointmentFilters } from '@/components/appointments/AppointmentFilters';
-import { AppointmentTable } from '@/components/appointments/AppointmentTable';
-import { AppointmentForm } from '@/components/appointments/AppointmentForm';
-import { AppointmentStatus } from '@/components/appointments/AppointmentStatusBadge';
-import { cn } from '@/lib/utils';
-import { useTranslation } from '@/hooks/useTranslation';
-import { format } from 'date-fns';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
-import { ConsultationForm } from '@/components/consultations/ConsultationForm';
+import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { AppointmentFilters } from "@/components/appointments/AppointmentFilters";
+import { AppointmentTable } from "@/components/appointments/AppointmentTable";
+import { AppointmentForm } from "@/components/appointments/AppointmentForm";
+import { AppointmentStatus } from "@/components/appointments/AppointmentStatusBadge";
+import { cn } from "@/lib/utils";
+import { useTranslation } from "@/hooks/useTranslation";
+import { format } from "date-fns";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { ConsultationForm } from "@/components/consultations/ConsultationForm";
+import { useAppointments } from "@/hooks/useAppointments";
+import { useDoctors } from "@/hooks/useDoctors";
+import { usePatients } from "@/hooks/usePatients";
+import {
+  AppointmentFormData,
+  AppointmentStatusEnum,
+  RendezVous,
+} from "@/types/rendezvous";
+import { ConsultationDTO } from "@/types/consultation";
+import { Patient } from "@/types/patient";
+import { Doctor } from "@/types/doctor";
 
 interface Appointment {
   id: string;
@@ -19,228 +43,191 @@ interface Appointment {
   patientId: string;
   doctorName: string;
   doctorId: string;
-  date: string;
+  dateHeure: string;
   time: string;
   duration: number; // minutes
   reason: string;
-  status: AppointmentStatus;
+  status: keyof typeof AppointmentStatusEnum;
   notes?: string;
 }
 
-// Mock data for doctors and patients
-const mockDoctors = [
-  { id: '1', name: 'Dr. Sarah Johnson', specialty: 'Cardiology' },
-  { id: '2', name: 'Dr. James Wilson', specialty: 'Dermatology' },
-  { id: '3', name: 'Dr. Emily Harris', specialty: 'Pediatrics' },
-  { id: '4', name: 'Dr. Michael Brown', specialty: 'General Medicine' }
-];
+function mapRendezVousToAppointment(
+  rdv: RendezVous,
+  patients: Patient[],
+  doctors: Doctor[]
+): Appointment {
+  const patient = patients.find((p) => p.id === rdv.patientId);
+  const doctor = doctors.find((d) => d.id === rdv.medecinId);
 
-const mockPatients = [
-  { id: '1', name: 'John Doe' },
-  { id: '2', name: 'Jane Smith' },
-  { id: '3', name: 'Robert Brown' },
-  { id: '4', name: 'Emily Davis' },
-  { id: '5', name: 'Michael Wilson' }
-];
-
-const mockAppointments: Appointment[] = [
-  {
-    id: '1',
-    patientName: 'John Doe',
-    patientId: '1',
-    doctorName: 'Dr. Michael Brown',
-    doctorId: '4',
-    date: '2025-04-30',
-    time: '09:00',
-    duration: 30,
-    reason: 'Annual check-up',
-    status: 'Scheduled'
-  },
-  {
-    id: '2',
-    patientName: 'Jane Smith',
-    patientId: '2',
-    doctorName: 'Dr. Sarah Johnson',
-    doctorId: '1',
-    date: '2025-04-30',
-    time: '10:30',
-    duration: 45,
-    reason: 'Follow-up appointment',
-    status: 'Scheduled'
-  },
-  {
-    id: '3',
-    patientName: 'Robert Brown',
-    patientId: '3',
-    doctorName: 'Dr. Michael Brown',
-    doctorId: '4',
-    date: '2023-04-29',
-    time: '14:15',
-    duration: 30,
-    reason: 'Consultation',
-    status: 'Completed',
-    notes: 'Patient is feeling better, prescribed medication refill.'
-  },
-  {
-    id: '4',
-    patientName: 'Emily Davis',
-    patientId: '4',
-    doctorName: 'Dr. James Wilson',
-    doctorId: '2',
-    date: '2025-05-02',
-    time: '11:00',
-    duration: 60,
-    reason: 'Initial consultation',
-    status: 'Scheduled'
-  },
-  {
-    id: '5',
-    patientName: 'Michael Wilson',
-    patientId: '5',
-    doctorName: 'Dr. Emily Harris',
-    doctorId: '3',
-    date: '2023-04-28',
-    time: '15:30',
-    duration: 30,
-    reason: 'Check-up',
-    status: 'Cancelled'
-  },
-  {
-    id: '6',
-    patientName: 'John Doe',
-    patientId: '1',
-    doctorName: 'Dr. Sarah Johnson',
-    doctorId: '1',
-    date: '2023-03-15',
-    time: '09:45',
-    duration: 30,
-    reason: 'Prescription renewal',
-    status: 'Completed'
-  },
-  {
-    id: '7',
-    patientName: 'Jane Smith',
-    patientId: '2',
-    doctorName: 'Dr. Emily Harris',
-    doctorId: '3',
-    date: '2023-04-10',
-    time: '14:00',
-    duration: 45,
-    reason: 'Child vaccination',
-    status: 'Completed'
-  },
-  {
-    id: '8',
-    patientName: 'Robert Brown',
-    patientId: '3',
-    doctorName: 'Dr. James Wilson',
-    doctorId: '2',
-    date: '2023-03-22',
-    time: '11:30',
-    duration: 60,
-    reason: 'Skin condition evaluation',
-    status: 'No-show'
-  }
-];
+  return {
+    id: rdv.id,
+    patientId: rdv.patientId,
+    doctorId: rdv.medecinId,
+    dateHeure: rdv.dateHeure,
+    time: new Date(rdv.dateHeure).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+    duration: 30, // ou une valeur par défaut
+    reason: rdv.commentaire ?? "—",
+    status: AppointmentStatusEnum[
+      rdv.statut
+    ] as keyof typeof AppointmentStatusEnum,
+    patientName:
+      rdv.patientNom ||
+      (patient ? `${patient.prenom} ${patient.nom}` : "Inconnu"),
+    doctorName:
+      rdv.medecinNom ||
+      (doctor ? `Dr. ${doctor.prenom} ${doctor.nom}` : "Inconnu"),
+    notes: rdv.justificationAnnulation || "",
+  };
+}
 
 function AppointmentsPage() {
   const { user } = useAuth();
-  const { t } = useTranslation('appointments');
-  const tConsultations = useTranslation('consultations').t;
-  const tCommon = useTranslation('common').t;
-  
+  const { doctors, isLoading: isLoadingDoctors } = useDoctors();
+  const { patients, isLoading: isLoadingPatients } = usePatients();
+  const { t } = useTranslation("appointments");
+  const tConsultations = useTranslation("consultations").t;
+  const tCommon = useTranslation("common").t;
+
+  const {
+    filteredAppointments,
+    isLoading,
+    isSubmitting,
+    permissions,
+    searchTerm,
+    setSearchTerm,
+    handleAddAppointment,
+    handleUpdateAppointment,
+    handleCancelAppointment,
+    refetchAppointments,
+  } = useAppointments();
+
+  console.log("Données brutes filteredAppointments:", filteredAppointments);
+  console.log("Liste patients:", patients);
+  console.log("Liste médecins:", doctors);
+
+  const mappedAppointments: Appointment[] = filteredAppointments.map((rdv) =>
+    mapRendezVousToAppointment(rdv, patients, doctors)
+  );
+
+  console.log("Données mappées pour affichage:", mappedAppointments);
+
   // State for filters
-  const [searchTerm, setSearchTerm] = useState('');
   const [dateFilter, setDateFilter] = useState<Date | null>(null);
-  const [statusFilter, setStatusFilter] = useState<AppointmentStatus | 'all'>('all');
-  
+  const [statusFilter, setStatusFilter] = useState<AppointmentStatus | "all">(
+    "all"
+  );
+
   // State for appointment form
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
-  
+  const [selectedAppointment, setSelectedAppointment] =
+    useState<Appointment | null>(null);
+
   // State for appointment details dialog
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const [viewingAppointment, setViewingAppointment] = useState<Appointment | null>(null);
-  
+  const [viewingAppointment, setViewingAppointment] =
+    useState<Appointment | null>(null);
+
   // State for cancel confirmation dialog
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
-  const [appointmentToCancel, setAppointmentToCancel] = useState<string | null>(null);
-  
+  const [appointmentToCancel, setAppointmentToCancel] = useState<string | null>(
+    null
+  );
+
   // State for consultation form
   const [isConsultationFormOpen, setIsConsultationFormOpen] = useState(false);
-  const [appointmentForConsultation, setAppointmentForConsultation] = useState<Appointment | null>(null);
+  const [appointmentForConsultation, setAppointmentForConsultation] =
+    useState<Appointment | null>(null);
 
   // Filter appointments based on user role, search term, date and status
   const getFilteredAppointments = () => {
     if (!user) return { upcoming: [], past: [] };
-    
-    let filtered = [...mockAppointments];
-    
-    // Filter by role
-    if (user.role === 'Patient') {
-      filtered = filtered.filter(appointment => 
-        appointment.patientId === user.id || 
-        appointment.patientName.includes(user.name)
-      );
-    } else if (user.role === 'Doctor') {
-      filtered = filtered.filter(appointment => 
-        appointment.doctorId === user.id || 
-        appointment.doctorName.includes(user.name)
-      );
-    }
-    
-    // Apply search term filter
+
+    let filtered = [...mappedAppointments];
+
+    // Filtrage selon le rôle utilisateur
+    // if (user.role === "Patient") {
+    //   filtered = filtered.filter(
+    //     (appointment) =>
+    //       appointment.patientId === user.id ||
+    //       (appointment.patientName
+    //         ?.toLowerCase()
+    //         .includes(user.name.toLowerCase()) ??
+    //         false)
+    //   );
+    // } else if (user.role === "Doctor") {
+    //   filtered = filtered.filter(
+    //     (appointment) =>
+    //       appointment.doctorId === user.id ||
+    //       (appointment.doctorName
+    //         ?.toLowerCase()
+    //         .includes(user.name.toLowerCase()) ??
+    //         false)
+    //   );
+    // }
+
+    // Filtre sur le champ de recherche
     if (searchTerm) {
-      filtered = filtered.filter(appointment => 
-        appointment.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        appointment.doctorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        appointment.reason.toLowerCase().includes(searchTerm.toLowerCase())
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(
+        (appointment) =>
+          (appointment.patientName?.toLowerCase().includes(term) ?? false) ||
+          (appointment.doctorName?.toLowerCase().includes(term) ?? false) ||
+          (appointment.reason?.toLowerCase().includes(term) ?? false)
       );
     }
-    
-    // Apply date filter
+
+    // Filtre sur la date
     if (dateFilter) {
-      const formattedDateFilter = format(dateFilter, 'yyyy-MM-dd');
-      filtered = filtered.filter(appointment => appointment.date === formattedDateFilter);
+      filtered = filtered.filter((appointment) => {
+        const appointmentDate = new Date(appointment.dateHeure);
+        const formattedAppointmentDate = format(appointmentDate, "yyyy-MM-dd");
+        const formattedFilterDate = format(dateFilter, "yyyy-MM-dd");
+        return formattedAppointmentDate === formattedFilterDate;
+      });
     }
-    
-    // Apply status filter
-    if (statusFilter !== 'all') {
-      filtered = filtered.filter(appointment => appointment.status === statusFilter);
-    }
-    
-    // Split into upcoming and past appointments
+
+    // Filtre sur le statut
+    filtered = filtered.filter(
+      (appointment) =>
+        statusFilter === "all" || appointment.status === statusFilter
+    );
+
+    // Séparer en rdv à venir vs passés
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
-    const upcoming = filtered.filter(appointment => {
-      const appointmentDate = new Date(appointment.date);
-      return appointmentDate >= today || appointment.status === 'Scheduled';
+
+    const upcoming = filtered.filter((appointment) => {
+      const appointmentDate = new Date(appointment.dateHeure);
+      return appointmentDate >= today || appointment.status === "CONFIRME";
     });
-    
-    const past = filtered.filter(appointment => {
-      const appointmentDate = new Date(appointment.date);
-      return appointmentDate < today && appointment.status !== 'Scheduled';
+
+    const past = filtered.filter((appointment) => {
+      const appointmentDate = new Date(appointment.dateHeure);
+      return appointmentDate < today && appointment.status !== "CONFIRME";
     });
-    
-    // Sort upcoming by date (ascending)
-    upcoming.sort((a, b) => {
-      const dateA = new Date(a.date + 'T' + a.time);
-      const dateB = new Date(b.date + 'T' + b.time);
-      return dateA.getTime() - dateB.getTime();
-    });
-    
-    // Sort past by date (descending)
-    past.sort((a, b) => {
-      const dateA = new Date(a.date + 'T' + a.time);
-      const dateB = new Date(b.date + 'T' + b.time);
-      return dateB.getTime() - dateA.getTime();
-    });
-    
+
+    // Tri ascendant pour les prochains rendez-vous
+    upcoming.sort(
+      (a, b) =>
+        new Date(a.dateHeure).getTime() - new Date(b.dateHeure).getTime()
+    );
+
+    // Tri descendant pour les anciens rendez-vous
+    past.sort(
+      (a, b) =>
+        new Date(b.dateHeure).getTime() - new Date(a.dateHeure).getTime()
+    );
+
     return { upcoming, past };
   };
 
   const { upcoming, past } = getFilteredAppointments();
+
+  console.log("[AppointmentsPage] Upcoming appointments:", upcoming);
+  console.log("[AppointmentsPage] Past appointments:", past);
 
   // Handlers for appointment actions
   const handleCancel = (appointmentId: string) => {
@@ -248,25 +235,29 @@ function AppointmentsPage() {
     setAppointmentToCancel(appointmentId);
     setIsCancelDialogOpen(true);
   };
-  
-  const confirmCancelAppointment = () => {
+
+  const confirmCancelAppointment = async () => {
     if (appointmentToCancel) {
-      // Here would be the API call to cancel the appointment
-      console.log(`Cancelling appointment ${appointmentToCancel}`);
-      
-      // Show success message
-      toast.success(t('appointmentCancelled'));
-      
-      // Close the dialog
-      setIsCancelDialogOpen(false);
-      setAppointmentToCancel(null);
+      try {
+        await handleCancelAppointment(
+          appointmentToCancel,
+          user?.role === "Doctor" ? "doctor" : "patient"
+        );
+
+        toast.success(t("appointmentCancelled"));
+        setIsCancelDialogOpen(false);
+        setAppointmentToCancel(null);
+        refetchAppointments(); // <-- Important pour rafraîchir la liste
+      } catch (error) {
+        toast.error(t("appointmentError"));
+      }
     }
   };
 
   const handleComplete = (appointmentId: string) => {
     // Here would be the API call to mark the appointment as completed
     console.log(`Completing appointment ${appointmentId}`);
-    toast.success(t('appointmentCompleted'));
+    toast.success(t("appointmentCompleted"));
   };
 
   const handleReschedule = (appointment: Appointment) => {
@@ -291,51 +282,70 @@ function AppointmentsPage() {
     setIsFormOpen(true);
   };
 
-  const handleFormSubmit = (data: any) => {
-    // Here would be the API call to create or update an appointment
-    console.log("Submitting appointment data:", data);
-    
-    // Show success message
+  const handleFormSubmit = async (data: any) => {
+    console.log("[AppointmentsPage] Form submitted with data:", data);
     if (selectedAppointment) {
-      toast.success(t('appointmentUpdated'));
+      console.log(
+        "[AppointmentsPage] Updating appointment id:",
+        selectedAppointment.id
+      );
+      try {
+        await handleUpdateAppointment(selectedAppointment.id, data);
+        console.log("[AppointmentsPage] Appointment updated successfully");
+        toast.success(t("appointmentUpdated"));
+      } catch (error) {
+        console.error("[AppointmentsPage] Update failed:", error);
+        toast.error(t("appointmentError"));
+      }
     } else {
-      toast.success(t('appointmentCreated'));
+      console.log("[AppointmentsPage] Creating new appointment");
+      try {
+        await handleAddAppointment(data);
+        console.log("[AppointmentsPage] Appointment created successfully");
+        toast.success(t("appointmentCreated"));
+      } catch (error) {
+        console.error("[AppointmentsPage] Creation failed:", error);
+        toast.error(t("appointmentError"));
+      }
     }
-    
-    // Close the form
     setIsFormOpen(false);
+    refetchAppointments();
   };
-  
+
   const handleCreateConsultation = (appointment: Appointment) => {
     // Only allow doctors to create consultations from appointments
-    if (user?.role === 'Doctor' && appointment.status === 'Scheduled') {
+    if (user?.role === "Doctor" && appointment.status === "CONFIRME") {
       setAppointmentForConsultation(appointment);
       setIsConsultationFormOpen(true);
     }
   };
-  
-  const handleConsultationFormSubmit = (data: any) => {
+
+  const handleConsultationFormSubmit = (data: ConsultationDTO) => {
     // Here would be the API call to create a consultation
     console.log("Creating consultation from appointment:", data);
-    
+
     // Show success message
     toast.success("Consultation created successfully");
-    
+
     // Close the form
     setIsConsultationFormOpen(false);
     setAppointmentForConsultation(null);
   };
 
+  console.log("[AppointmentsPage] user.id:", user?.id);
+
   return (
     <div className="space-y-6 pb-8">
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">{t('appointments')}</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          {t("appointments")}
+        </h1>
         <p className="text-muted-foreground">
-          {user?.role === 'Patient' 
-            ? t('manageYourAppointments') 
-            : user?.role === 'Doctor'
-            ? t('managePatientAppointments')
-            : t('manageAllAppointments')}
+          {user?.role === "Patient"
+            ? t("manageYourAppointments")
+            : user?.role === "Doctor"
+            ? t("managePatientAppointments")
+            : t("manageAllAppointments")}
         </p>
       </div>
 
@@ -353,32 +363,38 @@ function AppointmentsPage() {
       <div className="space-y-6">
         <Card>
           <CardHeader className="py-4">
-            <CardTitle>{t('upcomingAppointments')}</CardTitle>
-            <CardDescription>{tCommon('manage')} {t('upcomingAppointments').toLowerCase()}</CardDescription>
+            <CardTitle>{t("upcomingAppointments")}</CardTitle>
+            <CardDescription>
+              {tCommon("manage")} {t("upcomingAppointments").toLowerCase()}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <AppointmentTable
               appointments={upcoming}
-              userRole={user?.role || ''}
+              userRole={user?.role || ""}
               onCancel={handleCancel}
               onComplete={handleComplete}
               onReschedule={handleReschedule}
               onViewDetails={handleViewDetails}
               onAddNotes={handleAddNotes}
-              onRowClick={user?.role === 'Doctor' ? handleCreateConsultation : undefined}
+              onRowClick={
+                user?.role === "Doctor" ? handleCreateConsultation : undefined
+              }
             />
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className={cn("py-4", past.length === 0 && "border-b-0")}>
-            <CardTitle>{t('pastAppointments')}</CardTitle>
-            <CardDescription>{tCommon('view')} {t('pastAppointments').toLowerCase()}</CardDescription>
+            <CardTitle>{t("pastAppointments")}</CardTitle>
+            <CardDescription>
+              {tCommon("view")} {t("pastAppointments").toLowerCase()}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <AppointmentTable
               appointments={past}
-              userRole={user?.role || ''}
+              userRole={user?.role || ""}
               onViewDetails={handleViewDetails}
               isPast={true}
             />
@@ -392,91 +408,118 @@ function AppointmentsPage() {
         onClose={() => setIsFormOpen(false)}
         onSubmit={handleFormSubmit}
         initialData={selectedAppointment}
-        doctors={mockDoctors}
-        patients={mockPatients}
-        patientId={user?.role === 'Patient' ? user.id : undefined}
+        doctors={doctors}
+        patients={patients}
+        patientId={user?.role === "Patient" ? user.id : undefined}
       />
-      
+
       {/* Appointment Details Dialog */}
       <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>{t('appointmentDetails')}</DialogTitle>
+            <DialogTitle>{t("appointmentDetails")}</DialogTitle>
           </DialogHeader>
           {viewingAppointment && (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">{tCommon('patient')}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    {tCommon("patient")}
+                  </p>
                   <p>{viewingAppointment.patientName}</p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">{tCommon('doctor')}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    {tCommon("doctor")}
+                  </p>
                   <p>{viewingAppointment.doctorName}</p>
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">{t('date')}</p>
-                  <p>{viewingAppointment.date}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    {t("date")}
+                  </p>
+                  <p>{viewingAppointment.dateHeure}</p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">{t('time')}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    {t("time")}
+                  </p>
                   <p>{viewingAppointment.time}</p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">{t('durationMinutes')}</p>
-                  <p>{viewingAppointment.duration} {t('min')}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    {t("durationMinutes")}
+                  </p>
+                  <p>
+                    {viewingAppointment.duration} {t("min")}
+                  </p>
                 </div>
               </div>
               <div>
-                <p className="text-sm font-medium text-muted-foreground">{t('reason')}</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  {t("reason")}
+                </p>
                 <p>{viewingAppointment.reason}</p>
               </div>
               {viewingAppointment.notes && (
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">{t('additionalNotes')}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    {t("additionalNotes")}
+                  </p>
                   <p>{viewingAppointment.notes}</p>
                 </div>
               )}
               <DialogFooter>
-                {viewingAppointment.status === 'Scheduled' && user?.role !== 'Patient' && (
-                  <Button variant="outline" className="mr-auto" onClick={() => {
-                    handleCreateConsultation(viewingAppointment);
-                    setIsDetailsOpen(false);
-                  }}>
-                    {tConsultations('createConsultation')}
-                  </Button>
-                )}
-                <Button variant="outline" onClick={() => setIsDetailsOpen(false)}>
-                  {tCommon('close')}
+                {viewingAppointment.status === "CONFIRME" &&
+                  user?.role !== "Patient" && (
+                    <Button
+                      variant="outline"
+                      className="mr-auto"
+                      onClick={() => {
+                        handleCreateConsultation(viewingAppointment);
+                        setIsDetailsOpen(false);
+                      }}
+                    >
+                      {tConsultations("createConsultation")}
+                    </Button>
+                  )}
+                <Button
+                  variant="outline"
+                  onClick={() => setIsDetailsOpen(false)}
+                >
+                  {tCommon("close")}
                 </Button>
               </DialogFooter>
             </div>
           )}
         </DialogContent>
       </Dialog>
-      
+
       {/* Cancel Appointment Confirmation Dialog */}
       <Dialog open={isCancelDialogOpen} onOpenChange={setIsCancelDialogOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>{t('cancelAppointment')}</DialogTitle>
+            <DialogTitle>{t("cancelAppointment")}</DialogTitle>
             <DialogDescription>
-              {tCommon('confirmActionCannotBeUndone')}
+              {tCommon("confirmActionCannotBeUndone")}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsCancelDialogOpen(false)}>
-              {tCommon('cancel')}
+            <Button
+              variant="outline"
+              onClick={() => setIsCancelDialogOpen(false)}
+            >
+              {tCommon("cancel")}
             </Button>
             <Button variant="destructive" onClick={confirmCancelAppointment}>
-              {t('cancelAppointment')}
+              {t("cancelAppointment")}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      
+
       {/* Consultation Form from Appointment */}
       {appointmentForConsultation && (
         <ConsultationForm
@@ -486,12 +529,14 @@ function AppointmentsPage() {
           initialData={{
             patientId: appointmentForConsultation.patientId,
             doctorId: appointmentForConsultation.doctorId,
-            date: appointmentForConsultation.date,
+            date: appointmentForConsultation.dateHeure,
             time: appointmentForConsultation.time,
-            reason: `${tConsultations('consultationFromAppointment')}: ${appointmentForConsultation.reason}`
+            reason: `${tConsultations("consultationFromAppointment")}: ${
+              appointmentForConsultation.reason
+            }`,
           }}
-          patients={mockPatients}
-          doctors={mockDoctors}
+          patients={patients}
+          doctors={doctors}
         />
       )}
     </div>

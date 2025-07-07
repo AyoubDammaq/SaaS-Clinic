@@ -79,6 +79,8 @@ export function ClinicForm({ isOpen, onClose, onSubmit, initialData, isLoading =
     try {
       await onSubmit({
         ...data,
+        siteWeb: data.siteWeb?.trim() === "" ? undefined : data.siteWeb,
+        description: data.description?.trim() === "" ? undefined : data.description,
         typeClinique: Number(data.typeClinique),
         statut: Number(data.statut),
       });

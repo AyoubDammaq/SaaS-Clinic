@@ -16,6 +16,17 @@ import { Document } from '@/types/patient';
 import { FileText, Trash2, Plus, Eye } from 'lucide-react';
 import { CreateMedicalRecordModal } from './CreateMedicalRecordForm';
 
+
+function normalizeDocumentType(label: string): string {
+  switch (label.toLowerCase()) {
+    case "pdf": return "pdf";
+    case "image": return "jpg"; // ou "png" selon ce que tu préfères
+    case "lab report": return "pdf";
+    case "prescription": return "pdf";
+    default: return "pdf";
+  }
+}
+
 // Define local interfaces for this component
 export interface MedicalRecord {
   id: string;
@@ -32,10 +43,10 @@ export interface MedicalRecord {
 
 export interface MedicalRecordDocument {
   id: string;
-  name: string;
+  nom: string;
   type: string;
   url: string;
-  uploadDate: string;
+  dateCreation: string;
 }
 
 export interface Patient {
@@ -55,7 +66,7 @@ interface MedicalRecordViewProps {
   isLoading: boolean;
   isSubmitting: boolean;
   updateMedicalRecord: (data: Partial<Omit<MedicalRecord, "id" | "patientId">>) => Promise<void>;
-  addDocument: (document: Omit<MedicalRecordDocument, "id">) => Promise<void>;
+  addDocument: (document: Omit<MedicalRecordDocument, "id" | 'dateCreation'>) => Promise<void>;
   deleteDocument: (documentId: string) => Promise<void>;
   onCreateMedicalRecord: (data: {
     allergies: string;
@@ -81,7 +92,7 @@ export function MedicalRecordView({
 }: MedicalRecordViewProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<Partial<MedicalRecord>>({});
-  const [newDocument, setNewDocument] = useState({ name: '', type: 'PDF', url: '' });
+  const [newDocument, setNewDocument] = useState({ nom: '', type: 'PDF', url: '' });
   const [showAddDocument, setShowAddDocument] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
@@ -118,13 +129,28 @@ export function MedicalRecordView({
 
   // Add a new document
   const handleAddDocument = async () => {
-    if (newDocument.name && newDocument.type) {
-      await addDocument({
-        ...newDocument,
-        uploadDate: new Date().toISOString().split('T')[0]
-      });
-      setNewDocument({ name: '', type: 'PDF', url: '' });
+      if (!newDocument.nom || !newDocument.type || !newDocument.url) {
+      alert("Le nom, type et URL du document sont obligatoires.");
+      return;
+    }
+
+    const fileExtension = normalizeDocumentType(newDocument.type);
+    const filename = newDocument.nom.trim().toLowerCase().replace(/\s+/g, "-") + "." + fileExtension;
+
+    const payloadFrontend = {
+      nom: filename,
+      type: fileExtension,
+      url: newDocument.url
+    };
+
+    console.log("[handleAddDocument] Payload sent to addDocument():", payloadFrontend);
+
+    try {
+      await addDocument(payloadFrontend);
+      setNewDocument({ nom: '', type: 'PDF', url: '' });
       setShowAddDocument(false);
+    } catch (error) {
+      console.error("[handleAddDocument] Error:", error);
     }
   };
 
@@ -330,8 +356,8 @@ export function MedicalRecordView({
                     <div className="space-y-3">
                       <Input 
                         placeholder="Document Name" 
-                        value={newDocument.name}
-                        onChange={(e) => handleDocumentInputChange('name', e.target.value)}
+                        value={newDocument.nom}
+                        onChange={(e) => handleDocumentInputChange('nom', e.target.value)}
                       />
                       <Select 
                         value={newDocument.type}
@@ -364,7 +390,7 @@ export function MedicalRecordView({
                         <Button 
                           size="sm" 
                           onClick={handleAddDocument}
-                          disabled={!newDocument.name}
+                          disabled={!newDocument.nom}
                         >
                           Add Document
                         </Button>
@@ -392,11 +418,11 @@ export function MedicalRecordView({
                             <td className="p-2 text-sm">
                               <div className="flex items-center">
                                 <FileText size={16} className="mr-2 text-muted-foreground" />
-                                {doc.name}
+                                {doc.nom}
                               </div>
                             </td>
                             <td className="p-2 text-sm">{doc.type}</td>
-                            <td className="p-2 text-sm">{doc.uploadDate}</td>
+                            <td className="p-2 text-sm">{doc.dateCreation}</td>
                             <td className="p-2 text-right">
                               <div className="flex justify-end gap-1">
                                 {doc.url && (

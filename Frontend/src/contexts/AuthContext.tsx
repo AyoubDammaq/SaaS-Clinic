@@ -87,7 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const userData = {
               id: decodedToken.sub, // L'email (sub) est utilisé comme ID
               name: decodedToken.name || '', // Vous pouvez ajouter des données supplémentaires si disponibles
-              email: decodedToken.sub,
+              email: decodedToken.email || '',
               role: decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || "Unknown", // Récupérer le rôle depuis le token
           };
 
@@ -133,28 +133,41 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = async () => {
     setIsLoading(true);
-    
+
     try {
-      // For demo purposes, we'll check if VITE_API_URL is set
       if (import.meta.env.VITE_API_URL && user) {
-        // Call logout API - send userId as body
-        await api.post(API_ENDPOINTS.AUTH.LOGOUT, user.id);
+        const payload = { email: user.email }; // ⚠️ attention à la casse
+
+        console.log("🟡 Envoi logout payload :", payload);
+
+        const response = await api.post(API_ENDPOINTS.AUTH.LOGOUT, payload);
+
+        console.log("🟢 Réponse succès logout :", response);
       }
-      
-      // Clear local state regardless of API call success
+
+      // Reset local storage et état local
       setUser(null);
       setToken(null);
       setIsAuthenticated(false);
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
-      
+
       toast.success(t('logoutSuccess'));
-    } catch (err) {
-      console.error('Logout error:', err);
+    } catch (err: any) {
+      console.error("🔴 Erreur logout :", err);
+
+      if (err.response) {
+        console.error("🔴 Détails réponse :", {
+          status: err.response.status,
+          data: err.response.data,
+          errors: err.response.data?.errors,
+        });
+      }
+
       toast.error(t('logoutError'));
-      
-      // Still clear local state even if API call fails
+
+      // Nettoyage même en cas d’erreur
       setUser(null);
       setToken(null);
       setIsAuthenticated(false);
@@ -165,6 +178,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setIsLoading(false);
     }
   };
+
   
   const register = async (
     FullName: string,
@@ -176,23 +190,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
     setError(null);
 
+    const translateError = (msg: string): string => {
+      const translations: Record<string, string> = {
+        "Passwords do not match.": t('passwordMismatch') || "Les mots de passe ne correspondent pas.",
+        "Password must be at least 8 characters.": t('passwordTooShort') || "Le mot de passe doit comporter au moins 8 caractères.",
+        "Password must contain an uppercase letter.": t('passwordUppercase') || "Le mot de passe doit contenir une lettre majuscule.",
+        "Password must contain a lowercase letter.": t('passwordLowercase') || "Le mot de passe doit contenir une lettre minuscule.",
+        "Password must contain a digit.": t('passwordDigit') || "Le mot de passe doit contenir un chiffre.",
+        "Email already exists.": t('emailExistsError') || "Cet email est déjà utilisé.",
+      };
+      return translations[msg] || msg;
+    };
+
     try {
-      // Créer l'objet utilisateur avec les noms de propriétés corrects pour l'API
       const userData: RegisterDto = {
         FullName,
         Email,
         Password,
         ConfirmPassword,
-        Role: Role ? mapRoleToNumber(Role) : undefined // Convertir la valeur Role en nombre
+        Role: Role ? roleMap[Role] : 4
       };
 
       const response = await api.post<User>(API_ENDPOINTS.AUTH.REGISTER, userData, {
-        withAuth: false, // Pas besoin de token pour l'inscription
+        withAuth: false,
       });
 
       if (!response) {
-        throw new Error('Failed to register user');
+        throw new Error('Registration failed');
       }
+
+      // Auto login
+      await login(Email, Password);
 
       toast.success(t('registerSuccess'));
       return true;
@@ -200,23 +228,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (err: unknown) {
       console.error('Registration error:', err);
 
-      let errorMessage = t('registerError');
+      let errorMessage = t('registerError') || 'Registration failed';
 
-      if (err instanceof AxiosError && err.response) {
+      if (err instanceof AxiosError && err.response?.data) {
         const data = err.response.data;
 
         if (typeof data === 'string') {
-          errorMessage = data;
+          errorMessage = translateError(data);
         } else if (typeof data === 'object' && data !== null) {
           if ('message' in data && typeof data.message === 'string') {
-            errorMessage = data.message;
+            errorMessage = translateError(data.message);
           } else {
             try {
-              const errorValues = Object.values(data).flat();
-              if (errorValues.length > 0) {
-                errorMessage = Array.isArray(errorValues[0])
-                  ? (errorValues[0] as string[]).join(', ')
-                  : errorValues.join(', ');
+              const messages: string[] = [];
+
+              for (const key in data) {
+                if (Array.isArray(data[key])) {
+                  messages.push(...data[key]);
+                } else if (typeof data[key] === 'string') {
+                  messages.push(data[key]);
+                }
+              }
+
+              if (messages.length > 0) {
+                errorMessage = messages.map(translateError).join(', ');
               }
             } catch (e) {
               console.error('Error parsing validation errors:', e);
@@ -224,16 +259,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           }
         }
       } else if (err instanceof Error) {
-        errorMessage = err.message;
+        errorMessage = translateError(err.message);
+      }
+
+      if (!errorMessage || errorMessage === t('registerError')) {
+        errorMessage = 'An unknown error occurred during registration.';
       }
 
       setError(errorMessage);
       toast.error(errorMessage);
       return false;
+
     } finally {
       setIsLoading(false);
     }
   };
+
 
   const changePassword = async (currentPassword: string, newPassword: string): Promise<boolean> => {
     if (!user) return false;
@@ -363,20 +404,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return roles.includes(user.role);
   };
 
-  function mapRoleToNumber(role: UserRole): number {
-    switch (role) {
-      case 'SuperAdmin':
-        return 2;
-      case 'ClinicAdmin':
-        return 1;
-      case 'Doctor':
-        return 3;
-      case 'Patient':
-        return 4;
-      default:
-        return 4;  // Valeur par défaut en cas d'erreur
-    }
-  }
+  const roleMap: Record<UserRole, number> = {
+    SuperAdmin: 2,
+    ClinicAdmin: 1,
+    Doctor: 3,
+    Patient: 4
+  };
 
   function mapNumberToRole(roleNumber?: number): UserRole {
     switch (roleNumber) {

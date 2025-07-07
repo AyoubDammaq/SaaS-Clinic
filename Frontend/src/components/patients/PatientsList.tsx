@@ -98,9 +98,9 @@ export function PatientsList({
       familyHistory: dossier.antécédentsFamiliaux || '', // Map "antécédentsFamiliaux"
       documents: (dossier.documents || []).map((doc) => ({
         id: doc.id,
-        name: doc.nom || '',
+        nom: doc.nom || '',
         type: doc.type,
-        uploadDate: doc.dateCreation || '',
+        dateCreation: doc.dateCreation || '',
         url: doc.url || '',
       })),
     };

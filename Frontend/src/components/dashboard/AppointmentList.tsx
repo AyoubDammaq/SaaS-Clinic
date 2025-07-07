@@ -11,7 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-type AppointmentStatus = 'Scheduled' | 'Completed' | 'Cancelled' | 'No-show';
+type AppointmentStatus = 'CONFIRME' | 'ANNULE' | 'EN_ATTENTE';
 
 interface Appointment {
   id: string;
@@ -78,10 +78,9 @@ function StatusBadge({ status }: { status: AppointmentStatus }) {
       variant="outline"
       className={cn(
         "text-xs",
-        status === 'Scheduled' && "border-blue-200 bg-blue-50 text-blue-700",
-        status === 'Completed' && "border-green-200 bg-green-50 text-green-700",
-        status === 'Cancelled' && "border-red-200 bg-red-50 text-red-700",
-        status === 'No-show' && "border-amber-200 bg-amber-50 text-amber-700"
+        status === 'CONFIRME' && "border-blue-200 bg-blue-50 text-blue-700",
+        status === 'EN_ATTENTE' && "border-green-200 bg-green-50 text-green-700",
+        status === 'ANNULE' && "border-red-200 bg-red-50 text-red-700",
       )}
     >
       {status}

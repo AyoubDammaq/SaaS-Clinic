@@ -15,25 +15,25 @@ export const doctorService = {
   // Get all doctors
   async getDoctors(): Promise<Doctor[]> {
     const response = await api.get<Doctor[]>(API_ENDPOINTS.DOCTORS.GET_ALL);
-    return response; // Return the response directly
+    return response;
   },
 
   // Get doctor by ID
   async getDoctorById(id: UUID): Promise<Doctor> {
     const response = await api.get<Doctor>(API_ENDPOINTS.DOCTORS.GET_BY_ID(id));
-    return response; // Corrigez pour retourner response.data
+    return response;
   },
   
   // Add a new doctor
   async createDoctor(doctorData: DoctorDto): Promise<Doctor> {
-    const response = await api.post<Doctor>(API_ENDPOINTS.DOCTORS.BASE, doctorData);
-    return response; // Corrigez pour retourner response.data
+    const response = await api.post<Doctor>(API_ENDPOINTS.DOCTORS.CREATE, doctorData);
+    return response;
   },
 
   // Update a doctor
   async updateDoctor(id: UUID, doctorData: DoctorDto): Promise<Doctor> {
     const response = await api.put<Doctor>(API_ENDPOINTS.DOCTORS.UPDATE(id), doctorData);
-    return response; // Corrigez pour retourner response.data
+    return response;
   },
 
   // Delete a doctor
@@ -46,66 +46,66 @@ export const doctorService = {
     }
   },
 
-  // Filter doctors by speciality
+  // Filter doctors by specialty
   async filterDoctorsBySpeciality(specialite: string): Promise<Doctor[]> {
-    const response = await api.get<Doctor[]>(`${API_ENDPOINTS.DOCTORS.BASE}/filter/specialite?specialite=${encodeURIComponent(specialite)}`);
-    return response; // Corrigez pour retourner response.data
+    const response = await api.get<Doctor[]>(API_ENDPOINTS.DOCTORS.FILTER_BY_SPECIALTY(specialite));
+    return response;
   },
   
   // Filter doctors by name or first name
   async filterDoctorsByName(nom?: string, prenom?: string): Promise<Doctor[]> {
-    let url = `${API_ENDPOINTS.DOCTORS.BASE}/filter/name?`;
-    if (nom) url += `name=${encodeURIComponent(nom)}&`;
-    if (prenom) url += `prenom=${encodeURIComponent(prenom)}`;
-    
-    const response = await api.get<Doctor[]>(url);
-    return response; // Corrigez pour retourner response.data
+    const response = await api.get<Doctor[]>(
+      API_ENDPOINTS.DOCTORS.FILTER_BY_NAME(nom, prenom)
+    );
+    return response;
   },
 
   // Get doctors by clinic
   async getDoctorsByClinic(cliniqueId: UUID): Promise<Doctor[]> {
-    const response = await api.get<Doctor[]>(`${API_ENDPOINTS.DOCTORS.BASE}/clinique/${cliniqueId}`);
-    return response; // Corrigez pour retourner response.data
+    const response = await api.get<Doctor[]>(API_ENDPOINTS.DOCTORS.BY_CLINIC(cliniqueId));
+    return response;
   },
 
   // Assign a doctor to a clinic
   async assignDoctorToClinic(medecinId: UUID, cliniqueId: UUID): Promise<void> {
     const data: AttribuerMedecinDto = { medecinId, cliniqueId };
-    await api.post<void>(`${API_ENDPOINTS.DOCTORS.BASE}/attribuer`, data);
+    await api.post<void>(API_ENDPOINTS.DOCTORS.ATTRIBUER, data);
   },
 
   // Unassign a doctor from a clinic
   async unassignDoctorFromClinic(medecinId: UUID): Promise<void> {
-    await api.delete<void>(`${API_ENDPOINTS.DOCTORS.BASE}/desabonner/${medecinId}`);
+    await api.delete<void>(API_ENDPOINTS.DOCTORS.DESABONNER(medecinId));
   },
 
   // Get doctor count by speciality
   async getDoctorCountBySpeciality(): Promise<SpecialiteStatistique[]> {
-    const response = await api.get<SpecialiteStatistique[]>(`${API_ENDPOINTS.DOCTORS.BASE}/statistiques/specialite`);
-    return response; // Corrigez pour retourner response.data
+    const response = await api.get<SpecialiteStatistique[]>(API_ENDPOINTS.DOCTORS.STATS_BY_SPECIALTY);
+    return response;
   },
 
   // Get doctor count by clinic
   async getDoctorCountByClinic(): Promise<CliniqueStatistique[]> {
-    const response = await api.get<CliniqueStatistique[]>(`${API_ENDPOINTS.DOCTORS.BASE}/statistiques/clinique`);
-    return response; // Corrigez pour retourner response.data
+    const response = await api.get<CliniqueStatistique[]>(API_ENDPOINTS.DOCTORS.STATS_BY_CLINIC);
+    return response;
   },
 
   // Get doctor count by speciality in a clinic
   async getDoctorCountBySpecialityInClinic(cliniqueId: UUID): Promise<SpecialiteStatistique[]> {
-    const response = await api.get<SpecialiteStatistique[]>(`${API_ENDPOINTS.DOCTORS.BASE}/statistiques/specialite/clinique/${cliniqueId}`);
-    return response; // Corrigez pour retourner response.data
+    const response = await api.get<SpecialiteStatistique[]>(
+      API_ENDPOINTS.DOCTORS.STATS_BY_SPECIALTY_IN_CLINIC(cliniqueId)
+    );
+    return response;
   },
 
   // Get doctor IDs by clinic
   async getDoctorIdsByClinic(cliniqueId: UUID): Promise<UUID[]> {
-    const response = await api.get<UUID[]>(`${API_ENDPOINTS.DOCTORS.BASE}/medecinsIds/clinique/${cliniqueId}`);
-    return response; // Corrigez pour retourner response.data
+    const response = await api.get<UUID[]>(API_ENDPOINTS.DOCTORS.IDS_BY_CLINIQUE(cliniqueId));
+    return response;
   },
 
   // Get doctor activities
-  async getDoctorActivities(medecinId: UUID): Promise<unknown[]> { // Remplacez unknown[] par un type approprié si disponible
-    const response = await api.get<unknown[]>(`${API_ENDPOINTS.DOCTORS.BASE}/activites/${medecinId}`);
-    return response; // Corrigez pour retourner response.data
+  async getDoctorActivities(medecinId: UUID): Promise<unknown[]> {
+    const response = await api.get<unknown[]>(API_ENDPOINTS.DOCTORS.ACTIVITES(medecinId));
+    return response;
   }
 };

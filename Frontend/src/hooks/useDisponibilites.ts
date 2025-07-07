@@ -1,11 +1,12 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
 import { useAuth } from '@/contexts/AuthContext';
 import { disponibiliteService } from '@/services/disponibiliteService';
-import { Disponibilite, DisponibiliteDto } from '@/types/disponibilite';
+import { Disponibilite } from '@/types/disponibilite';
 
-interface UseDisponibilitesState {
+type UUID = string;
+
+interface UseDisponibiliteState {
   disponibilites: Disponibilite[];
   isLoading: boolean;
   isSubmitting: boolean;
@@ -15,17 +16,24 @@ interface UseDisponibilitesState {
     canDelete: boolean;
     canView: boolean;
   };
-  addDisponibilite: (doctorId: string, data: DisponibiliteDto) => Promise<void>;
-  deleteDisponibilite: (disponibiliteId: string) => Promise<void>;
-  getDisponibilitesByDoctorId: (doctorId: string) => Promise<Disponibilite[]>;
-  getDisponibilitesByDoctorIdAndDate: (doctorId: string, date: Date) => Promise<Disponibilite[]>;
+  addDisponibilite: (data: Omit<Disponibilite, 'id'>) => Promise<void>;
+  updateDisponibilite: (disponibiliteId: UUID, data: Partial<Disponibilite>) => Promise<void>;
+  deleteDisponibilite: (disponibiliteId: UUID) => Promise<void>;
+  deleteAvailabilitiesByDoctor: (doctorId: UUID) => Promise<void>;
+  getAvailabilitiesByDoctor: (doctorId: UUID) => Promise<Disponibilite[]>;
+  getDisponibiliteByDay: (doctorId: UUID, day: string) => Promise<Disponibilite[]>;
+  getAvailableDoctors: (date: string, startTime?: string, endTime?: string) => Promise<UUID[]>;
+  isDoctorAvailable: (doctorId: UUID, dateTime: string) => Promise<boolean>;
+  getTotalAvailableTime: (doctorId: UUID, start: string, end: string) => Promise<number>;
+  getAvailabilitiesInInterval: (doctorId: UUID, start: string, end: string) => Promise<Disponibilite[]>;
 }
 
-export function useDisponibilites(): UseDisponibilitesState {
+export function useDisponibilite(doctorId: string): UseDisponibiliteState {
   const { user } = useAuth();
   const [disponibilites, setDisponibilites] = useState<Disponibilite[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [permissions, setPermissions] = useState({
     canCreate: false,
     canEdit: false,
@@ -33,55 +41,80 @@ export function useDisponibilites(): UseDisponibilitesState {
     canView: false,
   });
 
-  // Check permissions based on user role
   useEffect(() => {
     if (user) {
-      const canCreate = user.role === 'SuperAdmin' || user.role === 'ClinicAdmin' || user.role === 'Doctor';
-      const canEdit = user.role === 'SuperAdmin' || user.role === 'ClinicAdmin' || user.role === 'Doctor';
-      const canDelete = user.role === 'SuperAdmin' || user.role === 'ClinicAdmin' || user.role === 'Doctor';
-      const canView = true; // All authenticated users can view disponibilites
-      
+      const canCreate = ['SuperAdmin', 'ClinicAdmin', 'Doctor'].includes(user.role);
+      const canEdit = canCreate;
+      const canDelete = canCreate;
+      const canView = true;
       setPermissions({ canCreate, canEdit, canDelete, canView });
     }
   }, [user]);
 
-  // Add a new disponibilite
-  const addDisponibilite = async (doctorId: string, data: DisponibiliteDto) => {
+  const addDisponibilite = async (data: Omit<Disponibilite, 'id'>): Promise<void> => {
+    console.log("Adding Disponibilite:", data);
     setIsSubmitting(true);
     try {
-      await disponibiliteService.addDisponibilite(doctorId, data);
-      toast.success("Availability added successfully");
+      await disponibiliteService.addDisponibilite(data);
+      await getAvailabilitiesByDoctor(data.medecinId);
+      toast.success("Disponibilite added successfully");
     } catch (error) {
-      console.error("Error adding availability:", error);
-      toast.error("Failed to add availability");
+      console.error("Error adding Disponibilite:", error);
+      toast.error("Failed to add Disponibilite");
       throw error;
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Delete a disponibilite
-  const deleteDisponibilite = async (disponibiliteId: string) => {
+  const updateDisponibilite = async (disponibiliteId: UUID, data: Partial<Disponibilite>) => {
+    setIsSubmitting(true);
+    try {
+      await disponibiliteService.updateDisponibilite(disponibiliteId, data);
+      toast.success("Disponibilite updated successfully");
+    } catch (error) {
+      console.error("Error updating Disponibilite:", error);
+      toast.error("Failed to update Disponibilite");
+      throw error;
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const deleteDisponibilite = async (disponibiliteId: UUID) => {
     setIsSubmitting(true);
     try {
       await disponibiliteService.deleteDisponibilite(disponibiliteId);
-      toast.success("Availability deleted successfully");
+      toast.success("Disponibilite deleted successfully");
     } catch (error) {
-      console.error("Error deleting availability:", error);
-      toast.error("Failed to delete availability");
+      console.error("Error deleting Disponibilite:", error);
+      toast.error("Failed to delete Disponibilite");
       throw error;
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Get disponibilites by doctor ID
-  const getDisponibilitesByDoctorId = async (doctorId: string): Promise<Disponibilite[]> => {
+  const deleteAvailabilitiesByDoctor = async (doctorId: UUID) => {
+    setIsSubmitting(true);
+    try {
+      await disponibiliteService.deleteAvailabilitiesByDoctor(doctorId);
+      toast.success("All doctor availabilities deleted");
+    } catch (error) {
+      console.error("Error deleting doctor availabilities:", error);
+      toast.error("Failed to delete availabilities");
+      throw error;
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const getAvailabilitiesByDoctor = useCallback( async (doctorId: UUID): Promise<Disponibilite[]> => {
     setIsLoading(true);
     try {
-      const disponibilites = await disponibiliteService.getDisponibilitiesByDoctorId(doctorId);
-      setDisponibilites(disponibilites);
-      return disponibilites;
+      const result = await disponibiliteService.getAvailabilitiesByDoctor(doctorId);
+      setDisponibilites(result);
+      return result;
     } catch (error) {
       console.error("Error fetching availabilities:", error);
       toast.error("Failed to load availabilities");
@@ -89,20 +122,58 @@ export function useDisponibilites(): UseDisponibilitesState {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  // Get disponibilites by doctor ID and date
-  const getDisponibilitesByDoctorIdAndDate = async (doctorId: string, date: Date): Promise<Disponibilite[]> => {
+  const getDisponibiliteByDay = async (doctorId: UUID, day: string): Promise<Disponibilite[]> => {
     setIsLoading(true);
     try {
-      const disponibilites = await disponibiliteService.getDisponibilitiesByDoctorIdAndDate(doctorId, date);
-      return disponibilites;
+      return await disponibiliteService.getDisponibiliteByDay(doctorId, day);
     } catch (error) {
-      console.error("Error fetching availabilities by date:", error);
-      toast.error("Failed to load availabilities for the selected date");
+      console.error("Error fetching availabilities by day:", error);
+      toast.error("Failed to load availabilities for the selected day");
       throw error;
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const getAvailableDoctors = async (date: string, heureDebut?: string, heureFin?: string): Promise<UUID[]> => {
+    try {
+      return await disponibiliteService.getAvailableDoctors(date, heureDebut, heureFin);
+    } catch (error) {
+      console.error("Error fetching available doctors:", error);
+      toast.error("Failed to fetch available doctors");
+      throw error;
+    }
+  };
+
+  const isDoctorAvailable = async (doctorId: UUID, dateTime: string): Promise<boolean> => {
+    try {
+      return await disponibiliteService.isDoctorAvailable(doctorId, dateTime);
+    } catch (error) {
+      console.error("Error checking doctor Disponibilite:", error);
+      toast.error("Failed to check doctor Disponibilite");
+      throw error;
+    }
+  };
+
+  const getTotalAvailableTime = async (doctorId: UUID, start: string, end: string): Promise<number> => {
+    try {
+      return await disponibiliteService.getTotalAvailableTime(doctorId, start, end);
+    } catch (error) {
+      console.error("Error fetching total available time:", error);
+      toast.error("Failed to get total available time");
+      throw error;
+    }
+  };
+
+  const getAvailabilitiesInInterval = async (doctorId: UUID, start: string, end: string): Promise<Disponibilite[]> => {
+    try {
+      return await disponibiliteService.getAvailabilitiesInInterval(doctorId, start, end);
+    } catch (error) {
+      console.error("Error fetching availabilities in interval:", error);
+      toast.error("Failed to get availabilities for the interval");
+      throw error;
     }
   };
 
@@ -112,8 +183,14 @@ export function useDisponibilites(): UseDisponibilitesState {
     isSubmitting,
     permissions,
     addDisponibilite,
+    updateDisponibilite,
     deleteDisponibilite,
-    getDisponibilitesByDoctorId,
-    getDisponibilitesByDoctorIdAndDate
+    deleteAvailabilitiesByDoctor,
+    getAvailabilitiesByDoctor,
+    getDisponibiliteByDay,
+    getAvailableDoctors,
+    isDoctorAvailable,
+    getTotalAvailableTime,
+    getAvailabilitiesInInterval,
   };
 }
