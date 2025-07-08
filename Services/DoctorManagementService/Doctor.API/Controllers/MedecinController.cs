@@ -2,6 +2,7 @@
 using Doctor.Application.DoctorServices.Commands.AttribuerMedecinAUneClinique;
 using Doctor.Application.DoctorServices.Commands.DeleteDoctor;
 using Doctor.Application.DoctorServices.Commands.DesabonnerMedecinDeClinique;
+using Doctor.Application.DoctorServices.Commands.LinkUserToDoctor;
 using Doctor.Application.DoctorServices.Commands.UpdateDoctor;
 using Doctor.Application.DoctorServices.Queries.FilterDoctorsByName;
 using Doctor.Application.DoctorServices.Queries.FilterDoctorsBySpecialite;
@@ -44,19 +45,8 @@ namespace Doctor.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var medecin = new Medecin
-                {
-                    Prenom = medecinDto.Prenom,
-                    Nom = medecinDto.Nom,
-                    Specialite = medecinDto.Specialite,
-                    Email = medecinDto.Email,
-                    Telephone = medecinDto.Telephone,
-                    PhotoUrl = medecinDto.PhotoUrl,
-                    DateCreation = DateTime.UtcNow
-                };
-
-                await _mediator.Send(new AddDoctorCommand(medecinDto));
-                return Ok(new { Message = "Médecin ajouté avec succès" });
+                var createdDoctor = await _mediator.Send(new AddDoctorCommand(medecinDto));
+                return CreatedAtAction(nameof(ObtenirMedecinParId), new { id = createdDoctor.Id }, createdDoctor);
             }
             catch (Exception ex)
             {
@@ -316,6 +306,25 @@ namespace Doctor.API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { Message = "Une erreur est survenue lors de la récupération des activités du médecin", Details = ex.Message });
+            }
+        }
+
+        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
+        [HttpPost("link-user/doctor")]
+        public async Task<IActionResult> LinkUserToDoctor([FromBody] LinkDTO linkUserToDoctorDto)
+        {
+            try
+            {
+                var result = await _mediator.Send(new LinkUserToDoctorCommand(linkUserToDoctorDto));
+                if (result)
+                {
+                    return Ok(new { Message = "Utilisateur lié au médecin avec succès" });
+                }
+                return BadRequest(new { Message = "Échec de la liaison de l'utilisateur au médecin" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors de la liaison de l'utilisateur au médecin", Details = ex.Message });
             }
         }
     }

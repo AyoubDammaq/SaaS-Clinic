@@ -13,7 +13,6 @@
 
 
   <ItemGroup>
-    <Folder Include="DoctorServices\Commands\" />
     <Folder Include="DoctorServices\Queries\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Services\" />

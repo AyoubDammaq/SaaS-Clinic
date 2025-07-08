@@ -39,6 +39,8 @@ namespace Clinic.Domain.Entities
 
         public DateTime DateCreation { get; set; } = DateTime.UtcNow;
 
+        public Guid? UserId { get; set; }
+
         // ✳️ Méthode pour déclencher un Domain Event
         public void AjouterCliniqueEvent()
         {

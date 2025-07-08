@@ -24,5 +24,6 @@ namespace Doctor.Domain.Interfaces
 
         Task<IEnumerable<ActiviteMedecin>> GetActivitesMedecinAsync(Guid medecinId);
 
+        Task<bool> LinkUserToDoctorEntityAsync(Guid doctorId, Guid userId);
     }
 }

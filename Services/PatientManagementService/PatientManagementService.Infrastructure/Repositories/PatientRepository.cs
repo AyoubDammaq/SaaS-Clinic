@@ -32,7 +32,7 @@ namespace PatientManagementService.Infrastructure.Repositories
         }
 
         public async Task AddPatientAsync(Patient patient)
-        {  
+        {
             await _context.Patients.AddAsync(patient);
             await _context.SaveChangesAsync();
         }
@@ -70,7 +70,7 @@ namespace PatientManagementService.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        
+
         public async Task<int> GetStatistiquesAsync(DateTime dateDebut, DateTime dateFin)
         {
             var count = await _context.Patients
@@ -79,6 +79,19 @@ namespace PatientManagementService.Infrastructure.Repositories
 
             return count;
         }
-        
-    }
+
+        public async Task<bool> LinkUserToPatientEntityAsync(Guid patientId, Guid userId)
+        {
+            var patient = await _context.Patients.FindAsync(patientId);
+            if (patient == null)
+            {
+                return false; // Patient not found
+            }
+            patient.UserId = userId; // Assuming UserId is a property in Patient entity
+            _context.Patients.Update(patient);
+            await _context.SaveChangesAsync();
+            return true;
+
+        }
+    }   
 }

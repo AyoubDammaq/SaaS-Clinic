@@ -24,5 +24,6 @@ namespace Clinic.Domain.Interfaces
         Task<int> GetNombreNouvellesCliniquesDuMoisAsync();
         Task<IEnumerable<Statistique>> GetNombreNouvellesCliniquesParMoisAsync();
         Task<StatistiqueClinique> GetStatistiquesDesCliniquesAsync(Guid cliniqueId);
+        Task<bool> LinkUserToClinicEntityAsync(Guid clinicId, Guid userId);
     }
 }

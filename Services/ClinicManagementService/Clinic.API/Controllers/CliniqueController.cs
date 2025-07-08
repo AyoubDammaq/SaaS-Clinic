@@ -1,4 +1,5 @@
 ﻿using Clinic.Application.Commands.AjouterClinique;
+using Clinic.Application.Commands.LinkUserToClinic;
 using Clinic.Application.Commands.ModifierClinique;
 using Clinic.Application.Commands.SupprimerClinique;
 using Clinic.Application.DTOs;
@@ -258,6 +259,23 @@ namespace Clinic.API.Controllers
                 return StatusCode(500, $"Erreur lors de la récupération des statistiques de la clinique : {ex.Message}");
             }
         }
+
+        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
+        [HttpPost("link-user/clinic")]
+        public async Task<IActionResult> LinkUserToClinicEntity(LinkDTO linkDTO)
+        {
+            try
+            {
+                var result = await _mediator.Send(new LinkUserToClinicCommand(linkDTO));
+                return result ? Ok() : NotFound($"Clinique avec l'ID {linkDTO.ClinicId} ou utilisateur avec l'ID {linkDTO.UserId} introuvable.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur lors de la liaison de l'utilisateur à la clinique : {ex.Message}");
+            }
+        }
     }
 }
+
+
 

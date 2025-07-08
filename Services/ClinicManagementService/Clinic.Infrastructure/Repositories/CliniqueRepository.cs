@@ -173,5 +173,19 @@ namespace Clinic.Infrastructure.Repositories
                 NombrePatients = nbPatients
             };
         }
+
+        public async Task<bool> LinkUserToClinicEntityAsync(Guid clinicId, Guid userId)
+        {
+            var clinique = await _context.Cliniques.FindAsync(clinicId);
+            if (clinique == null)
+            {
+                _logger.LogWarning("Clinique avec l'ID {ClinicId} introuvable.", clinicId);
+                return false;
+            }
+            clinique.UserId = userId;
+            _context.Cliniques.Update(clinique);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

@@ -4,9 +4,6 @@ using AuthentificationService.Models;
 using AuthentificationService.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Web;
-
 
 namespace AuthentificationService.Controllers
 {
@@ -125,9 +122,9 @@ namespace AuthentificationService.Controllers
 
         [Authorize(Roles = "SuperAdmin")]
         [HttpDelete("users/{id}")]
-        public async Task<IActionResult> DeleteUser([FromRoute] Guid userId)
+        public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
         {
-            var result = await _authService.DeleteUserAsync(userId);
+            var result = await _authService.DeleteUserAsync(id);
             if (!result)
             {
                 return BadRequest("User deletion failed.");
@@ -185,6 +182,16 @@ namespace AuthentificationService.Controllers
             }
 
             return Ok(new { message = "Password has been reset successfully." });
+        }
+
+        [HttpPost("link-profile")]
+        public async Task<IActionResult> LinkProfile([FromBody] LinkUserProfileDto dto)
+        {
+            var success = await _authService.LinkUserToProfileAsync(dto);
+            if (!success)
+                return BadRequest("Linking profile failed.");
+
+            return Ok("Profile linked successfully.");
         }
 
     }

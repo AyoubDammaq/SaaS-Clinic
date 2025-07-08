@@ -223,5 +223,14 @@ namespace Doctor.Infrastructure.Repositories
                 }
             };
         }
+
+        public async Task<bool> LinkUserToDoctorEntityAsync(Guid doctorId, Guid userId)
+        {
+            var medecin = await GetByIdAsync(doctorId);
+            if (medecin == null) return false;
+            medecin.UserId = userId;
+            await UpdateAsync(medecin);
+            return true;
+        }
     }
 }

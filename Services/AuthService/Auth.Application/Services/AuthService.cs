@@ -364,6 +364,29 @@ namespace AuthentificationService.Services
             logger.LogInformation("Mot de passe réinitialisé avec succès pour l'email {Email}", email);
             return true;
         }
+        public async Task<bool> LinkUserToProfileAsync(LinkUserProfileDto dto)
+        {
+            var user = await context.Users.FindAsync(dto.UserId);
+            if (user == null) return false;
+
+            switch (dto.Role)
+            {
+                case UserRole.ClinicAdmin:
+                    user.CliniqueId = dto.EntityId;
+                    break;
+                case UserRole.Doctor:
+                    user.MedecinId = dto.EntityId;
+                    break;
+                case UserRole.Patient:
+                    user.PatientId = dto.EntityId;
+                    break;
+                default:
+                    return false;
+            }
+
+            await context.SaveChangesAsync();
+            return true;
+        }
 
         private bool IsStrongPassword(string password)
         {

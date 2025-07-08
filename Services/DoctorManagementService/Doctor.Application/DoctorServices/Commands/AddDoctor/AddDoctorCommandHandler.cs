@@ -1,10 +1,11 @@
-﻿using Doctor.Domain.Entities;
+﻿using Doctor.Application.DTOs;
+using Doctor.Domain.Entities;
 using Doctor.Domain.Interfaces;
 using MediatR;
 
 namespace Doctor.Application.DoctorServices.Commands.AddDoctor
 {
-    public class AddDoctorCommandHandler : IRequestHandler<AddDoctorCommand>
+    public class AddDoctorCommandHandler : IRequestHandler<AddDoctorCommand, GetMedecinRequestDto>
     {
         private readonly IMedecinRepository _medecinRepository;
 
@@ -13,7 +14,7 @@ namespace Doctor.Application.DoctorServices.Commands.AddDoctor
             _medecinRepository = medecinRepository;
         }
 
-        public async Task Handle(AddDoctorCommand request, CancellationToken cancellationToken)
+        public async Task<GetMedecinRequestDto> Handle(AddDoctorCommand request, CancellationToken cancellationToken)
         {
             if (request.createMedecinDto == null)
             {
@@ -44,6 +45,18 @@ namespace Doctor.Application.DoctorServices.Commands.AddDoctor
             medecin.AddDoctorEvent();
 
             await _medecinRepository.AddAsync(medecin);
+
+            return new GetMedecinRequestDto
+            {
+                Id = medecin.Id,
+                Prenom = medecin.Prenom,
+                Nom = medecin.Nom,
+                Specialite = medecin.Specialite,
+                Email = medecin.Email,
+                Telephone = medecin.Telephone,
+                PhotoUrl = medecin.PhotoUrl,
+                Disponibilites = medecin.Disponibilites.ToList()
+            };
         }
     }
 }

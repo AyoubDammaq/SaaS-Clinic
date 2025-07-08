@@ -33,6 +33,8 @@ namespace Doctor.Domain.Entities
         // Nouvelle propriété pour les disponibilités
         public ICollection<Disponibilite> Disponibilites { get; set; } = new List<Disponibilite>();
 
+        public Guid? UserId { get; set; }
+
         // ✳️ Méthode pour déclencher un Domain Event
         public void AddDoctorEvent()
         {

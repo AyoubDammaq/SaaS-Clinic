@@ -33,6 +33,8 @@ namespace PatientManagementService.Domain.Entities
 
         public virtual DossierMedical? DossierMedical { get; set; }
 
+        public Guid? UserId { get; set; }
+
         // Domain event methods
         public virtual void AjouterPatientEvent() =>
             AddDomainEvent(new PatientAdded(Id, Nom, Prenom));

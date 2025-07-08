@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PatientManagementService.Application.DTOs;
 using PatientManagementService.Application.PatientService.Commands.AddPatient;
 using PatientManagementService.Application.PatientService.Commands.DeletePatient;
+using PatientManagementService.Application.PatientService.Commands.LinkUserToPatient;
 using PatientManagementService.Application.PatientService.Commands.UpdatePatient;
 using PatientManagementService.Application.PatientService.Queries.GetAllPatients;
 using PatientManagementService.Application.PatientService.Queries.GetPatientById;
@@ -145,6 +146,24 @@ namespace PatientManagementService.API.Controllers
 
             var result = await _mediator.Send(new GetStatistiquesQuery(dateDebut, dateFin));
             return Ok(result);
+        }
+
+        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor, Patient"))]
+        [HttpPost("link-user/patient")]
+        public async Task<ActionResult> LinkUserToPatient([FromBody] LinkDto linkDto)
+        {
+            try
+            {
+                var result = await _mediator.Send(new LinkUserToPatientCommand(linkDto));
+                if (result)
+                    return Ok("Utilisateur lié au patient avec succès.");
+                else
+                    return BadRequest("Échec de la liaison de l'utilisateur au patient.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur interne du serveur : {ex.Message}");
+            }
         }
     }
 }

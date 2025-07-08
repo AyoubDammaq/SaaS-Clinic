@@ -18,5 +18,6 @@ namespace AuthentificationService.Services
         Task<bool> ForgotPasswordAsync(ForgotPasswordDto request);
         Task<User?> FindByEmailAsync(string email);
         Task<bool> ResetPasswordAsync(string email, string resetToken, string newPassword);
+        Task<bool> LinkUserToProfileAsync(LinkUserProfileDto dto);
     }
 }
