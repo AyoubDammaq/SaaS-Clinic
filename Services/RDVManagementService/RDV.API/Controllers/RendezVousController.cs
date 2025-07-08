@@ -32,7 +32,7 @@ namespace RDVManagementService.Controllers
             _mediator = mediator;
         }
 
-        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor, Patient")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RendezVous>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
