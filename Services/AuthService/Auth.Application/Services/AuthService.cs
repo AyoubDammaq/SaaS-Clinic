@@ -137,12 +137,21 @@ namespace AuthentificationService.Services
 
         private string GenerateJwtToken(User user)
         {
-            var claims = new[]
+            var claims = new List<Claim>
             {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                    new Claim(ClaimTypes.Role, user.Role.ToString())
-                };
+                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                 new Claim(ClaimTypes.Role, user.Role.ToString())
+            };
+
+            if (user.CliniqueId.HasValue)
+                claims.Add(new Claim("cliniqueId", user.CliniqueId.Value.ToString()));
+
+            if (user.MedecinId.HasValue)
+                claims.Add(new Claim("medecinId", user.MedecinId.Value.ToString()));
+
+            if (user.PatientId.HasValue)
+                claims.Add(new Claim("patientId", user.PatientId.Value.ToString()));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
