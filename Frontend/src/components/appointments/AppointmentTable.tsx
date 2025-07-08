@@ -51,9 +51,6 @@ export const AppointmentTable = ({
     startIndex,
     startIndex + ITEMS_PER_PAGE
   );
-
-  console.log("Rendez-vous reçus dans AppointmentTable:", appointments);
-  console.log("Rendez-vous paginés:", paginatedAppointments);
   
   // Handle row click
   const handleRowClick = (appointment: Appointment) => {

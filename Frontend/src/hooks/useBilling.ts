@@ -1,7 +1,7 @@
 
 import { useState, useMemo, useCallback } from 'react';
 import { Invoice, InvoiceStatus, PaymentDetails } from '@/types/billing';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from "@/hooks/useAuth";
 import { toast } from 'sonner';
 
 interface UseBillingOptions {

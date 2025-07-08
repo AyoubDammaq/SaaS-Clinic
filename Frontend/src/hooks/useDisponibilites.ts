@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from "@/hooks/useAuth";
 import { disponibiliteService } from '@/services/disponibiliteService';
 import { Disponibilite } from '@/types/disponibilite';
 

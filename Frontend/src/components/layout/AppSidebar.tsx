@@ -11,7 +11,7 @@ import {
   SidebarMenuButton,
   SidebarRail
 } from "@/components/ui/sidebar";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 import { 
   Home, 
   Users, 

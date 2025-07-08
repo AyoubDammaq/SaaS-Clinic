@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useTranslation } from '@/hooks/useTranslation';
 import { ConsultationDTO } from '@/types/consultation';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from "@/hooks/useAuth";
 
 interface Appointment {
   id: string;

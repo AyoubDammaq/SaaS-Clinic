@@ -41,11 +41,11 @@ export interface RendezVousStats {
 }
 
 export type AppointmentFormData = {
-  patientId?: string;
-  doctorId?: string;
+  patientId: string;
+  medecinId: string;
   dateHeure: string;
   time?: string;
-  duration: number;
+  duration?: number;
   reason?: string;
   notes?: string;
 };

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Search, Plus, FileEdit, Trash2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Doctor } from '@/types/doctor';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from "@/hooks/useAuth";
 
 interface DoctorsListProps {
   doctors: Doctor[];

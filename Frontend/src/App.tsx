@@ -17,7 +17,7 @@ import SettingsPage from '@/pages/settings/SettingsPage';
 import PlaceholderPage from '@/pages/PlaceholderPage';
 import NotificationsPage from '@/pages/notifications/NotificationsPage';
 import { PrivateRoute } from '@/components/PrivateRoute';
-import { AuthProvider } from '@/contexts/AuthContext';
+import { AuthProvider } from '@/contexts/AuthProvider';
 import { ThemeProvider } from '@/components/theme-provider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { LanguageProvider } from '@/contexts/LanguageContext';

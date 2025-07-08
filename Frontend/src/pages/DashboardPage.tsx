@@ -1,6 +1,6 @@
 
 import { useEffect, useMemo } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from "@/hooks/useAuth";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Calendar, CreditCard, Users, User, Activity, Building } from 'lucide-react';
 import { StatCard } from '@/components/dashboard/StatCard';

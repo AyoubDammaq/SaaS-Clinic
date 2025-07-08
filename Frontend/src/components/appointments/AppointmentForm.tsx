@@ -44,7 +44,7 @@ import { AppointmentFormData } from "@/types/rendezvous";
 const getAppointmentFormSchema = (t: (key: string) => string) =>
   z.object({
     patientId: z.string().min(1, { message: t("selectPatientRequired") }),
-    doctorId: z.string().min(1, { message: t("selectDoctorRequired") }),
+    medecinId: z.string().min(1, { message: t("selectDoctorRequired") }),
     date: z.date({ required_error: t("dateRequired") }),
     time: z.string().min(1, { message: t("timeRequired") }),
     duration: z.string().min(1, { message: t("durationRequired") }),
@@ -90,7 +90,7 @@ export const AppointmentForm = ({
     resolver: zodResolver(AppointmentFormSchema),
     defaultValues: {
       patientId: initialData?.patientId || patientId || "",
-      doctorId: initialData?.doctorId || "",
+      medecinId: initialData?.medecinId || "",
       date: initialData?.dateHeure
         ? new Date(initialData.dateHeure)
         : undefined,
@@ -113,7 +113,7 @@ export const AppointmentForm = ({
 
       const requestPayload = {
         patientId: data.patientId,
-        medecinId: data.doctorId,
+        medecinId: data.medecinId,
         dateHeure: dateHeure.toISOString(), // ✅ format ISO
         commentaire: data.reason, // ou "commentaire" selon le champ du backend
       };
@@ -187,7 +187,7 @@ export const AppointmentForm = ({
 
             <FormField
               control={form.control}
-              name="doctorId"
+              name="medecinId"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{tCommon("doctor")}</FormLabel>

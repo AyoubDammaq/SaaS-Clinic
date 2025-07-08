@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from "@/hooks/useAuth";
 import { DossierMedical, Patient } from '@/types/patient';
 import { PatientsList } from '@/components/patients/PatientsList';
 import { PatientProfile } from '@/components/patients/PatientProfile';

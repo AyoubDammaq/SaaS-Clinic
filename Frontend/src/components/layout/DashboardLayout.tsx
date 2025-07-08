@@ -5,7 +5,7 @@ import {
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { TopBar } from "./TopBar";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 import { BreadcrumbNav } from "./BreadcrumbNav";
 import { Toaster } from "@/components/ui/sonner";
 

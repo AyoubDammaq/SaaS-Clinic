@@ -6,7 +6,9 @@ export interface User {
   name: string;
   email: string;
   role: UserRole;
-  clinicId?: string;
+  cliniqueId?: string; // Optional for ClinicAdmin and SuperAdmin
+  medecinId?: string; // Optional for Doctor
+  patientId?: string; // Optional for Patient
 }
 
 export interface AuthState {
@@ -75,4 +77,14 @@ export interface LinkProfileDto {
   userId: string;
   entityId: string; 
   role: UserRole;
+}
+
+export interface DecodedToken {
+  sub: string;
+  name?: string;
+  email?: string;
+  "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"?: UserRole;
+  cliniqueId?: string;
+  medecinId?: string;
+  patientId?: string;
 }

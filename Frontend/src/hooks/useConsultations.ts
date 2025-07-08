@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from "@/hooks/useAuth";
 import { consultationService } from '@/services/consultationService';
 import { Consultation, ConsultationDTO } from '@/types/consultation';
 
@@ -65,7 +65,7 @@ export function useConsultations(): UseConsultationsState {
       } else if (user.role === 'Doctor') {
         // Doctors can see consultations they are assigned to
         consultationData = await consultationService.getConsultationsByDoctorId(user.id);
-      } else if (user.role === 'ClinicAdmin' && user.clinicId) {
+      } else if (user.role === 'ClinicAdmin' && user.cliniqueId) {
         // Clinic admins can see all consultations in their clinic
         // This would require an additional endpoint, for now we'll use getAllConsultations
         // and filter client-side

@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from "@/hooks/useAuth";
 import { doctorService } from '@/services/doctorService';
 import { Doctor, DoctorDto } from '@/types/doctor';
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 import {
   Card,
   CardContent,
@@ -42,33 +42,32 @@ interface Appointment {
   patientName: string;
   patientId: string;
   doctorName: string;
-  doctorId: string;
+  medecinId: string;
   dateHeure: string;
   time: string;
-  duration: number; // minutes
+  duration: number;
   reason: string;
   status: keyof typeof AppointmentStatusEnum;
   notes?: string;
 }
 
-function mapRendezVousToAppointment(
+const mapRendezVousToAppointment = (
   rdv: RendezVous,
   patients: Patient[],
   doctors: Doctor[]
-): Appointment {
+): Appointment => {
   const patient = patients.find((p) => p.id === rdv.patientId);
   const doctor = doctors.find((d) => d.id === rdv.medecinId);
-
   return {
     id: rdv.id,
     patientId: rdv.patientId,
-    doctorId: rdv.medecinId,
+    medecinId: rdv.medecinId,
     dateHeure: rdv.dateHeure,
     time: new Date(rdv.dateHeure).toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
     }),
-    duration: 30, // ou une valeur par défaut
+    duration: 30,
     reason: rdv.commentaire ?? "—",
     status: AppointmentStatusEnum[
       rdv.statut
@@ -81,12 +80,12 @@ function mapRendezVousToAppointment(
       (doctor ? `Dr. ${doctor.prenom} ${doctor.nom}` : "Inconnu"),
     notes: rdv.justificationAnnulation || "",
   };
-}
+};
 
 function AppointmentsPage() {
   const { user } = useAuth();
-  const { doctors, isLoading: isLoadingDoctors } = useDoctors();
-  const { patients, isLoading: isLoadingPatients } = usePatients();
+  const { doctors } = useDoctors();
+  const { patients } = usePatients();
   const { t } = useTranslation("appointments");
   const tConsultations = useTranslation("consultations").t;
   const tCommon = useTranslation("common").t;
@@ -104,15 +103,9 @@ function AppointmentsPage() {
     refetchAppointments,
   } = useAppointments();
 
-  console.log("Données brutes filteredAppointments:", filteredAppointments);
-  console.log("Liste patients:", patients);
-  console.log("Liste médecins:", doctors);
-
-  const mappedAppointments: Appointment[] = filteredAppointments.map((rdv) =>
+  const mappedAppointments = filteredAppointments.map((rdv) =>
     mapRendezVousToAppointment(rdv, patients, doctors)
   );
-
-  console.log("Données mappées pour affichage:", mappedAppointments);
 
   // State for filters
   const [dateFilter, setDateFilter] = useState<Date | null>(null);
@@ -147,55 +140,41 @@ function AppointmentsPage() {
 
     let filtered = [...mappedAppointments];
 
-    // Filtrage selon le rôle utilisateur
-    // if (user.role === "Patient") {
-    //   filtered = filtered.filter(
-    //     (appointment) =>
-    //       appointment.patientId === user.id ||
-    //       (appointment.patientName
-    //         ?.toLowerCase()
-    //         .includes(user.name.toLowerCase()) ??
-    //         false)
-    //   );
-    // } else if (user.role === "Doctor") {
-    //   filtered = filtered.filter(
-    //     (appointment) =>
-    //       appointment.doctorId === user.id ||
-    //       (appointment.doctorName
-    //         ?.toLowerCase()
-    //         .includes(user.name.toLowerCase()) ??
-    //         false)
-    //   );
-    // }
+    if (user.role === "ClinicAdmin") {
+      const doctorIds = doctors
+        .filter((d) => d.cliniqueId === user.cliniqueId)
+        .map((d) => d.id);
+      filtered = filtered.filter((a) => doctorIds.includes(a.medecinId));
+    } else if (user.role === "Doctor") {
+      filtered = filtered.filter((a) => a.medecinId === user.medecinId);
+    } else if (user.role === "Patient") {
+      filtered = filtered.filter((a) => a.patientId === user.patientId);
+    }
 
-    // Filtre sur le champ de recherche
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(
         (appointment) =>
-          (appointment.patientName?.toLowerCase().includes(term) ?? false) ||
-          (appointment.doctorName?.toLowerCase().includes(term) ?? false) ||
-          (appointment.reason?.toLowerCase().includes(term) ?? false)
+          appointment.patientName?.toLowerCase().includes(term) ||
+          appointment.doctorName?.toLowerCase().includes(term) ||
+          appointment.reason?.toLowerCase().includes(term)
       );
     }
 
-    // Filtre sur la date
     if (dateFilter) {
+      const formattedFilterDate = format(dateFilter, "yyyy-MM-dd");
       filtered = filtered.filter((appointment) => {
         const appointmentDate = new Date(appointment.dateHeure);
         const formattedAppointmentDate = format(appointmentDate, "yyyy-MM-dd");
-        const formattedFilterDate = format(dateFilter, "yyyy-MM-dd");
         return formattedAppointmentDate === formattedFilterDate;
       });
     }
 
-    // Filtre sur le statut
     filtered = filtered.filter(
       (appointment) =>
         statusFilter === "all" || appointment.status === statusFilter
     );
 
-    // Séparer en rdv à venir vs passés
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -209,13 +188,10 @@ function AppointmentsPage() {
       return appointmentDate < today && appointment.status !== "CONFIRME";
     });
 
-    // Tri ascendant pour les prochains rendez-vous
     upcoming.sort(
       (a, b) =>
         new Date(a.dateHeure).getTime() - new Date(b.dateHeure).getTime()
     );
-
-    // Tri descendant pour les anciens rendez-vous
     past.sort(
       (a, b) =>
         new Date(b.dateHeure).getTime() - new Date(a.dateHeure).getTime()
@@ -225,9 +201,6 @@ function AppointmentsPage() {
   };
 
   const { upcoming, past } = getFilteredAppointments();
-
-  console.log("[AppointmentsPage] Upcoming appointments:", upcoming);
-  console.log("[AppointmentsPage] Past appointments:", past);
 
   // Handlers for appointment actions
   const handleCancel = (appointmentId: string) => {
@@ -282,26 +255,18 @@ function AppointmentsPage() {
     setIsFormOpen(true);
   };
 
-  const handleFormSubmit = async (data: any) => {
-    console.log("[AppointmentsPage] Form submitted with data:", data);
+  const handleFormSubmit = async (data: AppointmentFormData) => {
     if (selectedAppointment) {
-      console.log(
-        "[AppointmentsPage] Updating appointment id:",
-        selectedAppointment.id
-      );
       try {
         await handleUpdateAppointment(selectedAppointment.id, data);
-        console.log("[AppointmentsPage] Appointment updated successfully");
         toast.success(t("appointmentUpdated"));
       } catch (error) {
         console.error("[AppointmentsPage] Update failed:", error);
         toast.error(t("appointmentError"));
       }
     } else {
-      console.log("[AppointmentsPage] Creating new appointment");
       try {
         await handleAddAppointment(data);
-        console.log("[AppointmentsPage] Appointment created successfully");
         toast.success(t("appointmentCreated"));
       } catch (error) {
         console.error("[AppointmentsPage] Creation failed:", error);
@@ -331,8 +296,6 @@ function AppointmentsPage() {
     setIsConsultationFormOpen(false);
     setAppointmentForConsultation(null);
   };
-
-  console.log("[AppointmentsPage] user.id:", user?.id);
 
   return (
     <div className="space-y-6 pb-8">
@@ -528,7 +491,7 @@ function AppointmentsPage() {
           onSubmit={handleConsultationFormSubmit}
           initialData={{
             patientId: appointmentForConsultation.patientId,
-            doctorId: appointmentForConsultation.doctorId,
+            doctorId: appointmentForConsultation.medecinId,
             date: appointmentForConsultation.dateHeure,
             time: appointmentForConsultation.time,
             reason: `${tConsultations("consultationFromAppointment")}: ${
