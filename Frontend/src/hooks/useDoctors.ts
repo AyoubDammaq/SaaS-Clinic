@@ -18,7 +18,7 @@ interface UseDoctorsState {
   };
   searchTerm: string;
   setSearchTerm: (term: string) => void;
-  addDoctor: (data: DoctorDto) => Promise<void>;
+  addDoctor: (data: DoctorDto) => Promise<Doctor>;
   updateDoctor: (id: string, data: DoctorDto) => Promise<void>;
   deleteDoctor: (id: string) => Promise<void>;
   assignDoctorToClinic: (medecinId: string, cliniqueId: string) => Promise<void>;
@@ -26,6 +26,7 @@ interface UseDoctorsState {
   refetchDoctors: () => Promise<void>;
   fetchDoctors: () => Promise<void>; 
   setDoctors: React.Dispatch<React.SetStateAction<Doctor[]>>;
+  linkUserToDoctor: (userId: string, doctorId: string) => Promise<void>;
 }
 
 export function useDoctors(): UseDoctorsState {
@@ -102,12 +103,13 @@ export function useDoctors(): UseDoctorsState {
   }, [fetchDoctors]);
 
   // Add a new doctor
-  const addDoctor = async (data: DoctorDto) => {
+  const addDoctor = async (data: DoctorDto) : Promise<Doctor> => {
     setIsSubmitting(true);
     try {
       const newDoctor = await doctorService.createDoctor(data);
       setDoctors(prev => [...prev, newDoctor]);
       toast.success("Doctor added successfully");
+      return newDoctor;
     } catch (error) {
       console.error("Error adding doctor:", error);
       toast.error("Failed to add doctor");
@@ -199,6 +201,21 @@ export function useDoctors(): UseDoctorsState {
     }
   };
 
+  // Link user to doctor
+  const linkUserToDoctor = async (userId: string, doctorId: string) => {
+    setIsSubmitting(true);
+    try {
+      await doctorService.linkUserToDoctor({ userId, doctorId });
+      toast.success("User linked to doctor successfully");
+    } catch (error) {
+      console.error("Error linking user to doctor:", error);
+      toast.error("Failed to link user to doctor");
+      throw error;
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
 
 
   return {
@@ -217,5 +234,6 @@ export function useDoctors(): UseDoctorsState {
     refetchDoctors: fetchDoctors,
     fetchDoctors,
     setDoctors,
+    linkUserToDoctor,
   };
 }

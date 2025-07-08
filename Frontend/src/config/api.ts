@@ -24,6 +24,7 @@ export const API_ENDPOINTS = {
     GET_USER_BY_ID: (id: string) => `${GATEWAY_BASE}/auth/users/${id}`,
     DELETE_USER: (id: string) => `${GATEWAY_BASE}/auth/users/${id}`,
     CHANGE_ROLE: `${GATEWAY_BASE}/auth/change-role`,
+    LINK_PROFILE: `${GATEWAY_BASE}/auth/link-profile`,
   },
 
   // Patient endpoints
@@ -34,6 +35,7 @@ export const API_ENDPOINTS = {
     CREATE: `${GATEWAY_BASE}/patients`,
     UPDATE: (id: string) => `${GATEWAY_BASE}/patients/${id}`,
     DELETE: (id: string) => `${GATEWAY_BASE}/patients/${id}`,
+    LINK_USER: `${GATEWAY_BASE}/patients/link-user/patient`,
   },
 
   // Medical records endpoints
@@ -81,6 +83,7 @@ export const API_ENDPOINTS = {
       `${GATEWAY_BASE}/medecin/medecinsIds/clinique/${cliniqueId}`,
     ACTIVITES: (medecinId: string) =>
       `${GATEWAY_BASE}/medecin/activites/${medecinId}`,
+    LINK_USER: `${GATEWAY_BASE}/doctors/link-user/doctor`,
   },
 
   // Appointment endpoints
@@ -139,6 +142,7 @@ export const API_ENDPOINTS = {
     CREATE: `${GATEWAY_BASE}/clinics`,
     UPDATE: (id: string) => `${GATEWAY_BASE}/clinics/${id}`,
     DELETE: (id: string) => `${GATEWAY_BASE}/clinics/${id}`,
+    LINK_USER: `${GATEWAY_BASE}/clinics/link-user/clinic`,
 
     // Search filters
     GET_BY_NAME: (name: string) => `${GATEWAY_BASE}/clinics/nom/${name}`,

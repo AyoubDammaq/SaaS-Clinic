@@ -18,10 +18,11 @@ interface UsePatientState {
   };
   searchTerm: string;
   setSearchTerm: (term: string) => void;
-  handleAddPatient: (data: Omit<Patient, 'id' | 'dateCreation'>) => Promise<void>;
+  handleAddPatient: (data: Omit<Patient, 'id' | 'dateCreation'>) => Promise<Patient>;
   handleUpdatePatient: (id: string, data: Partial<Omit<Patient, 'id' | 'dateCreation'>>) => Promise<void>;
   handleDeletePatient: (id: string) => Promise<void>;
   refetchPatients: () => Promise<void>;
+  linkUserToPatient: (userId: string, patientId: string) => Promise<void>;
 }
 
 export function usePatients(): UsePatientState {
@@ -100,12 +101,13 @@ export function usePatients(): UsePatientState {
   }, [fetchPatients]);
 
   // Ajouter un nouveau patient
-  const handleAddPatient = async (data: Omit<Patient, "id" | "dateCreation">) => {
+  const handleAddPatient = async (data: Omit<Patient, "id" | "dateCreation">): Promise<Patient>  => {
     setIsSubmitting(true);
     try {
       const newPatient = await patientService.createPatient(data);
       setPatients(prev => [...prev, newPatient]);
       toast.success("Patient ajouté avec succès");
+      return newPatient;
     } catch (error) {
       console.error("Erreur lors de l'ajout du patient:", error);
       toast.error("Échec de l'ajout du patient");
@@ -153,6 +155,18 @@ export function usePatients(): UsePatientState {
     }
   };
 
+  // Lier un utilisateur à un patient
+  const linkUserToPatient = async (userId: string, patientId: string) => {
+    try {
+      await patientService.linkUserToPatient({ userId, patientId });
+      toast.success("Utilisateur lié au patient avec succès");
+    } catch (error) {
+      console.error("Erreur lors de la liaison de l'utilisateur au patient:", error);
+      toast.error("Échec de la liaison de l'utilisateur au patient");
+      throw error;
+    }
+  };
+
   return {
     patients,
     filteredPatients,
@@ -164,6 +178,7 @@ export function usePatients(): UsePatientState {
     handleAddPatient,
     handleUpdatePatient,
     handleDeletePatient,
-    refetchPatients: fetchPatients
+    refetchPatients: fetchPatients,
+    linkUserToPatient,
   };
 }

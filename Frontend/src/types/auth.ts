@@ -70,3 +70,9 @@ export interface ChangeUserRoleRequestDto {
   userId: string;
   newRole: UserRole;
 }
+
+export interface LinkProfileDto {
+  userId: string;
+  entityId: string; 
+  role: UserRole;
+}

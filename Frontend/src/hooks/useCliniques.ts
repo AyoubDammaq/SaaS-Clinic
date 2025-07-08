@@ -22,7 +22,7 @@ interface UseCliniquesState {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
   setSelectedClinique: (clinique: Clinique | null) => void;
-  handleAddClinique: (data: Omit<Clinique, 'id' | 'dateCreation'>) => Promise<void>;
+  handleAddClinique: (data: Omit<Clinique, 'id' | 'dateCreation'>) => Promise<Clinique>;
   handleUpdateClinique: (id: string, data: Partial<Clinique>) => Promise<void>;
   handleDeleteClinique: (id: string) => Promise<void>;
   fetchCliniqueStatistics: (id: string) => Promise<void>;
@@ -34,6 +34,7 @@ interface UseCliniquesState {
   getNewCliniqueThisMonth: () => Promise<void>;
   getNewCliniqueByMonth: () => Promise<void>;
   refetchCliniques: () => Promise<void>;
+  linkUserToClinique: (userId: string, clinicId: string) => Promise<void>;
 }
 
 export function useCliniques(): UseCliniquesState {
@@ -111,12 +112,13 @@ export function useCliniques(): UseCliniquesState {
   };
 
   // Ajouter une nouvelle clinique
-  const handleAddClinique = async (data: Omit<Clinique, 'id' | 'dateCreation'>) => {
+  const handleAddClinique = async (data: Omit<Clinique, 'id' | 'dateCreation'>) : Promise<Clinique> => {
     setIsSubmitting(true);
     try {
       const newClinique = await cliniqueService.addClinique(data);
       setCliniques(prev => [...prev, newClinique]);
       toast.success("Clinique ajoutée avec succès");
+      return newClinique;
     } catch (error) {
       console.error("Erreur lors de l'ajout de la clinique:", error);
       toast.error("Échec de l'ajout de la clinique");
@@ -246,6 +248,17 @@ export function useCliniques(): UseCliniquesState {
     }
   };
   
+  // Lier un utilisateur à une clinique
+  const linkUserToClinique = async (userId: string, clinicId: string) => {
+    try {
+      await cliniqueService.linkUserToClinique({ userId, clinicId });
+      toast.success("Utilisateur lié à la clinique avec succès");
+    } catch (error) {
+      console.error("Erreur lors de la liaison de l'utilisateur à la clinique:", error);
+      toast.error("Échec de la liaison de l'utilisateur à la clinique");
+      throw error;
+    }
+  };
 
   return {
     cliniques,
@@ -270,6 +283,7 @@ export function useCliniques(): UseCliniquesState {
     getTotalCliniqueCount,
     getNewCliniqueThisMonth,
     getNewCliniqueByMonth,
-    refetchCliniques: fetchCliniques
+    refetchCliniques: fetchCliniques,
+    linkUserToClinique,
   };
 }

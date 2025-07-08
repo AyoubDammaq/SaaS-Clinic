@@ -69,3 +69,8 @@ export interface PatientStatistique {
     plusDeSoixante: number;
   };
 }
+
+export interface LinkUserToPatientDto {
+  userId: string; // ID of the user to link
+  patientId: string; // ID of the patient to link
+}

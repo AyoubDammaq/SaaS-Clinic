@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 import { API_ENDPOINTS } from '@/config/api';
 import { api } from '@/utils/apiClient';
-import { Patient, DossierMedical, DossierMedicalDTO, Document, PatientStatistique } from '@/types/patient';
+import { Patient, DossierMedical, DossierMedicalDTO, Document, PatientStatistique, LinkUserToPatientDto } from '@/types/patient';
 import { MedicalRecordDocument } from '@/components/patients/MedicalRecordView';
 
 export const patientService = {
@@ -78,6 +78,24 @@ export const patientService = {
     } catch (error) {
       console.error(`Failed to delete patient with ID ${id}:`, error);
       toast.error('Failed to delete patient');
+      throw error;
+    }
+  },
+
+  // Link user to patient
+    linkUserToPatient: async ({ userId, patientId }: LinkUserToPatientDto): Promise<void> => {
+    try {
+      const payload = {
+        userId,
+        patientId,
+      };
+
+      console.log("[linkUserToPatient] Linking user to patient:", payload);
+      await api.post(API_ENDPOINTS.PATIENTS.LINK_USER, payload);
+      toast.success('User linked to patient successfully');
+    } catch (error) {
+      console.error('Failed to link user to patient:', error);
+      toast.error('Failed to link user to patient');
       throw error;
     }
   },

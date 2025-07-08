@@ -40,3 +40,8 @@ export interface StatistiqueCliniqueDTO {
   nombreNouveauxPatientsParMois: StatistiqueDTO[];
   revenusParMois: StatistiqueDTO[];
 }
+
+export interface LinkUserToClinicDto {
+  userId: string; // ID of the user to link
+  clinicId: string; // ID of the patient to link
+}

@@ -1,7 +1,7 @@
 
 import { API_ENDPOINTS } from '@/config/api';
 import { api } from '@/utils/apiClient';
-import { Clinique, StatistiqueCliniqueDTO, StatistiqueDTO, TypeClinique } from '@/types/clinic';
+import { Clinique, LinkUserToClinicDto, StatistiqueCliniqueDTO, StatistiqueDTO, TypeClinique } from '@/types/clinic';
 import { toast } from 'sonner';
 
 export const cliniqueService = {
@@ -145,6 +145,19 @@ export const cliniqueService = {
     } catch (error) {
       console.error('Échec lors de la récupération des nouvelles cliniques par mois:', error);
       toast.error('Échec lors de la récupération des nouvelles cliniques par mois');
+      throw error;
+    }
+  },
+
+  // Link user to clinic
+  linkUserToClinique: async ({ userId, clinicId } : LinkUserToClinicDto): Promise<void> => {
+    const data = { userId, clinicId };
+    try {
+      await api.post<void>(API_ENDPOINTS.CLINICS.LINK_USER, data);
+      console.log("[cliniqueService] User linked to clinic successfully:", data);
+    } catch (error) {
+      console.error('Échec lors de la liaison de l\'utilisateur à la clinique:', error);
+      toast.error('Échec lors de la liaison de l\'utilisateur à la clinique');
       throw error;
     }
   },

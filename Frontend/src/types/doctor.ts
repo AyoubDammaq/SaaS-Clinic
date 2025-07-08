@@ -40,3 +40,9 @@ export interface CliniqueStatistique {
   cliniqueName: string; // May need to be populated from clinic service
   nombreMedecins: number;
 }
+
+
+export interface LinkUserToDoctorDto {
+  userId: string; // ID of the user to link
+  doctorId: string; // ID of the patient to link
+}

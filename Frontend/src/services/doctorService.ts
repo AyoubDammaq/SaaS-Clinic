@@ -6,7 +6,8 @@ import {
   DoctorDto, 
   AttribuerMedecinDto, 
   SpecialiteStatistique, 
-  CliniqueStatistique 
+  CliniqueStatistique, 
+  LinkUserToDoctorDto
 } from '@/types/doctor';
 
 type UUID = string;
@@ -107,5 +108,13 @@ export const doctorService = {
   async getDoctorActivities(medecinId: UUID): Promise<unknown[]> {
     const response = await api.get<unknown[]>(API_ENDPOINTS.DOCTORS.ACTIVITES(medecinId));
     return response;
+  },
+
+  // Link user to doctor
+  async linkUserToDoctor({ userId, doctorId } : LinkUserToDoctorDto): Promise<void> {
+    const data = { userId, doctorId };
+    await api.post<void>(API_ENDPOINTS.DOCTORS.LINK_USER, data);
+    console.log("[doctorService] User linked to doctor successfully:", data);
   }
+
 };
