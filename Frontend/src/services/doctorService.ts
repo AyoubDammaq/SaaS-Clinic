@@ -75,7 +75,7 @@ export const doctorService = {
 
   // Unassign a doctor from a clinic
   async unassignDoctorFromClinic(medecinId: UUID): Promise<void> {
-    await api.delete<void>(API_ENDPOINTS.DOCTORS.DESABONNER(medecinId));
+    await api.post<void>(API_ENDPOINTS.DOCTORS.DESABONNER(medecinId));
   },
 
   // Get doctor count by speciality

@@ -373,7 +373,7 @@ function AppointmentsPage() {
         initialData={selectedAppointment}
         doctors={doctors}
         patients={patients}
-        patientId={user?.role === "Patient" ? user.id : undefined}
+        patientId={user?.role === "Patient" ? user.patientId : undefined}
       />
 
       {/* Appointment Details Dialog */}

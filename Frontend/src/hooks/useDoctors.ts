@@ -1,9 +1,8 @@
-
-import { useState, useEffect, useCallback } from 'react';
-import { toast } from 'sonner';
+import { useState, useEffect, useCallback } from "react";
+import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
-import { doctorService } from '@/services/doctorService';
-import { Doctor, DoctorDto } from '@/types/doctor';
+import { doctorService } from "@/services/doctorService";
+import { Doctor, DoctorDto } from "@/types/doctor";
 
 interface UseDoctorsState {
   doctors: Doctor[];
@@ -21,10 +20,13 @@ interface UseDoctorsState {
   addDoctor: (data: DoctorDto) => Promise<Doctor>;
   updateDoctor: (id: string, data: DoctorDto) => Promise<void>;
   deleteDoctor: (id: string) => Promise<void>;
-  assignDoctorToClinic: (medecinId: string, cliniqueId: string) => Promise<void>;
+  assignDoctorToClinic: (
+    medecinId: string,
+    cliniqueId: string
+  ) => Promise<void>;
   unassignDoctorFromClinic: (medecinId: string) => Promise<void>;
   refetchDoctors: () => Promise<void>;
-  fetchDoctors: () => Promise<void>; 
+  fetchDoctors: () => Promise<void>;
   setDoctors: React.Dispatch<React.SetStateAction<Doctor[]>>;
   linkUserToDoctor: (userId: string, doctorId: string) => Promise<void>;
 }
@@ -35,7 +37,7 @@ export function useDoctors(): UseDoctorsState {
   const [filteredDoctors, setFilteredDoctors] = useState<Doctor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [permissions, setPermissions] = useState({
     canCreate: false,
     canEdit: false,
@@ -46,11 +48,15 @@ export function useDoctors(): UseDoctorsState {
   // Check permissions based on user role
   useEffect(() => {
     if (user) {
-      const canCreate = user.role === 'SuperAdmin' || user.role === 'ClinicAdmin';
-      const canEdit = user.role === 'SuperAdmin' || user.role === 'ClinicAdmin' || user.role === 'Doctor';
-      const canDelete = user.role === 'SuperAdmin';
+      const canCreate =
+        user.role === "SuperAdmin" || user.role === "ClinicAdmin";
+      const canEdit =
+        user.role === "SuperAdmin" ||
+        user.role === "ClinicAdmin" ||
+        user.role === "Doctor";
+      const canDelete = user.role === "SuperAdmin";
       const canView = true; // All authenticated users can view doctors
-      
+
       setPermissions({ canCreate, canEdit, canDelete, canView });
     }
   }, [user]);
@@ -58,24 +64,32 @@ export function useDoctors(): UseDoctorsState {
   // Fetch doctors list
   const fetchDoctors = useCallback(async () => {
     if (!user) return;
-    
+
     setIsLoading(true);
     try {
       // Get all doctors
       const data = await doctorService.getDoctors();
-      
+
       // Filter doctors based on user role
       let filteredData = [...data];
-      
-      if (user.role === 'ClinicAdmin' || user.role === 'Doctor') {
-        // Clinic admins and doctors can only see doctors in their clinic
-        if (user.clinicId) {
-          filteredData = data.filter(d => d.cliniqueId === user.clinicId);
+
+      if (user.role === "ClinicAdmin") {
+        if (user.cliniqueId) {
+          filteredData = data.filter(
+            (d) => d.cliniqueId === null || d.cliniqueId === user.cliniqueId
+          );
+        } else {
+          filteredData = data.filter((d) => d.cliniqueId === null); // fallback
+        }
+      } else if (user.role === "Doctor") {
+        if (user.cliniqueId) {
+          filteredData = data.filter((d) => d.cliniqueId === user.cliniqueId);
         }
       }
+
       // SuperAdmin can see all doctors
       // Patients can see all doctors too
-      
+
       setDoctors(filteredData);
       setFilteredDoctors(filteredData);
     } catch (error) {
@@ -85,14 +99,17 @@ export function useDoctors(): UseDoctorsState {
       setIsLoading(false);
     }
   }, [user]);
-  
+
   // Filter doctors based on search term
   useEffect(() => {
     if (doctors.length === 0) return;
-    
-    const results = doctors.filter(doctor => 
-      `${doctor.prenom} ${doctor.nom}`.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      doctor.specialite.toLowerCase().includes(searchTerm.toLowerCase())
+
+    const results = doctors.filter(
+      (doctor) =>
+        `${doctor.prenom} ${doctor.nom}`
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        doctor.specialite.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredDoctors(results);
   }, [searchTerm, doctors]);
@@ -103,11 +120,11 @@ export function useDoctors(): UseDoctorsState {
   }, [fetchDoctors]);
 
   // Add a new doctor
-  const addDoctor = async (data: DoctorDto) : Promise<Doctor> => {
+  const addDoctor = async (data: DoctorDto): Promise<Doctor> => {
     setIsSubmitting(true);
     try {
       const newDoctor = await doctorService.createDoctor(data);
-      setDoctors(prev => [...prev, newDoctor]);
+      setDoctors((prev) => [...prev, newDoctor]);
       toast.success("Doctor added successfully");
       return newDoctor;
     } catch (error) {
@@ -124,7 +141,9 @@ export function useDoctors(): UseDoctorsState {
     setIsSubmitting(true);
     try {
       const updatedDoctor = await doctorService.updateDoctor(id, data);
-      setDoctors(prev => prev.map(doctor => (doctor.id === id ? updatedDoctor : doctor)));
+      setDoctors((prev) =>
+        prev.map((doctor) => (doctor.id === id ? updatedDoctor : doctor))
+      );
       toast.success("Doctor updated successfully");
     } catch (error) {
       console.error("Error updating doctor:", error);
@@ -161,7 +180,7 @@ export function useDoctors(): UseDoctorsState {
     setIsLoading(true);
     try {
       await doctorService.deleteDoctor(id);
-      setDoctors(prev => prev.filter(doctor => doctor.id !== id));
+      setDoctors((prev) => prev.filter((doctor) => doctor.id !== id));
       toast.success("Doctor deleted successfully");
     } catch (error) {
       console.error("Error deleting doctor:", error);
@@ -172,29 +191,40 @@ export function useDoctors(): UseDoctorsState {
   };
 
   // Assign doctor to clinic
-  const assignDoctorToClinic = async (medecinId: string, cliniqueId: string) => {
+  const assignDoctorToClinic = async (
+    medecinId: string,
+    cliniqueId: string
+  ) => {
     setIsSubmitting(true);
     try {
       await doctorService.assignDoctorToClinic(medecinId, cliniqueId);
-      toast.success('Médecin attribué à la clinique avec succès');
+      toast.success("Médecin attribué à la clinique avec succès");
       await refetchDoctors();
     } catch (error) {
-      console.error('Erreur lors de l’attribution du médecin à la clinique :', error);
-      toast.error('Échec de l’attribution du médecin');
+      console.error(
+        "Erreur lors de l’attribution du médecin à la clinique :",
+        error
+      );
+      toast.error("Échec de l’attribution du médecin");
       throw error;
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  // Unassign doctor from clinic
   const unassignDoctorFromClinic = async (medecinId: string) => {
     setIsSubmitting(true);
     try {
       await doctorService.unassignDoctorFromClinic(medecinId);
-      toast.success('Médecin désabonné de la clinique avec succès');
+      toast.success("Médecin désabonné de la clinique avec succès");
       await refetchDoctors();
     } catch (error) {
-      console.error('Erreur lors du désabonnement du médecin de la clinique :', error);
-      toast.error('Échec du désabonnement du médecin');
+      console.error(
+        "Erreur lors du désabonnement du médecin de la clinique :",
+        error
+      );
+      toast.error("Échec du désabonnement du médecin");
       throw error;
     } finally {
       setIsSubmitting(false);
@@ -215,8 +245,6 @@ export function useDoctors(): UseDoctorsState {
       setIsSubmitting(false);
     }
   };
-
-
 
   return {
     doctors,

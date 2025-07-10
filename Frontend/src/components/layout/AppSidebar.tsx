@@ -51,7 +51,7 @@ export function AppSidebar() {
         name: 'Doctors',
         path: '/doctors',
         icon: User,
-        roles: ['SuperAdmin', 'ClinicAdmin']
+        roles: ['SuperAdmin', 'ClinicAdmin', 'Patient']
       },
       {
         name: 'Appointments',
@@ -87,7 +87,7 @@ export function AppSidebar() {
         name: 'Clinics',
         path: '/clinics',
         icon: Building,
-        roles: ['SuperAdmin']
+        roles: ['SuperAdmin', 'Patient']
       },
       {
         name: 'Settings',

@@ -73,7 +73,6 @@ export function DoctorForm({
   });
 
     useEffect(() => {
-      console.log("Resetting form with initialData:", initialData);
       form.reset({
         ...defaultValues,
         ...initialData,
@@ -223,33 +222,7 @@ export function DoctorForm({
                 </FormItem>
               )}
             />
-            {/** Clinic (if available) */}
-            {clinics.length > 0 && (
-              <FormField
-                control={form.control}
-                name="cliniqueId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Clinic</FormLabel>
-                    <Select value={field.value} onValueChange={field.onChange}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a clinic" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {clinics.map((clinic) => (
-                          <SelectItem key={clinic.id} value={clinic.id}>
-                            {clinic.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
+            
             {/** Photo URL */}
             <FormField
               control={form.control}

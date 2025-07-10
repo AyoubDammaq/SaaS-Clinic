@@ -63,26 +63,26 @@ export const API_ENDPOINTS = {
     UPDATE: (id: string) => `${GATEWAY_BASE}/doctors/${id}`,
     DELETE: (id: string) => `${GATEWAY_BASE}/doctors/${id}`,
     FILTER_BY_SPECIALTY: (specialite: string) =>
-      `${GATEWAY_BASE}/medecin/filter/specialite?specialite=${encodeURIComponent(
+      `${GATEWAY_BASE}/doctors/filter/specialite?specialite=${encodeURIComponent(
         specialite
       )}`,
     FILTER_BY_NAME: (nom?: string, prenom?: string) =>
-      `${GATEWAY_BASE}/medecin/filter/name?name=${encodeURIComponent(
+      `${GATEWAY_BASE}/doctors/filter/name?name=${encodeURIComponent(
         nom ?? ""
       )}&prenom=${encodeURIComponent(prenom ?? "")}`,
     BY_CLINIC: (cliniqueId: string) =>
-      `${GATEWAY_BASE}/medecin/clinique/${cliniqueId}`,
-    ATTRIBUER: `${GATEWAY_BASE}/medecin/attribuer`,
+      `${GATEWAY_BASE}/doctors/clinique/${cliniqueId}`,
+    ATTRIBUER: `${GATEWAY_BASE}/doctors/attribuer`,
     DESABONNER: (medecinId: string) =>
-      `${GATEWAY_BASE}/medecin/desabonner/${medecinId}`,
-    STATS_BY_SPECIALTY: `${GATEWAY_BASE}/medecin/statistiques/specialite`,
-    STATS_BY_CLINIC: `${GATEWAY_BASE}/medecin/statistiques/clinique`,
+      `${GATEWAY_BASE}/doctors/desabonner/${medecinId}`,
+    STATS_BY_SPECIALTY: `${GATEWAY_BASE}/doctors/statistiques/specialite`,
+    STATS_BY_CLINIC: `${GATEWAY_BASE}/doctors/statistiques/clinique`,
     STATS_BY_SPECIALTY_IN_CLINIC: (cliniqueId: string) =>
-      `${GATEWAY_BASE}/medecin/statistiques/specialite/clinique/${cliniqueId}`,
+      `${GATEWAY_BASE}/doctors/statistiques/specialite/clinique/${cliniqueId}`,
     IDS_BY_CLINIQUE: (cliniqueId: string) =>
-      `${GATEWAY_BASE}/medecin/medecinsIds/clinique/${cliniqueId}`,
+      `${GATEWAY_BASE}/doctors/medecinsIds/clinique/${cliniqueId}`,
     ACTIVITES: (medecinId: string) =>
-      `${GATEWAY_BASE}/medecin/activites/${medecinId}`,
+      `${GATEWAY_BASE}/doctors/activites/${medecinId}`,
     LINK_USER: `${GATEWAY_BASE}/doctors/link-user/doctor`,
   },
 
@@ -94,22 +94,22 @@ export const API_ENDPOINTS = {
     CREATE: `${GATEWAY_BASE}/appointments`,
     UPDATE: (id: string) => `${GATEWAY_BASE}/appointments/${id}`,
     CANCEL_BY_PATIENT: (id: string) =>
-      `${GATEWAY_BASE}/appointments/annuler/patient/${id}`, 
+      `${GATEWAY_BASE}/appointments/annuler/patient/${id}`,
     CANCEL_BY_DOCTOR: (id: string) =>
-      `${GATEWAY_BASE}/appointments/annuler/medecin/${id}`, 
+      `${GATEWAY_BASE}/appointments/annuler/medecin/${id}`,
     CONFIRM_BY_DOCTOR: (id: string) =>
-      `${GATEWAY_BASE}/appointments/confirmer/${id}`, 
+      `${GATEWAY_BASE}/appointments/confirmer/${id}`,
     GET_BY_PATIENT_ID: (patientId: string) =>
-      `${GATEWAY_BASE}/appointments/patient/${patientId}`, 
+      `${GATEWAY_BASE}/appointments/patient/${patientId}`,
     GET_BY_DOCTOR_ID: (medecinId: string) =>
-      `${GATEWAY_BASE}/appointments/medecin/${medecinId}`, 
+      `${GATEWAY_BASE}/appointments/medecin/${medecinId}`,
     GET_BY_DATE: (date: string) => `${GATEWAY_BASE}/appointments/date/${date}`,
     GET_BY_STATUS: (statut: string) =>
-      `${GATEWAY_BASE}/appointments/statut/${statut}`, 
+      `${GATEWAY_BASE}/appointments/statut/${statut}`,
     GET_STATS_PERIOD: (start: string, end: string) =>
-      `${GATEWAY_BASE}/appointments/period?start=${start}&end=${end}`, 
+      `${GATEWAY_BASE}/appointments/period?start=${start}&end=${end}`,
     COUNT_BY_DOCTORS: (medecinIds: string) =>
-      `${GATEWAY_BASE}/appointments/count?medecinIds=${medecinIds}`, 
+      `${GATEWAY_BASE}/appointments/count?medecinIds=${medecinIds}`,
     COUNT_DISTINCT_PATIENTS: (medecinIds: string) =>
       `${GATEWAY_BASE}/appointments/distinct/patients?medecinIds=${medecinIds}`,
   },
@@ -196,11 +196,15 @@ export const API_ENDPOINTS = {
       heureDebut?: string,
       heureFin?: string
     ) => {
-      let url = `${GATEWAY_BASE}/availibility/medecins-disponibles`;
+      let url = `${GATEWAY_BASE}/availibility/medecins-disponibles?date=${date}`;
       if (heureDebut) url += `&heureDebut=${heureDebut}`;
       if (heureFin) url += `&heureFin=${heureFin}`;
       return url;
     },
+    GET_AVAILABLE_SLOTS: (doctorId: string, date: string) =>
+      `${GATEWAY_BASE}/availibility/medecins/${doctorId}/creneaux-disponibles?date=${encodeURIComponent(
+        date
+      )}`,
     IS_AVAILABLE: (doctorId: string, dateTime: string) =>
       `${GATEWAY_BASE}/availibility/disponibilites/${doctorId}/disponible`,
     TOTAL_AVAILABLE_TIME: (doctorId: string, start: string, end: string) =>

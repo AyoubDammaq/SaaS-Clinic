@@ -54,6 +54,7 @@ export const AppointmentTable = ({
   
   // Handle row click
   const handleRowClick = (appointment: Appointment) => {
+    
     if (onRowClick) {
       onRowClick(appointment);
     } else if (onViewDetails) {
@@ -71,7 +72,7 @@ export const AppointmentTable = ({
             {userRole !== 'Doctor' && <TableHead>{tCommon('doctor')}</TableHead>}
             <TableHead>{t('reason')}</TableHead>
             <TableHead>{tCommon('status')}</TableHead>
-            <TableHead>{tCommon('actions')}</TableHead>
+            <TableHead>{tCommon('Actions')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

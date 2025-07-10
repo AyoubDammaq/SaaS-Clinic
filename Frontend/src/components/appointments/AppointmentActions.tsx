@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button";
 import {
-  FileEdit,
   XCircle,
   CheckCircle,
-  Eye,
   CalendarPlus,
 } from "lucide-react";
 import { AppointmentStatus } from "./AppointmentStatusBadge";
@@ -44,13 +42,12 @@ export const AppointmentActions = ({
 }: AppointmentActionsProps) => {
   const { t } = useTranslation("appointments");
   const tCommon = useTranslation("common").t;
-  const canEdit =
-    appointment.status === "CONFIRME" || appointment.status === "EN_ATTENTE";
+  const canEdit = appointment.status === "EN_ATTENTE";
 
   if (userRole === "Patient") {
     return (
       <div className="flex gap-2">
-        {canEdit && appointment.status !== "ANNULE" && (
+        {appointment.status !== "ANNULE" && (
           <Button
             size="sm"
             variant="ghost"
@@ -60,25 +57,17 @@ export const AppointmentActions = ({
             <XCircle className="h-4 w-4 mr-1" /> {tCommon("cancel")}
           </Button>
         )}
-        <Button
-          size="sm"
-          variant="ghost"
-          className="hover:bg-blue-50 hover:text-blue-600"
-          onClick={() =>
-            appointment.status === "CONFIRME"
-              ? onReschedule && onReschedule(appointment)
-              : onViewDetails && onViewDetails(appointment)
-          }
-        >
-          {appointment.status === "CONFIRME" ? (
+        {canEdit && (
+          <Button
+            size="sm"
+            variant="ghost"
+            className="hover:bg-blue-50 hover:text-blue-600"
+            onClick={() => onReschedule && onReschedule(appointment)}
+          >
             <CalendarPlus className="h-4 w-4 mr-1" />
-          ) : (
-            <Eye className="h-4 w-4 mr-1" />
-          )}
-          {appointment.status === "CONFIRME"
-            ? t("reschedule")
-            : tCommon("view")}
-        </Button>
+            {t("reschedule")}
+          </Button>
+        )}
       </div>
     );
   }
@@ -96,28 +85,12 @@ export const AppointmentActions = ({
             <CheckCircle className="h-4 w-4 mr-1" /> {t("complete")}
           </Button>
         )}
-        <Button
-          size="sm"
-          variant="ghost"
-          className="hover:bg-blue-50 hover:text-blue-600"
-          onClick={() => onViewDetails && onViewDetails(appointment)}
-        >
-          <Eye className="h-4 w-4 mr-1" /> {tCommon("view")}
-        </Button>
       </div>
     );
   }
 
   return (
     <div className="flex gap-2">
-      <Button
-        size="sm"
-        variant="ghost"
-        className="hover:bg-blue-50 hover:text-blue-600"
-        onClick={() => onViewDetails && onViewDetails(appointment)}
-      >
-        <Eye className="h-4 w-4 mr-1" /> {tCommon("view")}
-      </Button>
       {canEdit && (
         <Button
           size="sm"

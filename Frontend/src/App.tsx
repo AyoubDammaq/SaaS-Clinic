@@ -49,7 +49,7 @@ function App() {
                 </Route>
 
                 {/* Doctors (Admins only) */}
-                <Route element={<PrivateRoute allowedRoles={['SuperAdmin', 'ClinicAdmin']} />}>
+                <Route element={<PrivateRoute allowedRoles={['SuperAdmin', 'ClinicAdmin', 'Patient']} />}>
                   <Route path="/doctors" element={<DoctorsPage />} />
                   <Route path="/clinics" element={<ClinicsPage />} />
                   <Route path="/settings" element={<SettingsPage />} />

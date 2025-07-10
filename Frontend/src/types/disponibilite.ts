@@ -30,3 +30,7 @@ export interface Disponibilite {
   heureFin: string; // Time in HH:mm format
 }
 
+export interface CreneauDisponibleDto {
+  dateHeureDebut: string;
+  dateHeureFin: string;
+}

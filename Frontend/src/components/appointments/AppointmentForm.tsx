@@ -40,6 +40,8 @@ import { useTranslation } from "@/hooks/useTranslation";
 import { Patient } from "@/types/patient";
 import { Doctor } from "@/types/doctor";
 import { AppointmentFormData } from "@/types/rendezvous";
+import { useDisponibilite } from "@/hooks/useDisponibilites";
+import { CreneauDisponibleDto } from "@/types/disponibilite";
 
 const getAppointmentFormSchema = (t: (key: string) => string) =>
   z.object({
@@ -77,6 +79,11 @@ export const AppointmentForm = ({
   const AppointmentFormSchema = getAppointmentFormSchema(t);
   type AppointmentFormValues = z.infer<typeof AppointmentFormSchema>;
 
+  const { getAvailableSlots } = useDisponibilite();
+  const [availableSlots, setAvailableSlots] = useState<CreneauDisponibleDto[]>(
+    []
+  );
+
   useEffect(() => {
     if (isOpen) {
       console.log(
@@ -100,6 +107,43 @@ export const AppointmentForm = ({
     },
   });
 
+  const medecinId = form.watch("medecinId");
+  const date = form.watch("date");
+
+  useEffect(() => {
+    const fetchSlots = async () => {
+      if (medecinId && date) {
+        try {
+          const formattedDate =
+            typeof date === "string" ? date : date.toLocaleDateString("fr-CA");
+
+          const slots = await getAvailableSlots(medecinId, formattedDate);
+          setAvailableSlots(slots);
+        } catch (err) {
+          setAvailableSlots([]);
+          console.error("Erreur lors du chargement des créneaux disponibles");
+        }
+      }
+    };
+
+    fetchSlots();
+  }, [medecinId, date, getAvailableSlots]);
+
+  useEffect(() => {
+    if (initialData) {
+      form.reset({
+        patientId: initialData.patientId || "",
+        medecinId: initialData.medecinId || "",
+        date: initialData.dateHeure
+          ? new Date(initialData.dateHeure)
+          : undefined,
+        time: initialData.time || "",
+        duration: initialData.duration?.toString() || "30",
+        reason: initialData.reason || "",
+      });
+    }
+  }, [initialData, form]);
+
   const handleSubmit = async (data: AppointmentFormValues) => {
     console.log("[AppointmentForm] Validated form data:", data);
     if (patientId) {
@@ -110,11 +154,17 @@ export const AppointmentForm = ({
       const [hours, minutes] = data.time.split(":").map(Number);
       const dateHeure = new Date(data.date);
       dateHeure.setHours(hours, minutes, 0, 0);
+      const pad = (num: number) => String(num).padStart(2, "0");
+      const localIso = `${dateHeure.getFullYear()}-${pad(
+        dateHeure.getMonth() + 1
+      )}-${pad(dateHeure.getDate())}T${pad(dateHeure.getHours())}:${pad(
+        dateHeure.getMinutes()
+      )}:00`;
 
       const requestPayload = {
         patientId: data.patientId,
         medecinId: data.medecinId,
-        dateHeure: dateHeure.toISOString(), // ✅ format ISO
+        dateHeure: localIso, // ✅ format ISO
         commentaire: data.reason, // ou "commentaire" selon le champ du backend
       };
 
@@ -201,18 +251,14 @@ export const AppointmentForm = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {doctors.length === 0 ? (
-                        <SelectItem disabled value="">
-                          {t("noDoctorsAvailable")}
-                        </SelectItem>
-                      ) : (
-                        doctors.map((doctor) => (
+                      {doctors
+                        .filter((doctor) => !!doctor.cliniqueId) // 🔥 Ne garde que les médecins liés à une clinique
+                        .map((doctor) => (
                           <SelectItem key={doctor.id} value={doctor.id}>
                             {doctor.prenom} {doctor.nom}{" "}
                             {doctor.specialite ? `- ${doctor.specialite}` : ""}
                           </SelectItem>
-                        ))
-                      )}
+                        ))}
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -270,7 +316,43 @@ export const AppointmentForm = ({
                   <FormItem>
                     <FormLabel>{t("time")}</FormLabel>
                     <FormControl>
-                      <Input type="time" {...field} />
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder={t("selectTime")} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {availableSlots.length === 0 ? (
+                            <div className="px-3 py-2 text-sm text-muted-foreground">
+                              {t("noAvailableSlots")}
+                            </div>
+                          ) : (
+                            availableSlots
+                              .filter(
+                                (slot) =>
+                                  new Date(slot.dateHeureDebut) > new Date()
+                              ) // 🛡️ protection complémentaire
+                              .map((slot, index) => {
+                                const start = new Date(slot.dateHeureDebut);
+                                return (
+                                  <SelectItem
+                                    key={index}
+                                    value={start.toTimeString().slice(0, 5)}
+                                  >
+                                    {start.toLocaleTimeString("fr-FR", {
+                                      hour: "2-digit",
+                                      minute: "2-digit",
+                                    })}
+                                  </SelectItem>
+                                );
+                              })
+                          )}
+                        </SelectContent>
+                      </Select>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
