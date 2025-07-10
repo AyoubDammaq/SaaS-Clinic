@@ -2,6 +2,7 @@
 using Doctor.Application.AvailibilityServices.Commands.SupprimerDisponibilite;
 using Doctor.Application.AvailibilityServices.Commands.SupprimerDisponibilitesParMedecinId;
 using Doctor.Application.AvailibilityServices.Commands.UpdateDisponibilite;
+using Doctor.Application.AvailibilityServices.Queries.GetCreneauxDisponibles;
 using Doctor.Application.AvailibilityServices.Queries.GetDisponibilites;
 using Doctor.Application.AvailibilityServices.Queries.GetDisponibilitesByMedecinId;
 using Doctor.Application.AvailibilityServices.Queries.GetDisponibilitesByMedecinIdAndJour;
@@ -9,6 +10,7 @@ using Doctor.Application.AvailibilityServices.Queries.GetMedecinsDisponibles;
 using Doctor.Application.AvailibilityServices.Queries.GetTotalAvailableTime;
 using Doctor.Application.AvailibilityServices.Queries.IsAvailable;
 using Doctor.Application.AvailibilityServices.Queries.ObtenirDisponibilitesDansIntervalle;
+using Doctor.Application.DTOs;
 using Doctor.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -137,6 +139,20 @@ namespace Doctor.API.Controllers
                 }
                 var medecins = await _mediator.Send(new GetMedecinsDisponiblesQuery(date, heureDebut, heureFin));
                 return Ok(medecins);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur interne s'est produite.", Details = ex.Message });
+            }
+        }
+
+        [HttpGet("medecins/{medecinId}/creneaux-disponibles")]
+        public async Task<IActionResult> ObtenirCreneauxDisponibles(Guid medecinId, DateTime date)
+        {
+            try
+            {
+                var creneaux = await _mediator.Send(new GetCreneauxDisponiblesQuery(medecinId, date));
+                return Ok(creneaux);
             }
             catch (Exception ex)
             {

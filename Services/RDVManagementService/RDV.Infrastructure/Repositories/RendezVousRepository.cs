@@ -76,6 +76,13 @@ namespace RDV.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<RendezVous>> GetRendezVousByMedecinAndDateAsync(Guid medecinId, DateTime date)
+        {
+            return await _context.RendezVous
+                .Where(r => r.MedecinId == medecinId && r.DateHeure.Date == date.Date && r.Statut == RDVstatus.CONFIRME)
+                .ToListAsync();
+        }
+
 
         public async Task<int> CountByMedecinIdsAsync(List<Guid> medecinIds)
         {

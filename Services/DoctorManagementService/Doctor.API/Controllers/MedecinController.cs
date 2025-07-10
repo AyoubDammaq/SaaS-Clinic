@@ -28,10 +28,12 @@ namespace Doctor.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
-        public MedecinController(IMediator mediator, IConfiguration configuration)
+        private readonly ILogger<MedecinController> _logger;
+        public MedecinController(IMediator mediator, IConfiguration configuration, ILogger<MedecinController> logger)
         {
             _mediator = mediator;
             _configuration = configuration;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -192,11 +194,12 @@ namespace Doctor.API.Controllers
                 {
                     return NotFound(new { Message = "Médecin non trouvé" });
                 }
-
+                /*
                 using (var httpClient = new HttpClient())
                 {
                     var clinicServiceBaseUrl = _configuration["Services:ClinicServiceBaseUrl"];
-                    var clinicServiceUrl = $"{clinicServiceBaseUrl}/api/Clinique/{attribuerMedecinDto.CliniqueId}";
+                    var clinicServiceUrl = $"{clinicServiceBaseUrl}/Clinics/{attribuerMedecinDto.CliniqueId}";
+                    _logger.LogInformation($"ClinicServiceBaseUrl: {clinicServiceBaseUrl}");
                     var response = await httpClient.GetAsync(clinicServiceUrl);
 
                     if (!response.IsSuccessStatusCode)
@@ -204,6 +207,7 @@ namespace Doctor.API.Controllers
                         return NotFound(new { Message = "Clinique non trouvée" });
                     }
                 }
+                */
 
                 await _mediator.Send(new AttribuerMedecinAUneCliniqueCommand(attribuerMedecinDto.MedecinId, attribuerMedecinDto.CliniqueId));
                 return Ok(new { Message = "Médecin attribué à la clinique avec succès" });
@@ -214,7 +218,7 @@ namespace Doctor.API.Controllers
             }
         }
 
-        [HttpDelete("desabonner/{medecinId}")]
+        [HttpPost("desabonner/{medecinId}")]
         [Authorize(Roles = "SuperAdmin, ClinicAdmin")]
         public async Task<IActionResult> DesabonnerMedecinDeClinique(Guid medecinId)
         {

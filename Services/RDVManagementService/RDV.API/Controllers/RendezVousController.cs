@@ -15,6 +15,7 @@ using RDV.Application.Queries.GetRendezVousById;
 using RDV.Application.Queries.GetRendezVousByMedecinId;
 using RDV.Application.Queries.GetRendezVousByPatientId;
 using RDV.Application.Queries.GetRendezVousByStatut;
+using RDV.Application.Queries.GetRendezVousParMedecinEtDate;
 using RDV.Application.Queries.GetStatistiques;
 using RDV.Domain.Entities;
 using RDV.Domain.Enums;
@@ -240,6 +241,17 @@ namespace RDVManagementService.Controllers
             {
                 return StatusCode(500, $"Erreur interne du serveur: {ex.Message}");
             }
+        }
+
+        [HttpGet("medecin/{medecinId}/date")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RendezVous>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetByMedecinAndDate(Guid medecinId, [FromQuery] DateTime date)
+        {
+            var rdvs = await _mediator.Send(new GetRendezVousParMedecinEtDateQuery(medecinId, date));
+            return Ok(rdvs);
         }
 
         [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]

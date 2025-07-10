@@ -2,6 +2,8 @@ using Doctor.API.Extensions;
 using Doctor.Application.AvailibilityServices.Commands.AjouterDisponibilite;
 using Doctor.Application.AvailibilityServices.Commands.UpdateDisponibilite;
 using Doctor.Application.Behaviors;
+using Doctor.Application.Interfaces;
+using Doctor.Application.Services;
 using Doctor.Domain.Interfaces;
 using Doctor.Domain.Interfaces.Messaging;
 using Doctor.Infrastructure.Data;
@@ -36,6 +38,11 @@ builder.Services.AddDbContext<MedecinDbContext>(options =>
 builder.Services.AddScoped<IMedecinRepository, MedecinRepository>();
 builder.Services.AddScoped<IDisponibiliteRepository, DisponibiliteRepository>();
 builder.Services.AddSingleton<IKafkaProducer, KafkaProducer>();
+
+builder.Services.AddHttpClient<IRendezVousHttpClient, RendezVousHttpClient>(client =>
+{
+    client.BaseAddress = new Uri("http://rdvservice:8089"); // nom DNS Docker
+});
 
 
 builder.Services.AddHttpClient<IMedecinRepository, MedecinRepository>();
