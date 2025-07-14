@@ -282,7 +282,7 @@ namespace RDVManagementService.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> AnnulerRendezVousParMedecin(Guid rendezVousId, [FromBody] string justification)
+        public async Task<IActionResult> AnnulerRendezVousParMedecin(Guid rendezVousId, [FromBody] JustificationDto dto)
         {
             try
             {
@@ -291,7 +291,7 @@ namespace RDVManagementService.Controllers
                     return BadRequest("Invalid rendez-vous ID");
                 }
 
-                await _mediator.Send(new AnnulerRendezVousParMedecinCommand(rendezVousId, justification));
+                await _mediator.Send(new AnnulerRendezVousParMedecinCommand(rendezVousId, dto.Justification));
                 return NoContent();
             }
             catch (Exception ex)
