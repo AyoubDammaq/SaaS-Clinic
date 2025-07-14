@@ -36,6 +36,7 @@ import {
 import { ConsultationDTO } from "@/types/consultation";
 import { Patient } from "@/types/patient";
 import { Doctor } from "@/types/doctor";
+import { CancelByDoctorDialog } from "@/components/appointments/CancelByDoctorDialog";
 
 interface Appointment {
   id: string;
@@ -100,6 +101,8 @@ function AppointmentsPage() {
     handleAddAppointment,
     handleUpdateAppointment,
     handleCancelAppointment,
+    handleCancelAppointmentByDoctor,
+    handleConfirmAppointment,
     refetchAppointments,
   } = useAppointments();
 
@@ -132,6 +135,11 @@ function AppointmentsPage() {
   // State for consultation form
   const [isConsultationFormOpen, setIsConsultationFormOpen] = useState(false);
   const [appointmentForConsultation, setAppointmentForConsultation] =
+    useState<Appointment | null>(null);
+
+  // State for cancel by doctor dialog
+  const [doctorCancelDialogOpen, setDoctorCancelDialogOpen] = useState(false);
+  const [appointmentToCancelByDoctor, setAppointmentToCancelByDoctor] =
     useState<Appointment | null>(null);
 
   // Filter appointments based on user role, search term, date and status
@@ -227,6 +235,28 @@ function AppointmentsPage() {
     }
   };
 
+  const handleCancelByDoctor = (appointment: Appointment) => {
+    setAppointmentToCancelByDoctor(appointment);
+    setDoctorCancelDialogOpen(true);
+  };
+
+  const confirmDoctorCancellation = async (justification: string) => {
+    if (appointmentToCancelByDoctor) {
+      try {
+        await handleCancelAppointmentByDoctor(
+          appointmentToCancelByDoctor.id,
+          justification
+        );
+        toast.success(t("appointmentCancelledByDoctor"));
+        setDoctorCancelDialogOpen(false);
+        setAppointmentToCancelByDoctor(null);
+        refetchAppointments(); // Refresh appointments after cancellation
+      } catch (error) {
+        toast.error(t("appointmentError"));
+      }
+    }
+  };
+
   const handleComplete = (appointmentId: string) => {
     // Here would be the API call to mark the appointment as completed
     console.log(`Completing appointment ${appointmentId}`);
@@ -243,6 +273,16 @@ function AppointmentsPage() {
     // Open the details dialog
     setViewingAppointment(appointment);
     setIsDetailsOpen(true);
+  };
+
+  const handleConfirm = async (appointmentId: string) => {
+    try {
+      await handleConfirmAppointment(appointmentId);
+      toast.success(t("appointmentConfirmed"));
+      refetchAppointments(); // Refresh appointments after confirmation
+    } catch (error) {
+      toast.error(t("appointmentError"));
+    }
   };
 
   const handleAddNotes = (appointment: Appointment) => {
@@ -336,6 +376,7 @@ function AppointmentsPage() {
               appointments={upcoming}
               userRole={user?.role || ""}
               onCancel={handleCancel}
+              onCancelByDoctor={handleCancelByDoctor}
               onComplete={handleComplete}
               onReschedule={handleReschedule}
               onViewDetails={handleViewDetails}
@@ -343,6 +384,7 @@ function AppointmentsPage() {
               onRowClick={
                 user?.role === "Doctor" ? handleCreateConsultation : undefined
               }
+              onConfirm={handleConfirm}
             />
           </CardContent>
         </Card>
@@ -502,6 +544,15 @@ function AppointmentsPage() {
           doctors={doctors}
         />
       )}
+
+      <CancelByDoctorDialog
+        isOpen={doctorCancelDialogOpen}
+        onClose={() => {
+          setDoctorCancelDialogOpen(false);
+          setAppointmentToCancelByDoctor(null);
+        }}
+        onSubmit={confirmDoctorCancellation}
+      />
     </div>
   );
 }

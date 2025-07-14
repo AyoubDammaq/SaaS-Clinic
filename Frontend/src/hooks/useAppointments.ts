@@ -32,6 +32,11 @@ interface UseAppointmentsState {
     by: "patient" | "doctor",
     justification?: string
   ) => Promise<void>;
+  handleCancelAppointmentByDoctor: (
+    id: string,
+    justification: string
+  ) => Promise<void>;
+  handleConfirmAppointment: (id: string) => Promise<void>;
   refetchAppointments: () => Promise<void>;
 }
 
@@ -174,7 +179,9 @@ export function useAppointments(): UseAppointmentsState {
         await rendezVousService.annulerParPatient(id);
       }
       setAppointments((prev) =>
-        prev.map((r) => (r.id === id ? { ...r, statut: AppointmentStatusEnum.ANNULE } : r))
+        prev.map((r) =>
+          r.id === id ? { ...r, statut: AppointmentStatusEnum.ANNULE } : r
+        )
       );
       toast.success("Rendez-vous annulé");
     } catch (error) {
@@ -182,6 +189,43 @@ export function useAppointments(): UseAppointmentsState {
       toast.error("Échec de l’annulation du rendez-vous");
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleCancelAppointmentByDoctor = async (
+    id: string,
+    justification: string
+  ) => {
+    setIsSubmitting(true);
+    try {
+      await rendezVousService.annulerParMedecin(id, { justification });
+      setAppointments((prev) =>
+        prev.map((r) =>
+          r.id === id ? { ...r, statut: AppointmentStatusEnum.ANNULE } : r
+        )
+      );
+      toast.success("Rendez-vous annulé par le médecin");
+    } catch (error) {
+      console.error("Erreur lors de l'annulation du rendez-vous par le médecin:", error);
+      toast.error("Échec de l’annulation du rendez-vous par le médecin");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleConfirmAppointment = async (id: string) => {
+    setIsSubmitting(true);
+    try {
+      await rendezVousService.confirmer(id);
+      setAppointments((prev) =>
+        prev.map((r) =>
+          r.id === id ? { ...r, statut: AppointmentStatusEnum.CONFIRME } : r
+        )
+      );
+      toast.success("Rendez-vous confirmé");
+    } catch (error) {
+      console.error("Erreur lors de la confirmation du rendez-vous:", error);
+      toast.error("Échec de la confirmation du rendez-vous");
     }
   };
 
@@ -196,6 +240,8 @@ export function useAppointments(): UseAppointmentsState {
     handleAddAppointment,
     handleUpdateAppointment,
     handleCancelAppointment,
+    handleCancelAppointmentByDoctor,
+    handleConfirmAppointment,
     refetchAppointments: fetchAppointments,
   };
 }

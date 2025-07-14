@@ -18,12 +18,14 @@ interface AppointmentTableProps {
   appointments: Appointment[];
   userRole: string;
   onCancel?: (appointmentId: string) => void;
+  onCancelByDoctor?: (appointment: Appointment) => void;
   onComplete?: (appointmentId: string) => void;
   onReschedule?: (appointment: Appointment) => void;
   onViewDetails?: (appointment: Appointment) => void;
   onAddNotes?: (appointment: Appointment) => void;
   onRowClick?: (appointment: Appointment) => void;
   isPast?: boolean;
+  onConfirm?: (appointmentId: string) => void;
 }
 
 const ITEMS_PER_PAGE = 5;
@@ -32,12 +34,14 @@ export const AppointmentTable = ({
   appointments,
   userRole,
   onCancel,
+  onCancelByDoctor,
   onComplete,
   onReschedule,
   onViewDetails,
   onAddNotes,
   onRowClick,
-  isPast = false
+  isPast = false,
+  onConfirm,
 }: AppointmentTableProps) => {
   const { t } = useTranslation('appointments');
   const tCommon = useTranslation('common').t;
@@ -119,6 +123,8 @@ export const AppointmentTable = ({
                     onReschedule={onReschedule}
                     onViewDetails={onViewDetails}
                     onAddNotes={onAddNotes}
+                    onConfirm={onConfirm}
+                    onCancelByDoctor= {onCancelByDoctor}
                   />
                 </TableCell>
               </TableRow>
