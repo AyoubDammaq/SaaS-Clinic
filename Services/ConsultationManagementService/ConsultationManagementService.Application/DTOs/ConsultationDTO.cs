@@ -13,6 +13,9 @@ namespace ConsultationManagementService.Application.DTOs
         public Guid MedecinId { get; set; }
 
         [Required]
+        public Guid ClinicId { get; set; }
+
+        [Required]
         public DateTime DateConsultation { get; set; }
 
         [Required]

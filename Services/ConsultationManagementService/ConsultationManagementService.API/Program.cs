@@ -1,6 +1,8 @@
 using ConsultationManagementService.API.Extensions;
 using ConsultationManagementService.Application.Commands.CreateConsultation;
+using ConsultationManagementService.Application.Interfaces;
 using ConsultationManagementService.Application.Mappings;
+using ConsultationManagementService.Application.Services;
 using ConsultationManagementService.Data;
 using ConsultationManagementService.Domain.Interfaces.Messaging;
 using ConsultationManagementService.Infrastructure.Messaging;
@@ -8,6 +10,7 @@ using ConsultationManagementService.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using System.Text;
@@ -53,6 +56,11 @@ builder.Services.AddDbContext<ConsultationDbContext>(options =>
 builder.Services.AddScoped<IConsultationRepository, ConsultationRepository>();
 builder.Services.AddSingleton<IKafkaProducer, KafkaProducer>();
 
+builder.Services.AddHttpClient<IDoctorHttpClient, DoctorHttpClient>(client =>
+{
+    client.BaseAddress = new Uri("http://doctorservice:8085"); // nom DNS Docker
+});
+
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddMediatR(cfg =>
@@ -93,6 +101,13 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    });
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -102,6 +117,16 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.MapScalarApiReference();
     app.ApplyMigrations();
 }
+
+var wwwrootPath = Path.Combine(builder.Environment.ContentRootPath, "wwwroot");
+Directory.CreateDirectory(wwwrootPath);
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "wwwroot")),
+    RequestPath = ""
+});
 
 app.UseCors("AllowAllOrigins");
 

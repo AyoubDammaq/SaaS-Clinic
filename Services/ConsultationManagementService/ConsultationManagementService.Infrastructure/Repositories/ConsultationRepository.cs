@@ -131,5 +131,13 @@ namespace ConsultationManagementService.Repositories
         {
             return await _context.Consultations.AnyAsync(c => c.Id == consultationId);
         }
+
+        public async Task<IEnumerable<Consultation>> GetConsultationsByClinicIdAsync(Guid clinicId)
+        {
+            return await _context.Consultations
+                .Include(c => c.Documents)
+                .Where(c => c.ClinicId == clinicId)
+                .ToListAsync();
+        }
     }
 }

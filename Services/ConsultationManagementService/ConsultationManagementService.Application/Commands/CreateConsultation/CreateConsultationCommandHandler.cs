@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using ConsultationManagementService.Application.DTOs;
+using ConsultationManagementService.Application.Interfaces;
+using ConsultationManagementService.Application.Services;
 using ConsultationManagementService.Domain.Entities;
 using ConsultationManagementService.Repositories;
 using MediatR;
@@ -9,10 +11,13 @@ namespace ConsultationManagementService.Application.Commands.CreateConsultation
     public class CreateConsultationCommandHandler : IRequestHandler<CreateConsultationCommand>
     {
         private readonly IConsultationRepository _consultationRepository;
+        private readonly IDoctorHttpClient _doctorServiceClient;
         private readonly IMapper _mapper;
-        public CreateConsultationCommandHandler(IConsultationRepository consultationRepository, IMapper mapper)
+
+        public CreateConsultationCommandHandler(IConsultationRepository consultationRepository, IMapper mapper, IDoctorHttpClient doctorHttpClient)
         {
             _consultationRepository = consultationRepository;
+            _doctorServiceClient = doctorHttpClient;
             _mapper = mapper;
         }
         public async Task Handle(CreateConsultationCommand request, CancellationToken cancellationToken)
@@ -21,6 +26,15 @@ namespace ConsultationManagementService.Application.Commands.CreateConsultation
             {
                 throw new ArgumentNullException(nameof(request.consultation), "Les données de la consultation ne peuvent pas être nulles.");
             }
+
+            // Appel HTTP pour récupérer le médecin
+            var medecin = await _doctorServiceClient.GetDoctorById(request.consultation.MedecinId);
+
+            if (medecin == null || medecin.CliniqueId == null || medecin.CliniqueId == Guid.Empty)
+                throw new InvalidOperationException($"Le médecin avec l'id {request.consultation.MedecinId} n'est pas assigné à une clinique.");
+
+            // Injecter ClinicId récupéré
+            request.consultation.ClinicId = medecin.CliniqueId.Value;
 
             ValidateConsultationData(request.consultation); // Validation des données
 
@@ -41,6 +55,10 @@ namespace ConsultationManagementService.Application.Commands.CreateConsultation
             if (consultation.MedecinId == Guid.Empty)
             {
                 throw new ArgumentException("L'identifiant du médecin ne peut pas être vide.");
+            }
+            if (consultation.ClinicId == Guid.Empty)
+            {
+                throw new ArgumentException("L'identifiant de la clinique ne peut pas être vide.");
             }
             if (consultation.DateConsultation == default)
             {

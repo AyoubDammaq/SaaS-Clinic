@@ -15,6 +15,7 @@ using ConsultationManagementService.Application.Commands.UploadDocumentMedical;
 using ConsultationManagementService.Application.Commands.DeleteDocumentMedical;
 using ConsultationManagementService.Application.Queries.GetNombreConsultations;
 using ConsultationManagementService.Application.Queries.CountByMedecinIds;
+using ConsultationManagementService.Application.Queries.GetConsultationsByClinicId;
 
 namespace ConsultationManagementService.Controllers
 {
@@ -252,23 +253,43 @@ namespace ConsultationManagementService.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> UploadDocumentMedicalAsync([FromBody] DocumentMedicalDTO documentMedicalDto)
+        public async Task<IActionResult> UploadDocumentMedicalAsync([FromForm] Guid consultationId, [FromForm] string type, [FromForm] IFormFile file)
         {
             try
             {
-                if (documentMedicalDto == null)
+                if (file == null || file.Length == 0)
                 {
-                    return BadRequest("Invalid document data");
-                }
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
+                    return BadRequest("Aucun fichier reçu.");
                 }
 
-                await _mediator.Send(new UploadDocumentMedicalCommand(documentMedicalDto));
+                // Générer un chemin de stockage (ici temporaire local pour test)
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                Directory.CreateDirectory(uploadsFolder); // Crée le dossier si nécessaire
+
+                var uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                var fichierUrl = $"/uploads/{uniqueFileName}";
+
+                var dto = new DocumentMedicalDTO
+                {
+                    Id = Guid.NewGuid(),
+                    ConsultationId = consultationId,
+                    FileName = file.FileName,
+                    Type = type,
+                    FichierURL = fichierUrl,
+                    DateAjout = DateTime.Now
+                };
+
+                await _mediator.Send(new UploadDocumentMedicalCommand(dto));
                 return Ok("Document Médical uploadé avec succès");
             }
-            catch (ArgumentException ex) // Ajout de la gestion spécifique des erreurs de validation
+            catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -277,7 +298,6 @@ namespace ConsultationManagementService.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
         // DELETE: api/Consultation/Document/{id}
         [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpDelete("Document/{id}")]
@@ -326,6 +346,17 @@ namespace ConsultationManagementService.Controllers
 
             var count = await _mediator.Send(new CountByMedecinIdsQuery(medecinIds));
             return Ok(count);
+        }
+
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
+        [HttpGet("by-clinic")]
+        public async Task<IActionResult> GetConsultationsByClinicId([FromQuery] Guid clinicId)
+        {
+            if (clinicId == Guid.Empty)
+                return BadRequest("Invalid ClinicId");
+
+            var consultations = await _mediator.Send(new GetConsultationsByClinicIdQuery(clinicId));
+            return Ok(consultations);
         }
     }
 }

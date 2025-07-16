@@ -4,6 +4,7 @@ using ConsultationManagementService.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConsultationManagementService.Infrastructure.Migrations
 {
     [DbContext(typeof(ConsultationDbContext))]
-    partial class ConsultationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250715111406_AddClinicIdToConsultation")]
+    partial class AddClinicIdToConsultation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,11 +73,6 @@ namespace ConsultationManagementService.Infrastructure.Migrations
                     b.Property<string>("FichierURL")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Type")
                         .IsRequired()

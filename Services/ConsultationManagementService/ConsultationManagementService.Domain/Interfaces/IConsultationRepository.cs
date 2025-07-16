@@ -20,5 +20,6 @@ namespace ConsultationManagementService.Repositories
         Task UploadDocumentMedicalAsync(DocumentMedical documentMedical);
         Task<bool> DeleteDocumentMedicalAsync(Guid id);
         Task<bool> ExistsAsync(Guid consultationId);
+        Task<IEnumerable<Consultation>> GetConsultationsByClinicIdAsync(Guid clinicId);
     }
 }

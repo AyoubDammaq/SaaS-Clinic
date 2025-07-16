@@ -10,6 +10,10 @@ namespace ConsultationManagementService.Application.DTOs
         public Guid ConsultationId { get; set; }
 
         [Required]
+        [StringLength(100)] 
+        public string FileName { get; set; }
+
+        [Required]
         [StringLength(50)]
         public string Type { get; set; } = string.Empty;  // Ex: "Ordonnance", "Radio", "Analyse", etc.
 

@@ -30,4 +30,6 @@ RUN dotnet publish "./ConsultationManagementService.API.csproj" -c $BUILD_CONFIG
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+RUN mkdir -p /app/wwwroot/uploads
+COPY ./ConsultationManagementService.API/wwwroot /app/wwwroot
 ENTRYPOINT ["dotnet", "ConsultationManagementService.API.dll"]
