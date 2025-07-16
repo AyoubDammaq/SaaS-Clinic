@@ -4,39 +4,39 @@ export interface Consultation {
   id: string;
   patientId: string;
   medecinId: string;
+  clinicId: string;
   dateConsultation: string;
-  heureDebut: string;
-  heureFin: string;
-  raison: string;
-  notes?: string;
-  statut: 'Programmée' | 'Terminée' | 'Annulée';
-  documents?: DocumentMedical[];
+  diagnostic: string;
+  notes: string;
+  documents: DocumentMedical[];
 }
 
 export interface ConsultationDTO {
   id?: string;
   patientId: string;
   medecinId: string;
+  clinicId?: string; // Ce champ peut être rempli automatiquement backend
   dateConsultation: string;
-  heureDebut: string;
-  heureFin: string;
-  raison: string;
-  notes?: string;
-  statut: 'Programmée' | 'Terminée' | 'Annulée';
+  diagnostic: string;
+  notes: string;
+  documents?: DocumentMedicalDTO[];
 }
+
 
 export interface DocumentMedical {
   id: string;
   consultationId: string;
-  nom: string;
+  fileName: string; 
   type: string;
-  contenu: string;
-  dateUpload: string;
+  fichierURL: string; // Renommé pour correspondre au backend
+  dateAjout: string;
 }
 
 export interface DocumentMedicalDTO {
+  id?: string;
   consultationId: string;
-  nom: string;
+  fileName: string;
   type: string;
-  contenu: string;
+  fichierURL: string;
+  dateAjout?: string;
 }

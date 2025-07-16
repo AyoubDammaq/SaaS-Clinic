@@ -1,15 +1,33 @@
-
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { useTranslation } from '@/hooks/useTranslation';
-import { ConsultationDTO } from '@/types/consultation';
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { useTranslation } from "@/hooks/useTranslation";
+import { ConsultationDTO } from "@/types/consultation";
 import { useAuth } from "@/hooks/useAuth";
 
 interface Appointment {
@@ -17,8 +35,6 @@ interface Appointment {
   patientId: string;
   medecinId: string;
   date: string;
-  heureDebut: string;
-  heureFin: string;
   raison: string;
   status: string;
 }
@@ -34,23 +50,20 @@ export function CreateFromAppointment({
   appointment,
   open,
   onOpenChange,
-  onCreateConsultation
+  onCreateConsultation,
 }: CreateFromAppointmentProps) {
-  const { t } = useTranslation('consultations');
+  const { t } = useTranslation("consultations");
   const { user } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<ConsultationDTO>({
     defaultValues: {
-      patientId: '',
-      medecinId: user?.id || '',
-      dateConsultation: '',
-      heureDebut: '',
-      heureFin: '',
-      raison: '',
-      notes: '',
-      statut: 'Programmée'
-    }
+      patientId: "",
+      medecinId: user?.id || "",
+      dateConsultation: "",
+      diagnostic: "",
+      notes: "",
+    },
   });
 
   // Update form when appointment changes
@@ -60,11 +73,8 @@ export function CreateFromAppointment({
         patientId: appointment.patientId,
         medecinId: appointment.medecinId,
         dateConsultation: appointment.date,
-        heureDebut: appointment.heureDebut,
-        heureFin: appointment.heureFin,
-        raison: appointment.raison,
-        notes: '',
-        statut: 'Programmée'
+        diagnostic: "",
+        notes: "",
       });
     }
   }, [appointment, form]);
@@ -74,10 +84,10 @@ export function CreateFromAppointment({
     try {
       await onCreateConsultation(data);
       onOpenChange(false);
-      toast.success(t('consultationAddSuccess'));
+      toast.success(t("consultationAddSuccess"));
     } catch (error) {
-      console.error('Error creating consultation:', error);
-      toast.error(t('errorAddingConsultation'));
+      console.error("Error creating consultation:", error);
+      toast.error(t("errorAddingConsultation"));
     } finally {
       setIsSubmitting(false);
     }
@@ -87,114 +97,75 @@ export function CreateFromAppointment({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>{t('consultationFromAppointment')}</DialogTitle>
+          <DialogTitle>{t("consultationFromAppointment")}</DialogTitle>
           <DialogDescription>
             Create a new consultation based on this appointment.
           </DialogDescription>
         </DialogHeader>
-        
+
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4 py-4"
+          >
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
                 name="dateConsultation"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('date')}</FormLabel>
+                    <FormLabel>{t("date")}</FormLabel>
                     <FormControl>
                       <Input type="date" {...field} disabled />
                     </FormControl>
                   </FormItem>
                 )}
               />
-              
-              <div className="grid grid-cols-2 gap-2">
-                <FormField
-                  control={form.control}
-                  name="heureDebut"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t('startTime')}</FormLabel>
-                      <FormControl>
-                        <Input type="time" {...field} disabled />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="heureFin"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t('endTime')}</FormLabel>
-                      <FormControl>
-                        <Input type="time" {...field} disabled />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
             </div>
-            
+
             <FormField
               control={form.control}
-              name="raison"
+              name="diagnostic"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('reason')}</FormLabel>
+                  <FormLabel>{t("diagnostic")}</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      placeholder={t("Write the diagnostic")} 
+                      {...field}
+                    />
                   </FormControl>
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="notes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('notes')}</FormLabel>
+                  <FormLabel>{t("notes")}</FormLabel>
                   <FormControl>
-                    <Textarea rows={5} {...field} />
+                    <Textarea
+                      rows={5}
+                      placeholder={t("Enter Notes")} 
+                      {...field}
+                    />
                   </FormControl>
                 </FormItem>
               )}
             />
-            
-            <FormField
-              control={form.control}
-              name="statut"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('status')}</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a status" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="Programmée">{t('scheduled')}</SelectItem>
-                      <SelectItem value="Terminée">{t('completed')}</SelectItem>
-                      <SelectItem value="Annulée">{t('canceled')}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormItem>
-              )}
-            />
-            
+
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+              >
                 Cancel
               </Button>
               <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? 'Creating...' : 'Create Consultation'}
+                {isSubmitting ? "Creating..." : "Create Consultation"}
               </Button>
             </DialogFooter>
           </form>

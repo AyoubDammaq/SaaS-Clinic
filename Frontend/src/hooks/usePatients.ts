@@ -68,8 +68,8 @@ export function usePatients(): UsePatientState {
         filteredData = data.filter(p => p.email === user.email);
       } else if (user.role === 'Doctor' || user.role === 'ClinicAdmin') {
         // Un médecin ou admin de clinique ne peut voir que les patients de sa clinique
-        if (user.clinicId) {
-          filteredData = data.filter(p => p.clinicId === user.clinicId);
+        if (user.cliniqueId) {
+          filteredData = data.filter(p => p.clinicId === user.cliniqueId);
         }
       }
       // Un SuperAdmin peut voir tous les patients

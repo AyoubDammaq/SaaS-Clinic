@@ -1,9 +1,6 @@
-
-import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
-import { FileText, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Clinique, StatistiqueCliniqueDTO, TypeClinique, StatutClinique } from '@/types/clinic';
 import {
   BarChart,

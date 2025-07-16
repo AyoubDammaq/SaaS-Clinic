@@ -116,12 +116,29 @@ export const API_ENDPOINTS = {
 
   // Consultation endpoints
   CONSULTATIONS: {
-    BASE: `${GATEWAY_BASE}/consultation`, // Updated to match C# controller
-    GET_ALL: `${GATEWAY_BASE}/consultation`,
-    GET_BY_ID: (id: string) => `${GATEWAY_BASE}/consultation/${id}`,
-    CREATE: `${GATEWAY_BASE}/consultation`,
-    UPDATE: (id: string) => `${GATEWAY_BASE}/consultation`,
-    DELETE: (id: string) => `${GATEWAY_BASE}/consultation/${id}`,
+    BASE: `${GATEWAY_BASE}/consultations`, // Updated to match C# controller
+    GET_ALL: `${GATEWAY_BASE}/consultations`,
+    GET_BY_ID: (id: string) => `${GATEWAY_BASE}/consultations/${id}`,
+    CREATE: `${GATEWAY_BASE}/consultations`,
+    UPDATE: (id: string) => `${GATEWAY_BASE}/consultations`,
+    DELETE: (id: string) => `${GATEWAY_BASE}/consultations/${id}`,
+    GET_BY_PATIENT_ID: (patientId: string) =>
+      `${GATEWAY_BASE}/consultations/patient/${patientId}`,
+    GET_BY_DOCTOR_ID: (doctorId: string) =>
+      `${GATEWAY_BASE}/consultations/doctor/${doctorId}`,
+    GET_BY_CLINIC_ID: (clinicId: string) =>
+      `${GATEWAY_BASE}/consultations/by-clinic?clinicId=${clinicId}`,
+    GET_DOCUMENT_BY_ID: (id: string) =>
+      `${GATEWAY_BASE}/consultations/document/${id}`,
+    UPLOAD_DOCUMENT: `${GATEWAY_BASE}/consultations/document`,
+    DELETE_DOCUMENT: (id: string) =>
+      `${GATEWAY_BASE}/consultations/document/${id}`,
+    COUNT_BETWEEN_DATES: (start: string, end: string) =>
+      `${GATEWAY_BASE}/consultations/count?start=${start}&end=${end}`,
+    COUNT_BY_DOCTOR_IDS: (ids: string[]) =>
+      `${GATEWAY_BASE}/consultations/countByMedecinIds?${ids
+        .map((id) => `medecinIds=${id}`)
+        .join("&")}`,
   },
 
   // Billing endpoints

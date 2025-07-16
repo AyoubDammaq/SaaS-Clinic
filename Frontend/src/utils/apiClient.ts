@@ -54,7 +54,13 @@ export async function apiClient<T = unknown>(
 
     // Add body if provided (and not GET request)
     if (body && method !== HTTP_METHODS.GET) {
-      requestOptions.body = JSON.stringify(body);
+      if (body instanceof FormData) {
+        requestOptions.body = body;
+        // Important : ne pas mettre Content-Type, le navigateur le gère
+        delete headers["Content-Type"];
+      } else {
+        requestOptions.body = JSON.stringify(body);
+      }
     }
 
     console.log(`API Request to ${url}`, {

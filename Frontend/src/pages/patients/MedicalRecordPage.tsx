@@ -1,17 +1,24 @@
-
-import { useParams, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { useParams, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { CreateMedicalRecordModal } from "@/components/patients/CreateMedicalRecordForm";
-import { ArrowLeft } from 'lucide-react';
-import { MedicalRecordView, MedicalRecord as MedicalRecordViewType, MedicalRecordDocument } from '@/components/patients/MedicalRecordView';
-import { useMedicalRecord } from '@/hooks/useMedicalRecord';
-import { patientService } from '@/services/patientService';
-import { useState, useEffect } from 'react';
-import { toast } from 'sonner';
-import { useTranslation } from '@/hooks/useTranslation';
-import { DossierMedicalDTO } from '@/types/patient';
-import { Patient, Document, DossierMedical } from '@/types/patient';
+import { ArrowLeft } from "lucide-react";
+import {
+  MedicalRecordView,
+  MedicalRecord as MedicalRecordViewType,
+  MedicalRecordDocument,
+} from "@/components/patients/MedicalRecordView";
+import { useMedicalRecord } from "@/hooks/useMedicalRecord";
+import { patientService } from "@/services/patientService";
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
+import { useTranslation } from "@/hooks/useTranslation";
+import { DossierMedicalDTO } from "@/types/patient";
+import { Patient, Document, DossierMedical } from "@/types/patient";
+import { Consultation } from "@/types/consultation";
+import { ConsultationHistory } from "@/components/patients/ConsultationHistory";
+import { ConsultationDetails } from "@/components/consultations/ConsultationDetails";
+import { useDoctors } from "@/hooks/useDoctors";
 
 function MedicalRecordPage() {
   const { id } = useParams<{ id: string }>();
@@ -19,8 +26,20 @@ function MedicalRecordPage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [patient, setPatient] = useState<Patient | null>(null);
   const [isLoadingPatient, setIsLoadingPatient] = useState(true);
-  const { t } = useTranslation('patients');
-  
+  const { t } = useTranslation("patients");
+  const [selectedConsultation, setSelectedConsultation] =
+    useState<Consultation | null>(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const { doctors, isLoading: isLoadingDoctors } = useDoctors();
+
+  const selectedDoctor = doctors.find(
+    (doc) => doc.id === selectedConsultation?.medecinId
+  );
+
+  const doctorName = selectedDoctor
+    ? `${selectedDoctor.prenom} ${selectedDoctor.nom}`
+    : "";
+
   const {
     medicalRecord,
     isLoading: isLoadingRecord,
@@ -29,23 +48,23 @@ function MedicalRecordPage() {
     createMedicalRecord,
     updateMedicalRecord,
     addDocument,
-    deleteDocument
+    deleteDocument,
   } = useMedicalRecord(id || "");
 
   // Récupérer les données du patient
   useEffect(() => {
     const fetchPatient = async () => {
       if (!id) return;
-      
+
       setIsLoadingPatient(true);
       try {
         const patientData = await patientService.getPatientById(id);
-        
+
         if (patientData) {
           setPatient(patientData);
         } else {
           toast.error("Patient not found");
-          navigate('/patients');
+          navigate("/patients");
         }
       } catch (error) {
         console.error("Erreur lors de la récupération du patient:", error);
@@ -54,7 +73,7 @@ function MedicalRecordPage() {
         setIsLoadingPatient(false);
       }
     };
-    
+
     fetchPatient();
   }, [id, navigate]);
 
@@ -63,7 +82,7 @@ function MedicalRecordPage() {
       <Card>
         <CardContent className="pt-6">
           <div className="flex justify-center items-center h-40">
-            <p className="text-muted-foreground">{t('loading', 'common')}</p>
+            <p className="text-muted-foreground">{t("loading", "common")}</p>
           </div>
         </CardContent>
       </Card>
@@ -89,29 +108,31 @@ function MedicalRecordPage() {
     return {
       id: medicalRecord.id,
       patientId: medicalRecord.patientId,
-      allergies: medicalRecord.allergies || '',
-      chronicDiseases: medicalRecord.maladiesChroniques || '', // OK
-      currentMedications: medicalRecord.medicamentsActuels || '', // OK
-      bloodType:  medicalRecord.groupeSanguin || '', // OK
-      creationDate: medicalRecord.dateCreation || '',
-      personalHistory: medicalRecord.antécédentsPersonnels || '', // OK
-      familyHistory: medicalRecord.antécédentsFamiliaux || '', // OK
-      documents: (medicalRecord.documents || []).map(doc => ({
+      allergies: medicalRecord.allergies || "",
+      chronicDiseases: medicalRecord.maladiesChroniques || "", // OK
+      currentMedications: medicalRecord.medicamentsActuels || "", // OK
+      bloodType: medicalRecord.groupeSanguin || "", // OK
+      creationDate: medicalRecord.dateCreation || "",
+      personalHistory: medicalRecord.antécédentsPersonnels || "", // OK
+      familyHistory: medicalRecord.antécédentsFamiliaux || "", // OK
+      documents: (medicalRecord.documents || []).map((doc) => ({
         id: doc.id,
-        nom: doc.nom || '',
+        nom: doc.nom || "",
         type: doc.type,
-        dateCreation: doc.dateCreation || '',
-        url: doc.url || ''
-      }))
+        dateCreation: doc.dateCreation || "",
+        url: doc.url || "",
+      })),
     };
   };
 
-  const mapViewDocumentToAppDocument = (viewDocument: Omit<MedicalRecordDocument, "id" | "dateCreation">): Omit<Document, "id"> => {
+  const mapViewDocumentToAppDocument = (
+    viewDocument: Omit<MedicalRecordDocument, "id" | "dateCreation">
+  ): Omit<Document, "id"> => {
     return {
       nom: viewDocument.nom,
       type: viewDocument.type,
-      url: viewDocument.url || '',
-      dateCreation: new Date().toISOString() 
+      url: viewDocument.url || "",
+      dateCreation: new Date().toISOString(),
     };
   };
 
@@ -124,10 +145,9 @@ function MedicalRecordPage() {
       medicamentsActuels: data.currentMedications,
       groupeSanguin: data.bloodType,
       antécédentsPersonnels: data.personalHistory,
-      antécédentsFamiliaux: data.familyHistory
+      antécédentsFamiliaux: data.familyHistory,
     };
   };
-
 
   const handleCreateMedicalRecord = async (data: {
     allergies: string;
@@ -156,21 +176,28 @@ function MedicalRecordPage() {
     }
   };
 
+  const handleViewConsultationDetails = (consultation: Consultation) => {
+    setSelectedConsultation(consultation);
+    setIsDetailsOpen(true);
+  };
+
   return (
     <div className="space-y-6 pb-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">{t('patientRecord')}</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            {t("patientRecord")}
+          </h1>
           <p className="text-muted-foreground">
             Consulter et gérer les informations médicales du patient
           </p>
         </div>
-        <Button variant="outline" onClick={() => navigate('/patients')}>
+        <Button variant="outline" onClick={() => navigate("/patients")}>
           <ArrowLeft className="mr-2 h-4 w-4" />
           Retour aux patients
         </Button>
       </div>
-      
+
       <MedicalRecordView
         patient={{
           name: `${patient.prenom} ${patient.nom}`,
@@ -179,7 +206,7 @@ function MedicalRecordPage() {
           dateOfBirth: patient.dateNaissance,
           gender: patient.sexe,
           address: patient.adresse,
-          id: patient.id
+          id: patient.id,
         }}
         medicalRecord={mapMedicalRecordToView()}
         isLoading={isLoadingRecord}
@@ -196,6 +223,23 @@ function MedicalRecordPage() {
         onCreateMedicalRecord={handleCreateMedicalRecord}
         isCreating={isSubmitting}
       />
+      {medicalRecord && (
+        <ConsultationHistory
+          patientId={patient.id}
+          patientName={`${patient.prenom} ${patient.nom}`}
+          fallbackDoctorName={doctorName}
+          onViewConsultationDetails={handleViewConsultationDetails}
+        />
+      )}
+      {selectedConsultation && (
+        <ConsultationDetails
+          isOpen={isDetailsOpen}
+          onClose={() => setIsDetailsOpen(false)}
+          consultation={selectedConsultation}
+          patientName={`${patient.prenom} ${patient.nom}`}
+          doctorName={doctorName} // tu peux améliorer ça avec une recherche si tu veux
+        />
+      )}
     </div>
   );
 }

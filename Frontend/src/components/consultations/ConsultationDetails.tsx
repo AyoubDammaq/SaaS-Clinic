@@ -1,5 +1,3 @@
-
-import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,45 +7,55 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, FileText, User } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Calendar, FileText, User } from "lucide-react";
+import { Consultation } from "@/types/consultation";
+import { format } from "date-fns";
+import { useState } from "react";
+import { ConsultationDetailsComplete } from "./ConsultationDetailsComplete";
 
 interface ConsultationDetailsProps {
   isOpen: boolean;
   onClose: () => void;
-  consultation: {
-    id: string;
-    patientName: string;
-    doctorName: string;
-    date: string;
-    time: string;
-    duration: number;
-    reason: string;
-    status: 'Completed' | 'Pending' | 'Cancelled';
-    notes?: string;
-    prescription?: string;
-  } | null;
+  consultation: Consultation | null;
+  patientName: string;
+  doctorName: string;
 }
 
-export function ConsultationDetails({ 
-  isOpen, 
-  onClose, 
-  consultation 
+export function ConsultationDetails({
+  isOpen,
+  onClose,
+  consultation,
+  patientName,
+  doctorName,
 }: ConsultationDetailsProps) {
+  const [showCompleteDetails, setShowCompleteDetails] = useState(false);
+
   if (!consultation) return null;
 
-  const getStatusBadgeClass = (status: string) => {
-    switch (status) {
-      case 'Completed':
-        return 'text-green-600 bg-green-50 border-green-200';
-      case 'Pending':
-        return 'text-blue-600 bg-blue-50 border-blue-200';
-      case 'Cancelled':
-        return 'text-red-600 bg-red-50 border-red-200';
-      default:
-        return '';
-    }
+  const splitDateTime = (dateTime: string) => {
+    const [datePart, timePart] = dateTime.split("T");
+    return {
+      date: format(new Date(datePart), "yyyy-MM-dd"),
+      time: timePart?.slice(0, 5) || "",
+    };
   };
+
+  const { date, time } = splitDateTime(consultation.dateConsultation);
+
+  if (showCompleteDetails) {
+    return (
+      <ConsultationDetailsComplete
+        isOpen={showCompleteDetails}
+        onClose={() => {
+          setShowCompleteDetails(false);
+          onClose();
+        }}
+        consultation={consultation}
+        patientName={patientName}
+        doctorName={doctorName}
+      />
+    );
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -66,13 +74,8 @@ export function ConsultationDetails({
                 <Calendar className="h-4 w-4 text-muted-foreground" />
                 Date & Time
               </h3>
-              <p className="text-sm">
-                {consultation.date} at {consultation.time} ({consultation.duration} minutes)
-              </p>
             </div>
-            <Badge variant="outline" className={getStatusBadgeClass(consultation.status)}>
-              {consultation.status}
-            </Badge>
+            <p className="text-sm">{date} at {time}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -81,23 +84,23 @@ export function ConsultationDetails({
                 <User className="h-4 w-4 text-muted-foreground" />
                 Patient
               </h3>
-              <p className="text-sm">{consultation.patientName}</p>
+              <p className="text-sm">{patientName}</p>
             </div>
             <div>
               <h3 className="font-medium flex items-center gap-1">
                 <User className="h-4 w-4 text-muted-foreground" />
                 Doctor
               </h3>
-              <p className="text-sm">{consultation.doctorName}</p>
+              <p className="text-sm">{doctorName}</p>
             </div>
           </div>
 
           <div>
             <h3 className="font-medium flex items-center gap-1">
               <FileText className="h-4 w-4 text-muted-foreground" />
-              Reason for Consultation
+              Diagnostic
             </h3>
-            <p className="text-sm">{consultation.reason}</p>
+            <p className="text-sm">{consultation.diagnostic}</p>
           </div>
 
           {consultation.notes && (
@@ -108,18 +111,15 @@ export function ConsultationDetails({
               </p>
             </div>
           )}
-
-          {consultation.prescription && (
-            <div>
-              <h3 className="font-medium">Prescription</h3>
-              <p className="text-sm whitespace-pre-wrap border p-3 rounded-md bg-blue-50">
-                {consultation.prescription}
-              </p>
-            </div>
-          )}
         </div>
 
         <DialogFooter>
+          <Button 
+            variant="outline" 
+            onClick={() => setShowCompleteDetails(true)}
+          >
+            Voir détails complets
+          </Button>
           <Button onClick={onClose}>Close</Button>
         </DialogFooter>
       </DialogContent>

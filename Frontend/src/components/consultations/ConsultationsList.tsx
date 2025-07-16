@@ -10,7 +10,6 @@ import { Consultation } from '@/types/consultation';
 import { format } from 'date-fns';
 
 interface ConsultationsListProps {
-  consultations: Consultation[];
   filteredConsultations: Consultation[];
   searchTerm: string;
   setSearchTerm: (term: string) => void;
@@ -23,10 +22,12 @@ interface ConsultationsListProps {
   onAddConsultation: () => void;
   onEditConsultation: (consultation: Consultation) => void;
   onDeleteConsultation: (id: string) => void;
+  onViewConsultationDetails: (consultation: Consultation) => void;
+  doctors: { id: string; prenom: string; nom: string }[];
+  patients: { id: string; prenom: string; nom: string }[];
 }
 
 export function ConsultationsList({
-  consultations,
   filteredConsultations,
   searchTerm,
   setSearchTerm,
@@ -34,14 +35,11 @@ export function ConsultationsList({
   permissions,
   onAddConsultation,
   onEditConsultation,
-  onDeleteConsultation
+  onDeleteConsultation,
+  onViewConsultationDetails,
+  doctors,
+  patients,
 }: ConsultationsListProps) {
-  const navigate = useNavigate();
-
-  const handleRowClick = (consultation: Consultation) => {
-    navigate(`/consultations/${consultation.id}`);
-  };
-
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'Programmée':
@@ -57,8 +55,8 @@ export function ConsultationsList({
 
   const formatDate = (dateString: string) => {
     try {
-      return format(new Date(dateString), 'PPP');
-    } catch (error) {
+      return format(new Date(dateString), 'PPpp'); // Ex: Jul 16, 2025 at 14:30
+    } catch {
       return dateString;
     }
   };
@@ -93,16 +91,15 @@ export function ConsultationsList({
           </Button>
         )}
       </div>
-      
+
       <div className="rounded-md border">
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Date</TableHead>
-              <TableHead>Time</TableHead>
               <TableHead>Patient</TableHead>
               <TableHead>Doctor</TableHead>
-              <TableHead>Reason</TableHead>
+              <TableHead>Diagnostic</TableHead>
               <TableHead>Status</TableHead>
               {(permissions.canEdit || permissions.canDelete) && <TableHead>Actions</TableHead>}
             </TableRow>
@@ -110,52 +107,59 @@ export function ConsultationsList({
           <TableBody>
             {filteredConsultations.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="h-24 text-center">
+                <TableCell colSpan={6} className="h-24 text-center">
                   No consultations found
                 </TableCell>
               </TableRow>
             ) : (
-              filteredConsultations.map((consultation) => (
-                <TableRow 
-                  key={consultation.id} 
-                  className="cursor-pointer hover:bg-muted/60"
-                  onClick={() => handleRowClick(consultation)}
-                >
-                  <TableCell>{formatDate(consultation.dateConsultation)}</TableCell>
-                  <TableCell>{consultation.heureDebut} - {consultation.heureFin}</TableCell>
-                  <TableCell className="font-medium">{consultation.patientId}</TableCell>
-                  <TableCell>{consultation.medecinId}</TableCell>
-                  <TableCell>{consultation.raison}</TableCell>
-                  <TableCell>{getStatusBadge(consultation.statut)}</TableCell>
-                  {(permissions.canEdit || permissions.canDelete) && (
-                    <TableCell onClick={(e) => e.stopPropagation()}>
-                      <div className="flex items-center gap-2">
-                        {permissions.canEdit && (
-                          <Button size="sm" variant="ghost" onClick={(e) => {
-                            e.stopPropagation();
-                            onEditConsultation(consultation);
-                          }}>
-                            <FileEdit className="h-4 w-4" />
-                          </Button>
-                        )}
-                        {permissions.canDelete && (
-                          <Button 
-                            size="sm" 
-                            variant="ghost" 
-                            className="text-red-500" 
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onDeleteConsultation(consultation.id);
-                            }}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        )}
-                      </div>
-                    </TableCell>
-                  )}
-                </TableRow>
-              ))
+              filteredConsultations.map((consultation) => {
+                const patient = patients.find((p) => p.id === consultation.patientId);
+                const doctor = doctors.find((d) => d.id === consultation.medecinId);
+
+                return (
+                  <TableRow
+                    key={consultation.id}
+                    className="cursor-pointer hover:bg-muted/50"
+                    onClick={() => onViewConsultationDetails(consultation)}
+                  >
+                    <TableCell>{formatDate(consultation.dateConsultation)}</TableCell>
+                    <TableCell>{patient ? `${patient.prenom} ${patient.nom}` : "N/A"}</TableCell>
+                    <TableCell>{doctor ? `${doctor.prenom} ${doctor.nom}` : "N/A"}</TableCell>
+                    <TableCell>{consultation.diagnostic || "—"}</TableCell>
+                    {(permissions.canEdit || permissions.canDelete) && (
+                      <TableCell onClick={(e) => e.stopPropagation()}>
+                        <div className="flex items-center gap-2">
+                          {permissions.canEdit && (
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onEditConsultation(consultation);
+                              }}
+                            >
+                              <FileEdit className="h-4 w-4" />
+                            </Button>
+                          )}
+                          {permissions.canDelete && (
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-red-500"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onDeleteConsultation(consultation.id);
+                              }}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          )}
+                        </div>
+                      </TableCell>
+                    )}
+                  </TableRow>
+                );
+              })
             )}
           </TableBody>
         </Table>

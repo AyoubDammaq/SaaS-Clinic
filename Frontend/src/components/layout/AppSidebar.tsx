@@ -1,30 +1,29 @@
-
 import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { 
-  Sidebar, 
-  SidebarContent, 
+import {
+  Sidebar,
+  SidebarContent,
   SidebarHeader,
   SidebarFooter,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarRail
+  SidebarRail,
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/hooks/useAuth";
-import { 
-  Home, 
-  Users, 
-  Calendar, 
-  FileText, 
-  CreditCard, 
-  Bell, 
-  BarChart2, 
+import {
+  Home,
+  Users,
+  Calendar,
+  FileText,
+  CreditCard,
+  Bell,
+  BarChart2,
   Settings,
   LogOut,
   Building,
   ClipboardList,
-  User
+  User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -32,74 +31,80 @@ import { Button } from "@/components/ui/button";
 export function AppSidebar() {
   const { user, logout } = useAuth();
   const location = useLocation();
-  
+
   const roleBasedMenuItems = useMemo(() => {
     const items = [
       {
-        name: 'Dashboard',
-        path: '/dashboard',
+        name: "Dashboard",
+        path: "/dashboard",
         icon: Home,
-        roles: ['SuperAdmin', 'ClinicAdmin', 'Doctor', 'Patient']
+        roles: ["SuperAdmin", "ClinicAdmin", "Doctor", "Patient"],
       },
       {
-        name: 'Patients',
-        path: '/patients',
+        name: "Patients",
+        path: "/patients",
         icon: Users,
-        roles: ['SuperAdmin', 'ClinicAdmin', 'Doctor']
+        roles: ["SuperAdmin", "ClinicAdmin", "Doctor"],
       },
       {
-        name: 'Doctors',
-        path: '/doctors',
+        name: "Doctors",
+        path: "/doctors",
         icon: User,
-        roles: ['SuperAdmin', 'ClinicAdmin', 'Patient']
+        roles: ["SuperAdmin", "ClinicAdmin", "Patient"],
       },
       {
-        name: 'Appointments',
-        path: '/appointments',
+        name: "Appointments",
+        path: "/appointments",
         icon: Calendar,
-        roles: ['SuperAdmin', 'ClinicAdmin', 'Doctor', 'Patient']
+        roles: ["SuperAdmin", "ClinicAdmin", "Doctor", "Patient"],
       },
       {
-        name: 'Consultations',
-        path: '/consultations',
+        name: "Consultations",
+        path: "/consultations",
         icon: ClipboardList,
-        roles: ['SuperAdmin', 'ClinicAdmin', 'Doctor', 'Patient']
+        roles: ["SuperAdmin", "ClinicAdmin", "Doctor", "Patient"],
       },
       {
-        name: 'Billing',
-        path: '/billing',
+        name: "Billing",
+        path: "/billing",
         icon: CreditCard,
-        roles: ['SuperAdmin', 'ClinicAdmin', 'Patient']
+        roles: ["SuperAdmin", "ClinicAdmin", "Patient"],
       },
       {
-        name: 'Notifications',
-        path: '/notifications',
+        name: "Notifications",
+        path: "/notifications",
         icon: Bell,
-        roles: ['SuperAdmin', 'ClinicAdmin', 'Doctor', 'Patient']
+        roles: ["SuperAdmin", "ClinicAdmin", "Doctor", "Patient"],
       },
       {
-        name: 'Reports',
-        path: '/reports',
+        name: "Reports",
+        path: "/reports",
         icon: BarChart2,
-        roles: ['SuperAdmin', 'ClinicAdmin', 'Doctor']
+        roles: ["SuperAdmin", "ClinicAdmin", "Doctor"],
       },
       {
-        name: 'Clinics',
-        path: '/clinics',
+        name: "Clinics",
+        path: "/clinics",
         icon: Building,
-        roles: ['SuperAdmin', 'Patient']
+        roles: ["SuperAdmin", "Patient"],
       },
       {
-        name: 'Settings',
-        path: '/settings',
+        name: "Settings",
+        path: "/settings",
         icon: Settings,
-        roles: ['SuperAdmin', 'ClinicAdmin']
-      }
+        roles: ["SuperAdmin", "ClinicAdmin"],
+      },
+      {
+        name: "User Management",
+        path: "/users",
+        icon: FileText,
+        roles: ["SuperAdmin"],
+      },
     ];
-    
+
     if (!user) return [];
-    
-    return items.filter(item => item.roles.includes(user.role));
+
+    return items.filter((item) => item.roles.includes(user.role));
   }, [user]);
 
   return (
@@ -113,21 +118,22 @@ export function AppSidebar() {
           <span className="text-xl font-bold">SaaS-Clinic</span>
         </Link>
       </SidebarHeader>
-      
+
       <SidebarContent className="px-3 py-2">
         <SidebarMenu>
           {roleBasedMenuItems.map((item) => (
             <SidebarMenuItem key={item.path}>
-              <SidebarMenuButton 
+              <SidebarMenuButton
                 asChild
                 isActive={location.pathname === item.path}
                 tooltip={item.name}
               >
-                <Link 
+                <Link
                   to={item.path}
                   className={cn(
                     "nav-link flex w-full items-center gap-3 px-3 py-2 rounded-md",
-                    location.pathname === item.path && "bg-sidebar-accent text-clinic-500"
+                    location.pathname === item.path &&
+                      "bg-sidebar-accent text-clinic-500"
                   )}
                 >
                   <item.icon className="h-5 w-5" />
@@ -138,10 +144,10 @@ export function AppSidebar() {
           ))}
         </SidebarMenu>
       </SidebarContent>
-      
+
       <SidebarFooter className="p-3">
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           className="w-full justify-start gap-3 text-muted-foreground"
           onClick={logout}
         >

@@ -16,6 +16,7 @@ export interface AuthContextType {
     name: string,
     email: string,
     password: string,
+    confirmPassword: string,
     role?: UserRole
   ) => Promise<boolean>;
   changePassword: (

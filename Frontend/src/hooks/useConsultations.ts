@@ -1,9 +1,12 @@
-
-import { useState, useEffect, useCallback } from 'react';
-import { toast } from 'sonner';
+import { useState, useEffect, useCallback } from "react";
+import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
-import { consultationService } from '@/services/consultationService';
-import { Consultation, ConsultationDTO } from '@/types/consultation';
+import { consultationService } from "@/services/consultationService";
+import {
+  Consultation,
+  ConsultationDTO,
+  DocumentMedicalDTO,
+} from "@/types/consultation";
 
 interface UseConsultationsState {
   consultations: Consultation[];
@@ -21,16 +24,20 @@ interface UseConsultationsState {
   addConsultation: (data: ConsultationDTO) => Promise<void>;
   updateConsultation: (data: ConsultationDTO) => Promise<void>;
   deleteConsultation: (id: string) => Promise<void>;
+  uploadDocumentMedical: (consultationId: string, file: File) => Promise<void>;
+  deleteDocumentMedical: (id: string) => Promise<void>;
   refetchConsultations: () => Promise<void>;
 }
 
 export function useConsultations(): UseConsultationsState {
   const { user } = useAuth();
   const [consultations, setConsultations] = useState<Consultation[]>([]);
-  const [filteredConsultations, setFilteredConsultations] = useState<Consultation[]>([]);
+  const [filteredConsultations, setFilteredConsultations] = useState<
+    Consultation[]
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [permissions, setPermissions] = useState({
     canCreate: false,
     canEdit: false,
@@ -38,124 +45,165 @@ export function useConsultations(): UseConsultationsState {
     canView: false,
   });
 
-  // Check permissions based on user role
+  // 🔐 Définir les permissions utilisateur
   useEffect(() => {
     if (user) {
-      const canCreate = user.role === 'SuperAdmin' || user.role === 'ClinicAdmin' || user.role === 'Doctor';
-      const canEdit = user.role === 'SuperAdmin' || user.role === 'ClinicAdmin' || user.role === 'Doctor';
-      const canDelete = user.role === 'SuperAdmin' || user.role === 'ClinicAdmin' || user.role === 'Doctor';
-      const canView = true; // All authenticated users can view consultations they have access to
-      
+      const canCreate = user.role === "Doctor";
+      const canEdit = user.role === "Doctor";
+      const canDelete = user.role === "Doctor";
+      const canView = true; // Tout le monde peut voir
+
       setPermissions({ canCreate, canEdit, canDelete, canView });
     }
   }, [user]);
 
-  // Fetch consultations list
+  // 📥 Charger les consultations en fonction du rôle utilisateur
   const fetchConsultations = useCallback(async () => {
     if (!user) return;
-    
+
     setIsLoading(true);
     try {
       let consultationData: Consultation[] = [];
-      
-      // Fetch consultations based on user role
-      if (user.role === 'Patient') {
-        // Patients can only see their own consultations
-        consultationData = await consultationService.getConsultationsByPatientId(user.id);
-      } else if (user.role === 'Doctor') {
-        // Doctors can see consultations they are assigned to
-        consultationData = await consultationService.getConsultationsByDoctorId(user.id);
-      } else if (user.role === 'ClinicAdmin' && user.cliniqueId) {
-        // Clinic admins can see all consultations in their clinic
-        // This would require an additional endpoint, for now we'll use getAllConsultations
-        // and filter client-side
-        const allConsultations = await consultationService.getAllConsultations();
-        // We would need to filter by clinic, which might require additional data about doctors
-        consultationData = allConsultations;
+
+      if (user.role === "Patient") {
+        consultationData =
+          await consultationService.getConsultationsByPatientId(user.patientId);
+      } else if (user.role === "Doctor") {
+        consultationData = await consultationService.getConsultationsByDoctorId(
+          user.medecinId
+        );
+      } else if (user.role === "ClinicAdmin" && user.cliniqueId) {
+        consultationData = await consultationService.getConsultationsByClinicId(
+          user.cliniqueId
+        );
       } else {
-        // SuperAdmin can see all consultations
         consultationData = await consultationService.getAllConsultations();
       }
-      
+
       setConsultations(consultationData);
       setFilteredConsultations(consultationData);
     } catch (error) {
       console.error("Error fetching consultations:", error);
-      toast.error("Failed to load consultations");
+      toast.error("Échec du chargement des consultations");
     } finally {
       setIsLoading(false);
     }
   }, [user]);
-  
-  // Filter consultations based on search term
+
+  // 🔎 Filtrage en fonction du champ de recherche
   useEffect(() => {
-    if (consultations.length === 0) return;
-    
-    const results = consultations.filter(consultation => 
-      consultation.raison.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      consultation.dateConsultation.includes(searchTerm)
+    if (!consultations.length) return;
+
+    const results = consultations.filter(
+      (consultation) =>
+        consultation.diagnostic
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        consultation.dateConsultation.includes(searchTerm)
     );
     setFilteredConsultations(results);
   }, [searchTerm, consultations]);
 
-  // Initial data loading
+  // 📦 Chargement initial
   useEffect(() => {
     fetchConsultations();
   }, [fetchConsultations]);
 
-  // Add a new consultation
+  // ➕ Ajouter une consultation
   const addConsultation = async (data: ConsultationDTO) => {
     setIsSubmitting(true);
     try {
       await consultationService.createConsultation(data);
-      await fetchConsultations(); // Refetch to get the updated list with IDs
-      toast.success("Consultation added successfully");
+      await fetchConsultations();
+      toast.success("Consultation ajoutée avec succès");
     } catch (error) {
-      console.error("Error adding consultation:", error);
-      toast.error("Failed to add consultation");
+      console.error("Erreur lors de l'ajout:", error);
+      toast.error("Échec de l'ajout de la consultation");
       throw error;
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Update an existing consultation
+  // 📝 Modifier une consultation
   const updateConsultation = async (data: ConsultationDTO) => {
-    if (!data.id) {
-      toast.error("Consultation ID is required for updates");
-      return;
-    }
-    
     setIsSubmitting(true);
     try {
       await consultationService.updateConsultation(data);
-      setConsultations(prev => 
-        prev.map(consultation => consultation.id === data.id ? { ...consultation, ...data } : consultation)
-      );
-      toast.success("Consultation updated successfully");
+      await fetchConsultations();
+      toast.success("Consultation mise à jour avec succès");
     } catch (error) {
-      console.error("Error updating consultation:", error);
-      toast.error("Failed to update consultation");
+      console.error("Erreur lors de la mise à jour:", error);
+      toast.error("Échec de la mise à jour de la consultation");
       throw error;
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Delete a consultation
+  // ❌ Supprimer une consultation
   const deleteConsultation = async (id: string) => {
-    if (!window.confirm("Are you sure you want to delete this consultation?")) {
+    if (
+      !window.confirm("Confirmez-vous la suppression de cette consultation ?")
+    ) {
       return;
     }
 
     setIsLoading(true);
     try {
       await consultationService.deleteConsultation(id);
-      setConsultations(prev => prev.filter(consultation => consultation.id !== id));
-      toast.success("Consultation deleted successfully");
+      setConsultations((prev) => prev.filter((c) => c.id !== id));
+      toast.success("Consultation supprimée avec succès");
     } catch (error) {
-      console.error("Error deleting consultation:", error);
-      toast.error("Failed to delete consultation");
+      console.error("Erreur lors de la suppression:", error);
+      toast.error("Échec de la suppression de la consultation");
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const uploadDocumentMedical = async (consultationId: string, file: File) => {
+    setIsSubmitting(true);
+    try {
+      const formData = new FormData();
+      formData.append("consultationId", consultationId);
+      formData.append("file", file);
+      formData.append("type", file.type); // optionnel
+      // fichierURL et dateAjout seront générés côté serveur
+
+      await consultationService.uploadDocumentMedical(formData);
+
+      toast.success("Document médical téléchargé avec succès");
+    } catch (error) {
+      console.error(
+        "Erreur lors du téléchargement du document médical:",
+        error
+      );
+      toast.error("Échec du téléchargement du document médical");
+      throw error;
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const deleteDocumentMedical = async (id: string) => {
+    if (
+      !window.confirm("Confirmez-vous la suppression de ce document médical ?")
+    ) {
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await consultationService.deleteDocumentMedical(id);
+      toast.success("Document médical supprimé avec succès");
+    } catch (error) {
+      console.error(
+        "Erreur lors de la suppression du document médical:",
+        error
+      );
+      toast.error("Échec de la suppression du document médical");
       throw error;
     } finally {
       setIsLoading(false);
@@ -173,6 +221,8 @@ export function useConsultations(): UseConsultationsState {
     addConsultation,
     updateConsultation,
     deleteConsultation,
-    refetchConsultations: fetchConsultations
+    uploadDocumentMedical,
+    deleteDocumentMedical,
+    refetchConsultations: fetchConsultations,
   };
 }

@@ -37,6 +37,8 @@ import { ConsultationDTO } from "@/types/consultation";
 import { Patient } from "@/types/patient";
 import { Doctor } from "@/types/doctor";
 import { CancelByDoctorDialog } from "@/components/appointments/CancelByDoctorDialog";
+import { CreateFromAppointment } from "@/components/consultations/CreateFromAppointment";
+import { useConsultations } from "@/hooks/useConsultations";
 
 interface Appointment {
   id: string;
@@ -87,6 +89,7 @@ function AppointmentsPage() {
   const { user } = useAuth();
   const { doctors } = useDoctors();
   const { patients } = usePatients();
+  const { addConsultation } = useConsultations(); 
   const { t } = useTranslation("appointments");
   const tConsultations = useTranslation("consultations").t;
   const tCommon = useTranslation("common").t;
@@ -325,16 +328,20 @@ function AppointmentsPage() {
     }
   };
 
-  const handleConsultationFormSubmit = (data: ConsultationDTO) => {
-    // Here would be the API call to create a consultation
-    console.log("Creating consultation from appointment:", data);
+  const handleConsultationFormSubmit = async (data: ConsultationDTO) => {
+    try {
+      await addConsultation(data);
+      toast.success("Consultation créée avec succès");
 
-    // Show success message
-    toast.success("Consultation created successfully");
+      setIsConsultationFormOpen(false);
+      setAppointmentForConsultation(null);
 
-    // Close the form
-    setIsConsultationFormOpen(false);
-    setAppointmentForConsultation(null);
+      // Optionnel : tu peux aussi déclencher un refetch des consultations ici si nécessaire
+      // refetchConsultations();
+    } catch (error) {
+      console.error("Erreur lors de la création de la consultation :", error);
+      toast.error("Échec de la création de la consultation");
+    }
   };
 
   return (
@@ -477,19 +484,6 @@ function AppointmentsPage() {
                 </div>
               )}
               <DialogFooter>
-                {viewingAppointment.status === "CONFIRME" &&
-                  user?.role !== "Patient" && (
-                    <Button
-                      variant="outline"
-                      className="mr-auto"
-                      onClick={() => {
-                        handleCreateConsultation(viewingAppointment);
-                        setIsDetailsOpen(false);
-                      }}
-                    >
-                      {tConsultations("createConsultation")}
-                    </Button>
-                  )}
                 <Button
                   variant="outline"
                   onClick={() => setIsDetailsOpen(false)}
@@ -527,21 +521,21 @@ function AppointmentsPage() {
 
       {/* Consultation Form from Appointment */}
       {appointmentForConsultation && (
-        <ConsultationForm
-          isOpen={isConsultationFormOpen}
-          onClose={() => setIsConsultationFormOpen(false)}
-          onSubmit={handleConsultationFormSubmit}
-          initialData={{
+        <CreateFromAppointment
+          appointment={{
+            id: appointmentForConsultation.id,
             patientId: appointmentForConsultation.patientId,
-            doctorId: appointmentForConsultation.medecinId,
-            date: appointmentForConsultation.dateHeure,
-            time: appointmentForConsultation.time,
-            reason: `${tConsultations("consultationFromAppointment")}: ${
-              appointmentForConsultation.reason
-            }`,
+            medecinId: appointmentForConsultation.medecinId,
+            date: appointmentForConsultation.dateHeure.split("T")[0],
+            raison: appointmentForConsultation.reason,
+            status: appointmentForConsultation.status,
           }}
-          patients={patients}
-          doctors={doctors}
+          open={isConsultationFormOpen}
+          onOpenChange={(open) => {
+            setIsConsultationFormOpen(open);
+            if (!open) setAppointmentForConsultation(null);
+          }}
+          onCreateConsultation={handleConsultationFormSubmit}
         />
       )}
 
