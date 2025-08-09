@@ -20,7 +20,7 @@
         "EnableRateLimiting": true,
         "Period": "1m",
         "PeriodTimespan": 60,
-        "Limit": 30
+        "Limit": 100
       }
     },
     {
@@ -43,7 +43,7 @@
         "EnableRateLimiting": true,
         "Period": "1m",
         "PeriodTimespan": 60,
-        "Limit": 30
+        "Limit": 100
       }
     },
     {
@@ -66,7 +66,7 @@
         "EnableRateLimiting": true,
         "Period": "1m",
         "PeriodTimespan": 60,
-        "Limit": 30
+        "Limit": 100
       }
     },
     {
@@ -89,7 +89,7 @@
         "EnableRateLimiting": true,
         "Period": "1m",
         "PeriodTimespan": 60,
-        "Limit": 30
+        "Limit": 100
       }
     },
     {
@@ -112,7 +112,7 @@
         "EnableRateLimiting": true,
         "Period": "1m",
         "PeriodTimespan": 60,
-        "Limit": 30
+        "Limit": 100
       }
     },
     {
@@ -135,7 +135,7 @@
         "EnableRateLimiting": true,
         "Period": "1m",
         "PeriodTimespan": 60,
-        "Limit": 30
+        "Limit": 100
       }
     },
     {
@@ -158,7 +158,7 @@
         "EnableRateLimiting": true,
         "Period": "1m",
         "PeriodTimespan": 60,
-        "Limit": 30
+        "Limit": 1000
       }
     },
     {
@@ -181,7 +181,7 @@
         "EnableRateLimiting": true,
         "Period": "1m",
         "PeriodTimespan": 60,
-        "Limit": 30
+        "Limit": 100
       }
     },
     {
@@ -197,6 +197,29 @@
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "FileCacheOptions": {
         "TtlSeconds": 30,
+        "Region": "facturationregion"
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 100
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Paiement/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "facturationservice",
+          "Port": 8093
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Paiement/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
         "Region": "paymentsregion"
       },
       "RateLimitOptions": {
@@ -204,7 +227,30 @@
         "EnableRateLimiting": true,
         "Period": "1m",
         "PeriodTimespan": 60,
-        "Limit": 30
+        "Limit": 100
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Tarification/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "facturationservice",
+          "Port": 8093
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Tarification/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "tarificationsregion"
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 100
       }
     },
     {
@@ -227,7 +273,7 @@
         "EnableRateLimiting": true,
         "Period": "1m",
         "PeriodTimespan": 60,
-        "Limit": 30
+        "Limit": 100
       }
     },
     {
@@ -250,7 +296,7 @@
         "EnableRateLimiting": true,
         "Period": "1m",
         "PeriodTimespan": 60,
-        "Limit": 30
+        "Limit": 100
       }
     }
   ],
@@ -258,6 +304,7 @@
     "BaseUrl": "http://localhost:8000",
     "RequestIdKey": "RequestId",
     "RateLimitOptions": {
+      "ClientIdHeader": "Client-Id",
       "DisableRateLimitHeaders": false,
       "QuotaExceededMessage": "Limite de requêtes atteinte",
       "HttpStatusCode": 429
