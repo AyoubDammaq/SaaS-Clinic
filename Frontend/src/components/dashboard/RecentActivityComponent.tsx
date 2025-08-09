@@ -6,7 +6,15 @@ import {
   FileText,
   User,
 } from "lucide-react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/hooks/useTranslation";
 
 type ActivityType = "appointment" | "consultation" | "payment" | "registration";
 
@@ -24,28 +32,31 @@ interface RecentActivityProps {
 }
 
 export function RecentActivityComponent({ activities }: RecentActivityProps) {
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium">Recent Activity</h3>
-      </div>
+  const { t } = useTranslation("dashboard");
 
-      <div className="space-y-4">
+  return (
+    <Card className="overflow-hidden">
+      <CardHeader>
+        <CardTitle>{t("recent_activity_title") || "Recent Activity"}</CardTitle>
+        <CardDescription>
+          {t("recent_activity_description") || "Overview of your recent activities"}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="p-4 space-y-3">
         {activities.map((activity) => (
           <div
             key={activity.id}
             className={cn(
-              "flex items-start gap-3 rounded-lg border p-3",
+              "flex items-start gap-3 rounded-lg border p-3 transition-all duration-200 hover:bg-muted/20",
               !activity.seen && "bg-muted/40"
             )}
           >
-            <div className="rounded-full bg-muted p-1.5 text-muted-foreground">
+            <div className="rounded-full bg-muted p-2 text-muted-foreground">
               {getActivityIcon(activity.type)}
             </div>
-
             <div className="space-y-1 flex-1">
-              <p className="font-medium">{activity.title}</p>
-              <p className="text-sm text-muted-foreground">
+              <p className="font-medium text-sm">{activity.title}</p>
+              <p className="text-xs text-muted-foreground line-clamp-2">
                 {activity.description}
               </p>
               <div className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -55,8 +66,8 @@ export function RecentActivityComponent({ activities }: RecentActivityProps) {
             </div>
           </div>
         ))}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
 

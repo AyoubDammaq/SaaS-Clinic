@@ -3,7 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useAppointments } from "@/hooks/useAppointments";
 import { useDoctors } from "@/hooks/useDoctors";
 import { usePatients } from "@/hooks/usePatients";
-import { useReportings } from "@/hooks/useReportings"; // Importer le hook
+import { useReportings } from "@/hooks/useReportings";
 import {
   LineChart,
   Line,
@@ -36,7 +36,7 @@ import {
 import { AppointmentStatusEnum, RendezVous } from "@/types/rendezvous";
 import { Patient } from "@/types/patient";
 import { Doctor } from "@/types/doctor";
-import { format, isValid } from "date-fns"; // Pour formater les dates
+import { format, isValid } from "date-fns";
 import { toast } from "sonner";
 import {
   AppointmentDayStat,
@@ -48,7 +48,7 @@ import {
 import { NextAppointmentCard } from "@/components/dashboard/NextAppointmentCard";
 import { fr } from "date-fns/locale";
 import { RecentPaiementDto } from "@/types/billing";
-import { count } from "console";
+import { useTranslation } from "@/hooks/useTranslation";
 
 // Interface Appointment (inchangée)
 interface Appointment {
@@ -92,7 +92,7 @@ const mapRendezVousToAppointment = (
   };
 };
 
-// Générer les données pour le graphique des patients (basé sur rendezvousStats)
+// Générer les données pour le graphique des patients (inchangée)
 const generatePatientData = (stats: StatistiqueDTO[]) => {
   const monthlyData: { [key: string]: number } = {};
   const monthsFullName = [
@@ -160,7 +160,6 @@ function fillPatientData(
     "Dec",
   ];
 
-  // Derniers 12 mois à partir de maintenant
   const now = new Date();
   const last12Months = Array.from({ length: 12 }).map((_, i) => {
     const d = new Date(now.getFullYear(), now.getMonth() - (11 - i), 1);
@@ -173,7 +172,7 @@ function fillPatientData(
   });
 }
 
-// Générer les données pour le graphique des rendez-vous (basé sur rendezvousStats)
+// Générer les données pour le graphique des rendez-vous (inchangée)
 const generateAppointmentData = (stats: StatistiqueDTO[]) => {
   const days = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
   const currentWeekStart = new Date();
@@ -207,7 +206,11 @@ const generateAppointmentData = (stats: StatistiqueDTO[]) => {
 const generateRecentActivities = (
   appointments: RendezVous[],
   patients: Patient[],
-  doctors: Doctor[]
+  doctors: Doctor[],
+  t: (
+    key: string,
+    options?: { ns?: string; values?: Record<string, string | number> }
+  ) => string
 ) => {
   return appointments.slice(0, 4).map((rdv, index) => {
     const patient = patients.find((p) => p.id === rdv.patientId);
@@ -219,20 +222,26 @@ const generateRecentActivities = (
     const doctorName =
       rdv.medecinNom ||
       (doctor ? `Dr. ${doctor.prenom} ${doctor.nom}` : "Inconnu");
-
+    const hourCount = index + 1;
+    const time = t("activity_time_with_at", {
+      values: {
+        count: hourCount,
+        s: hourCount > 1 ? "s" : "",
+      },
+    });
     return {
       id: rdv.id,
       type: "appointment" as const,
       title:
         rdv.statut === AppointmentStatusEnum.CONFIRME
-          ? "Rendez-vous confirmé"
-          : "Nouveau rendez-vous",
+          ? t("activity_confirmed_appointment") || "Rendez-vous confirmé"
+          : t("activity_new_appointment") || "Nouveau rendez-vous",
       description: `${patientName} ${
         rdv.statut === AppointmentStatusEnum.CONFIRME
-          ? "a confirmé"
-          : "a planifié"
+          ? t("activity_confirmed_description") || "a confirmé"
+          : t("activity_scheduled_description") || "a planifié"
       } un rendez-vous avec ${doctorName}`,
-      time: `${index + 1} heure${index > 0 ? "s" : ""} ago`,
+      time,
       seen: rdv.statut === AppointmentStatusEnum.CONFIRME,
     };
   });
@@ -249,7 +258,6 @@ const normalizeWeeklyStats = (stats: AppointmentDayStat[]) => {
     "Sunday",
   ];
 
-  // Si stats est undefined, retourner une liste vide ou remplie de 0
   if (!Array.isArray(stats)) {
     return daysOfWeek.map((day) => ({
       jour: day,
@@ -270,9 +278,9 @@ const normalizeWeeklyStats = (stats: AppointmentDayStat[]) => {
   });
 };
 
-
 function DashboardPage() {
   const { user } = useAuth();
+  const { t } = useTranslation("dashboard");
   const { filteredAppointments, isLoading, setSearchTerm } = useAppointments();
   const { doctors } = useDoctors();
   const { patients } = usePatients();
@@ -354,18 +362,20 @@ function DashboardPage() {
       calculterNombreConsultationsByPatient(user.patientId, startDate, endDate)
         .then((count) => setNombreConsultations(count))
         .catch((error) => {
-          toast.error("Erreur lors du chargement du nombre de consultations");
+          toast.error(
+            t("error_consultations") ||
+              "Erreur lors du chargement du nombre de consultations"
+          );
           setNombreConsultations(0);
         });
       fetchRecentPaymentsByPatient(user.patientId)
         .then((payment) => {
           console.log("Recent Payment:", payment);
-          // Si payment est null ou vide (statut 204), définir recentPayments à null
           setRecentPayments(payment || null);
         })
         .catch((error) => {
           console.error("Error fetching recent payments:", error);
-          setRecentPayments(null); // En cas d'erreur, définir à null
+          setRecentPayments(null);
         });
     }
   }, [
@@ -373,6 +383,7 @@ function DashboardPage() {
     dateRange,
     calculterNombreConsultationsByPatient,
     fetchRecentPaymentsByPatient,
+    t,
   ]);
 
   useEffect(() => {
@@ -413,7 +424,9 @@ function DashboardPage() {
           }
         })
         .catch((error) => {
-          toast.error("Erreur lors du chargement des statistiques");
+          toast.error(
+            t("error_stats") || "Erreur lors du chargement des statistiques"
+          );
         });
     }
   }, [
@@ -440,6 +453,7 @@ function DashboardPage() {
     getNewPatientsTrend,
     getNewDoctorsTrend,
     getRevenueTrend,
+    t,
   ]);
 
   useEffect(() => {
@@ -499,8 +513,9 @@ function DashboardPage() {
   );
 
   const recentActivities = useMemo(
-    () => generateRecentActivities(roleFilteredAppointments, patients, doctors),
-    [roleFilteredAppointments, patients, doctors]
+    () =>
+      generateRecentActivities(roleFilteredAppointments, patients, doctors, t),
+    [roleFilteredAppointments, patients, doctors, t]
   );
 
   const doctorsBySpecialtyChart = useMemo(() => {
@@ -575,7 +590,7 @@ function DashboardPage() {
           />
         );
       default:
-        return <div>Rôle inconnu</div>;
+        return <div>{t("unknown_role") || "Rôle inconnu"}</div>;
     }
   }, [
     user,
@@ -606,6 +621,7 @@ function DashboardPage() {
     patientTrend,
     doctorTrend,
     revenueTrend,
+    t,
   ]);
 
   useEffect(() => {
@@ -617,14 +633,14 @@ function DashboardPage() {
   return (
     <div className="dashboard-container space-y-6 pb-8">
       {isLoading || statsLoading ? (
-        <div>Chargement...</div>
+        <div>{t("loading") || "Loading..."}</div>
       ) : (
         <>
           <div className="flex flex-col gap-2">
             <h1 className="text-3xl font-bold tracking-tight">
-              Tableau de bord
+              {t("title") || "Dashboard"}
             </h1>
-            <p className="text-muted-foreground">Bienvenue, {user?.name}</p>
+            <p className="text-muted-foreground">{t("welcome")}</p>
           </div>
           {dashboardContent}
         </>
@@ -652,26 +668,28 @@ function SuperAdminDashboard({
   doctorTrend?: { value: number; isPositive: boolean } | null;
   revenueTrend?: { value: number; isPositive: boolean } | null;
 }) {
+  const { t } = useTranslation("dashboard");
+
   if (!dashboardStats || !patientData || !doctorsBySpecialtyChart) {
-    return <div>Chargement des données...</div>;
+    return <div>{t("loading") || "Loading..."}</div>;
   }
   return (
     <div className="space-y-6">
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
-          title="Total Cliniques"
+          title={t("super_admin_total_clinics") || "Total Clinics"}
           value={`${dashboardStats?.totalClinics?.toString() || 0}`}
           icon={<Building className="h-4 w-4" />}
           trend={clinicTrend ?? { value: 0, isPositive: true }}
         />
         <StatCard
-          title="Total Patients"
+          title={t("super_admin_total_patients") || "Total Patients"}
           value={(newPatientsCount ?? 0).toString()}
           icon={<Users className="h-4 w-4" />}
           trend={patientTrend ?? { value: 0, isPositive: true }}
         />
         <StatCard
-          title="Total Doctors"
+          title={t("super_admin_total_doctors") || "Total Doctors"}
           value={
             dashboardStats?.doctorsBySpecialty
               ?.reduce((sum, stat) => sum + stat.nombre, 0)
@@ -681,7 +699,7 @@ function SuperAdminDashboard({
           trend={doctorTrend ?? { value: 0, isPositive: true }}
         />
         <StatCard
-          title="Revenus Totaux"
+          title={t("super_admin_total_revenue") || "Total Revenue"}
           value={`$${dashboardStats.totalFacturesPayees ?? 0}`}
           icon={<CreditCard className="h-4 w-4" />}
           trend={revenueTrend ?? { value: 0, isPositive: true }}
@@ -691,9 +709,12 @@ function SuperAdminDashboard({
       <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Clinic Growth</CardTitle>
+            <CardTitle>
+              {t("super_admin_clinic_growth_title") || "Clinic Growth"}
+            </CardTitle>
             <CardDescription>
-              New patient registrations across all clinics
+              {t("super_admin_clinic_growth_description") ||
+                "New patient registrations across all clinics"}
             </CardDescription>
           </CardHeader>
           <CardContent className="h-80">
@@ -715,9 +736,13 @@ function SuperAdminDashboard({
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Répartition des Médecins</CardTitle>
+            <CardTitle>
+              {t("super_admin_doctors_distribution_title") ||
+                "Doctors Distribution"}
+            </CardTitle>
             <CardDescription>
-              Nombre de médecins par spécialité enregistrés sur la plateforme
+              {t("super_admin_doctors_distribution_description") ||
+                "Number of doctors by specialty registered on the platform"}
             </CardDescription>
           </CardHeader>
           <CardContent className="h-80">
@@ -736,7 +761,14 @@ function SuperAdminDashboard({
                 />
                 <YAxis allowDecimals={false} />
                 <Tooltip
-                  formatter={(value) => [`${value} médecin(s)`, "Total"]}
+                  formatter={(value) => [
+                    `${value} ${
+                      t(
+                        "super_admin_doctors_distribution_title"
+                      ).toLowerCase() || "doctors"
+                    }`,
+                    "Total",
+                  ]}
                 />
                 <Bar
                   dataKey="value"
@@ -767,34 +799,40 @@ function ClinicAdminDashboard({
   revenusMensuel = 0.0,
   revenusMensuelTrend = { value: 0, isPositive: true },
 }) {
+  const { t } = useTranslation("dashboard");
   return (
     <div className="space-y-6">
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
-          title="Nouveaux Patients"
+          title={t("clinic_admin_new_patients") || "New Patients"}
           value={newPatientsByClinic?.toString() || "0"}
           icon={<Users className="h-4 w-4" />}
           trend={newPatientsTrend || { value: 0, isPositive: true }}
         />
         <StatCard
-          title="Consultations"
+          title={t("clinic_admin_consultations") || "Consultations"}
           value={consultationCount?.toString() || "0"}
           icon={<Activity className="h-4 w-4" />}
           trend={consultationsTrend || { value: 0, isPositive: true }}
         />
         <StatCard
-          title="Rendez-vous Aujourd'hui"
+          title={t("clinic_admin_appointments_today") || "Appointments Today"}
           value={dashboardStats || "0"}
           icon={<Calendar className="h-4 w-4" />}
-          description={`${
-            pendingAppointmentsByClinic?.toString() || "0"
-          } en attente de confirmation`}
+          description={
+            t("clinic_admin_pending_appointments", {
+              values: { count: pendingAppointmentsByClinic },
+            }) ||
+            `${
+              pendingAppointmentsByClinic?.toString() || "0"
+            } en attente de confirmation`
+          }
         />
         <StatCard
-          title="Revenus Mensuels"
+          title={t("clinic_admin_monthly_revenue") || "Monthly Revenue"}
           value={`$${revenusMensuel || 0}`}
           icon={<CreditCard className="h-4 w-4" />}
-          trend={revenusMensuelTrend} // Use the actual trend data
+          trend={revenusMensuelTrend}
         />
       </div>
 
@@ -805,9 +843,12 @@ function ClinicAdminDashboard({
 
       <Card>
         <CardHeader>
-          <CardTitle>Activité Hebdomadaire</CardTitle>
+          <CardTitle>
+            {t("clinic_admin_weekly_activity_title") || "Weekly Activity"}
+          </CardTitle>
           <CardDescription>
-            Statistiques des rendez-vous pour votre clinique
+            {t("clinic_admin_weekly_activity_description") ||
+              "Appointment statistics for your clinic"}
           </CardDescription>
         </CardHeader>
         <CardContent className="h-80">
@@ -838,30 +879,38 @@ function DoctorDashboard({
   consultationsTrend = { value: 0, isPositive: true },
   pendingAppointmentsByDoctor,
 }) {
+  const { t } = useTranslation("dashboard");
   return (
     <div className="space-y-6">
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         <StatCard
-          title="Rendez-vous Aujourd'hui"
+          title={t("doctor_appointments_today") || "Appointments Today"}
           value={dashboardStats || "0"}
           icon={<Calendar className="h-4 w-4" />}
-          description={`${
-            pendingAppointmentsByDoctor?.toString() || "0"
-          } en attente de confirmation`}
+          description={
+            t("doctor_pending_appointments", {
+              values: { count: pendingAppointmentsByDoctor },
+            }) ||
+            `${
+              pendingAppointmentsByDoctor?.toString() || "0"
+            } en attente de confirmation`
+          }
         />
         <StatCard
-          title="Nouveaux Patients"
+          title={t("doctor_new_patients") || "New Patients"}
           value={newPatientsByDoctor?.toString() || "0"}
           icon={<Users className="h-4 w-4" />}
           trend={newPatientsTrend}
-          description="Ce mois"
+          description={t("doctor_this_month") || "This month"}
         />
         <StatCard
-          title="Consultations Terminées"
+          title={
+            t("doctor_completed_consultations") || "Completed Consultations"
+          }
           value={consultationCount?.toString() || "0"}
           icon={<Activity className="h-4 w-4" />}
           trend={consultationsTrend || { value: 0, isPositive: true }}
-          description="Ce mois"
+          description={t("doctor_this_month") || "This month"}
         />
       </div>
 
@@ -871,9 +920,12 @@ function DoctorDashboard({
 
       <Card>
         <CardHeader>
-          <CardTitle>Planning Hebdomadaire</CardTitle>
+          <CardTitle>
+            {t("doctor_weekly_schedule_title") || "Weekly Schedule"}
+          </CardTitle>
           <CardDescription>
-            Votre charge de rendez-vous pour la semaine
+            {t("doctor_weekly_schedule_description") ||
+              "Your appointment workload for the week"}
           </CardDescription>
         </CardHeader>
         <CardContent className="h-80">
@@ -905,6 +957,7 @@ function PatientDashboard({
   recentActivities: RecentActivity[];
   recentPayments: RecentPaiementDto | null;
 }) {
+  const { t } = useTranslation("dashboard");
   const totalPayments =
     recentPayments && typeof recentPayments.montant === "number"
       ? recentPayments.montant
@@ -914,35 +967,47 @@ function PatientDashboard({
       ? format(new Date(recentPayments.datePaiement), "d MMMM yyyy", {
           locale: fr,
         })
-      : "Date invalide"
-    : "Aucun paiement";
+      : t("patient_no_payment") || "No payment"
+    : t("patient_no_payment") || "No payment";
 
   return (
     <div className="space-y-6">
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         <StatCard
-          title="Rendez-vous à venir"
+          title={t("patient_upcoming_appointments") || "Upcoming Appointments"}
           value={appointments
             .filter((rdv) => rdv.status !== AppointmentStatusEnum.ANNULE)
             .length.toString()}
           icon={<Calendar className="h-4 w-4" />}
           description={
             appointments[0]
-              ? `Prochain : ${appointments[0].date}, ${appointments[0].time}`
-              : "Aucun rendez-vous à venir"
+              ? t("appointment_date_time", {
+                  values: {
+                    date: appointments[0].date,
+                    time: appointments[0].time,
+                  },
+                }) || `${appointments[0].date}, ${appointments[0].time}`
+              : t("patient_no_upcoming_appointments") ||
+                "No upcoming appointments"
           }
         />
         <StatCard
-          title="Consultations Terminées"
+          title={
+            t("patient_completed_consultations") || "Completed Consultations"
+          }
           value={nombreConsultations?.toString() || "0"}
           icon={<Activity className="h-4 w-4" />}
-          description="Depuis l'inscription"
+          description={t("patient_since_registration") || "Since registration"}
         />
         <StatCard
-          title="Paiements Récents"
+          title={t("patient_recent_payments") || "Recent Payments"}
           value={`€${totalPayments.toFixed(2)}`}
           icon={<CreditCard className="h-4 w-4" />}
-          description={`Dernier paiement : ${latestPaymentDate}`}
+          description={
+            t("patient_last_payment", {
+              values: { date: latestPaymentDate },
+            }) || `Dernier paiement : ${latestPaymentDate}`
+          }
         />
       </div>
 

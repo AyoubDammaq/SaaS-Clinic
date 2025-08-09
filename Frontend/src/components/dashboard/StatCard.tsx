@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface StatCardProps {
   title: string;
@@ -22,6 +23,7 @@ export function StatCard({
   trend,
   className,
 }: StatCardProps) {
+  const { t } = useTranslation("dashboard");
   return (
     <Card className={cn("h-full", className)}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -46,7 +48,7 @@ export function StatCard({
               {trend.isPositive ? "↑" : "↓"} {Math.abs(trend.value)}%
             </div>
             <div className="text-xs text-muted-foreground">
-              from last period
+              {t("trend_from_last_period") || "from last period"}
             </div>
           </div>
         )}
