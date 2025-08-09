@@ -45,7 +45,21 @@ export type AppointmentFormData = {
   medecinId: string;
   dateHeure: string;
   time?: string;
-  duration?: number;
   reason?: string;
-  notes?: string;
+};
+
+
+export type DoctorType = {
+  id: string;
+  name: string;
+};
+
+export type PatientType = {
+  id: string;
+  name: string;
+};
+
+export type ClinicType = {
+  id: string;
+  name: string;
 };

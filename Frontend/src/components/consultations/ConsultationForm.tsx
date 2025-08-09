@@ -31,12 +31,14 @@ import { toast } from "sonner";
 import { Patient } from "@/types/patient";
 import { Doctor } from "@/types/doctor";
 import { useTranslation } from "@/hooks/useTranslation";
+import { ConsultationType, consultationTypes } from "@/types/consultation";
+
+type ConsultationTypeKey = keyof typeof consultationTypes;
 
 const consultationFormSchema = z.object({
   patientId: z.string().min(1, { message: "Please select a patient." }),
   medecinId: z.string().min(1, { message: "Please select a doctor." }),
-  date: z.string().min(1, { message: "Please select a date." }),
-  time: z.string().min(1, { message: "Please select a time." }),
+  type: z.nativeEnum(ConsultationType),
   diagnostic: z
     .string()
     .min(5, { message: "Le diagnostic doit contenir au moins 5 caractères." }),
@@ -48,7 +50,7 @@ export type ConsultationFormValues = z.infer<typeof consultationFormSchema>;
 interface ConsultationFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: ConsultationFormValues) => void;
+  onSubmit: (data: ConsultationFormValues & { date: string }) => void;
   initialData?: Partial<ConsultationFormValues>;
   patients: Patient[];
   doctors: Doctor[];
@@ -73,10 +75,9 @@ export function ConsultationForm({
     defaultValues: {
       patientId: initialData?.patientId || "",
       medecinId: initialData?.medecinId || "",
-      date: initialData?.date || "",
-      time: initialData?.time || "",
       diagnostic: initialData?.diagnostic || "",
       notes: initialData?.notes || "",
+      type: initialData?.type || ConsultationType.ConsultationGenerale,
     },
   });
 
@@ -86,17 +87,21 @@ export function ConsultationForm({
       form.reset(initialData);
     } else {
       form.reset({
+        patientId: "",
         medecinId: user.role === "Doctor" ? user.medecinId || "" : "",
+        diagnostic: "",
+        notes: "",
+        type: ConsultationType.ConsultationGenerale,
       });
     }
   }, [initialData, user, form]);
 
   const handleSubmit = async (data: ConsultationFormValues) => {
+    console.log("✅ Form submitted with values:", data);
     setIsSubmitting(true);
     try {
-      const [hours, minutes] = data.time.split(":").map(Number);
-      const dateHeure = new Date(data.date);
-      dateHeure.setHours(hours, minutes, 0, 0);
+      // Obtenir la date et l'heure actuelles
+      const dateHeure = new Date();
       const pad = (num: number) => String(num).padStart(2, "0");
       const localIso = `${dateHeure.getFullYear()}-${pad(
         dateHeure.getMonth() + 1
@@ -104,7 +109,7 @@ export function ConsultationForm({
         dateHeure.getMinutes()
       )}:00`;
 
-      const requestPayload: ConsultationFormValues = {
+      const requestPayload: ConsultationFormValues & { date: string } = {
         ...data,
         date: localIso,
       };
@@ -112,25 +117,35 @@ export function ConsultationForm({
       await onSubmit(requestPayload);
       toast.success(
         initialData
-          ? "Consultation updated successfully!"
-          : "Consultation created successfully!"
+          ? t("consultationUpdateSuccess")
+          : t("consultationAddSuccess")
       );
       form.reset();
       onClose();
     } catch (error) {
       console.error("Error submitting consultation form:", error);
-      toast.error("Failed to save consultation. Please try again.");
+      toast.error(
+        initialData
+          ? t("errorUpdatingConsultation")
+          : t("errorAddingConsultation")
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  // Trouver les noms du patient et du médecin pour l'affichage en lecture seule
+  const selectedPatient = patients.find((p) => p.id === initialData?.patientId);
+  const selectedDoctor = doctors.find((d) => d.id === initialData?.medecinId);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[550px]">
         <DialogHeader>
           <DialogTitle>
-            {initialData ? "Edit Consultation" : "Schedule New Consultation"}
+            {initialData
+              ? t("editConsultationTitle")
+              : t("scheduleNewConsultation")}
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
@@ -143,27 +158,125 @@ export function ConsultationForm({
               name="patientId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Patient</FormLabel>
+                  <FormLabel>{tCommon("patient")}</FormLabel>
+                  {initialData ? (
+                    <FormControl>
+                      <Input
+                        value={
+                          `${selectedPatient?.prenom || ""} ${
+                            selectedPatient?.nom || ""
+                          }`.trim() || "N/A"
+                        }
+                        disabled
+                      />
+                    </FormControl>
+                  ) : (
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue
+                            placeholder={t("selectPatientPlaceholder")}
+                          />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {patients.length === 0 ? (
+                          <SelectItem disabled value="">
+                            {t("noPatientsAvailable")}
+                          </SelectItem>
+                        ) : (
+                          patients.map((patient) => (
+                            <SelectItem key={patient.id} value={patient.id}>
+                              {patient.prenom} {patient.nom}
+                            </SelectItem>
+                          ))
+                        )}
+                      </SelectContent>
+                    </Select>
+                  )}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {user.role !== "Doctor" && (
+              <FormField
+                control={form.control}
+                name="medecinId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{tCommon("doctor")}</FormLabel>
+                    {initialData ? (
+                      <FormControl>
+                        <Input
+                          value={
+                            `${selectedDoctor?.prenom || ""} ${
+                              selectedDoctor?.nom || ""
+                            }`.trim() || "N/A"
+                          }
+                          disabled
+                        />
+                      </FormControl>
+                    ) : (
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={t("selectDoctorPlaceholder")}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {doctors.length === 0 ? (
+                            <SelectItem disabled value="">
+                              {t("noDoctorsAvailable")}
+                            </SelectItem>
+                          ) : (
+                            doctors.map((doctor) => (
+                              <SelectItem key={doctor.id} value={doctor.id}>
+                                {doctor.prenom} {doctor.nom}
+                              </SelectItem>
+                            ))
+                          )}
+                        </SelectContent>
+                      </Select>
+                    )}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+
+            <FormField
+              control={form.control}
+              name="type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("typeConsultation")}</FormLabel>
                   <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    onValueChange={(val) => field.onChange(parseInt(val))}
+                    value={field.value?.toString()}
+                    defaultValue={field.value?.toString()}
+                    disabled={!!initialData?.type}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Sélectionner un patient" />
+                        <SelectValue placeholder={t("selectTypePlaceholder")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {patients.length === 0 ? (
-                        <SelectItem disabled value="">
-                          {t("noPatientsAvailable")}
-                        </SelectItem>
-                      ) : (
-                        patients.map((patient) => (
-                          <SelectItem key={patient.id} value={patient.id}>
-                            {patient.prenom} {patient.nom}
+                      {Object.entries(consultationTypes).map(
+                        ([value, label]) => (
+                          <SelectItem key={value} value={value}>
+                            {t(label)}
                           </SelectItem>
-                        ))
+                        )
                       )}
                     </SelectContent>
                   </Select>
@@ -172,42 +285,17 @@ export function ConsultationForm({
               )}
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="date"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Date</FormLabel>
-                    <FormControl>
-                      <Input type="date" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="time"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Time</FormLabel>
-                    <FormControl>
-                      <Input type="time" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
             <FormField
               control={form.control}
               name="diagnostic"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Diagnostic</FormLabel>
+                  <FormLabel>{t("reason")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Indiquer le diagnostic..." {...field} />
+                    <Input
+                      placeholder={t("diagnosticPlaceholder")}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -219,10 +307,10 @@ export function ConsultationForm({
               name="notes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Notes complémentaires</FormLabel>
+                  <FormLabel>{t("notes")}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Ajouter des détails supplémentaires"
+                      placeholder={t("notesPlaceholder")}
                       className="resize-none"
                       {...field}
                     />
@@ -234,14 +322,14 @@ export function ConsultationForm({
 
             <DialogFooter>
               <Button type="button" variant="outline" onClick={onClose}>
-                Cancel
+                {t("cancelButton")}
               </Button>
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting
-                  ? "Saving..."
+                  ? t("savingButton")
                   : initialData
-                  ? "Update"
-                  : "Schedule"}
+                  ? t("updateButton")
+                  : t("scheduleButton")}
               </Button>
             </DialogFooter>
           </form>

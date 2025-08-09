@@ -98,6 +98,8 @@ export async function apiClient<T = unknown>(
         waitTime = exponentialDelay * (0.8 + Math.random() * 0.4); // Add jitter (±20%)
       }
 
+      waitTime = Math.max(waitTime, 0); 
+
       if (retryCount < maxRetries) {
         console.warn(
           `Rate limited. Retrying after ${

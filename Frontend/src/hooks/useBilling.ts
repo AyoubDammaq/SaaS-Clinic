@@ -1,187 +1,292 @@
-
-import { useState, useMemo, useCallback } from 'react';
-import { Invoice, InvoiceStatus, PaymentDetails } from '@/types/billing';
+import { useState, useMemo, useCallback, useEffect } from "react";
+import {
+  AddTarificationRequest,
+  Facture,
+  FactureStatus,
+  PayInvoiceRequest,
+  TarifConsultation,
+  UpdateTarificationRequest,
+} from "@/types/billing";
 import { useAuth } from "@/hooks/useAuth";
-import { toast } from 'sonner';
+import { toast } from "sonner";
+import { billingService } from "@/services/billingService";
 
 interface UseBillingOptions {
-  initialInvoices?: Invoice[];
+  initialInvoices?: Facture[];
   itemsPerPage?: number;
   autoFetch?: boolean;
 }
 
-export function useBilling({ 
-  initialInvoices = [], 
+export function useBilling({
+  initialInvoices = [],
   itemsPerPage = 5,
-  autoFetch = true
+  autoFetch = true,
 }: UseBillingOptions = {}) {
   const { user } = useAuth();
-  const [invoices, setInvoices] = useState<Invoice[]>(initialInvoices);
-  const [searchTerm, setSearchTerm] = useState('');
+
+  // États pour factures
+  const [invoices, setInvoices] = useState<Facture[]>(initialInvoices);
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortField, setSortField] = useState<keyof Invoice>('date');
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
-  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+  const [sortField, setSortField] = useState<keyof Facture>("dateEmission");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+  const [selectedInvoice, setSelectedInvoice] = useState<Facture | null>(null);
   const [isPaymentFormOpen, setIsPaymentFormOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch invoices - in a real app, this would call an API
+  // États pour tarifications
+  const [tarifications, setTarifications] = useState<TarifConsultation[]>([]);
+  const [isTarifsLoading, setIsTarifsLoading] = useState(false);
+  const [tarifsError, setTarifsError] = useState<string | null>(null);
+
+  // Fetch invoices selon rôle utilisateur
   const fetchInvoices = useCallback(async () => {
     if (!autoFetch) return;
-    
+
     setIsLoading(true);
     setError(null);
-    
+
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      // In a real app, you'd fetch from an API here
-      // const response = await fetch('/api/invoices');
-      // const data = await response.json();
-      // setInvoices(data);
-      
-      setInvoices(initialInvoices);
+      let fetchedInvoices: Facture[] = [];
+
+      if (user?.role === "Patient") {
+        fetchedInvoices = await billingService.filterFactures({
+          patientId: user.patientId,
+        });
+      } else if (user?.role === "ClinicAdmin") {
+        fetchedInvoices = await billingService.filterFactures({
+          clinicId: user.cliniqueId,
+        });
+      } else {
+        fetchedInvoices = await billingService.getAllFactures();
+      }
+
+      setInvoices(fetchedInvoices);
     } catch (err) {
-      console.error('Failed to fetch invoices:', err);
-      setError('Failed to load invoices. Please try again.');
-      toast.error('Failed to load invoices');
+      console.error("Failed to fetch invoices:", err);
+      setError("Failed to load invoices. Please try again.");
+      toast.error("Failed to load invoices");
     } finally {
       setIsLoading(false);
     }
-  }, [initialInvoices, autoFetch]);
+  }, [autoFetch, user]);
 
-  // Filter invoices based on search term and user role
-  const filteredInvoices = useMemo(() => {
-    let filtered = invoices;
-    
-    // Filter by search term
-    if (searchTerm) {
-      const searchLower = searchTerm.toLowerCase();
-      filtered = filtered.filter(invoice => (
-        invoice.id.toLowerCase().includes(searchLower) ||
-        invoice.patient.toLowerCase().includes(searchLower) ||
-        invoice.description.toLowerCase().includes(searchLower)
-      ));
-    }
-    
-    // Filter by user role (patients only see their own invoices)
-    if (user?.role === 'Patient') {
-      filtered = filtered.filter(invoice => 
-        invoice.patient.toLowerCase().includes((user.name || '').toLowerCase())
+  const getFacturesByClinicId = useCallback(async (cliniqueId: string) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const factures = await billingService.getFacturesByClinicId(cliniqueId);
+      setInvoices(factures);
+    } catch (err) {
+      console.error(
+        "Erreur lors du chargement des factures par clinique :",
+        err
       );
+      setError("Erreur lors du chargement des factures de la clinique.");
+      toast.error("Impossible de charger les factures de cette clinique");
+    } finally {
+      setIsLoading(false);
     }
-    
-    return filtered;
-  }, [invoices, searchTerm, user]);
+  }, []);
 
-  // Sort invoices
+  const handleDeleteFacture = useCallback(async (id: string) => {
+    const confirmed = window.confirm(
+      "Êtes-vous sûr de vouloir supprimer cette facture ?"
+    );
+    if (!confirmed) return;
+
+    try {
+      await billingService.deleteFacture(id);
+      setInvoices((prev) => prev.filter((inv) => inv.id !== id));
+      toast.success("Facture supprimée avec succès");
+    } catch (error) {
+      console.error("Erreur lors de la suppression de la facture:", error);
+      toast.error("Échec de la suppression de la facture");
+    }
+  }, []);
+
+  // Filtrage, tri et pagination factures
+  const filteredInvoices = useMemo(() => {
+    if (!searchTerm.trim()) return invoices;
+    const lowerTerm = searchTerm.toLowerCase();
+
+    return invoices.filter(
+      (inv) =>
+        inv.id.toLowerCase().includes(lowerTerm) ||
+        (inv.paiement &&
+          inv.paiement.factureId.toLowerCase().includes(lowerTerm)) ||
+        inv.status.toLowerCase().includes(lowerTerm)
+    );
+  }, [invoices, searchTerm]);
+
   const sortedInvoices = useMemo(() => {
     return [...filteredInvoices].sort((a, b) => {
-      let comparison = 0;
-      
-      // Handle different field types
-      if (sortField === 'amount') {
-        comparison = a.amount - b.amount;
-      } else if (sortField === 'date' || sortField === 'dueDate') {
-        // Sort dates
-        const dateA = new Date(a[sortField]);
-        const dateB = new Date(b[sortField]);
-        comparison = dateA.getTime() - dateB.getTime();
-      } else {
-        comparison = String(a[sortField]).localeCompare(String(b[sortField]));
+      let cmp = 0;
+
+      if (sortField === "montantTotal" || sortField === "montantPaye") {
+        cmp = (a[sortField] ?? 0) - (b[sortField] ?? 0);
+      } else if (sortField === "dateEmission") {
+        cmp =
+          new Date(a.dateEmission).getTime() -
+          new Date(b.dateEmission).getTime();
+      } else if (
+        typeof a[sortField] === "string" &&
+        typeof b[sortField] === "string"
+      ) {
+        cmp = (a[sortField] as string).localeCompare(b[sortField] as string);
       }
-      
-      return sortDirection === 'desc' ? -comparison : comparison;
+
+      return sortDirection === "desc" ? -cmp : cmp;
     });
   }, [filteredInvoices, sortField, sortDirection]);
 
-  // Calculate pagination
-  const totalPages = Math.ceil(sortedInvoices.length / itemsPerPage);
+  const totalPages = Math.max(
+    1,
+    Math.ceil(sortedInvoices.length / itemsPerPage)
+  );
   const paginatedInvoices = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    return sortedInvoices.slice(startIndex, startIndex + itemsPerPage);
+    const start = (currentPage - 1) * itemsPerPage;
+    return sortedInvoices.slice(start, start + itemsPerPage);
   }, [sortedInvoices, currentPage, itemsPerPage]);
 
-  // Handle sorting changes
-  const handleSort = useCallback((field: keyof Invoice) => {
-    if (field === sortField) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortField(field);
-      setSortDirection('asc');
-    }
-  }, [sortField, sortDirection]);
+  const handleSort = useCallback(
+    (field: keyof Facture) => {
+      if (field === sortField) {
+        setSortDirection((d) => (d === "asc" ? "desc" : "asc"));
+      } else {
+        setSortField(field);
+        setSortDirection("asc");
+      }
+    },
+    [sortField]
+  );
 
-  // Reset pagination when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, sortField, sortDirection]);
 
-  // Initial fetch
   useEffect(() => {
     fetchInvoices();
   }, [fetchInvoices]);
 
-  // Handle payment form
-  const handlePayNow = useCallback((invoice: Invoice) => {
+  // Paiement
+  const handlePayNow = useCallback((invoice: Facture) => {
     setSelectedInvoice(invoice);
     setIsPaymentFormOpen(true);
   }, []);
-
-  // Handle payment submission
-  const handlePaymentSubmit = useCallback((data: PaymentDetails) => {
-    if (!selectedInvoice) return;
-    
-    try {
-      // Update invoice status
-      const updatedInvoices = invoices.map(invoice => 
-        invoice.id === selectedInvoice.id ? { ...invoice, status: 'Paid' as InvoiceStatus } : invoice
-      );
-      
-      setInvoices(updatedInvoices);
-      closePaymentForm();
-      
-      // In a real app, you'd send this to your backend
-      console.log('Payment processed:', { invoiceId: selectedInvoice.id, ...data });
-      toast.success('Payment successfully processed');
-    } catch (error) {
-      console.error('Payment error:', error);
-      toast.error('Payment processing failed. Please try again.');
-    }
-  }, [selectedInvoice, invoices]);
 
   const closePaymentForm = useCallback(() => {
     setIsPaymentFormOpen(false);
     setSelectedInvoice(null);
   }, []);
 
-  // Handle invoice download
-  const handleDownload = useCallback((invoice: Invoice) => {
-    // In a real app, this would trigger a PDF download
+  const handlePaymentSubmit = useCallback(
+    async (
+      invoiceId: string,
+      data: PayInvoiceRequest & { montant: number }
+    ) => {
+      if (!selectedInvoice) return;
+
+      try {
+        await billingService.payerFacture(selectedInvoice.id, data);
+
+        setInvoices((prev) =>
+          prev.map((inv) =>
+            inv.id === selectedInvoice.id
+              ? {
+                  ...inv,
+                  status: FactureStatus.PAYEE,
+                  montantPaye: inv.montantTotal,
+                }
+              : inv
+          )
+        );
+
+        closePaymentForm();
+
+        toast.success("Payment successfully processed");
+      } catch (error) {
+        console.error("Payment error:", error);
+        toast.error("Payment processing failed. Please try again.");
+      }
+    },
+    [selectedInvoice, closePaymentForm]
+  );
+
+  const handleDownload = useCallback((invoice: Facture) => {
     toast.info(`Downloading invoice ${invoice.id}...`);
-    console.log('Downloading invoice:', invoice.id);
-    
-    // Simulate download
-    setTimeout(() => {
-      toast.success(`Invoice ${invoice.id} downloaded`);
-    }, 1500);
+    // Implémenter export PDF si besoin
   }, []);
 
-  // Check user permissions
-  const userPermissions = useMemo(() => {
-    return {
-      canPayInvoices: user?.role !== undefined,
-      canViewAllInvoices: user?.role === 'SuperAdmin' || user?.role === 'ClinicAdmin',
-      canGenerateReports: user?.role === 'SuperAdmin' || user?.role === 'ClinicAdmin'
-    };
-  }, [user?.role]);
+  // Permissions
+  const userPermissions = useMemo(
+    () => ({
+      canPayInvoices: !!user?.role,
+      canViewAllInvoices:
+        user?.role === "SuperAdmin" || user?.role === "ClinicAdmin",
+      canGenerateReports:
+        user?.role === "SuperAdmin" || user?.role === "ClinicAdmin",
+    }),
+    [user?.role]
+  );
 
-  // Refresh data
   const refreshInvoices = useCallback(() => {
     fetchInvoices();
   }, [fetchInvoices]);
+
+  // -- Gestion des Tarifications --
+
+  const fetchTarifications = useCallback(async (clinicId: string) => {
+    setIsTarifsLoading(true);
+    setTarifsError(null);
+    try {
+      const data = await billingService.getConsultationPricing(clinicId);
+      setTarifications(data);
+    } catch (error) {
+      console.error("Erreur chargement tarifications:", error);
+      setTarifsError("Impossible de charger les tarifications.");
+      toast.error("Impossible de charger les tarifications.");
+    } finally {
+      setIsTarifsLoading(false);
+    }
+  }, []);
+
+  const refreshTarifications = useCallback(
+    (clinicId: string) => {
+      fetchTarifications(clinicId);
+    },
+    [fetchTarifications]
+  );
+
+  const addTarification = useCallback(
+    async (data: AddTarificationRequest) => {
+      try {
+        await billingService.addTarification(data);
+        toast.success("Tarification ajoutée avec succès");
+        refreshInvoices();
+      } catch (error) {
+        console.error("Erreur ajout tarification :", error);
+        toast.error("Impossible d'ajouter la tarification");
+      }
+    },
+    [refreshInvoices]
+  );
+
+  const updateTarification = useCallback(
+    async (data: UpdateTarificationRequest) => {
+      try {
+        await billingService.updateTarification(data);
+        toast.success("Tarification mise à jour avec succès");
+        refreshInvoices();
+      } catch (error) {
+        console.error("Erreur mise à jour tarification :", error);
+        toast.error("Impossible de mettre à jour la tarification");
+      }
+    },
+    [refreshInvoices]
+  );
 
   return {
     invoices: paginatedInvoices,
@@ -198,14 +303,22 @@ export function useBilling({
     sortDirection,
     handleSort,
     selectedInvoice,
+    handleDeleteFacture,
     isPaymentFormOpen,
     handlePayNow,
     handlePaymentSubmit,
     closePaymentForm,
     handleDownload,
     refreshInvoices,
-    userPermissions
+    getFacturesByClinicId,
+    // Tarifications
+    tarifications,
+    isTarifsLoading,
+    tarifsError,
+    fetchTarifications,
+    refreshTarifications,
+    addTarification,
+    updateTarification,
+    userPermissions,
   };
 }
-
-import { useEffect } from 'react';

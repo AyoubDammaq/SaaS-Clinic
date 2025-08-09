@@ -29,6 +29,9 @@ export interface AuthContextType {
     token: string,
     newPassword: string
   ) => Promise<boolean>;
+  getAllUsers: () => Promise<User[] | null>;
+  getUserById: (id: string) => Promise<User | null>;
+  changeUserRole: (userId: string, role: UserRole) => Promise<boolean>;
   deleteUser: (
     userId: string,
     options?: { isRollback?: boolean }

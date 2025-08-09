@@ -37,14 +37,9 @@ export default {
   dateRequired: "Veuillez sélectionner une date",
   timeRequired: "Veuillez sélectionner une heure",
   selectDate: "Sélectionner une date",
-  durationMinutes: "Durée (minutes)",
-  selectDuration: "Sélectionner la durée",
-  durationRequired: "Veuillez sélectionner une durée",
   reasonForAppointment: "Motif du rendez-vous",
   reasonPlaceholder: "Brève description du motif du rendez-vous",
   reasonMinimum: "Veuillez fournir un motif (min 5 caractères)",
-  notesPlaceholder: "Notes supplémentaires pour le médecin ou le patient",
-  additionalNotes: "Notes supplémentaires",
   saving: "Enregistrement...",
   schedule: "Planifier",
   update: "Mettre à jour",
@@ -56,13 +51,13 @@ export default {
   completed: "Terminé",
   cancelled: "Annulé",
   noShow: "Absence",
+  pending: "En Attente",
   
   // Appointment Actions
   reschedule: "Reprogrammer",
   manage: "Gérer",
   complete: "Terminer",
-  viewNotes: "Voir les notes",
-  addNotes: "Ajouter des notes",
+  confirm: "Confirmer",
   
   // Management Text
   manageYourAppointments: "Consultez et gérez vos rendez-vous médicaux",
@@ -77,4 +72,10 @@ export default {
   selectDateFromCalendar: "Sélectionnez une date dans le calendrier",
   upcomingAvailability: "Disponibilité à venir",
   noAvailabilitySet: "Aucune disponibilité n'a été définie",
+
+  allClinics: "Toutes les cliniques",
+  allDoctors: "Tous les médecins",
+  allPatients: "Tous les patients", 
+
+  confirmActionCannotBeUndone:"Êtes-vous sûr de vouloir annuler ce rendez-vous? Cette action est irréversible."
 };

@@ -24,6 +24,7 @@ import {
   Building,
   ClipboardList,
   User,
+  BookText,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,18 @@ export function AppSidebar() {
         path: "/dashboard",
         icon: Home,
         roles: ["SuperAdmin", "ClinicAdmin", "Doctor", "Patient"],
+      },
+      {
+        name: "Medical Record",
+        path: "/medicalrecord",
+        icon: BookText,
+        roles: ["Patient"],
+      },
+      {
+        name: "Clinics",
+        path: "/clinics",
+        icon: Building,
+        roles: ["SuperAdmin", "Patient", "Doctor"],
       },
       {
         name: "Patients",
@@ -76,18 +89,12 @@ export function AppSidebar() {
         icon: Bell,
         roles: ["SuperAdmin", "ClinicAdmin", "Doctor", "Patient"],
       },
-      {
-        name: "Reports",
-        path: "/reports",
-        icon: BarChart2,
-        roles: ["SuperAdmin", "ClinicAdmin", "Doctor"],
-      },
-      {
-        name: "Clinics",
-        path: "/clinics",
-        icon: Building,
-        roles: ["SuperAdmin", "Patient"],
-      },
+      // {
+      //   name: "Reports",
+      //   path: "/reports",
+      //   icon: BarChart2,
+      //   roles: ["SuperAdmin", "ClinicAdmin", "Doctor"],
+      // },
       {
         name: "Settings",
         path: "/settings",

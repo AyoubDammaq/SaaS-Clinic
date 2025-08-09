@@ -1,29 +1,47 @@
-import { useState } from 'react';
+// ClinicsPage.tsx
+import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { 
-  Card, CardContent, CardDescription, CardHeader, CardTitle 
-} from '@/components/ui/card';
-import { 
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow 
-} from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { 
-  Search, Plus, FileEdit, Trash2, Users, User, Calendar, CreditCard, MapPin, Phone, Mail 
-} from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { useCliniques } from '@/hooks/useCliniques';
-import { Clinique } from '@/types/clinic';
-import { toast } from 'sonner';
-import { ClinicForm } from '@/components/clinics/ClinicForm';
-import { StatutClinique, TypeClinique } from '@/types/clinic';
-import { CliniqueDetail } from '@/components/clinics/CliniqueDetail';
-import { ClinicFilters } from '@/components/clinics/ClinicFilters';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Search,
+  Plus,
+  FileEdit,
+  Trash2,
+  MapPin,
+  Phone,
+  Mail,
+} from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { useCliniques } from "@/hooks/useCliniques";
+import { Clinique, TypeClinique, StatutClinique } from "@/types/clinic";
+import { toast } from "sonner";
+import { ClinicForm } from "@/components/clinics/ClinicForm";
+import { CliniqueDetail } from "@/components/clinics/CliniqueDetail";
+import { ClinicFilters } from "@/components/clinics/ClinicFilters";
+import { ConfirmDeleteDialog } from "@/components/consultations/ConfirmDeleteDialog";
+import { useTranslation } from "@/hooks/useTranslation";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { cn } from "@/lib/utils";
 
-
-type ClinicFormValues = Omit<Clinique, 'id' | 'dateCreation'>;
+type ClinicFormValues = Omit<Clinique, "id" | "dateCreation">;
 
 function ClinicsPage() {
+  const { t } = useTranslation("clinics");
+  const tCommon = useTranslation("common").t;
   const { user } = useAuth();
   const {
     filteredCliniques,
@@ -41,9 +59,24 @@ function ClinicsPage() {
     filterCliniquesByAddress,
   } = useCliniques();
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [addressSearch, setAddressSearch] = useState('');
+  const [addressSearch, setAddressSearch] = useState("");
   const [editingClinic, setEditingClinic] = useState<Clinique | null>(null);
   const [selectedClinic, setSelectedClinic] = useState<Clinique | null>(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false); // État pour le dialogue
+  const [clinicToDelete, setClinicToDelete] = useState<Clinique | null>(null); // Clinique à supprimer
+  const [currentPage, setCurrentPage] = useState(1); // État pour la page actuelle
+
+  const getTypeCliniqueLabel = (value: number) => {
+    const key =
+      TypeClinique[
+        value as unknown as keyof typeof TypeClinique as string
+      ]?.toLowerCase();
+    return t(key) || t("unknown");
+  };
+
+  // Filtrer les cliniques pour les Doctor
+  const doctorClinic =
+    user?.role === "Doctor" ? filteredCliniques[0] || null : null;
 
   // Open modal for add
   const handleOpenAdd = () => {
@@ -52,7 +85,8 @@ function ClinicsPage() {
   };
 
   // Open modal for edit
-  const handleOpenEdit = (clinic: Clinique) => {
+  const handleOpenEdit = (clinic: Clinique, event: React.MouseEvent) => {
+    event.stopPropagation(); // Empêche la propagation au parent
     setEditingClinic(clinic);
     setIsFormOpen(true);
   };
@@ -62,26 +96,37 @@ function ClinicsPage() {
     try {
       if (editingClinic) {
         await handleUpdateClinique(editingClinic.id, data);
-        toast.success('Clinic updated successfully!');
+        toast.success(t("clinic_updated_success"));
       } else {
         await handleAddClinique(data);
-        toast.success('Clinic added successfully!');
+        toast.success(t("clinic_added_success"));
       }
       setIsFormOpen(false);
       setEditingClinic(null);
       refetchCliniques();
     } catch (error) {
-      // Error handled in hooks
       console.error("Error submitting clinic form:", error);
-      toast.error("Failed to save clinic. Please try again.");
+      toast.error(t("clinic_save_failed"));
     }
   };
 
-  // Handle delete
-  const handleDelete = async (clinic: Clinique) => {
-    if (window.confirm(`Are you sure you want to delete "${clinic.nom}"?`)) {
-      await handleDeleteClinique(clinic.id);
+  // Open delete confirmation dialog
+  const handleOpenDeleteDialog = (
+    clinic: Clinique,
+    event: React.MouseEvent
+  ) => {
+    event.stopPropagation();
+    setClinicToDelete(clinic);
+    setIsDeleteDialogOpen(true);
+  };
+
+  // Handle delete confirmation
+  const handleConfirmDelete = async () => {
+    if (clinicToDelete) {
+      await handleDeleteClinique(clinicToDelete.id);
       refetchCliniques();
+      setIsDeleteDialogOpen(false);
+      setClinicToDelete(null);
     }
   };
 
@@ -94,45 +139,57 @@ function ClinicsPage() {
   };
 
   const renderStatusBadge = (statut: number) => {
-    const variant = statut === StatutClinique.Active
-      ? 'text-green-600 bg-green-50 border-green-200'
-      : 'text-red-600 bg-red-50 border-red-200';
+    const variant =
+      statut === StatutClinique.Active
+        ? "text-green-600 bg-green-50 border-green-200"
+        : "text-red-600 bg-red-50 border-red-200";
     return (
       <Badge variant="outline" className={variant}>
-        {statut === StatutClinique.Active ? "Active" : "Inactive"}
+        {statut === StatutClinique.Active ? t("active") : t("inactive")}
       </Badge>
     );
   };
 
-    // Prepare type and status options for the filter
   const typeOptions = Object.values(TypeClinique)
-    .filter((v) => typeof v === 'number')
+    .filter((v) => typeof v === "number")
     .map((value) => ({
       value: value as number,
       label: TypeClinique[value as number],
     }));
 
   const statusOptions = Object.values(StatutClinique)
-    .filter((v) => typeof v === 'number')
+    .filter((v) => typeof v === "number")
     .map((value) => ({
       value: value as number,
       label: StatutClinique[value as number],
     }));
 
-  // Filter state
-  const [clinicFilters, setClinicFilters] = useState<{ typeClinique: number | null; statut: number | null }>({
+  const [clinicFilters, setClinicFilters] = useState<{
+    typeClinique: number | null;
+    statut: number | null;
+  }>({
     typeClinique: null,
     statut: null,
   });
 
-  // Filtering logic
   const filteredCliniquesToShow = filteredCliniques.filter((clinic) => {
-    const matchesType = clinicFilters.typeClinique === null || clinic.typeClinique === clinicFilters.typeClinique;
-    const matchesStatus = clinicFilters.statut === null || clinic.statut === clinicFilters.statut;
+    const matchesType =
+      clinicFilters.typeClinique === null ||
+      clinic.typeClinique === clinicFilters.typeClinique;
+    const matchesStatus =
+      clinicFilters.statut === null || clinic.statut === clinicFilters.statut;
     return matchesType && matchesStatus;
   });
 
-    // Show details when a clinic is selected
+  // Constantes pour la pagination
+  const ITEMS_PER_PAGE = 5;
+  const totalPages = Math.ceil(filteredCliniques.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedCliniques = filteredCliniquesToShow.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
+
   if (selectedClinic) {
     return (
       <CliniqueDetail
@@ -144,16 +201,47 @@ function ClinicsPage() {
     );
   }
 
-  // This page is only accessible to SuperAdmin
-  if (user?.role !== 'SuperAdmin') {
+  if (
+    !["SuperAdmin", "Doctor", "Patient", "ClinicAdmin"].includes(user?.role)
+  ) {
     return (
       <div className="flex items-center justify-center h-full">
         <Card>
           <CardHeader>
-            <CardTitle>Access Denied</CardTitle>
-            <CardDescription>You do not have permission to access this page.</CardDescription>
+            <CardTitle>{t("access_denied")}</CardTitle>
+            <CardDescription>{t("access_denied_description")}</CardDescription>
           </CardHeader>
         </Card>
+      </div>
+    );
+  }
+
+  // Si l'utilisateur est un Doctor, afficher directement les détails de sa clinique
+  if (user?.role === "Doctor") {
+    return (
+      <div className="space-y-6 pb-8">
+        {isLoading ? (
+          <Card>
+            <CardContent className="text-center py-8">
+              <p className="text-muted-foreground">{t("loading_clinics")}</p>
+            </CardContent>
+          </Card>
+        ) : doctorClinic ? (
+          <CliniqueDetail
+            clinique={doctorClinic}
+            statistics={statistics}
+            isLoadingStats={isLoadingStats}
+            onBack={() => setSelectedClinic(null)}
+          />
+        ) : (
+          <Card>
+            <CardContent className="text-center py-8">
+              <p className="text-muted-foreground">
+                {t("doctor_no_clinic_assigned")}
+              </p>
+            </CardContent>
+          </Card>
+        )}
       </div>
     );
   }
@@ -161,9 +249,9 @@ function ClinicsPage() {
   return (
     <div className="space-y-6 pb-8">
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">Clinics</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{t("clinics")}</h1>
         <p className="text-muted-foreground">
-          Manage all clinics in the SaaS-Clinic platform
+          {t("manage_clinics_description")}
         </p>
       </div>
 
@@ -177,28 +265,29 @@ function ClinicsPage() {
         <div className="relative w-full max-w-sm">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search clinics..."
+            placeholder={t("search_clinics")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-8"
           />
         </div>
-        <Button className="ml-2" onClick={handleOpenAdd}>
-          <Plus className="mr-1 h-4 w-4" /> Add Clinic
-        </Button>
+        {permissions.canCreate && (
+          <Button className="ml-2" onClick={handleOpenAdd}>
+            <Plus className="mr-1 h-4 w-4" /> {t("add_clinic")}
+          </Button>
+        )}
       </div>
 
-      {/* Address search input and button */}
       <div className="flex items-center justify-between mb-4">
         <div className="relative w-full max-w-sm">
           <MapPin className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search by address..."
+            placeholder={t("search_by_address")}
             value={addressSearch}
-            onChange={e => {
+            onChange={(e) => {
               setAddressSearch(e.target.value);
-              handleSearchByAddress(e.target.value); // Auto-filter as you type
-            }}            
+              handleSearchByAddress(e.target.value);
+            }}
             className="pl-8"
           />
         </div>
@@ -206,20 +295,20 @@ function ClinicsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>All Clinics</CardTitle>
-          <CardDescription>List of all registered clinics</CardDescription>
+          <CardTitle>{t("all_clinics")}</CardTitle>
+          <CardDescription>{t("all_clinics_description")}</CardDescription>
         </CardHeader>
         <CardContent>
           {isLoading ? (
             <div className="text-center py-8 text-muted-foreground">
-              Loading clinics...
+              {t("loading_clinics")}
             </div>
           ) : filteredCliniquesToShow.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
-              No clinics found
+              {t("no_clinics_found")}
             </div>
           ) : (
-            filteredCliniquesToShow.map((clinic) => (
+            paginatedCliniques.map((clinic) => (
               <div
                 key={clinic.id}
                 className="border rounded-lg p-4 mb-4 cursor-pointer hover:bg-muted/60"
@@ -233,7 +322,9 @@ function ClinicsPage() {
                     <div className="flex items-center gap-2">
                       <h3 className="text-lg font-semibold">{clinic.nom}</h3>
                       {renderStatusBadge(clinic.statut)}
-                      <Badge variant="secondary" className="ml-2">{clinic.typeClinique}</Badge>
+                      <Badge variant="secondary" className="ml-2">
+                        {getTypeCliniqueLabel(clinic.typeClinique)}
+                      </Badge>
                     </div>
                     <div className="flex items-center gap-1 text-muted-foreground text-sm">
                       <MapPin className="h-3.5 w-3.5" />
@@ -251,29 +342,78 @@ function ClinicsPage() {
                       {clinic.siteWeb && (
                         <div className="flex items-center gap-1 text-sm">
                           <span className="text-muted-foreground">🌐</span>
-                          <a href={clinic.siteWeb} target="_blank" rel="noopener noreferrer" className="underline">{clinic.siteWeb}</a>
+                          <a
+                            href={clinic.siteWeb}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline"
+                          >
+                            {clinic.siteWeb}
+                          </a>
                         </div>
                       )}
                     </div>
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    <Button variant="outline" size="sm" onClick={() => handleOpenEdit(clinic)}>
-                      <FileEdit className="h-3.5 w-3.5 mr-1" /> Edit
-                    </Button>
-                    {clinic.statut === StatutClinique.Active && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="text-red-500"
-                        onClick={() => handleDelete(clinic)}
-                      >
-                        <Trash2 className="h-3.5 w-3.5 mr-1" /> Delete
-                      </Button>
-                    )}
-                  </div>
+                  {(permissions.canEdit || permissions.canDelete) && (
+                    <div className="flex flex-wrap gap-2">
+                      {permissions.canEdit && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={(e) => handleOpenEdit(clinic, e)}
+                        >
+                          <FileEdit className="h-3.5 w-3.5 mr-1" /> {t("edit")}
+                        </Button>
+                      )}
+                      {permissions.canDelete &&
+                        clinic.statut === StatutClinique.Active && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-red-500"
+                            onClick={(e) => handleOpenDeleteDialog(clinic, e)}
+                          >
+                            <Trash2 className="h-3.5 w-3.5 mr-1" />{" "}
+                            {t("delete")}
+                          </Button>
+                        )}
+                    </div>
+                  )}
                 </div>
               </div>
             ))
+          )}
+          {totalPages > 1 && (
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(prev - 1, 1))
+                    }
+                    className={cn(
+                      currentPage <= 1 && "pointer-events-none opacity-50"
+                    )}
+                  />
+                </PaginationItem>
+                <PaginationItem className="flex items-center">
+                  <span className="text-sm">
+                    {tCommon("page")} {currentPage} {tCommon("of")} {totalPages}
+                  </span>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationNext
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                    }
+                    className={cn(
+                      currentPage >= totalPages &&
+                        "pointer-events-none opacity-50"
+                    )}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
           )}
         </CardContent>
       </Card>
@@ -285,16 +425,31 @@ function ClinicsPage() {
           setEditingClinic(null);
         }}
         onSubmit={handleFormSubmit}
-        initialData={editingClinic ? {
-          nom: editingClinic.nom,
-          adresse: editingClinic.adresse,
-          numeroTelephone: editingClinic.numeroTelephone,
-          email: editingClinic.email,
-          siteWeb: editingClinic.siteWeb,
-          description: editingClinic.description,
-          typeClinique: editingClinic.typeClinique?.toString(),
-          statut: editingClinic.statut?.toString(),
-        } : undefined}
+        initialData={
+          editingClinic
+            ? {
+                nom: editingClinic.nom,
+                adresse: editingClinic.adresse,
+                numeroTelephone: editingClinic.numeroTelephone,
+                email: editingClinic.email,
+                siteWeb: editingClinic.siteWeb,
+                description: editingClinic.description,
+                typeClinique: editingClinic.typeClinique?.toString(),
+                statut: editingClinic.statut?.toString(),
+              }
+            : undefined
+        }
+      />
+
+      <ConfirmDeleteDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={() => {
+          setIsDeleteDialogOpen(false);
+          setClinicToDelete(null);
+        }}
+        onConfirm={handleConfirmDelete}
+        title={t("confirm_delete_title")}
+        message={t("confirm_delete_message")}
       />
     </div>
   );

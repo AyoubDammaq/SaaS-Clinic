@@ -22,6 +22,7 @@ interface UsePatientState {
   handleUpdatePatient: (id: string, data: Partial<Omit<Patient, 'id' | 'dateCreation'>>) => Promise<void>;
   handleDeletePatient: (id: string) => Promise<void>;
   refetchPatients: () => Promise<void>;
+  fetchPatients: () => Promise<void>;
   linkUserToPatient: (userId: string, patientId: string) => Promise<void>;
 }
 
@@ -68,9 +69,9 @@ export function usePatients(): UsePatientState {
         filteredData = data.filter(p => p.email === user.email);
       } else if (user.role === 'Doctor' || user.role === 'ClinicAdmin') {
         // Un médecin ou admin de clinique ne peut voir que les patients de sa clinique
-        if (user.cliniqueId) {
-          filteredData = data.filter(p => p.clinicId === user.cliniqueId);
-        }
+        // if (user.cliniqueId) {
+        //   filteredData = data.filter(p => p.clinicId === user.cliniqueId);
+        // }
       }
       // Un SuperAdmin peut voir tous les patients
       
@@ -137,10 +138,6 @@ export function usePatients(): UsePatientState {
 
   // Supprimer un patient
   const handleDeletePatient = async (id: string) => {
-    if (!window.confirm("Êtes-vous sûr de vouloir supprimer ce patient ?")) {
-      return;
-    }
-
     setIsLoading(true);
     try {
       await patientService.deletePatient(id);
@@ -179,6 +176,7 @@ export function usePatients(): UsePatientState {
     handleUpdatePatient,
     handleDeletePatient,
     refetchPatients: fetchPatients,
+    fetchPatients,
     linkUserToPatient,
   };
 }

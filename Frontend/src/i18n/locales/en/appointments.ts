@@ -37,14 +37,9 @@ export default {
   dateRequired: "Please select a date",
   timeRequired: "Please select a time",
   selectDate: "Select a date",
-  durationMinutes: "Duration (minutes)",
-  selectDuration: "Select Duration",
-  durationRequired: "Please select a duration",
   reasonForAppointment: "Reason for Appointment",
   reasonPlaceholder: "Brief description of the appointment reason",
   reasonMinimum: "Please provide a reason (min 5 characters)",
-  notesPlaceholder: "Any additional notes for the doctor or patient",
-  additionalNotes: "Additional Notes",
   saving: "Saving...",
   schedule: "Schedule",
   update: "Update",
@@ -56,13 +51,13 @@ export default {
   completed: "Completed",
   cancelled: "Cancelled",
   noShow: "No-show",
+  pending: "Pending",
   
   // Appointment Actions
   reschedule: "Reschedule",
   manage: "Manage",
   complete: "Complete",
-  viewNotes: "View Notes",
-  addNotes: "Add Notes",
+  confirm: "Confirm",
   
   // Management Text
   manageYourAppointments: "View and manage your medical appointments",
@@ -77,4 +72,10 @@ export default {
   selectDateFromCalendar: "Select a date from the calendar",
   upcomingAvailability: "Upcoming Availability",
   noAvailabilitySet: "No availability has been set",
+
+  allClinics: "All Clinics",
+  allDoctors: "All Doctors",
+  allPatients: "All Patients", 
+
+  confirmActionCannotBeUndone:"Are you sure you want to cancel this appointment? This action cannot be undone."
 };

@@ -1,26 +1,58 @@
-
+// ClinicForm.tsx
 import { useState, useEffect } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { TypeClinique, StatutClinique } from "@/types/clinic";
-import { toast } from 'sonner';
+import { toast } from "sonner";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const clinicFormSchema = z.object({
-  nom: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  adresse: z.string().min(5, { message: "Address must be at least 5 characters." }),
-  numeroTelephone: z.string().min(5, { message: "Phone number must be at least 5 characters." }),
-  email: z.string().email({ message: "Please enter a valid email address." }),
-  siteWeb: z.string().url().optional().or(z.literal('')),
+  nom: z.string().min(2, { message: "name_min_length" }),
+  adresse: z.string().min(5, { message: "address_min_length" }),
+  numeroTelephone: z.string().min(5, { message: "phone_min_length" }),
+  email: z.string().email({ message: "invalid_email" }),
+  siteWeb: z.string().url({ message: "invalid_url" }).optional().or(z.literal("")),
   description: z.string().optional(),
-  typeClinique: z.string(),
-  statut: z.string(),
+  typeClinique: z.string().refine(
+    (value) => {
+      const num = Number(value);
+      return Object.values(TypeClinique).includes(num);
+    },
+    { message: "invalid_clinic_type" }
+  ),
+  statut: z.string().refine(
+    (value) => {
+      const num = Number(value);
+      return Object.values(StatutClinique).includes(num);
+    },
+    { message: "invalid_clinic_status" }
+  ),
 });
 
 export type ClinicFormValues = z.infer<typeof clinicFormSchema>;
@@ -28,7 +60,12 @@ export type ClinicFormValues = z.infer<typeof clinicFormSchema>;
 interface ClinicFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: Omit<ClinicFormValues, "typeClinique" | "statut"> & { typeClinique: number; statut: number }) => void;
+  onSubmit: (
+    data: Omit<ClinicFormValues, "typeClinique" | "statut"> & {
+      typeClinique: number;
+      statut: number;
+    }
+  ) => void;
   initialData?: {
     nom?: string;
     adresse?: string;
@@ -36,16 +73,22 @@ interface ClinicFormProps {
     email?: string;
     siteWeb?: string;
     description?: string;
-    typeClinique?: string; 
-    statut?: string;       
+    typeClinique?: string;
+    statut?: string;
   };
   isLoading?: boolean;
 }
 
-
-export function ClinicForm({ isOpen, onClose, onSubmit, initialData, isLoading = false }: ClinicFormProps) {
+export function ClinicForm({
+  isOpen,
+  onClose,
+  onSubmit,
+  initialData,
+  isLoading = false,
+}: ClinicFormProps) {
+  const { t } = useTranslation("clinics");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const form = useForm<ClinicFormValues>({
     resolver: zodResolver(clinicFormSchema),
     defaultValues: {
@@ -55,12 +98,18 @@ export function ClinicForm({ isOpen, onClose, onSubmit, initialData, isLoading =
       email: initialData?.email || "",
       siteWeb: initialData?.siteWeb || "",
       description: initialData?.description || "",
-      typeClinique: initialData?.typeClinique !== undefined ? String(initialData.typeClinique) : String(TypeClinique.Publique),
-      statut: initialData?.statut !== undefined ? String(initialData.statut) : String(StatutClinique.Active),
+      typeClinique:
+        initialData?.typeClinique !== undefined
+          ? String(initialData.typeClinique)
+          : String(TypeClinique.Publique),
+      statut:
+        initialData?.statut !== undefined
+          ? String(initialData.statut)
+          : String(StatutClinique.Active),
     },
   });
 
-    // Add this effect to update form values when initialData changes
+  // Update form values when initialData changes
   useEffect(() => {
     form.reset({
       nom: initialData?.nom || "",
@@ -69,8 +118,14 @@ export function ClinicForm({ isOpen, onClose, onSubmit, initialData, isLoading =
       email: initialData?.email || "",
       siteWeb: initialData?.siteWeb || "",
       description: initialData?.description || "",
-      typeClinique: initialData?.typeClinique !== undefined ? String(initialData.typeClinique) : String(TypeClinique.Publique),
-      statut: initialData?.statut !== undefined ? String(initialData.statut) : String(StatutClinique.Active),
+      typeClinique:
+        initialData?.typeClinique !== undefined
+          ? String(initialData.typeClinique)
+          : String(TypeClinique.Publique),
+      statut:
+        initialData?.statut !== undefined
+          ? String(initialData.statut)
+          : String(StatutClinique.Active),
     });
   }, [initialData, form]);
 
@@ -80,46 +135,61 @@ export function ClinicForm({ isOpen, onClose, onSubmit, initialData, isLoading =
       await onSubmit({
         ...data,
         siteWeb: data.siteWeb?.trim() === "" ? undefined : data.siteWeb,
-        description: data.description?.trim() === "" ? undefined : data.description,
+        description:
+          data.description?.trim() === "" ? undefined : data.description,
         typeClinique: Number(data.typeClinique),
         statut: Number(data.statut),
       });
-      toast.success(initialData ? "Clinic updated successfully!" : "Clinic created successfully!");
+      toast.success(
+        initialData ? t("clinic_updated_success") : t("clinic_added_success")
+      );
       form.reset();
       onClose();
     } catch (error) {
       console.error("Error submitting clinic form:", error);
-      toast.error("Failed to save clinic. Please try again.");
+      toast.error(t("clinic_save_failed"));
     } finally {
       setIsSubmitting(false);
     }
   };
 
-    const getTypeCliniqueLabel = (value: number) => {
-      return TypeClinique[value as unknown as keyof typeof TypeClinique];
-    };
-    const getStatutCliniqueLabel = (value: number) => {
-      return StatutClinique[value as unknown as keyof typeof StatutClinique];
-    };
+  const getTypeCliniqueLabel = (value: number): string => {
+    const label = TypeClinique[value as unknown as keyof typeof TypeClinique as string];
+    return typeof label === "string" ? label.toLowerCase() : "unknown";
+  };
+
+  const getStatutCliniqueLabel = (value: number): string => {
+    const label = StatutClinique[value as unknown as keyof typeof StatutClinique as string];
+    return typeof label === "string" ? label.toLowerCase() : "unknown";
+  };
+
+  const getErrorMessage = (errorMessage: string | undefined): string | null => {
+    if (!errorMessage) return null;
+    return t(errorMessage);
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[550px]">
+      <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto p-4">
         <DialogHeader>
-          <DialogTitle>{initialData ? "Edit Clinic" : "Add New Clinic"}</DialogTitle>
+          <DialogTitle>
+            {initialData ? t("edit_clinic") : t("add_clinic")}
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-3">
             <FormField
               control={form.control}
               name="nom"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Clinic Name</FormLabel>
+                  <FormLabel>{t("name")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Health Care Clinic" {...field} />
+                    <Input placeholder={t("name_placeholder")} {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage>
+                    {getErrorMessage(form.formState.errors.nom?.message)}
+                  </FormMessage>
                 </FormItem>
               )}
             />
@@ -128,11 +198,17 @@ export function ClinicForm({ isOpen, onClose, onSubmit, initialData, isLoading =
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("email")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="clinic@example.com" type="email" {...field} />
+                    <Input
+                      placeholder={t("email_placeholder")}
+                      type="email"
+                      {...field}
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage>
+                    {getErrorMessage(form.formState.errors.email?.message)}
+                  </FormMessage>
                 </FormItem>
               )}
             />
@@ -141,11 +217,13 @@ export function ClinicForm({ isOpen, onClose, onSubmit, initialData, isLoading =
               name="numeroTelephone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone</FormLabel>
+                  <FormLabel>{t("phone")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="555-1234" {...field} />
+                    <Input placeholder={t("phone_placeholder")} {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage>
+                    {getErrorMessage(form.formState.errors.numeroTelephone?.message)}
+                  </FormMessage>
                 </FormItem>
               )}
             />
@@ -154,11 +232,13 @@ export function ClinicForm({ isOpen, onClose, onSubmit, initialData, isLoading =
               name="adresse"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Address</FormLabel>
+                  <FormLabel>{t("address")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="123 Main St" {...field} />
+                    <Input placeholder={t("address_placeholder")} {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage>
+                    {getErrorMessage(form.formState.errors.adresse?.message)}
+                  </FormMessage>
                 </FormItem>
               )}
             />
@@ -167,11 +247,13 @@ export function ClinicForm({ isOpen, onClose, onSubmit, initialData, isLoading =
               name="siteWeb"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Website</FormLabel>
+                  <FormLabel>{t("website")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="https://clinic.com" {...field} />
+                    <Input placeholder={t("website_placeholder")} {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage>
+                    {getErrorMessage(form.formState.errors.siteWeb?.message)}
+                  </FormMessage>
                 </FormItem>
               )}
             />
@@ -180,22 +262,24 @@ export function ClinicForm({ isOpen, onClose, onSubmit, initialData, isLoading =
               name="typeClinique"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Clinic Type</FormLabel>
+                  <FormLabel>{t("type")}</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select type" />
+                      <SelectValue placeholder={t("select_type")} />
                     </SelectTrigger>
                     <SelectContent>
                       {Object.values(TypeClinique)
                         .filter((v) => typeof v === "number")
                         .map((type) => (
                           <SelectItem key={type} value={type.toString()}>
-                            {getTypeCliniqueLabel(type as number)}
+                            {t(getTypeCliniqueLabel(type as number))}
                           </SelectItem>
                         ))}
                     </SelectContent>
                   </Select>
-                  <FormMessage />
+                  <FormMessage>
+                    {getErrorMessage(form.formState.errors.typeClinique?.message)}
+                  </FormMessage>
                 </FormItem>
               )}
             />
@@ -204,22 +288,24 @@ export function ClinicForm({ isOpen, onClose, onSubmit, initialData, isLoading =
               name="statut"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Status</FormLabel>
+                  <FormLabel>{t("status")}</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select status" />
+                      <SelectValue placeholder={t("select_status")} />
                     </SelectTrigger>
                     <SelectContent>
                       {Object.values(StatutClinique)
                         .filter((v) => typeof v === "number")
                         .map((statut) => (
                           <SelectItem key={statut} value={statut.toString()}>
-                            {getStatutCliniqueLabel(statut as number)}
+                            {t(getStatutCliniqueLabel(statut as number))}
                           </SelectItem>
                         ))}
                     </SelectContent>
                   </Select>
-                  <FormMessage />
+                  <FormMessage>
+                    {getErrorMessage(form.formState.errors.statut?.message)}
+                  </FormMessage>
                 </FormItem>
               )}
             />
@@ -228,24 +314,30 @@ export function ClinicForm({ isOpen, onClose, onSubmit, initialData, isLoading =
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>{t("description")}</FormLabel>
                   <FormControl>
-                    <Textarea 
-                      placeholder="Provide a brief description of the clinic" 
-                      className="resize-none" 
-                      {...field} 
+                    <Textarea
+                      placeholder={t("description_placeholder")}
+                      className="resize-none"
+                      {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage>
+                    {getErrorMessage(form.formState.errors.description?.message)}
+                  </FormMessage>
                 </FormItem>
               )}
             />
-            <DialogFooter>
+            <DialogFooter className="flex justify-end gap-2 pt-4">
               <Button type="button" variant="outline" onClick={onClose}>
-                Cancel
+                {t("cancel")}
               </Button>
               <Button type="submit" disabled={isSubmitting || isLoading}>
-                {isSubmitting || isLoading ? "Saving..." : initialData ? "Update" : "Create"}
+                {isSubmitting || isLoading
+                  ? t("saving")
+                  : initialData
+                  ? t("update")
+                  : t("create")}
               </Button>
             </DialogFooter>
           </form>

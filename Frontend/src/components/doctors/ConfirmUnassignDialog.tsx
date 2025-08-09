@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { ReactNode } from "react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface ConfirmUnassignDialogProps {
   onConfirm: () => void;
@@ -23,9 +24,11 @@ interface ConfirmUnassignDialogProps {
 export const ConfirmUnassignDialog = ({
   onConfirm,
   children,
-  title = "Confirmer la désassignation",
-  description = "Voulez-vous vraiment désassigner ce médecin de la clinique ? Cette action est irréversible.",
+  title,
+  description,
 }: ConfirmUnassignDialogProps) => {
+  const { t } = useTranslation("doctors");
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -34,7 +37,7 @@ export const ConfirmUnassignDialog = ({
             size="sm"
             variant="ghost"
             className="text-destructive"
-            title="Désassigner"
+            title={t("unassignDoctor")}
             onClick={(e) => e.stopPropagation()}
           >
             <X className="h-4 w-4" />
@@ -43,16 +46,21 @@ export const ConfirmUnassignDialog = ({
       </AlertDialogTrigger>
       <AlertDialogContent onClick={(e) => e.stopPropagation()}>
         <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>{description}</AlertDialogDescription>
+          <AlertDialogTitle>{title || t("confirmUnassignTitle")}</AlertDialogTitle>
+          <AlertDialogDescription>
+            {description || t("confirmUnassignDescription")}
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Annuler</AlertDialogCancel>
+          <AlertDialogCancel aria-label={t("cancel")}>
+            {t("cancel")}
+          </AlertDialogCancel>
           <AlertDialogAction
             className="bg-destructive text-white hover:bg-destructive/90"
             onClick={onConfirm}
+            aria-label={t("unassignDoctor")}
           >
-            Désassigner
+            {t("unassignDoctor")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

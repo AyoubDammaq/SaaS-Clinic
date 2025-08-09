@@ -1,29 +1,67 @@
-
 export default {
   // Consultation
   createConsultation: "Create Consultation",
   consultationFromAppointment: "Create Consultation from Appointment",
-  
+  consultationsPageTitle: "Consultations",
+  patientDescription: "View your consultation history and medical notes",
+  doctorDescription: "Manage patient consultations and medical records",
+  adminDescription: "Oversee clinic consultations and medical history",
+  medicalConsultationsTitle: "Medical Consultations",
+  patientConsultationsDescription: "Your consultation history with doctors",
+  adminConsultationsDescription: "Patient consultation records",
+  noConsultationsFound: "No consultations found",
+  searchConsultationsPlaceholder: "Search consultations...",
+  newConsultation: "New Consultation",
+  scheduleConsultation: "Schedule Consultation",
+  scheduleNewConsultation: "Schedule New Consultation",
+  editConsultationTitle: "Edit Consultation",
+  selectPatientPlaceholder: "Select a patient",
+  selectDoctorPlaceholder: "Select a doctor",
+  selectTypePlaceholder: "Select type",
+  diagnosticPlaceholder: "Enter the diagnosis...",
+  notesPlaceholder: "Add additional details",
+  cancelButton: "Cancel",
+  scheduleButton: "Schedule",
+  updateButton: "Update",
+  savingButton: "Saving...",
+  noPatientsAvailable: "No patients available",
+  noDoctorsAvailable: "No doctors available",
+  allClinics: "All Clinics",
+  allDoctors: "All Doctors",
+  allPatients: "All Patients",
+  allTypes: "All Types",
+  activeFilters: "Active Filters",
+
   // Consultation list
   consultationsList: "Consultations List",
   addConsultation: "Add Consultation",
   editConsultation: "Edit Consultation",
   deleteConsultation: "Delete Consultation",
   consultationDetails: "Consultation Details",
-  
+
   // Consultation fields
   patient: "Patient",
   doctor: "Doctor",
   date: "Date",
   startTime: "Start Time",
   endTime: "End Time",
-  reason: "Reason",
+  reason: "Diagnostic",
+  typeConsultation: "Consultation Type",
   notes: "Notes",
   status: "Status",
+  actions: "Actions",
+  clinic: "Clinic",
   scheduled: "Scheduled",
   completed: "Completed",
   canceled: "Canceled",
-  
+
+  // Consultation types
+  "consultationType.general": "General Consultation",
+  "consultationType.specialist": "Specialist Consultation",
+  "consultationType.emergency": "Emergency Consultation",
+  "consultationType.followUp": "Follow-up Consultation",
+  "consultationType.laboratory": "Laboratory Consultation",
+
   // Medical documents
   documents: "Medical Documents",
   addDocument: "Add Document",
@@ -31,7 +69,30 @@ export default {
   documentName: "Document Name",
   documentType: "Document Type",
   uploadDate: "Upload Date",
-  
+  noDocumentsAttached: "No documents attached",
+  unknownDate: "Unknown Date",
+
+  // Consultation details
+  consultationDetailsTitle: "Consultation Details",
+  consultationDetailsSummary: "Summary of consultation information",
+  consultationDetailsComplete: "Complete information and associated documents",
+  generalInformation: "General Information",
+  dateAndTime: "Date and Time",
+  notSpecified: "Not Specified",
+  medicalDetails: "Medical Details",
+  diagnostic: "Diagnostic",
+  addDocuments: "Add Documents",
+  upload: "Upload",
+  uploading: "Uploading...",
+  simplifiedView: "Simplified View",
+  completeView: "Complete View",
+  close: "Close",
+  documentPreview: "Document Preview",
+  download: "Download",
+  previewNotAvailable: "Preview not available",
+  cancel: "Cancel",
+  confirm: "Confirm",
+
   // Messages
   consultationAddSuccess: "Consultation added successfully",
   consultationUpdateSuccess: "Consultation updated successfully",
@@ -40,7 +101,11 @@ export default {
   documentDeleteSuccess: "Document deleted successfully",
   confirmDelete: "Are you sure you want to delete this consultation?",
   confirmDeleteDocument: "Are you sure you want to delete this document?",
-  
+  confirmDeleteDescription:
+    "Are you sure you want to delete this consultation? This action cannot be undone.",
+  confirmDeleteDocumentDescription:
+    "Are you sure you want to delete this medical document? This action cannot be undone.",
+
   // Errors
   errorFetchingConsultations: "Error fetching consultations",
   errorAddingConsultation: "Error adding consultation",
@@ -48,4 +113,18 @@ export default {
   errorDeletingConsultation: "Error deleting consultation",
   errorAddingDocument: "Error adding document",
   errorDeletingDocument: "Error deleting document",
+  errorFetchingClinics: "Failed to fetch clinics",
+  errorFetchingClinic: "Failed to fetch clinic",
+  errorAddingClinic: "Failed to add clinic",
+  errorUpdatingClinic: "Failed to update clinic",
+  errorDeletingClinic: "Failed to delete clinic",
+  errorFetchingClinicStats: "Failed to fetch clinic statistics",
+  errorFetchingClinicsByType: "Failed to fetch clinics by type",
+  errorFetchingClinicsByName: "Failed to fetch clinics by name",
+  errorFetchingClinicsByAddress: "Failed to fetch clinics by address",
+  errorFetchingClinicsByStatus: "Failed to fetch clinics by status",
+  errorFetchingTotalClinicCount: "Failed to fetch total clinic count",
+  errorFetchingNewClinicsThisMonth: "Failed to fetch new clinics this month",
+  errorFetchingNewClinicsByMonth: "Failed to fetch new clinics by month",
+  errorLinkingUserToClinic: "Failed to link user to clinic",
 };

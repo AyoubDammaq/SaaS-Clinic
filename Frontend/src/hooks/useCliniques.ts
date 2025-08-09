@@ -1,9 +1,9 @@
-
-import { useState, useEffect, useCallback } from 'react';
-import { toast } from 'sonner';
+import { useState, useEffect, useCallback } from "react";
+import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
-import { Clinique, StatistiqueCliniqueDTO, TypeClinique } from '@/types/clinic';
-import { cliniqueService } from '@/services/cliniqueService';
+import { Clinique, StatistiqueCliniqueDTO, TypeClinique } from "@/types/clinic";
+import { cliniqueService } from "@/services/cliniqueService";
+import { useDoctors } from "./useDoctors";
 
 interface UseCliniquesState {
   cliniques: Clinique[];
@@ -22,12 +22,14 @@ interface UseCliniquesState {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
   setSelectedClinique: (clinique: Clinique | null) => void;
-  handleAddClinique: (data: Omit<Clinique, 'id' | 'dateCreation'>) => Promise<Clinique>;
+  handleAddClinique: (
+    data: Omit<Clinique, "id" | "dateCreation">
+  ) => Promise<Clinique>;
   handleUpdateClinique: (id: string, data: Partial<Clinique>) => Promise<void>;
   handleDeleteClinique: (id: string) => Promise<void>;
   fetchCliniqueStatistics: (id: string) => Promise<void>;
   filterCliniquesByType: (type: TypeClinique) => Promise<void>;
-  filterCliniquesByStatus: (status: 'Active' | 'Inactive') => Promise<void>;
+  filterCliniquesByStatus: (status: "Active" | "Inactive") => Promise<void>;
   filterCliniquesByName: (name: string) => Promise<void>;
   filterCliniquesByAddress: (address: string) => Promise<void>;
   getTotalCliniqueCount: () => Promise<void>;
@@ -43,9 +45,13 @@ export function useCliniques(): UseCliniquesState {
   const [filteredCliniques, setFilteredCliniques] = useState<Clinique[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedClinique, setSelectedClinique] = useState<Clinique | null>(null);
-  const [statistics, setStatistics] = useState<StatistiqueCliniqueDTO | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedClinique, setSelectedClinique] = useState<Clinique | null>(
+    null
+  );
+  const [statistics, setStatistics] = useState<StatistiqueCliniqueDTO | null>(
+    null
+  );
   const [isLoadingStats, setIsLoadingStats] = useState(false);
   const [permissions, setPermissions] = useState({
     canCreate: false,
@@ -53,13 +59,15 @@ export function useCliniques(): UseCliniquesState {
     canDelete: false,
     canView: false,
   });
+  const { doctors } = useDoctors();
 
   // Vérifier les permissions en fonction du rôle de l'utilisateur
   useEffect(() => {
     if (user) {
-      const canCreate = user.role === 'SuperAdmin' || user.role === 'ClinicAdmin';
-      const canEdit = user.role === 'SuperAdmin' || user.role === 'ClinicAdmin';
-      const canDelete = user.role === 'SuperAdmin';
+      const canCreate =
+        user.role === "SuperAdmin" || user.role === "ClinicAdmin";
+      const canEdit = user.role === "SuperAdmin" || user.role === "ClinicAdmin";
+      const canDelete = user.role === "SuperAdmin";
       const canView = true; // Tous les utilisateurs peuvent voir les cliniques
 
       setPermissions({ canCreate, canEdit, canDelete, canView });
@@ -71,6 +79,7 @@ export function useCliniques(): UseCliniquesState {
     setIsLoading(true);
     try {
       const data = await cliniqueService.getAllCliniques();
+      console.log("Cliniques fetched:", data);
       setCliniques(data);
       setFilteredCliniques(data);
     } catch (error) {
@@ -84,10 +93,11 @@ export function useCliniques(): UseCliniquesState {
   // Filtrer les cliniques en fonction du terme de recherche
   useEffect(() => {
     if (cliniques.length === 0) return;
-    
-    const results = cliniques.filter(clinique => 
-      clinique.nom.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      clinique.adresse.toLowerCase().includes(searchTerm.toLowerCase())
+
+    const results = cliniques.filter(
+      (clinique) =>
+        clinique.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        clinique.adresse.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredCliniques(results);
   }, [searchTerm, cliniques]);
@@ -96,6 +106,28 @@ export function useCliniques(): UseCliniquesState {
   useEffect(() => {
     fetchCliniques();
   }, [fetchCliniques]);
+
+  useEffect(() => {
+    if (user?.role === "Doctor") {
+      const currentDoctor = doctors.find((doc) => doc.id === user.medecinId);
+
+      if (currentDoctor) {
+        const foundClinic = cliniques.find(
+          (c) => c.id === currentDoctor.cliniqueId
+        );
+        if (foundClinic) {
+          setFilteredCliniques([foundClinic]);
+        } else {
+          console.warn(
+            "❌ Clinique non trouvée pour:",
+            currentDoctor.cliniqueId
+          );
+        }
+      } else {
+        console.warn("❌ Aucun médecin trouvé avec userId:", user.medecinId);
+      }
+    }
+  }, [user, cliniques, doctors]);
 
   // Récupérer les statistiques d'une clinique
   const fetchCliniqueStatistics = async (id: string) => {
@@ -112,11 +144,13 @@ export function useCliniques(): UseCliniquesState {
   };
 
   // Ajouter une nouvelle clinique
-  const handleAddClinique = async (data: Omit<Clinique, 'id' | 'dateCreation'>) : Promise<Clinique> => {
+  const handleAddClinique = async (
+    data: Omit<Clinique, "id" | "dateCreation">
+  ): Promise<Clinique> => {
     setIsSubmitting(true);
     try {
       const newClinique = await cliniqueService.addClinique(data);
-      setCliniques(prev => [...prev, newClinique]);
+      setCliniques((prev) => [...prev, newClinique]);
       toast.success("Clinique ajoutée avec succès");
       return newClinique;
     } catch (error) {
@@ -133,8 +167,10 @@ export function useCliniques(): UseCliniquesState {
     setIsSubmitting(true);
     try {
       await cliniqueService.updateClinique(id, data);
-      setCliniques(prev => 
-        prev.map(clinique => clinique.id === id ? { ...clinique, ...data } : clinique)
+      setCliniques((prev) =>
+        prev.map((clinique) =>
+          clinique.id === id ? { ...clinique, ...data } : clinique
+        )
       );
       toast.success("Clinique mise à jour avec succès");
     } catch (error) {
@@ -148,14 +184,16 @@ export function useCliniques(): UseCliniquesState {
 
   // Supprimer une clinique
   const handleDeleteClinique = async (id: string) => {
-    if (!window.confirm("Êtes-vous sûr de vouloir supprimer cette clinique ?")) {
+    if (
+      !window.confirm("Êtes-vous sûr de vouloir supprimer cette clinique ?")
+    ) {
       return;
     }
 
     setIsLoading(true);
     try {
       await cliniqueService.deleteClinique(id);
-      setCliniques(prev => prev.filter(clinique => clinique.id !== id));
+      setCliniques((prev) => prev.filter((clinique) => clinique.id !== id));
       toast.success("Clinique supprimée avec succès");
     } catch (error) {
       console.error("Erreur lors de la suppression de la clinique:", error);
@@ -178,7 +216,7 @@ export function useCliniques(): UseCliniquesState {
     }
   };
 
-  const filterCliniquesByStatus = async (status: 'Active' | 'Inactive') => {
+  const filterCliniquesByStatus = async (status: "Active" | "Inactive") => {
     setIsLoading(true);
     try {
       const data = await cliniqueService.getCliniqueByStatus(status);
@@ -230,7 +268,9 @@ export function useCliniques(): UseCliniquesState {
       const count = await cliniqueService.getNewCliniqueThisMonth();
       toast.success(`Nouvelles cliniques ce mois-ci: ${count}`);
     } catch (error) {
-      toast.error("Échec de la récupération des nouvelles cliniques ce mois-ci");
+      toast.error(
+        "Échec de la récupération des nouvelles cliniques ce mois-ci"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -247,14 +287,17 @@ export function useCliniques(): UseCliniquesState {
       setIsLoading(false);
     }
   };
-  
+
   // Lier un utilisateur à une clinique
   const linkUserToClinique = async (userId: string, clinicId: string) => {
     try {
       await cliniqueService.linkUserToClinique({ userId, clinicId });
       toast.success("Utilisateur lié à la clinique avec succès");
     } catch (error) {
-      console.error("Erreur lors de la liaison de l'utilisateur à la clinique:", error);
+      console.error(
+        "Erreur lors de la liaison de l'utilisateur à la clinique:",
+        error
+      );
       toast.error("Échec de la liaison de l'utilisateur à la clinique");
       throw error;
     }

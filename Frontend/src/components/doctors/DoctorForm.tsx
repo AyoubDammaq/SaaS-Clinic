@@ -3,32 +3,61 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import {
-  Form, FormControl, FormField, FormItem, FormLabel, FormMessage
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { API_ENDPOINTS } from "@/config/api";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import { useTranslation } from "@/hooks/useTranslation";
 
-const doctorFormSchema = z.object({
-  prenom: z.string().min(2, { message: "First name is required" }),
-  nom: z.string().min(2, { message: "Last name is required" }),
-  email: z.string().email({ message: "Please enter a valid email address." }),
-  telephone: z.string().min(5, { message: "Phone number must be at least 5 characters." }),
-  specialite: z.string().min(1, { message: "Please select a specialty." }),
-  cliniqueId: z.string().nullable().optional(),
-  photoUrl: z.string().url().or(z.literal("")).optional(),
-  id: z.string().optional()
-});
+// Définir les valeurs brutes des spécialités pour la soumission au serveur
+const specialties = [
+  { value: "General Practitioner", key: "generalPractitioner" },
+  { value: "Pediatrician", key: "pediatrician" },
+  { value: "Cardiologist", key: "cardiologist" },
+  { value: "Dermatologist", key: "dermatologist" },
+  { value: "Neurologist", key: "neurologist" },
+  { value: "Psychiatrist", key: "psychiatrist" },
+  { value: "Ophthalmologist", key: "ophthalmologist" },
+  { value: "Gynecologist", key: "gynecologist" },
+  { value: "Orthopedist", key: "orthopedist" },
+  { value: "Dentist", key: "dentist" },
+];
 
-type DoctorFormValues = z.infer<typeof doctorFormSchema>;
+const doctorFormSchema = (t: (key: string) => string) =>
+  z.object({
+    prenom: z.string().min(2, { message: t("firstNameRequired") }),
+    nom: z.string().min(2, { message: t("lastNameRequired") }),
+    email: z.string().email({ message: t("invalidEmail") }),
+    telephone: z.string().min(5, { message: t("phoneLength") }),
+    specialite: z.string().min(1, { message: t("specialtyRequired") }),
+    cliniqueId: z.string().nullable().optional(),
+    photoUrl: z.string().url().or(z.literal("")).optional(),
+    id: z.string().optional(),
+  });
+
+type DoctorFormValues = z.infer<ReturnType<typeof doctorFormSchema>>;
 
 interface DoctorFormProps {
   isOpen: boolean;
@@ -37,12 +66,6 @@ interface DoctorFormProps {
   initialData?: Partial<DoctorFormValues>;
   clinics?: { id: string; name: string }[];
 }
-
-const specialties = [
-  "General Practitioner", "Pediatrician", "Cardiologist", "Dermatologist",
-  "Neurologist", "Psychiatrist", "Ophthalmologist", "Gynecologist",
-  "Orthopedist", "Dentist"
-];
 
 const defaultValues: Partial<DoctorFormValues> = {
   prenom: "",
@@ -61,31 +84,32 @@ export function DoctorForm({
   initialData,
   clinics = [],
 }: DoctorFormProps) {
-  const { token } = useAuth(); // ✅ Use AuthContext
+  const { token } = useAuth();
+  const { t } = useTranslation("doctors");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<DoctorFormValues>({
-    resolver: zodResolver(doctorFormSchema),
+    resolver: zodResolver(doctorFormSchema(t)),
     defaultValues: {
       ...defaultValues,
       ...initialData,
     },
   });
 
-    useEffect(() => {
-      form.reset({
-        ...defaultValues,
-        ...initialData,
-      });
-    }, [initialData, form]);
+  useEffect(() => {
+    form.reset({
+      ...defaultValues,
+      ...initialData,
+    });
+  }, [initialData, form]);
 
   const handleSubmit = async (data: DoctorFormValues) => {
     console.log("[DoctorForm] Submitting form with values:", data);
     setIsSubmitting(true);
-    
+
     try {
       if (!token) {
-        toast.error("You are not authenticated.");
+        toast.error(t("loginRequired"));
         return;
       }
 
@@ -98,12 +122,11 @@ export function DoctorForm({
 
       console.log("Sending", method, "request to", url);
 
-
       const response = await fetch(url, {
         method,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           prenom: data.prenom,
@@ -121,13 +144,15 @@ export function DoctorForm({
         throw new Error("Request failed");
       }
 
-      toast.success(isUpdating ? "Doctor updated!" : "Doctor created!");
+      toast.success(
+        isUpdating ? t("doctorUpdateSuccess") : t("doctorAddSuccess")
+      );
       form.reset();
       onClose();
-      onSubmit({ ...data, id: initialData?.id || undefined }); 
+      onSubmit({ ...data, id: initialData?.id || undefined });
     } catch (error) {
       console.error("Error submitting doctor form:", error);
-      toast.error("Failed to save doctor. Please try again.");
+      toast.error(t("errorAddingDoctor"));
     } finally {
       setIsSubmitting(false);
     }
@@ -137,19 +162,24 @@ export function DoctorForm({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{initialData ? "Edit Doctor" : "Add New Doctor"}</DialogTitle>
+          <DialogTitle>
+            {initialData ? t("editDoctor") : t("addDoctor")}
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-4"
+          >
             {/** First Name */}
             <FormField
               control={form.control}
               name="prenom"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>First Name</FormLabel>
+                  <FormLabel>{t("firstName")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Dr. Jane" {...field} />
+                    <Input placeholder={t("firstName")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -161,9 +191,9 @@ export function DoctorForm({
               name="nom"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Last Name</FormLabel>
+                  <FormLabel>{t("lastName")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Smith" {...field} />
+                    <Input placeholder={t("lastName")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -175,9 +205,9 @@ export function DoctorForm({
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("email")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="doctor@example.com" type="email" {...field} />
+                    <Input placeholder={t("email")} type="email" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -189,9 +219,9 @@ export function DoctorForm({
               name="telephone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone</FormLabel>
+                  <FormLabel>{t("phone")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="555-5678" {...field} />
+                    <Input placeholder={t("phone")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -203,17 +233,17 @@ export function DoctorForm({
               name="specialite"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Specialty</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormLabel>{t("specialty")}</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a specialty" />
+                        <SelectValue placeholder={t("specialty")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {specialties.map((specialty) => (
-                        <SelectItem key={specialty} value={specialty}>
-                          {specialty}
+                      {specialties.map(({ value, key }) => (
+                        <SelectItem key={value} value={value}>
+                          {t(key)}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -222,16 +252,16 @@ export function DoctorForm({
                 </FormItem>
               )}
             />
-            
+
             {/** Photo URL */}
             <FormField
               control={form.control}
               name="photoUrl"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Photo URL</FormLabel>
+                  <FormLabel>{t("photo")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="https://..." {...field} />
+                    <Input placeholder={t("photo")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -239,10 +269,15 @@ export function DoctorForm({
             />
             <DialogFooter>
               <Button type="button" variant="outline" onClick={onClose}>
-                Cancel
+                {t("cancel")}{" "}
+                {/* Ajouter la clé 'cancel' si elle n'existe pas */}
               </Button>
               <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Saving..." : initialData ? "Update" : "Create"}
+                {isSubmitting
+                  ? t("saving") // Ajouter la clé 'saving' si nécessaire
+                  : initialData
+                  ? t("update") // Ajouter la clé 'update' si nécessaire
+                  : t("create")}{" "}
               </Button>
             </DialogFooter>
           </form>

@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CreateMedicalRecordModal } from "@/components/patients/CreateMedicalRecordForm";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, User } from "lucide-react";
 import {
   MedicalRecordView,
   MedicalRecord as MedicalRecordViewType,
@@ -10,7 +10,7 @@ import {
 } from "@/components/patients/MedicalRecordView";
 import { useMedicalRecord } from "@/hooks/useMedicalRecord";
 import { patientService } from "@/services/patientService";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { toast } from "sonner";
 import { useTranslation } from "@/hooks/useTranslation";
 import { DossierMedicalDTO } from "@/types/patient";
@@ -19,26 +19,79 @@ import { Consultation } from "@/types/consultation";
 import { ConsultationHistory } from "@/components/patients/ConsultationHistory";
 import { ConsultationDetails } from "@/components/consultations/ConsultationDetails";
 import { useDoctors } from "@/hooks/useDoctors";
+import { useAuth } from "@/hooks/useAuth";
+import { differenceInYears } from "date-fns";
+
+function SimplifiedPatientProfile({ patient }: { patient: Patient }) {
+  const { t } = useTranslation("patients");
+
+  const calculateAge = (dateOfBirth: string) => {
+    try {
+      const date = new Date(dateOfBirth);
+      if (isNaN(date.getTime())) throw new Error("Invalid date");
+      return differenceInYears(new Date(), date);
+    } catch {
+      return t("unknown_age") || "Âge inconnu";
+    }
+  };
+
+  return (
+    <Card className="mb-6">
+      <CardContent className="pt-6">
+        <div className="flex items-center gap-4">
+          <User className="h-8 w-8 text-primary" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div aria-label={t("patient_name") || "Nom du patient"}>
+              <span className="text-sm text-muted-foreground">{t("name") || "Nom"}: </span>
+              <span className="font-medium">{`${patient.prenom} ${patient.nom}`}</span>
+            </div>
+            <div aria-label={t("patient_age") || "Âge du patient"}>
+              <span className="text-sm text-muted-foreground">{t("age") || "Âge"}: </span>
+              <span className="font-medium">{calculateAge(patient.dateNaissance)}</span>
+            </div>
+            <div aria-label={t("patient_gender") || "Sexe du patient"}>
+              <span className="text-sm text-muted-foreground">{t("gender") || "Sexe"}: </span>
+              <span className="font-medium">
+                {patient.sexe === "M" ? t("male") || "Homme" : patient.sexe === "F" ? t("female") || "Femme" : t("other") || "Autre"}
+              </span>
+            </div>
+            <div aria-label={t("patient_email") || "Email du patient"}>
+              <span className="text-sm text-muted-foreground">{t("email") || "Email"}: </span>
+              <span className="font-medium">{patient.email}</span>
+            </div>
+            <div aria-label={t("patient_phone") || "Téléphone du patient"}>
+              <span className="text-sm text-muted-foreground">{t("phone") || "Téléphone"}: </span>
+              <span className="font-medium">{patient.telephone}</span>
+            </div>
+            {patient.adresse && (
+              <div aria-label={t("patient_address") || "Adresse du patient"}>
+                <span className="text-sm text-muted-foreground">{t("address") || "Adresse"}: </span>
+                <span className="font-medium">{patient.adresse}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 
 function MedicalRecordPage() {
+  const { user } = useAuth();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [patient, setPatient] = useState<Patient | null>(null);
   const [isLoadingPatient, setIsLoadingPatient] = useState(true);
+  const [patientCache, setPatientCache] = useState<{ [key: string]: Patient }>({});
   const { t } = useTranslation("patients");
-  const [selectedConsultation, setSelectedConsultation] =
-    useState<Consultation | null>(null);
+  const stableT = useMemo(() => t, [t]); // Stabiliser la fonction t
+  const [selectedConsultation, setSelectedConsultation] = useState<Consultation | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const { doctors, isLoading: isLoadingDoctors } = useDoctors();
 
-  const selectedDoctor = doctors.find(
-    (doc) => doc.id === selectedConsultation?.medecinId
-  );
-
-  const doctorName = selectedDoctor
-    ? `${selectedDoctor.prenom} ${selectedDoctor.nom}`
-    : "";
+  const selectedDoctor = doctors.find((doc) => doc.id === selectedConsultation?.medecinId);
+  const doctorName = selectedDoctor ? `${selectedDoctor.prenom} ${selectedDoctor.nom}` : "";
 
   const {
     medicalRecord,
@@ -54,35 +107,53 @@ function MedicalRecordPage() {
   // Récupérer les données du patient
   useEffect(() => {
     const fetchPatient = async () => {
-      if (!id) return;
+      if (!id) {
+        toast.error(stableT("errors.no_patient_id") || "Aucun ID de patient fourni");
+        navigate("/patients");
+        return;
+      }
+
+      // Vérifier le cache
+      if (patientCache[id]) {
+        setPatient(patientCache[id]);
+        setIsLoadingPatient(false);
+        return;
+      }
 
       setIsLoadingPatient(true);
       try {
         const patientData = await patientService.getPatientById(id);
-
         if (patientData) {
           setPatient(patientData);
+          setPatientCache((prev) => ({ ...prev, [id]: patientData }));
+          // Appeler fetchMedicalRecord après patient
+          await fetchMedicalRecord(id);
         } else {
-          toast.error("Patient not found");
+          toast.error(stableT("errors.patient_not_found") || "Patient non trouvé");
           navigate("/patients");
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error("Erreur lors de la récupération du patient:", error);
-        toast.error("Échec du chargement des données du patient");
+        if (error.response?.status === 429) {
+          toast.error(stableT("errors.rate_limit_exceeded") || "Trop de requêtes, veuillez réessayer plus tard");
+        } else {
+          toast.error(stableT("errors.load_patient_failed") || "Échec du chargement des données du patient");
+        }
+        navigate("/patients");
       } finally {
         setIsLoadingPatient(false);
       }
     };
 
     fetchPatient();
-  }, [id, navigate]);
+  }, [id, navigate, stableT, patientCache, fetchMedicalRecord]);
 
-  if (isLoadingPatient) {
+  if (isLoadingPatient || isLoadingRecord) {
     return (
       <Card>
         <CardContent className="pt-6">
           <div className="flex justify-center items-center h-40">
-            <p className="text-muted-foreground">{t("loading", "common")}</p>
+            <p className="text-muted-foreground">{stableT("loading", "common") || "Chargement..."}</p>
           </div>
         </CardContent>
       </Card>
@@ -94,7 +165,7 @@ function MedicalRecordPage() {
       <Card>
         <CardContent className="pt-6">
           <div className="flex justify-center items-center h-40">
-            <p className="text-muted-foreground">Patient introuvable</p>
+            <p className="text-muted-foreground">{stableT("patient_not_found") || "Patient introuvable"}</p>
           </div>
         </CardContent>
       </Card>
@@ -109,12 +180,12 @@ function MedicalRecordPage() {
       id: medicalRecord.id,
       patientId: medicalRecord.patientId,
       allergies: medicalRecord.allergies || "",
-      chronicDiseases: medicalRecord.maladiesChroniques || "", // OK
-      currentMedications: medicalRecord.medicamentsActuels || "", // OK
-      bloodType: medicalRecord.groupeSanguin || "", // OK
+      chronicDiseases: medicalRecord.maladiesChroniques || "",
+      currentMedications: medicalRecord.medicamentsActuels || "",
+      bloodType: medicalRecord.groupeSanguin || "",
       creationDate: medicalRecord.dateCreation || "",
-      personalHistory: medicalRecord.antécédentsPersonnels || "", // OK
-      familyHistory: medicalRecord.antécédentsFamiliaux || "", // OK
+      personalHistory: medicalRecord.antécédentsPersonnels || "",
+      familyHistory: medicalRecord.antécédentsFamiliaux || "",
       documents: (medicalRecord.documents || []).map((doc) => ({
         id: doc.id,
         nom: doc.nom || "",
@@ -169,10 +240,10 @@ function MedicalRecordPage() {
       };
 
       await createMedicalRecord(payload);
-      toast.success("Medical record created successfully");
+      toast.success(stableT("success.medical_record_created") || "Dossier médical créé avec succès");
     } catch (error) {
       console.error("Failed to create medical record:", error);
-      toast.error("Failed to create medical record");
+      toast.error(stableT("errors.create_medical_record_failed") || "Échec de la création du dossier médical");
     }
   };
 
@@ -183,22 +254,28 @@ function MedicalRecordPage() {
 
   return (
     <div className="space-y-6 pb-8">
+      {/* Section du profil simplifié */}
+      {["SuperAdmin", "ClinicAdmin", "Doctor"].includes(user.role) && patient && (
+        <SimplifiedPatientProfile patient={patient} />
+      )}
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
-            {t("patientRecord")}
+            {stableT("patientRecord") || "Dossier médical"}
           </h1>
           <p className="text-muted-foreground">
-            Consulter et gérer les informations médicales du patient
+            {stableT("manage_medical_info") || "Consulter et gérer les informations médicales du patient"}
           </p>
         </div>
         <Button variant="outline" onClick={() => navigate("/patients")}>
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Retour aux patients
+          {stableT("back_to_patients") || "Retour aux patients"}
         </Button>
       </div>
 
       <MedicalRecordView
+        userRole={user.role}
         patient={{
           name: `${patient.prenom} ${patient.nom}`,
           email: patient.email,
@@ -212,11 +289,9 @@ function MedicalRecordPage() {
         isLoading={isLoadingRecord}
         isSubmitting={isSubmitting}
         updateMedicalRecord={(data) => {
-          // Map the data back to the format expected by updateMedicalRecord
           return updateMedicalRecord(mapViewUpdateToAppUpdate(data));
         }}
         addDocument={(documentData) => {
-          // Map the document data to the format expected by addDocument
           return addDocument(mapViewDocumentToAppDocument(documentData));
         }}
         deleteDocument={deleteDocument}
@@ -237,7 +312,7 @@ function MedicalRecordPage() {
           onClose={() => setIsDetailsOpen(false)}
           consultation={selectedConsultation}
           patientName={`${patient.prenom} ${patient.nom}`}
-          doctorName={doctorName} // tu peux améliorer ça avec une recherche si tu veux
+          doctorName={doctorName}
         />
       )}
     </div>

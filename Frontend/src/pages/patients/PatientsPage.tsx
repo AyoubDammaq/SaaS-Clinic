@@ -11,10 +11,20 @@ import { Button } from '@/components/ui/button';
 import { FileText, Settings, User } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useTranslation } from '@/hooks/useTranslation';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 type PatientFormValues = Omit<Patient, 'id' | 'dateCreation'>;
 
 function PatientsPage() {
+  const { t } = useTranslation("patients");
   const { user } = useAuth();
   const navigate = useNavigate();
   const {
@@ -33,12 +43,12 @@ function PatientsPage() {
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [patientData, setPatientData] = useState<Patient | null>(null);
   const [activeTab, setActiveTab] = useState("profile");
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [patientToDelete, setPatientToDelete] = useState<string | null>(null);
 
   // Load patient data if user is a patient
   useEffect(() => {
     if (user?.role === 'Patient' && patients.length > 0) {
-      // In a real app, we'd fetch the patient profile for the current user
-      // Here we're mocking it by finding a patient with matching email
       const foundPatient = patients.find(p => p.email === user.email) || patients[0];
       setPatientData(foundPatient);
     }
@@ -46,18 +56,16 @@ function PatientsPage() {
 
   // Navigate to medical record
   const handleViewMedicalRecord = (patientId: string) => {
-    window.location.href = `medical-record/${patientId}`;
+    navigate(`/medical-record/${patientId}`);
   };
 
   // Handle form submission
   const handleFormSubmit = async (data: PatientFormValues) => {
     try {
       if (selectedPatient) {
-        // Update existing patient
         const payload = { ...data, id: selectedPatient.id };
         await handleUpdatePatient(selectedPatient.id, payload);
       } else {
-        // Add new patient
         await handleAddPatient(data);
       }
       setSelectedPatient(null);
@@ -73,16 +81,34 @@ function PatientsPage() {
     setIsFormOpen(true);
   };
 
+  // Handle delete patient with confirmation
+  const handleDeletePatientConfirm = async () => {
+    if (patientToDelete) {
+      try {
+        await handleDeletePatient(patientToDelete);
+        setIsDeleteDialogOpen(false);
+        setPatientToDelete(null);
+      } catch (error) {
+        console.error("Error deleting patient:", error);
+        // Vous pouvez ajouter un toast ici si nécessaire
+      }
+    }
+  };
+
+  const handleDeletePatientRequest = (patientId: string) => {
+    setPatientToDelete(patientId);
+    setIsDeleteDialogOpen(true);
+  };
+
   // Role-specific patient view
   const renderPatientView = () => {
     if (!user) return null;
     
-    // For Patients - Show only their own information with tabs
     if (user.role === 'Patient') {
       if (!patientData) {
         return (
           <div className="flex justify-center items-center h-40">
-            <p className="text-muted-foreground">Loading patient profile...</p>
+            <p className="text-muted-foreground">{t("loading_patient_profile")}</p>
           </div>
         );
       }
@@ -104,17 +130,17 @@ function PatientsPage() {
           className="w-full"
         >
           <TabsList className="mb-6 grid grid-cols-3 w-full md:w-auto">
-            <TabsTrigger value="profile" className="flex items-center gap-2">
+            <TabsTrigger value="profile" className="flex items-center gap-2" aria-label={t("profile")}>
               <User className="h-4 w-4" />
-              <span className="hidden md:inline">Profile</span>
+              <span className="hidden md:inline">{t("profile")}</span>
             </TabsTrigger>
-            <TabsTrigger value="medical" className="flex items-center gap-2">
+            <TabsTrigger value="medical" className="flex items-center gap-2" aria-label={t("medical_record")}>
               <FileText className="h-4 w-4" />
-              <span className="hidden md:inline">Medical Record</span>
+              <span className="hidden md:inline">{t("medical_record")}</span>
             </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center gap-2">
+            <TabsTrigger value="settings" className="flex items-center gap-2" aria-label={t("settings")}>
               <Settings className="h-4 w-4" />
-              <span className="hidden md:inline">Settings</span>
+              <span className="hidden md:inline">{t("settings")}</span>
             </TabsTrigger>
           </TabsList>
 
@@ -122,16 +148,15 @@ function PatientsPage() {
             <PatientProfile 
               patient={patientProfileData} 
               onEditPatient={(patient) => {
-                // Map the patient profile data back to our Patient type format
                 const updatedPatient: Partial<Patient> = {
                   id: patient.id,
-                  nom: patient.name.split(' ')[1] || patientData?.nom || '',
-                  prenom: patient.name.split(' ')[0] || patientData?.prenom || '',
+                  nom: patient.nom.split(' ')[1] || patientData?.nom || '',
+                  prenom: patient.prenom.split(' ')[0] || patientData?.prenom || '',
                   email: patient.email,
-                  telephone: patient.phone,
-                  dateNaissance: patient.dateOfBirth,
-                  sexe: patient.gender as "M" | "F", // Force the type to match our defined enum
-                  adresse: patient.address
+                  telephone: patient.telephone,
+                  dateNaissance: patient.dateNaissance,
+                  sexe: patient.sexe as "M" | "F",
+                  adresse: patient.adresse
                 };
                 handleUpdatePatient(patient.id, updatedPatient);
               }}
@@ -141,17 +166,18 @@ function PatientsPage() {
           <TabsContent value="medical" className="mt-0">
             <Card>
               <CardHeader>
-                <CardTitle>Medical Record</CardTitle>
+                <CardTitle>{t("medical_record")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-col items-start gap-4">
-                  <p>View your complete medical history, allergies, medications, and more.</p>
+                  <p>{t("view_medical_history_description")}</p>
                   <Button 
                     onClick={() => handleViewMedicalRecord(patientData.id)}
                     className="gap-2"
+                    aria-label={t("view_medical_record")}
                   >
                     <FileText className="h-4 w-4" />
-                    View Medical Record
+                    {t("view_medical_record")}
                   </Button>
                 </div>
               </CardContent>
@@ -164,10 +190,9 @@ function PatientsPage() {
         </Tabs>
       );
     }
-    
+
     async function fetchMedicalRecord(patientId: string): Promise<DossierMedical | null> {
       try {
-        // Simulate fetching the medical record for the selected patient
         const medicalRecord: DossierMedical = await fetch(`medical-records/${patientId}`).then(res => res.json());
         return medicalRecord;
       } catch (error) {
@@ -176,9 +201,9 @@ function PatientsPage() {
       }
     }
 
-    // For ClinicAdmin and Doctor - Show full patient list with actions
     return (
       <PatientsList 
+        userRole={user.role}
         patients={patients}
         filteredPatients={filteredPatients}
         searchTerm={searchTerm}
@@ -187,7 +212,7 @@ function PatientsPage() {
         permissions={permissions}
         onAddPatient={() => { setSelectedPatient(null); setIsFormOpen(true); }}
         onEditPatient={handleEditPatient}
-        onDeletePatient={handleDeletePatient}
+        onDeletePatient={handleDeletePatientRequest} // Mise à jour ici
         fetchMedicalRecord={fetchMedicalRecord}
       />
     );
@@ -197,12 +222,12 @@ function PatientsPage() {
     <div className="space-y-6 pb-8">
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold tracking-tight">
-          {user?.role === 'Patient' ? 'Patient Portal' : 'Patients'}
+          {user?.role === 'Patient' ? t("patient_portal") : t("patients")}
         </h1>
         <p className="text-muted-foreground">
           {user?.role === 'Patient' 
-            ? 'Manage your patient profile and view your medical information' 
-            : 'Manage and view patient information'}
+            ? t("manage_patient_profile_description") 
+            : t("manage_patients_description")}
         </p>
       </div>
       {renderPatientView()}
@@ -218,6 +243,24 @@ function PatientsPage() {
         initialData={selectedPatient || undefined}
         isLoading={isLoading}
       />
+
+      {/* Confirm Delete Dialog */}
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("confirmDelete")}</DialogTitle>
+            <DialogDescription>{t("confirmDeleteDescription")}</DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+              {t("cancel")}
+            </Button>
+            <Button variant="destructive" onClick={handleDeletePatientConfirm}>
+              {t("confirm")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

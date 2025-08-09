@@ -1,4 +1,3 @@
-
 export default {
   // Common UI elements
   home: "Home",
@@ -21,14 +20,17 @@ export default {
   clear: "Clear",
   clearAll: "Clear All",
   clearFilters: "Clear Filters",
+  filters: "Filters",
   status: "Status",
   close: "Close",
-  
+  page: "Page",
+  of: "of",
+
   // Language
   language: "Language",
   english: "English",
   french: "French",
-  
+
   // Theme
   theme: "Theme",
   darkMode: "Dark Mode",
@@ -39,4 +41,8 @@ export default {
   patient: "Patient",
   doctor: "Doctor",
   admin: "Admin",
+
+  //Pagination
+  next: "Next",
+  previous: "Previous",
 };

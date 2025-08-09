@@ -25,6 +25,8 @@ import { ConfirmUnassignDialog } from "@/components/doctors/ConfirmUnassignDialo
 import { AppointmentForm } from "@/components/appointments/AppointmentForm";
 import { useAppointments } from "@/hooks/useAppointments";
 import { useDisponibilite } from "@/hooks/useDisponibilites";
+import { useTranslation } from "@/hooks/useTranslation";
+import { ConfirmDeleteDialog } from "@/components/consultations/ConfirmDeleteDialog";
 
 export interface Doctor {
   id: string;
@@ -40,6 +42,7 @@ export interface Doctor {
 
 function DoctorsPage() {
   const { user } = useAuth();
+  const { t } = useTranslation("doctors");
   const {
     doctors,
     isLoading,
@@ -69,25 +72,73 @@ function DoctorsPage() {
     heureDebut: null as string | null,
     heureFin: null as string | null,
   });
-
   const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
   const [doctorToAssign, setDoctorToAssign] = useState<Doctor | null>(null);
   const [selectedClinicId, setSelectedClinicId] = useState<string | null>(null);
   const [isAppointmentFormOpen, setIsAppointmentFormOpen] = useState(false);
   const [doctorForAppointment, setDoctorForAppointment] =
     useState<Doctor | null>(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [doctorIdToDelete, setDoctorIdToDelete] = useState<string | null>(null);
   const hasFetchedDoctorsRef = useRef(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  // Define specialty values and translation keys
+  const specialtyValues = [
+    "General Practitioner",
+    "Pediatrician",
+    "Cardiologist",
+    "Dermatologist",
+    "Neurologist",
+    "Psychiatrist",
+    "Ophthalmologist",
+    "Gynecologist",
+    "Orthopedist",
+    "Dentist",
+  ];
+  const specialtyKeys = [
+    "generalPractitioner",
+    "pediatrician",
+    "cardiologist",
+    "dermatologist",
+    "neurologist",
+    "psychiatrist",
+    "ophthalmologist",
+    "gynecologist",
+    "orthopedist",
+    "dentist",
+  ];
+
+  // Calculate total pages and ensure currentPage is valid
+  const totalPages = Math.ceil(filteredDoctors.length / itemsPerPage);
+  const paginatedDoctors = filteredDoctors.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  // Adjust currentPage if it exceeds totalPages
+  useEffect(() => {
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages);
+    } else if (filteredDoctors.length === 0) {
+      setCurrentPage(1);
+    }
+  }, [filteredDoctors, totalPages, currentPage]);
 
   useEffect(() => {
     if (!hasFetchedDoctorsRef.current) {
-      fetchDoctors().catch(() => toast.error("Failed to fetch doctors"));
+      fetchDoctors().catch(() => toast.error(t("errorFetchingDoctors")));
       hasFetchedDoctorsRef.current = true;
     }
-  }, [fetchDoctors]);
+  }, [fetchDoctors, t]);
 
   useEffect(() => {
     const { date, heureDebut, heureFin } = availabilityFilters;
-    if (!date || !heureDebut || !heureFin) return;
+    if (!date || !heureDebut || !heureFin) {
+      setFilteredDoctors(doctors); // Reset to all doctors if filters are incomplete
+      return;
+    }
 
     const fetchAvailableDoctors = async () => {
       try {
@@ -100,17 +151,14 @@ function DoctorsPage() {
           availableDoctorIds.includes(doc.id)
         );
         setFilteredDoctors(filtered);
+        setCurrentPage(1);
       } catch (error) {
-        console.error(
-          "Erreur lors du filtrage des médecins disponibles",
-          error
-        );
-        toast.error("Erreur de récupération des médecins disponibles.");
+        console.error(t("errorFetchingDoctors"), error);
+        toast.error(t("errorFetchingDoctors"));
       }
     };
-
     fetchAvailableDoctors();
-  }, [availabilityFilters, doctors, getAvailableDoctors]);
+  }, [availabilityFilters, doctors, getAvailableDoctors, t]);
 
   useEffect(() => {
     const results = doctors.filter((doctor) => {
@@ -163,6 +211,7 @@ function DoctorsPage() {
     heureFin: string | null;
   }) => {
     setAvailabilityFilters(filters);
+    setCurrentPage(1); // Reset to page 1 when filters change
   };
 
   const handleFilterChange = (newFilters: {
@@ -171,6 +220,7 @@ function DoctorsPage() {
     assignedStatus: "all" | "assigned" | "unassigned";
   }) => {
     setFilters(newFilters);
+    setCurrentPage(1); // Reset to page 1 when filters change
   };
 
   const handleFormSubmit = async (data: Doctor) => {
@@ -178,14 +228,15 @@ function DoctorsPage() {
       setSelectedDoctor(null);
       setIsFormOpen(false);
       await fetchDoctors();
+      toast.success(t("doctorAddSuccess"));
     } catch (error) {
-      console.error("Error submitting doctor form:", error);
-      toast.error("Failed to save doctor. Please try again.");
+      console.error(t("errorAddingDoctor"), error);
+      toast.error(t("errorAddingDoctor"));
     }
   };
 
   const handleEditDoctor = (doctor: Doctor) => {
-    console.log("Editing doctor:", doctor);
+    console.log(t("editDoctor"), doctor);
     setSelectedDoctor(doctor);
     setIsFormOpen(true);
   };
@@ -195,25 +246,19 @@ function DoctorsPage() {
     clinicId: string | null | undefined
   ) => {
     if (!clinicId) {
-      toast.error("Clinic ID is invalid.");
+      toast.error(t("errorAddingDoctor"));
       return;
     }
-
     try {
       await assignDoctorToClinic(doctorId, clinicId);
       await fetchDoctors();
       setIsAssignModalOpen(false);
       setDoctorToAssign(null);
       setSelectedClinicId(null);
-
-      const message =
-        user.role === "ClinicAdmin"
-          ? "Médecin assigné à votre clinique avec succès"
-          : "Médecin assigné à la clinique avec succès";
-      toast.success(message);
+      toast.success(t("doctorAddSuccess"));
     } catch (error) {
-      console.error("Error assigning doctor:", error);
-      toast.error("Échec de l’assignation du médecin.");
+      console.error(t("errorAddingDoctor"), error);
+      toast.error(t("errorAddingDoctor"));
     }
   };
 
@@ -221,10 +266,10 @@ function DoctorsPage() {
     try {
       await unassignDoctorFromClinic(doctorId);
       await fetchDoctors();
-      toast.success("Médecin désassigné avec succès");
+      toast.success(t("doctorDeleteSuccess"));
     } catch (error) {
-      console.error("Erreur lors de la désassignation:", error);
-      toast.error("Erreur lors de la désassignation du médecin");
+      console.error(t("errorDeletingDoctor"), error);
+      toast.error(t("errorDeletingDoctor"));
     }
   };
 
@@ -232,70 +277,77 @@ function DoctorsPage() {
     try {
       if (user.role === "SuperAdmin") {
         await deleteDoctor(id);
-        toast.success("Médecin supprimé avec succès");
+        toast.success(t("doctorDeleteSuccess"));
       } else if (user.role === "ClinicAdmin") {
         await unassignDoctorFromClinic(id);
-        toast.success("Médecin désabonné de la clinique avec succès");
+        toast.success(t("doctorDeleteSuccess"));
       } else {
-        toast.error("Vous n'avez pas les droits pour effectuer cette action.");
+        toast.error(t("errorDeletingDoctor"));
         return;
       }
       await fetchDoctors();
     } catch (error) {
-      console.error("Erreur lors de la suppression:", error);
-      toast.error("Une erreur est survenue lors de la suppression.");
+      console.error(t("errorDeletingDoctor"), error);
+      toast.error(t("errorDeletingDoctor"));
+    }
+  };
+
+  const handleOpenDeleteDialog = (id: string) => {
+    setDoctorIdToDelete(id);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (doctorIdToDelete) {
+      handleDeleteDoctor(doctorIdToDelete);
+      setIsDeleteDialogOpen(false);
+      setDoctorIdToDelete(null);
     }
   };
 
   if (!user) {
-    return (
-      <div className="p-8 text-center">Please log in to access this page.</div>
-    );
+    return <div className="p-8 text-center">{t("loginRequired")}</div>;
   }
 
-  const currentDoctor =
-    user.role === "Doctor"
-      ? doctors.find((d) => d.email === user.email) || null
-      : null;
-
   if (isLoading) {
-    return <div className="p-8 text-center">Loading doctors...</div>;
+    return <div className="p-8 text-center">{t("loadingDoctors")}</div>;
   }
 
   if (user.role === "Doctor" || selectedDoctorForProfile) {
-    const doctorToShow = selectedDoctorForProfile || currentDoctor;
+    const doctorToShow =
+      selectedDoctorForProfile ||
+      (user.role === "Doctor"
+        ? doctors.find((d) => d.email === user.email) || null
+        : null);
 
     if (!doctorToShow) {
-      return <div className="p-8 text-center">Doctor data not found.</div>;
+      return <div className="p-8 text-center">{t("doctorDataNotFound")}</div>;
     }
 
     return (
       <div className="space-y-6 pb-8">
         <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold tracking-tight">Doctor Profile</h1>
-          <p className="text-muted-foreground">
-            Manage your professional information and settings
-          </p>
+          <h1 className="text-3xl font-bold tracking-tight">
+            {t("doctorDetails")}
+          </h1>
+          <p className="text-muted-foreground">{t("manageProfile")}</p>
         </div>
-
         <DoctorProfile
           doctor={doctorToShow}
           onEdit={handleEditDoctor}
           clinics={clinicsForForm}
           userRole={user.role}
         />
-
         {user.role !== "Doctor" && (
           <div className="mt-4">
             <Button
               variant="outline"
               onClick={() => setSelectedDoctorForProfile(null)}
             >
-              Back to Doctors List
+              {t("backToDoctorsList")}
             </Button>
           </div>
         )}
-
         <DoctorForm
           isOpen={isFormOpen}
           onClose={() => setIsFormOpen(false)}
@@ -310,153 +362,163 @@ function DoctorsPage() {
   const doctorsOfClinic = filteredDoctors.filter(
     (doctor) => doctor.cliniqueId === user.cliniqueId
   );
-
   const availableDoctors = filteredDoctors.filter(
     (doctor) => !doctor.cliniqueId
   );
 
-  const renderDoctorRow = (doctor: Doctor) => (
-    <TableRow
-      key={doctor.id}
-      className="cursor-pointer hover:bg-muted/60"
-      onClick={() => {
-        setSelectedDoctorForProfile(doctor);
-      }}
-    >
-      <TableCell>
-        <div className="flex items-center gap-3">
-          <Avatar className="h-8 w-8">
-            <AvatarFallback className="bg-clinic-500 text-white">
-              {doctor.prenom[0]}
-              {doctor.nom[0]}
-            </AvatarFallback>
-          </Avatar>
-          <div className="font-medium">
-            {doctor.prenom} {doctor.nom}
-          </div>
-        </div>
-      </TableCell>
-      <TableCell>{doctor.email}</TableCell>
-      <TableCell>
-        <Badge
-          variant="outline"
-          className="bg-blue-50 text-blue-600 border-blue-200"
-        >
-          {doctor.specialite}
-        </Badge>
-      </TableCell>
-      <TableCell>{doctor.telephone}</TableCell>
-      <TableCell
-        onClick={async (e) => {
-          e.stopPropagation();
+  const renderDoctorRow = (doctor: Doctor) => {
+    const specialtyIndex = specialtyValues.findIndex(
+      (value) => value.toLowerCase() === doctor.specialite.toLowerCase()
+    );
+    const translatedSpecialty =
+      specialtyIndex !== -1
+        ? t(specialtyKeys[specialtyIndex])
+        : t("unknownSpecialty");
 
-          if (user.role === "SuperAdmin") {
-            // SuperAdmin → ouvrir modal pour choisir une clinique
-            setDoctorToAssign(doctor);
-            setSelectedClinicId(doctor.cliniqueId ?? null);
-            setIsAssignModalOpen(true);
-          } else if (user.role === "ClinicAdmin") {
-            // ClinicAdmin → assigner directement à sa propre clinique
-            if (!user.cliniqueId) {
-              toast.error("Aucune clinique associée à cet administrateur.");
-              return;
-            }
-
-            try {
-              await handleAssignDoctor(doctor.id, user.cliniqueId);
-            } catch (error) {
-              console.error("Erreur d’assignation par ClinicAdmin :", error);
-            }
-          }
-        }}
-        className="cursor-pointer underline text-blue-600 hover:text-blue-800"
-        title={
-          user.role === "SuperAdmin"
-            ? "Assigner à une clinique"
-            : "Assigner à ma clinique"
-        }
+    return (
+      <TableRow
+        key={doctor.id}
+        className="cursor-pointer hover:bg-muted/60"
+        onClick={() => setSelectedDoctorForProfile(doctor)}
       >
-        {doctor.cliniqueId ? (
-          <Badge className="bg-green-100 text-green-800 border-green-200">
-            {cliniques.find((c) => c.id === doctor.cliniqueId)?.nom}
-          </Badge>
-        ) : (
-          <Badge className="bg-red-100 text-red-800 border-red-200">
-            Non assigné
-          </Badge>
-        )}
-      </TableCell>
-
-      <TableCell>
-        {user.role === "Patient" ? (
-          <Button
-            size="sm"
-            variant="outline"
-            className="text-blue-600"
-            onClick={(e) => {
-              e.stopPropagation();
-              setDoctorForAppointment(doctor);
-              setIsAppointmentFormOpen(true);
-            }}
-          >
-            Prendre rendez-vous
-          </Button>
-        ) : (
-          <div className="flex items-center gap-2">
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleEditDoctor(doctor);
-              }}
-              aria-label="Edit Doctor"
-            >
-              <FileEdit className="h-4 w-4" />
-            </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              className="text-red-500"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleDeleteDoctor(doctor.id);
-              }}
-              aria-label="Delete Doctor"
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-            {doctor.cliniqueId && (
-              <ConfirmUnassignDialog
-                onConfirm={() => handleUnassignDoctor(doctor.id)}
-              />
-            )}
+        <TableCell>
+          <div className="flex items-center gap-3">
+            <Avatar className="h-8 w-8">
+              <AvatarFallback className="bg-clinic-500 text-white">
+                {doctor.prenom[0]}
+                {doctor.nom[0]}
+              </AvatarFallback>
+            </Avatar>
+            <div className="font-medium">
+              {doctor.prenom} {doctor.nom}
+            </div>
           </div>
-        )}
-      </TableCell>
-    </TableRow>
-  );
+        </TableCell>
+        <TableCell>{doctor.email}</TableCell>
+        <TableCell>
+          <Badge
+            variant="outline"
+            className="bg-blue-50 text-blue-600 border-blue-200"
+          >
+            {translatedSpecialty}
+          </Badge>
+        </TableCell>
+        <TableCell>{doctor.telephone}</TableCell>
+        <TableCell
+          onClick={async (e) => {
+            e.stopPropagation();
+            if (user.role === "SuperAdmin") {
+              setDoctorToAssign(doctor);
+              setSelectedClinicId(doctor.cliniqueId ?? null);
+              setIsAssignModalOpen(true);
+            } else if (user.role === "ClinicAdmin") {
+              if (!user.cliniqueId) {
+                toast.error(t("errorAddingDoctor"));
+                return;
+              }
+              if (doctor.cliniqueId === user.cliniqueId) {
+                toast.info(t("doctorAddSuccess"));
+                return;
+              }
+              try {
+                await handleAssignDoctor(doctor.id, user.cliniqueId);
+              } catch (error) {
+                console.error(t("errorAddingDoctor"), error);
+              }
+            }
+          }}
+          className="cursor-pointer underline text-blue-600 hover:text-blue-800"
+          title={
+            user.role === "SuperAdmin"
+              ? t("assignToClinic")
+              : doctor.cliniqueId === user.cliniqueId
+              ? t("doctorAddSuccess")
+              : t("assignToClinic")
+          }
+        >
+          {doctor.cliniqueId ? (
+            <Badge className="bg-green-100 text-green-800 border-green-200">
+              {cliniques.find((c) => c.id === doctor.cliniqueId)?.nom}
+            </Badge>
+          ) : (
+            <Badge className="bg-red-100 text-red-800 border-red-200">
+              {t("noClinicAssigned")}
+            </Badge>
+          )}
+        </TableCell>
+        <TableCell>
+          {user.role === "Patient" ? (
+            <Button
+              size="sm"
+              variant="outline"
+              className="text-blue-600"
+              onClick={(e) => {
+                e.stopPropagation();
+                setDoctorForAppointment(doctor);
+                setIsAppointmentFormOpen(true);
+              }}
+            >
+              {t("takeAppointment")}
+            </Button>
+          ) : user.role === "ClinicAdmin" &&
+            doctor.cliniqueId !== user.cliniqueId ? null : (
+            <div className="flex items-center gap-2">
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEditDoctor(doctor);
+                }}
+                aria-label={t("editDoctor")}
+              >
+                <FileEdit className="h-4 w-4" />
+              </Button>
+              {user.role !== "ClinicAdmin" && (
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="text-red-500"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleOpenDeleteDialog(doctor.id);
+                  }}
+                  aria-label={t("deleteDoctor")}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              )}
+              {doctor.cliniqueId && (
+                <ConfirmUnassignDialog
+                  onConfirm={() => handleUnassignDoctor(doctor.id)}
+                />
+              )}
+            </div>
+          )}
+        </TableCell>
+      </TableRow>
+    );
+  };
 
   return (
     <div className="space-y-6 pb-8">
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">Doctors</h1>
-        <p className="text-muted-foreground">
-          Manage and view doctors information
-        </p>
+        <h1 className="text-3xl font-bold tracking-tight">
+          {t("doctorsList")}
+        </h1>
+        <p className="text-muted-foreground">{t("doctorDetails")}</p>
       </div>
-
       <Card>
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="relative w-full max-w-sm">
               <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search doctors..."
+                placeholder={t("search")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-8"
-                aria-label="Search doctors"
+                aria-label={t("search")}
               />
             </div>
             {user.role !== "Patient" && (
@@ -466,13 +528,12 @@ function DoctorsPage() {
                   setSelectedDoctor(null);
                   setIsFormOpen(true);
                 }}
-                aria-label="Add Doctor"
+                aria-label={t("addDoctor")}
               >
-                <Plus className="mr-1 h-4 w-4" /> Add Doctor
+                <Plus className="mr-1 h-4 w-4" /> {t("addDoctor")}
               </Button>
             )}
           </div>
-
           <DoctorFilters
             specialties={Array.from(new Set(doctors.map((d) => d.specialite)))}
             clinics={clinicsForForm}
@@ -480,28 +541,28 @@ function DoctorsPage() {
             onFilterChange={handleFilterChange}
             onAvailabilityFilterChange={handleAvailabilityFilterChange}
           />
-
           <div className="rounded-md border">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Doctor</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Specialization</TableHead>
-                  <TableHead>Contact</TableHead>
-                  <TableHead>Associated Clinic</TableHead>
+                  <TableHead>{t("fullName")}</TableHead>
+                  <TableHead>{t("email")}</TableHead>
+                  <TableHead>{t("specialty")}</TableHead>
+                  <TableHead>{t("phone")}</TableHead>
+                  <TableHead>{t("clinic")}</TableHead>
                   <TableHead>
-                    {user.role !== "Patient" ? "Actions" : "Prendre RDV"}
+                    {user.role !== "Patient"
+                      ? t("actions")
+                      : t("takeAppointment")}
                   </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {user.role === "ClinicAdmin" ? (
                   <>
-                    {/* Section 1: Médecins de la clinique */}
                     <TableRow>
                       <TableCell colSpan={6} className="bg-muted font-semibold">
-                        Médecins de la clinique
+                        {t("doctorsOfClinic")}
                       </TableCell>
                     </TableRow>
                     {doctorsOfClinic.length > 0 ? (
@@ -512,15 +573,13 @@ function DoctorsPage() {
                           colSpan={6}
                           className="text-center text-muted-foreground"
                         >
-                          Aucun médecin assigné à cette clinique.
+                          {t("noDoctorsInClinic")}
                         </TableCell>
                       </TableRow>
                     )}
-
-                    {/* Section 2: Médecins disponibles */}
                     <TableRow>
                       <TableCell colSpan={6} className="bg-muted font-semibold">
-                        Médecins disponibles
+                        {t("availableDoctors")}
                       </TableCell>
                     </TableRow>
                     {availableDoctors.length > 0 ? (
@@ -531,33 +590,50 @@ function DoctorsPage() {
                           colSpan={6}
                           className="text-center text-muted-foreground"
                         >
-                          Aucun médecin disponible pour l’assignation.
+                          {t("noAvailableDoctors")}
                         </TableCell>
                       </TableRow>
                     )}
                   </>
-                ) : // Default rendering for SuperAdmin and others
-                filteredDoctors.length > 0 ? (
-                  (user.role === "Patient"
-                    ? filteredDoctors.filter((doctor) => !!doctor.cliniqueId)
-                    : filteredDoctors
-                  ).map((doctor) => renderDoctorRow(doctor))
+                ) : paginatedDoctors.length > 0 ? (
+                  paginatedDoctors.map((doctor) => renderDoctorRow(doctor))
                 ) : (
                   <TableRow>
-                    <TableCell
-                      colSpan={user.role === "Patient" ? 6 : 6}
-                      className="text-center py-4"
-                    >
-                      No doctors found matching your search criteria
+                    <TableCell colSpan={6} className="text-center py-4">
+                      {t("noDoctorsFound")}
                     </TableCell>
                   </TableRow>
                 )}
               </TableBody>
             </Table>
+            {user.role !== "ClinicAdmin" && (
+              <div className="flex justify-center items-center gap-2 mt-4">
+                <Button
+                  variant="outline"
+                  disabled={currentPage === 1}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
+                >
+                  {t("previous")}
+                </Button>
+                <span className="px-2 text-muted-foreground">
+                  Page {currentPage} {t("sur")} {totalPages || 1}
+                </span>
+                <Button
+                  variant="outline"
+                  disabled={currentPage >= totalPages || totalPages === 0}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                >
+                  {t("next")}
+                </Button>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
-
       <DoctorForm
         isOpen={isFormOpen}
         onClose={() => setIsFormOpen(false)}
@@ -579,6 +655,13 @@ function DoctorsPage() {
         clinics={clinicsForForm}
         isSubmitting={isSubmitting}
       />
+      <ConfirmDeleteDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={() => setIsDeleteDialogOpen(false)}
+        onConfirm={handleConfirmDelete}
+        title={t("confirmDeleteDoctorTitle")}
+        message={t("confirmDeleteDoctorMessage")}
+      />
       {isAppointmentFormOpen && doctorForAppointment && (
         <AppointmentForm
           isOpen={isAppointmentFormOpen}
@@ -589,10 +672,10 @@ function DoctorsPage() {
           onSubmit={async (data) => {
             try {
               await handleAddAppointment(data);
-              toast.success("Rendez-vous enregistré !");
+              toast.success(t("availabilityAddSuccess"));
             } catch (error) {
-              toast.error("Erreur lors de la création du rendez-vous");
-              console.error("Erreur de création de rendez-vous:", error);
+              toast.error(t("errorAddingAvailability"));
+              console.error(t("errorAddingAvailability"), error);
             } finally {
               setIsAppointmentFormOpen(false);
               setDoctorForAppointment(null);

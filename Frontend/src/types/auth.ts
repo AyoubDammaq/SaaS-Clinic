@@ -9,6 +9,7 @@ export interface User {
   cliniqueId?: string; // Optional for ClinicAdmin and SuperAdmin
   medecinId?: string; // Optional for Doctor
   patientId?: string; // Optional for Patient
+  fullName?: string;
 }
 
 export interface AuthState {

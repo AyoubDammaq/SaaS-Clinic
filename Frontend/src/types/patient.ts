@@ -1,4 +1,3 @@
-
 export interface Patient {
   id: string;
   nom: string;
@@ -12,7 +11,7 @@ export interface Patient {
   dateCreation: string;
 }
 
-export interface PatientDTO extends Omit<Patient, 'id'> {
+export interface PatientDTO extends Omit<Patient, "id"> {
   id?: string;
 }
 export interface Document {
@@ -42,7 +41,8 @@ export interface DossierMedical {
   dateCreation: string; // Correspond à "creationDate"
 }
 
-export interface DossierMedicalDTO extends Omit<DossierMedical, 'id' | 'documents' | 'dateCreation'> {
+export interface DossierMedicalDTO
+  extends Omit<DossierMedical, "id" | "documents" | "dateCreation"> {
   patientId: string;
   allergies: string;
   medicamentsActuels: string;

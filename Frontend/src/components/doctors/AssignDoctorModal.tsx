@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface AssignDoctorModalProps {
   isOpen: boolean;
@@ -34,11 +35,13 @@ export function AssignDoctorModal({
   clinics,
   isSubmitting,
 }: AssignDoctorModalProps) {
+  const { t } = useTranslation("doctors");
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Assigner le médecin à une clinique</DialogTitle>
+          <DialogTitle>{t("assignDoctorToClinic")}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
@@ -47,7 +50,7 @@ export function AssignDoctorModal({
             onValueChange={(value) => setSelectedClinicId(value)}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Choisir une clinique" />
+              <SelectValue placeholder={t("selectClinic")} />
             </SelectTrigger>
             <SelectContent>
               {clinics.map((clinic) => (
@@ -60,13 +63,13 @@ export function AssignDoctorModal({
 
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
-              Annuler
+              {t("cancel")}
             </Button>
             <Button onClick={onConfirm} disabled={isSubmitting}>
               {isSubmitting && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               )}
-              Confirmer
+              {t("confirm")}
             </Button>
           </div>
         </div>

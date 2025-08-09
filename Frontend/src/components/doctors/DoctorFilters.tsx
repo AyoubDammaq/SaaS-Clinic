@@ -11,6 +11,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Filter, X } from "lucide-react";
 import { Input } from "../ui/input";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface DoctorFiltersProps {
   specialties: string[];
@@ -35,6 +36,7 @@ export function DoctorFilters({
   onFilterChange,
   onAvailabilityFilterChange,
 }: DoctorFiltersProps) {
+  const { t } = useTranslation("doctors"); // Utilisation du namespace "doctors"
   const [showFilters, setShowFilters] = useState(false);
   const [specialty, setSpecialty] = useState<string | null>(null);
   const [clinicId, setClinicId] = useState<string | null>(null);
@@ -95,7 +97,7 @@ export function DoctorFilters({
           onClick={() => setShowFilters(!showFilters)}
         >
           <Filter className="h-4 w-4" />
-          Filters
+          {t("filters")}
         </Button>
 
         {(specialty || clinicId || assignedStatus !== "all") && (
@@ -106,7 +108,7 @@ export function DoctorFilters({
             onClick={clearFilters}
           >
             <X className="h-4 w-4" />
-            Clear Filters
+            {t("clearFilters")}
           </Button>
         )}
       </div>
@@ -116,17 +118,17 @@ export function DoctorFilters({
           <CardContent className="p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="specialty-filter">Specialty</Label>
+                <Label htmlFor="specialty-filter">{t("specialty")}</Label>
                 <Select
                   value={specialty || "all_specialties"}
                   onValueChange={handleSpecialtyChange}
                 >
                   <SelectTrigger id="specialty-filter">
-                    <SelectValue placeholder="All Specialties" />
+                    <SelectValue placeholder={t("allSpecialties")} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all_specialties">
-                      All Specialties
+                      {t("allSpecialties")}
                     </SelectItem>
                     {specialties.map((specialty) => (
                       <SelectItem key={specialty} value={specialty}>
@@ -138,16 +140,16 @@ export function DoctorFilters({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="clinic-filter">Clinic</Label>
+                <Label htmlFor="clinic-filter">{t("clinic")}</Label>
                 <Select
                   value={clinicId || "all_clinics"}
                   onValueChange={handleClinicChange}
                 >
                   <SelectTrigger id="clinic-filter">
-                    <SelectValue placeholder="All Clinics" />
+                    <SelectValue placeholder={t("allClinics")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all_clinics">All Clinics</SelectItem>
+                    <SelectItem value="all_clinics">{t("allClinics")}</SelectItem>
                     {clinics.map((clinic) => (
                       <SelectItem key={clinic.id} value={clinic.id}>
                         {clinic.name}
@@ -160,28 +162,22 @@ export function DoctorFilters({
               {userRole !== "Patient" && (
                 <div className="space-y-2">
                   <Label htmlFor="assigned-status-filter">
-                    {userRole === "SuperAdmin"
-                      ? "Affectation"
-                      : "Disponibilité"}
+                    {userRole === "SuperAdmin" ? t("assignment") : t("availability")}
                   </Label>
                   <Select
                     value={assignedStatus}
                     onValueChange={handleAssignedStatusChange}
                   >
                     <SelectTrigger id="assigned-status-filter">
-                      <SelectValue placeholder="Tous" />
+                      <SelectValue placeholder={t("all")} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">Tous</SelectItem>
+                      <SelectItem value="all">{t("all")}</SelectItem>
                       <SelectItem value="assigned">
-                        {userRole === "SuperAdmin"
-                          ? "Assignés"
-                          : "Médecins de la clinique"}
+                        {userRole === "SuperAdmin" ? t("assigned") : t("clinicDoctors")}
                       </SelectItem>
                       <SelectItem value="unassigned">
-                        {userRole === "SuperAdmin"
-                          ? "Non assignés"
-                          : "Médecins disponibles"}
+                        {userRole === "SuperAdmin" ? t("unassigned") : t("availableDoctors")}
                       </SelectItem>
                     </SelectContent>
                   </Select>
@@ -189,7 +185,7 @@ export function DoctorFilters({
               )}
 
               <div className="space-y-2">
-                <Label>Disponibilité à la date</Label>
+                <Label>{t("availabilityDate")}</Label>
                 <Input
                   type="date"
                   value={availabilityDate || ""}
@@ -203,7 +199,7 @@ export function DoctorFilters({
                 />
               </div>
               <div className="space-y-2">
-                <Label>Heure de début</Label>
+                <Label>{t("startTime")}</Label>
                 <Input
                   type="time"
                   value={heureDebut || ""}
@@ -217,7 +213,7 @@ export function DoctorFilters({
                 />
               </div>
               <div className="space-y-2">
-                <Label>Heure de fin</Label>
+                <Label>{t("endTime")}</Label>
                 <Input
                   type="time"
                   value={heureFin || ""}

@@ -1,10 +1,7 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import { dossierMedicalService } from '@/services/patientService';
 import { DossierMedical, DossierMedicalDTO, Document, CreateDocumentRequest } from '@/types/patient';
 import { toast } from 'sonner';
-import { ApiResponse } from '@/types/response';
-import { MedicalRecordDocument } from '@/components/patients/MedicalRecordView';
 
 interface UseMedicalRecordResult {
   medicalRecord: DossierMedical | null;
@@ -26,14 +23,17 @@ export function useMedicalRecord(patientId: string): UseMedicalRecordResult {
   const [error, setError] = useState<string | null>(null);
 
   // Fonction pour charger le dossier médical
-  const fetchMedicalRecord = useCallback(async (patientId: string): Promise<DossierMedical | null> => {
+  const fetchMedicalRecord = useCallback(async (): Promise<DossierMedical | null> => {
+    if (!patientId) {
+      setMedicalRecord(null);
+      return null;
+    }
+
     setIsLoading(true);
     setError(null);
 
     try {
-      const dossier  = await dossierMedicalService.getDossierMedicalByPatientId(patientId);
-      console.log("Fetched dossier medical:", dossier);
-
+      const dossier = await dossierMedicalService.getDossierMedicalByPatientId(patientId);
       if (dossier && dossier.id) {
         setMedicalRecord(dossier);
         return dossier;
@@ -49,14 +49,14 @@ export function useMedicalRecord(patientId: string): UseMedicalRecordResult {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [patientId]);
 
 
 
   // Charger les données initiales
   useEffect(() => {
-    fetchMedicalRecord(patientId);
-  }, [patientId, fetchMedicalRecord]);
+    fetchMedicalRecord();
+  }, [fetchMedicalRecord]);
 
   // Add the createMedicalRecord method
   const createMedicalRecord = async (data: Partial<DossierMedicalDTO>): Promise<void> => {
@@ -86,7 +86,7 @@ export function useMedicalRecord(patientId: string): UseMedicalRecordResult {
       setDossierMedicalDTO(newMedicalRecord); // Set the newly created medical record
 
       // Ajoute cette ligne pour rafraîchir le state local :
-      await fetchMedicalRecord(patientId);
+      await fetchMedicalRecord();
       
       toast.success("Dossier médical créé avec succès");
     } catch (err) {

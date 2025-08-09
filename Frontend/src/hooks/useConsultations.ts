@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { consultationService } from "@/services/consultationService";
+import { billingService } from "@/services/billingService";
 import {
   Consultation,
   ConsultationDTO,
@@ -31,6 +32,7 @@ interface UseConsultationsState {
 
 export function useConsultations(): UseConsultationsState {
   const { user } = useAuth();
+  const { id, role, patientId, medecinId, cliniqueId } = user || {};
   const [consultations, setConsultations] = useState<Consultation[]>([]);
   const [filteredConsultations, setFilteredConsultations] = useState<
     Consultation[]
@@ -45,12 +47,14 @@ export function useConsultations(): UseConsultationsState {
     canView: false,
   });
 
+  console.log("user changed", user)
+
   // 🔐 Définir les permissions utilisateur
   useEffect(() => {
     if (user) {
       const canCreate = user.role === "Doctor";
-      const canEdit = user.role === "Doctor";
-      const canDelete = user.role === "Doctor";
+      const canEdit = user.role === "Doctor" || user.role === "ClinicAdmin";
+      const canDelete = user.role === "Doctor" || user.role === "ClinicAdmin";
       const canView = true; // Tout le monde peut voir
 
       setPermissions({ canCreate, canEdit, canDelete, canView });
@@ -65,17 +69,12 @@ export function useConsultations(): UseConsultationsState {
     try {
       let consultationData: Consultation[] = [];
 
-      if (user.role === "Patient") {
-        consultationData =
-          await consultationService.getConsultationsByPatientId(user.patientId);
-      } else if (user.role === "Doctor") {
-        consultationData = await consultationService.getConsultationsByDoctorId(
-          user.medecinId
-        );
-      } else if (user.role === "ClinicAdmin" && user.cliniqueId) {
-        consultationData = await consultationService.getConsultationsByClinicId(
-          user.cliniqueId
-        );
+      if (role === "Patient" && patientId) {
+        consultationData = await consultationService.getConsultationsByPatientId(patientId);
+      } else if (role === "Doctor" && medecinId) {
+        consultationData = await consultationService.getConsultationsByDoctorId(medecinId);
+      } else if (role === "ClinicAdmin" && cliniqueId) {
+        consultationData = await consultationService.getConsultationsByClinicId(cliniqueId);
       } else {
         consultationData = await consultationService.getAllConsultations();
       }
@@ -88,7 +87,13 @@ export function useConsultations(): UseConsultationsState {
     } finally {
       setIsLoading(false);
     }
-  }, [user]);
+  }, [user, role, patientId, medecinId, cliniqueId]);
+
+  useEffect(() => {
+    if (user) {
+      fetchConsultations();
+    }
+  }, [user, fetchConsultations]);
 
   // 🔎 Filtrage en fonction du champ de recherche
   useEffect(() => {
@@ -103,11 +108,6 @@ export function useConsultations(): UseConsultationsState {
     );
     setFilteredConsultations(results);
   }, [searchTerm, consultations]);
-
-  // 📦 Chargement initial
-  useEffect(() => {
-    fetchConsultations();
-  }, [fetchConsultations]);
 
   // ➕ Ajouter une consultation
   const addConsultation = async (data: ConsultationDTO) => {
@@ -143,15 +143,11 @@ export function useConsultations(): UseConsultationsState {
 
   // ❌ Supprimer une consultation
   const deleteConsultation = async (id: string) => {
-    if (
-      !window.confirm("Confirmez-vous la suppression de cette consultation ?")
-    ) {
-      return;
-    }
-
     setIsLoading(true);
     try {
       await consultationService.deleteConsultation(id);
+      const facture = await billingService.getFacturesByConsultationId(id);
+      await billingService.deleteFacture(facture.id);
       setConsultations((prev) => prev.filter((c) => c.id !== id));
       toast.success("Consultation supprimée avec succès");
     } catch (error) {
@@ -187,13 +183,8 @@ export function useConsultations(): UseConsultationsState {
     }
   };
 
+  // 📄 Supprimer un document médical
   const deleteDocumentMedical = async (id: string) => {
-    if (
-      !window.confirm("Confirmez-vous la suppression de ce document médical ?")
-    ) {
-      return;
-    }
-
     setIsLoading(true);
     try {
       await consultationService.deleteDocumentMedical(id);

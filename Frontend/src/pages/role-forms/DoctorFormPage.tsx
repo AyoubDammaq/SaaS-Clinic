@@ -43,8 +43,16 @@ function DoctorFormPage() {
   const [error, setError] = useState<string | null>(null);
 
   const specialties = [
-    "Cardiologie", "Dermatologie", "Endocrinologie", "Gastroentérologie",
-    "Neurologie", "Obstétrique", "Ophtalmologie", "Pédiatrie", "Psychiatrie", "Médecin généraliste"
+    "General Practitioner",
+    "Pediatrician",
+    "Cardiologist",
+    "Dermatologist",
+    "Neurologist",
+    "Psychiatrist",
+    "Ophthalmologist",
+    "Gynecologist",
+    "Orthopedist",
+    "Dentist",
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,8 +68,12 @@ function DoctorFormPage() {
     let createdDoctorId: string | null = null;
 
     try {
-      if (!user) throw new Error(t("notAuthenticated") || "Utilisateur non authentifié");
-      if (!formData.specialite) throw new Error(t("specialtyRequired") || "Veuillez sélectionner une spécialité");
+      if (!user)
+        throw new Error(t("notAuthenticated") || "Utilisateur non authentifié");
+      if (!formData.specialite)
+        throw new Error(
+          t("specialtyRequired") || "Veuillez sélectionner une spécialité"
+        );
 
       const doctor = await addDoctor({
         prenom: formData.prenom,
@@ -77,12 +89,18 @@ function DoctorFormPage() {
 
       await linkUserToDoctor(user.id, doctor.id);
       const result = await linkToProfile(user.id, doctor.id);
-      if (!result) throw new Error(t("profileLinkFailed") || "Échec de liaison avec le profil");
+      if (!result)
+        throw new Error(
+          t("profileLinkFailed") || "Échec de liaison avec le profil"
+        );
 
       toast.success(t("doctorCreated") || "Profil docteur créé avec succès");
       navigate("/dashboard");
     } catch (err) {
-      const message = err instanceof Error ? err.message : t("unknownError") || "Une erreur inconnue est survenue";
+      const message =
+        err instanceof Error
+          ? err.message
+          : t("unknownError") || "Une erreur inconnue est survenue";
       setError(message);
       toast.error(message);
 
@@ -105,7 +123,9 @@ function DoctorFormPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">SaaS-Clinic</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            SaaS-Clinic
+          </h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">
             {t("doctorFormSubtitle") || "Complete Your Doctor Profile"}
           </p>
@@ -115,7 +135,8 @@ function DoctorFormPage() {
           <CardHeader>
             <CardTitle>{t("doctorInfo") || "Doctor Information"}</CardTitle>
             <CardDescription>
-              {t("doctorInfoDesc") || "Please provide your professional information"}
+              {t("doctorInfoDesc") ||
+                "Please provide your professional information"}
             </CardDescription>
           </CardHeader>
 
@@ -130,7 +151,9 @@ function DoctorFormPage() {
               <div className="grid gap-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="prenom">{t("firstName") || "First Name"}</Label>
+                    <Label htmlFor="prenom">
+                      {t("firstName") || "First Name"}
+                    </Label>
                     <Input
                       id="prenom"
                       value={formData.prenom}
@@ -152,10 +175,21 @@ function DoctorFormPage() {
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="specialite">{t("specialty") || "Specialty"}</Label>
-                  <Select value={formData.specialite} onValueChange={(value) => setFormData(prev => ({ ...prev, specialite: value }))}>
+                  <Label htmlFor="specialite">
+                    {t("specialty") || "Specialty"}
+                  </Label>
+                  <Select
+                    value={formData.specialite}
+                    onValueChange={(value) =>
+                      setFormData((prev) => ({ ...prev, specialite: value }))
+                    }
+                  >
                     <SelectTrigger>
-                      <SelectValue placeholder={t("selectSpecialty") || "Select your specialty"} />
+                      <SelectValue
+                        placeholder={
+                          t("selectSpecialty") || "Select your specialty"
+                        }
+                      />
                     </SelectTrigger>
                     <SelectContent>
                       {specialties.map((specialty) => (
@@ -168,7 +202,9 @@ function DoctorFormPage() {
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="telephone">{t("phone") || "Phone Number"}</Label>
+                  <Label htmlFor="telephone">
+                    {t("phone") || "Phone Number"}
+                  </Label>
                   <Input
                     id="telephone"
                     value={formData.telephone}
@@ -179,7 +215,9 @@ function DoctorFormPage() {
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="photoUrl">{t("photoUrl") || "Profile Photo URL (optional)"}</Label>
+                  <Label htmlFor="photoUrl">
+                    {t("photoUrl") || "Profile Photo URL (optional)"}
+                  </Label>
                   <Input
                     id="photoUrl"
                     value={formData.photoUrl}
@@ -188,7 +226,11 @@ function DoctorFormPage() {
                   />
                 </div>
 
-                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={isSubmitting}
+                >
                   {isSubmitting
                     ? t("creatingProfile") || "Creating Profile..."
                     : t("completeRegistration") || "Complete Registration"}
@@ -199,7 +241,8 @@ function DoctorFormPage() {
 
           <CardFooter className="flex justify-center">
             <div className="text-sm text-muted-foreground">
-              {t("profileUpdatable") || "Your profile information can be updated later"}
+              {t("profileUpdatable") ||
+                "Your profile information can be updated later"}
             </div>
           </CardFooter>
         </Card>

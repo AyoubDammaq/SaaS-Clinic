@@ -1,7 +1,6 @@
-
-import { ReactNode } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
+import { ReactNode } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 interface StatCardProps {
   title: string;
@@ -15,7 +14,14 @@ interface StatCardProps {
   className?: string;
 }
 
-export function StatCard({ title, value, icon, description, trend, className }: StatCardProps) {
+export function StatCard({
+  title,
+  value,
+  icon,
+  description,
+  trend,
+  className,
+}: StatCardProps) {
   return (
     <Card className={cn("h-full", className)}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -31,7 +37,7 @@ export function StatCard({ title, value, icon, description, trend, className }: 
         )}
         {trend && (
           <div className="flex items-center gap-1 mt-2">
-            <div 
+            <div
               className={cn(
                 "text-xs font-medium",
                 trend.isPositive ? "text-green-600" : "text-red-600"

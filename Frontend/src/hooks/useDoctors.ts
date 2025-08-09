@@ -173,10 +173,6 @@ export function useDoctors(): UseDoctorsState {
       return;
     }
 
-    if (!window.confirm("Are you sure you want to delete this doctor?")) {
-      return;
-    }
-
     setIsLoading(true);
     try {
       await doctorService.deleteDoctor(id);

@@ -25,6 +25,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { t } = useTranslation("auth");
+  const userCache = new Map<string, User>();
 
   const roleMap: Record<UserRole, number> = {
     SuperAdmin: 2,
@@ -455,6 +456,118 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const getAllUsers = async (): Promise<User[] | null> => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const users = await api.get<User[]>(API_ENDPOINTS.AUTH.GET_ALL_USERS);
+      return users;
+    } catch (err: unknown) {
+      let errorMessage = t("userFetchError") || "Failed to fetch users";
+
+      if (err instanceof AxiosError && err.response?.data) {
+        const data = err.response.data;
+        if (typeof data === "string") {
+          errorMessage = data;
+        } else if (
+          typeof data === "object" &&
+          data !== null &&
+          "message" in data
+        ) {
+          errorMessage = data.message;
+        }
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getUserById = async (id: string): Promise<User | null> => {
+    setIsLoading(true);
+    setError(null);
+
+    if (userCache.has(id)) {
+      return userCache.get(id)!;
+    }
+
+    try {
+      const user = await api.get<User>(API_ENDPOINTS.AUTH.GET_USER_BY_ID(id));
+      return user;
+    } catch (err: unknown) {
+      let errorMessage = t("userFetchError") || "Failed to fetch user";
+
+      if (err instanceof AxiosError && err.response?.data) {
+        const data = err.response.data;
+        if (typeof data === "string") {
+          errorMessage = data;
+        } else if (
+          typeof data === "object" &&
+          data !== null &&
+          "message" in data
+        ) {
+          errorMessage = data.message;
+        }
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const changeUserRole = async (
+    userId: string,
+    role: UserRole
+  ): Promise<boolean> => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const roleValue = roleMap[role];
+      await api.post(API_ENDPOINTS.AUTH.CHANGE_ROLE, {
+        userId,
+        role: roleValue,
+      });
+
+      toast.success(t("roleChangeSuccess") || "User role updated");
+      return true;
+    } catch (err: unknown) {
+      let errorMessage = t("roleChangeError") || "Failed to change user role";
+
+      if (err instanceof AxiosError && err.response?.data) {
+        const data = err.response.data;
+        if (typeof data === "string") {
+          errorMessage = data;
+        } else if (
+          typeof data === "object" &&
+          data !== null &&
+          "message" in data
+        ) {
+          errorMessage = data.message;
+        }
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const deleteUser = async (
     userId: string,
     options?: { isRollback?: boolean }
@@ -587,6 +700,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         changePassword,
         forgotPassword,
         resetPassword,
+        getAllUsers,
+        getUserById,
+        changeUserRole,
         deleteUser,
         checkUserRole,
         linkToProfile,

@@ -228,7 +228,7 @@ export function useAppointments(): UseAppointmentsState {
       toast.error("Échec de la confirmation du rendez-vous");
     }
   };
-
+  
   return {
     appointments,
     filteredAppointments,

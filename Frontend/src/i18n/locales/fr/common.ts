@@ -1,4 +1,3 @@
-
 export default {
   // Common UI elements
   home: "Accueil",
@@ -21,22 +20,29 @@ export default {
   clear: "Effacer",
   clearAll: "Tout effacer",
   clearFilters: "Effacer les filtres",
+  filters: "Filtres",
   status: "Statut",
   close: "Fermer",
-  
+  page: "Page",
+  of: "de",
+
   // Language
   language: "Langue",
   english: "Anglais",
   french: "Français",
-  
+
   // Theme
   theme: "Thème",
   darkMode: "Mode sombre",
   lightMode: "Mode clair",
   system: "Système",
-  
+
   // Roles
   patient: "Patient",
   doctor: "Médecin",
   admin: "Administrateur",
+
+  // Pagination
+  next: "Suivant",
+  previous: "Précédent",
 };

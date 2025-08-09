@@ -1,22 +1,27 @@
+import en_auth from "./en/auth";
+import en_common from "./en/common";
+import en_appointments from "./en/appointments";
+import en_patients from "./en/patients";
+import en_consultations from "./en/consultations";
+import en_billing from "./en/billing";
+import en_doctors from "./en/doctors";
+import en_pagination from "./en/pagination";
+import en_clinics from "./en/clinics";
+import en_profil from "./en/profile"
 
-import en_auth from './en/auth';
-import en_common from './en/common';
-import en_appointments from './en/appointments';
-import en_patients from './en/patients';
-import en_consultations from './en/consultations';
-import en_billing from './en/billing';
-import en_doctors from './en/doctors';
-
-import fr_auth from './fr/auth';
-import fr_common from './fr/common';
-import fr_appointments from './fr/appointments';
-import fr_patients from './fr/patients';
-import fr_consultations from './fr/consultations';
-import fr_billing from './fr/billing';
-import fr_doctors from './fr/doctors';
+import fr_auth from "./fr/auth";
+import fr_common from "./fr/common";
+import fr_appointments from "./fr/appointments";
+import fr_patients from "./fr/patients";
+import fr_consultations from "./fr/consultations";
+import fr_billing from "./fr/billing";
+import fr_doctors from "./fr/doctors";
+import fr_pagination from "./fr/pagination";
+import fr_clinics from "./fr/clinics";
+import fr_profil from "./fr/profile"
 
 // Re-export the types
-export * from './types';
+export * from "./types";
 
 export const resources = {
   en: {
@@ -27,6 +32,9 @@ export const resources = {
     consultations: en_consultations,
     billing: en_billing,
     doctors: en_doctors,
+    pagination: en_pagination,
+    clinics: en_clinics,
+    profil: en_profil,
   },
   fr: {
     auth: fr_auth,
@@ -36,12 +44,15 @@ export const resources = {
     consultations: fr_consultations,
     billing: fr_billing,
     doctors: fr_doctors,
+    pagination: fr_pagination,
+    clinics: fr_clinics,
+    profil: fr_profil,
   },
 };
 
 export const availableLanguages = [
-  { code: 'en', label: 'English' },
-  { code: 'fr', label: 'Français' },
+  { code: "en", label: "English" },
+  { code: "fr", label: "Français" },
 ];
 
-export const defaultLanguage = 'en';
+export const defaultLanguage = "en";

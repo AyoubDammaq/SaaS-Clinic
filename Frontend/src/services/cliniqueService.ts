@@ -1,18 +1,22 @@
-
-import { API_ENDPOINTS } from '@/config/api';
-import { api } from '@/utils/apiClient';
-import { Clinique, LinkUserToClinicDto, StatistiqueCliniqueDTO, StatistiqueDTO, TypeClinique } from '@/types/clinic';
-import { toast } from 'sonner';
+import { API_ENDPOINTS } from "@/config/api";
+import { api } from "@/utils/apiClient";
+import {
+  Clinique,
+  LinkUserToClinicDto,
+  StatistiqueCliniqueDTO,
+  StatistiqueDTO,
+  TypeClinique,
+} from "@/types/clinic";
+import { toast } from "sonner";
 
 export const cliniqueService = {
-
   // Get all clinics
   getAllCliniques: async (): Promise<Clinique[]> => {
     try {
       return await api.get<Clinique[]>(API_ENDPOINTS.CLINICS.GET_ALL);
     } catch (error) {
-      console.error('Échec lors de la récupération des cliniques:', error);
-      toast.error('Échec lors de la récupération des cliniques');
+      console.error("Échec lors de la récupération des cliniques:", error);
+      toast.error("Échec lors de la récupération des cliniques");
       throw error;
     }
   },
@@ -22,29 +26,40 @@ export const cliniqueService = {
     try {
       return await api.get<Clinique>(API_ENDPOINTS.CLINICS.GET_BY_ID(id));
     } catch (error) {
-      console.error(`Échec lors de la récupération de la clinique ${id}:`, error);
+      console.error(
+        `Échec lors de la récupération de la clinique ${id}:`,
+        error
+      );
       toast.error(`Échec lors de la récupération de la clinique`);
       throw error;
     }
   },
 
   // Add a new clinic
-  addClinique: async (clinique: Omit<Clinique, 'id' | 'dateCreation'>): Promise<Clinique> => {
+  addClinique: async (
+    clinique: Omit<Clinique, "id" | "dateCreation">
+  ): Promise<Clinique> => {
     try {
       return await api.post<Clinique>(API_ENDPOINTS.CLINICS.CREATE, clinique);
     } catch (error) {
-      console.error('Échec lors de l\'ajout de la clinique:', error);
-      toast.error('Échec lors de l\'ajout de la clinique');
+      console.error("Échec lors de l'ajout de la clinique:", error);
+      toast.error("Échec lors de l'ajout de la clinique");
       throw error;
     }
   },
 
   // Update a clinic
-  updateClinique: async (id: string, clinique: Partial<Clinique>): Promise<void> => {
+  updateClinique: async (
+    id: string,
+    clinique: Partial<Clinique>
+  ): Promise<void> => {
     try {
       await api.put(API_ENDPOINTS.CLINICS.UPDATE(id), clinique);
     } catch (error) {
-      console.error(`Échec lors de la mise à jour de la clinique ${id}:`, error);
+      console.error(
+        `Échec lors de la mise à jour de la clinique ${id}:`,
+        error
+      );
       toast.error(`Échec lors de la mise à jour de la clinique`);
       throw error;
     }
@@ -55,19 +70,31 @@ export const cliniqueService = {
     try {
       await api.delete(API_ENDPOINTS.CLINICS.DELETE(id));
     } catch (error) {
-      console.error(`Échec lors de la suppression de la clinique ${id}:`, error);
+      console.error(
+        `Échec lors de la suppression de la clinique ${id}:`,
+        error
+      );
       toast.error(`Échec lors de la suppression de la clinique`);
       throw error;
     }
   },
 
   // Get statistics for a clinic
-  getCliniqueStatistics: async (id: string): Promise<StatistiqueCliniqueDTO> => {
+  getCliniqueStatistics: async (
+    id: string
+  ): Promise<StatistiqueCliniqueDTO> => {
     try {
-      return await api.get<StatistiqueCliniqueDTO>(`${API_ENDPOINTS.CLINICS.BASE}/statistiques/${id}`);
+      return await api.get<StatistiqueCliniqueDTO>(
+        `${API_ENDPOINTS.CLINICS.BASE}/statistiques/${id}`
+      );
     } catch (error) {
-      console.error(`Échec lors de la récupération des statistiques pour la clinique ${id}:`, error);
-      toast.error(`Échec lors de la récupération des statistiques de la clinique`);
+      console.error(
+        `Échec lors de la récupération des statistiques pour la clinique ${id}:`,
+        error
+      );
+      toast.error(
+        `Échec lors de la récupération des statistiques de la clinique`
+      );
       throw error;
     }
   },
@@ -75,10 +102,17 @@ export const cliniqueService = {
   // Filter clinics by type
   getCliniqueByType: async (type: TypeClinique): Promise<Clinique[]> => {
     try {
-      return await api.get<Clinique[]>(API_ENDPOINTS.CLINICS.GET_BY_TYPE(String(type)));
+      return await api.get<Clinique[]>(
+        API_ENDPOINTS.CLINICS.GET_BY_TYPE(String(type))
+      );
     } catch (error) {
-      console.error(`Échec lors de la récupération des cliniques de type ${type}:`, error);
-      toast.error(`Échec lors de la récupération des cliniques de type ${type}`);
+      console.error(
+        `Échec lors de la récupération des cliniques de type ${type}:`,
+        error
+      );
+      toast.error(
+        `Échec lors de la récupération des cliniques de type ${type}`
+      );
       throw error;
     }
   },
@@ -88,8 +122,13 @@ export const cliniqueService = {
     try {
       return await api.get<Clinique[]>(API_ENDPOINTS.CLINICS.GET_BY_NAME(name));
     } catch (error) {
-      console.error(`Échec lors de la récupération des cliniques avec le nom ${name}:`, error);
-      toast.error(`Échec lors de la récupération des cliniques avec le nom ${name}`);
+      console.error(
+        `Échec lors de la récupération des cliniques avec le nom ${name}:`,
+        error
+      );
+      toast.error(
+        `Échec lors de la récupération des cliniques avec le nom ${name}`
+      );
       throw error;
     }
   },
@@ -97,21 +136,37 @@ export const cliniqueService = {
   // Filter clinics by address
   getCliniqueByAddress: async (address: string): Promise<Clinique[]> => {
     try {
-      return await api.get<Clinique[]>(API_ENDPOINTS.CLINICS.GET_BY_ADDRESS(address));
+      return await api.get<Clinique[]>(
+        API_ENDPOINTS.CLINICS.GET_BY_ADDRESS(address)
+      );
     } catch (error) {
-      console.error(`Échec lors de la récupération des cliniques avec l'adresse ${address}:`, error);
-      toast.error(`Échec lors de la récupération des cliniques avec l'adresse ${address}`);
+      console.error(
+        `Échec lors de la récupération des cliniques avec l'adresse ${address}:`,
+        error
+      );
+      toast.error(
+        `Échec lors de la récupération des cliniques avec l'adresse ${address}`
+      );
       throw error;
     }
   },
 
   // Filter clinics by status
-  getCliniqueByStatus: async (status: 'Active' | 'Inactive'): Promise<Clinique[]> => {
+  getCliniqueByStatus: async (
+    status: "Active" | "Inactive"
+  ): Promise<Clinique[]> => {
     try {
-      return await api.get<Clinique[]>(API_ENDPOINTS.CLINICS.GET_BY_STATUS(status));
-    } catch (error) {  
-      console.error(`Échec lors de la récupération des cliniques avec le statut ${status}:`, error);
-      toast.error(`Échec lors de la récupération des cliniques avec le statut ${status}`);
+      return await api.get<Clinique[]>(
+        API_ENDPOINTS.CLINICS.GET_BY_STATUS(status)
+      );
+    } catch (error) {
+      console.error(
+        `Échec lors de la récupération des cliniques avec le statut ${status}:`,
+        error
+      );
+      toast.error(
+        `Échec lors de la récupération des cliniques avec le statut ${status}`
+      );
       throw error;
     }
   },
@@ -121,19 +176,29 @@ export const cliniqueService = {
     try {
       return await api.get<number>(API_ENDPOINTS.CLINICS.GET_TOTAL_COUNT);
     } catch (error) {
-      console.error('Échec lors de la récupération du nombre total de cliniques:', error);
-      toast.error('Échec lors de la récupération du nombre total de cliniques');
+      console.error(
+        "Échec lors de la récupération du nombre total de cliniques:",
+        error
+      );
+      toast.error("Échec lors de la récupération du nombre total de cliniques");
       throw error;
     }
   },
 
-    // Get new clinics for the current month
+  // Get new clinics for the current month
   getNewCliniqueThisMonth: async (): Promise<Clinique[]> => {
     try {
-      return await api.get<Clinique[]>(API_ENDPOINTS.CLINICS.GET_NEW_THIS_MONTH);
+      return await api.get<Clinique[]>(
+        API_ENDPOINTS.CLINICS.GET_NEW_THIS_MONTH
+      );
     } catch (error) {
-      console.error('Échec lors de la récupération des nouvelles cliniques du mois:', error);
-      toast.error('Échec lors de la récupération des nouvelles cliniques du mois');
+      console.error(
+        "Échec lors de la récupération des nouvelles cliniques du mois:",
+        error
+      );
+      toast.error(
+        "Échec lors de la récupération des nouvelles cliniques du mois"
+      );
       throw error;
     }
   },
@@ -141,23 +206,39 @@ export const cliniqueService = {
   // Get new clinics by month
   getNewCliniqueByMonth: async (): Promise<StatistiqueDTO[]> => {
     try {
-      return await api.get<StatistiqueDTO[]>(API_ENDPOINTS.CLINICS.GET_NEW_BY_MONTH);
+      return await api.get<StatistiqueDTO[]>(
+        API_ENDPOINTS.CLINICS.GET_NEW_BY_MONTH
+      );
     } catch (error) {
-      console.error('Échec lors de la récupération des nouvelles cliniques par mois:', error);
-      toast.error('Échec lors de la récupération des nouvelles cliniques par mois');
+      console.error(
+        "Échec lors de la récupération des nouvelles cliniques par mois:",
+        error
+      );
+      toast.error(
+        "Échec lors de la récupération des nouvelles cliniques par mois"
+      );
       throw error;
     }
   },
 
   // Link user to clinic
-  linkUserToClinique: async ({ userId, clinicId } : LinkUserToClinicDto): Promise<void> => {
+  linkUserToClinique: async ({
+    userId,
+    clinicId,
+  }: LinkUserToClinicDto): Promise<void> => {
     const data = { userId, clinicId };
     try {
       await api.post<void>(API_ENDPOINTS.CLINICS.LINK_USER, data);
-      console.log("[cliniqueService] User linked to clinic successfully:", data);
+      console.log(
+        "[cliniqueService] User linked to clinic successfully:",
+        data
+      );
     } catch (error) {
-      console.error('Échec lors de la liaison de l\'utilisateur à la clinique:', error);
-      toast.error('Échec lors de la liaison de l\'utilisateur à la clinique');
+      console.error(
+        "Échec lors de la liaison de l'utilisateur à la clinique:",
+        error
+      );
+      toast.error("Échec lors de la liaison de l'utilisateur à la clinique");
       throw error;
     }
   },
@@ -173,8 +254,6 @@ export const cliniqueService = {
   //   }
   // },
 
-
-
   // Get clinic statistics by month
   // getCliniqueStatisticsByMonth: async (id: string): Promise<StatistiqueDTO[]> => {
   //   try {
@@ -185,7 +264,6 @@ export const cliniqueService = {
   //     throw error;
   //   }
   // }
-
 
   // Get clinic statistics by year
   // getCliniqueStatisticsByYear: async (id: string): Promise<StatistiqueDTO[]> => {

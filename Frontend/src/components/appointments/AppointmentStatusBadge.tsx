@@ -16,17 +16,17 @@ const statusConfig: Record<AppointmentStatus, {
   className: string;
 }> = {
   CONFIRME: {
-    labelKey: "Planifié",
+    labelKey: "scheduled",
     icon: <CheckCircle className="h-3.5 w-3.5 mr-1" />,
     className: "text-green-600 bg-green-50 border-green-200",
   },
   EN_ATTENTE: {
-    labelKey: "En Attente",
+    labelKey: "pending",
     icon: <Clock className="h-3.5 w-3.5 mr-1" />,
     className: "text-blue-600 bg-blue-50 border-blue-200",
   },
   ANNULE: {
-    labelKey: "Annulé",
+    labelKey: "cancelled",
     icon: <XCircle className="h-3.5 w-3.5 mr-1" />,
     className: "text-red-600 bg-red-50 border-red-200",
   },

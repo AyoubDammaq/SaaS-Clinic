@@ -14,6 +14,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -27,7 +28,11 @@ import {
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useTranslation } from "@/hooks/useTranslation";
-import { ConsultationDTO } from "@/types/consultation";
+import {
+  ConsultationDTO,
+  ConsultationType,
+  consultationTypes,
+} from "@/types/consultation";
 import { useAuth } from "@/hooks/useAuth";
 
 interface Appointment {
@@ -63,6 +68,7 @@ export function CreateFromAppointment({
       dateConsultation: "",
       diagnostic: "",
       notes: "",
+      type: ConsultationType.ConsultationGenerale,
     },
   });
 
@@ -75,6 +81,7 @@ export function CreateFromAppointment({
         dateConsultation: appointment.date,
         diagnostic: "",
         notes: "",
+        type: ConsultationType.ConsultationGenerale,
       });
     }
   }, [appointment, form]);
@@ -125,15 +132,48 @@ export function CreateFromAppointment({
 
             <FormField
               control={form.control}
+              name="type"
+              render={({ field, fieldState }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t("typeConsultation") || "Type de consultation"}
+                  </FormLabel>
+                  <Select
+                    onValueChange={(val) => field.onChange(parseInt(val))}
+                    value={field.value?.toString()}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          placeholder={
+                            t("selectType") || "Sélectionner le type"
+                          }
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {Object.entries(consultationTypes).map(
+                        ([value, labelKey]) => (
+                          <SelectItem key={value} value={value}>
+                            {t(labelKey)}
+                          </SelectItem>
+                        )
+                      )}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage>{fieldState.error?.message}</FormMessage>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="diagnostic"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{t("diagnostic")}</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder={t("Write the diagnostic")} 
-                      {...field}
-                    />
+                    <Input placeholder={t("Write the diagnostic")} {...field} />
                   </FormControl>
                 </FormItem>
               )}
@@ -148,7 +188,7 @@ export function CreateFromAppointment({
                   <FormControl>
                     <Textarea
                       rows={5}
-                      placeholder={t("Enter Notes")} 
+                      placeholder={t("Enter Notes")}
                       {...field}
                     />
                   </FormControl>

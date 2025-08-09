@@ -49,7 +49,6 @@ const getAppointmentFormSchema = (t: (key: string) => string) =>
     medecinId: z.string().min(1, { message: t("selectDoctorRequired") }),
     date: z.date({ required_error: t("dateRequired") }),
     time: z.string().min(1, { message: t("timeRequired") }),
-    duration: z.string().min(1, { message: t("durationRequired") }),
     reason: z.string().min(5, { message: t("reasonMinimum") }),
   });
 
@@ -84,31 +83,47 @@ export const AppointmentForm = ({
     []
   );
 
-  useEffect(() => {
-    if (isOpen) {
-      console.log(
-        "[AppointmentForm] Opened form with initial data:",
-        initialData
-      );
-    }
-  }, [isOpen, initialData]);
-
   const form = useForm<AppointmentFormValues>({
     resolver: zodResolver(AppointmentFormSchema),
     defaultValues: {
-      patientId: initialData?.patientId || patientId || "",
-      medecinId: initialData?.medecinId || "",
-      date: initialData?.dateHeure
-        ? new Date(initialData.dateHeure)
-        : undefined,
-      time: initialData?.time || "",
-      duration: initialData?.duration?.toString() || "30",
-      reason: initialData?.reason || "",
+      patientId: patientId || "",
+      medecinId: "",
+      date: undefined,
+      time: "",
+      reason: "",
     },
   });
 
   const medecinId = form.watch("medecinId");
   const date = form.watch("date");
+
+  useEffect(() => {
+    if (isOpen) {
+      // Reset form when dialog opens
+      if (!initialData) {
+        form.reset({
+          patientId: patientId || "",
+          medecinId: "",
+          date: undefined,
+          time: "",
+          reason: "",
+        });
+        setAvailableSlots([]); // Reset available slots
+      } else {
+        form.reset({
+          patientId: initialData.patientId || patientId || "",
+          medecinId: initialData.medecinId || "",
+          date: initialData.dateHeure ? new Date(initialData.dateHeure) : undefined,
+          time: initialData.time || "",
+          reason: initialData.reason || "",
+        });
+      }
+      console.log(
+        "[AppointmentForm] Form reset with initial data:",
+        initialData
+      );
+    }
+  }, [isOpen, initialData, patientId, form]);
 
   useEffect(() => {
     const fetchSlots = async () => {
@@ -123,31 +138,18 @@ export const AppointmentForm = ({
           setAvailableSlots([]);
           console.error("Erreur lors du chargement des créneaux disponibles");
         }
+      } else {
+        setAvailableSlots([]); // Clear slots if no doctor or date selected
       }
     };
 
     fetchSlots();
   }, [medecinId, date, getAvailableSlots]);
 
-  useEffect(() => {
-    if (initialData) {
-      form.reset({
-        patientId: initialData.patientId || "",
-        medecinId: initialData.medecinId || "",
-        date: initialData.dateHeure
-          ? new Date(initialData.dateHeure)
-          : undefined,
-        time: initialData.time || "",
-        duration: initialData.duration?.toString() || "30",
-        reason: initialData.reason || "",
-      });
-    }
-  }, [initialData, form]);
-
   const handleSubmit = async (data: AppointmentFormValues) => {
     console.log("[AppointmentForm] Validated form data:", data);
     if (patientId) {
-      data.patientId = patientId; // forcer la valeur au patient connecté
+      data.patientId = patientId; // Force patientId for logged-in patient
     }
     setIsSubmitting(true);
     try {
@@ -164,13 +166,12 @@ export const AppointmentForm = ({
       const requestPayload = {
         patientId: data.patientId,
         medecinId: data.medecinId,
-        dateHeure: localIso, // ✅ format ISO
-        commentaire: data.reason, // ou "commentaire" selon le champ du backend
+        dateHeure: localIso,
+        commentaire: data.reason,
       };
 
       await onSubmit({
         ...requestPayload,
-        duration: parseInt(data.duration),
       });
       toast.success(
         initialData ? t("appointmentUpdated") : t("appointmentCreated")
@@ -252,7 +253,7 @@ export const AppointmentForm = ({
                     </FormControl>
                     <SelectContent>
                       {doctors
-                        .filter((doctor) => !!doctor.cliniqueId) // 🔥 Ne garde que les médecins liés à une clinique
+                        .filter((doctor) => !!doctor.cliniqueId)
                         .map((doctor) => (
                           <SelectItem key={doctor.id} value={doctor.id}>
                             {doctor.prenom} {doctor.nom}{" "}
@@ -266,6 +267,7 @@ export const AppointmentForm = ({
               )}
             />
             <div className="grid grid-cols-2 gap-4">
+              {/* Date Picker */}
               <FormField
                 control={form.control}
                 name="date"
@@ -300,7 +302,7 @@ export const AppointmentForm = ({
                             date < new Date() || date < new Date("1900-01-01")
                           }
                           initialFocus
-                          className={cn("p-3 pointer-events-auto")}
+                          className="p-3 pointer-events-auto"
                         />
                       </PopoverContent>
                     </Popover>
@@ -309,6 +311,7 @@ export const AppointmentForm = ({
                 )}
               />
 
+              {/* Time Selector */}
               <FormField
                 control={form.control}
                 name="time"
@@ -335,7 +338,7 @@ export const AppointmentForm = ({
                               .filter(
                                 (slot) =>
                                   new Date(slot.dateHeureDebut) > new Date()
-                              ) // 🛡️ protection complémentaire
+                              )
                               .map((slot, index) => {
                                 const start = new Date(slot.dateHeureDebut);
                                 return (
@@ -359,34 +362,6 @@ export const AppointmentForm = ({
                 )}
               />
             </div>
-
-            <FormField
-              control={form.control}
-              name="duration"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("durationMinutes")}</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder={t("selectDuration")} />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="15">15 {t("min")}</SelectItem>
-                      <SelectItem value="30">30 {t("min")}</SelectItem>
-                      <SelectItem value="45">45 {t("min")}</SelectItem>
-                      <SelectItem value="60">60 {t("min")}</SelectItem>
-                      <SelectItem value="90">90 {t("min")}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
             <FormField
               control={form.control}

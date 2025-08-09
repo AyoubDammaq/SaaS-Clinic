@@ -1,14 +1,17 @@
-
-import { useState } from 'react';
+import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { 
-  Card, CardContent, CardDescription, CardHeader, CardTitle 
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Settings,
   Bell,
@@ -19,29 +22,32 @@ import {
   Mail,
   CreditCard,
   Users,
-  Save
-} from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
-import { Separator } from '@/components/ui/separator';
+  Save,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
+import { ConsultationPricingSettings } from "@/components/settings/ConsultationPricingSettings";
 
 function SettingsPage() {
   const { user } = useAuth();
-  
+
   // Security settings
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [smsNotifications, setSmsNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
-  
+
   // Clinic settings (for ClinicAdmin)
-  const [clinicName, setClinicName] = useState('Main Street Medical Center');
-  const [clinicAddress, setClinicAddress] = useState('123 Main St, Anytown, CA 12345');
-  const [clinicPhone, setClinicPhone] = useState('555-123-4567');
-  const [clinicEmail, setClinicEmail] = useState('info@mainstreetmedical.com');
-  const [openingTime, setOpeningTime] = useState('08:00');
-  const [closingTime, setClosingTime] = useState('18:00');
-  
+  const [clinicName, setClinicName] = useState("Main Street Medical Center");
+  const [clinicAddress, setClinicAddress] = useState(
+    "123 Main St, Anytown, CA 12345"
+  );
+  const [clinicPhone, setClinicPhone] = useState("555-123-4567");
+  const [clinicEmail, setClinicEmail] = useState("info@mainstreetmedical.com");
+  const [openingTime, setOpeningTime] = useState("08:00");
+  const [closingTime, setClosingTime] = useState("18:00");
+
   const [workingDays, setWorkingDays] = useState({
     monday: true,
     tuesday: true,
@@ -53,9 +59,9 @@ function SettingsPage() {
   });
 
   const toggleWorkingDay = (day: keyof typeof workingDays) => {
-    setWorkingDays(prev => ({
+    setWorkingDays((prev) => ({
       ...prev,
-      [day]: !prev[day]
+      [day]: !prev[day],
     }));
   };
 
@@ -74,23 +80,32 @@ function SettingsPage() {
             </p>
           </div>
           <Separator />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <Label htmlFor="fullName">Full Name</Label>
-              <Input id="fullName" value={user?.name} placeholder="Enter your full name" />
+              <Input
+                id="fullName"
+                value={user?.name}
+                placeholder="Enter your full name"
+              />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" value={user?.email} type="email" placeholder="Enter your email address" />
+              <Input
+                id="email"
+                value={user?.email}
+                type="email"
+                placeholder="Enter your email address"
+              />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="phone">Phone Number</Label>
               <Input id="phone" placeholder="Enter your phone number" />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="language">Preferred Language</Label>
               <select
@@ -103,7 +118,7 @@ function SettingsPage() {
               </select>
             </div>
           </div>
-          
+
           <div className="flex justify-end">
             <Button>
               <Save className="mr-2 h-4 w-4" /> Save Profile
@@ -139,7 +154,7 @@ function SettingsPage() {
                 onCheckedChange={setEmailNotifications}
               />
             </div>
-            
+
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label>SMS Notifications</Label>
@@ -152,7 +167,7 @@ function SettingsPage() {
                 onCheckedChange={setSmsNotifications}
               />
             </div>
-            
+
             <Separator />
             <p className="font-medium">Notification Types</p>
 
@@ -165,7 +180,7 @@ function SettingsPage() {
               </div>
               <Switch defaultChecked />
             </div>
-            
+
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label>Account Updates</Label>
@@ -175,7 +190,7 @@ function SettingsPage() {
               </div>
               <Switch defaultChecked />
             </div>
-            
+
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label>Billing and Payment</Label>
@@ -186,7 +201,7 @@ function SettingsPage() {
               <Switch defaultChecked />
             </div>
           </div>
-          
+
           <div className="flex justify-end">
             <Button>
               <Save className="mr-2 h-4 w-4" /> Save Preferences
@@ -222,31 +237,43 @@ function SettingsPage() {
                 onCheckedChange={setTwoFactorEnabled}
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="current-password">Current Password</Label>
-              <Input id="current-password" type="password" placeholder="Enter your current password" />
+              <Input
+                id="current-password"
+                type="password"
+                placeholder="Enter your current password"
+              />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="new-password">New Password</Label>
-              <Input id="new-password" type="password" placeholder="Enter your new password" />
+              <Input
+                id="new-password"
+                type="password"
+                placeholder="Enter your new password"
+              />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="confirm-password">Confirm New Password</Label>
-              <Input id="confirm-password" type="password" placeholder="Confirm your new password" />
+              <Input
+                id="confirm-password"
+                type="password"
+                placeholder="Confirm your new password"
+              />
             </div>
           </div>
-          
+
           <div className="flex justify-end">
             <Button>
               <Save className="mr-2 h-4 w-4" /> Update Password
             </Button>
           </div>
-          
+
           <Separator />
-          
+
           <div>
             <h4 className="font-medium mb-2">Login Sessions</h4>
             <div className="space-y-2">
@@ -258,12 +285,15 @@ function SettingsPage() {
                       Web Browser • Started 2 hours ago
                     </p>
                   </div>
-                  <Badge variant="outline" className="bg-green-50 text-green-600 border-green-200">
+                  <Badge
+                    variant="outline"
+                    className="bg-green-50 text-green-600 border-green-200"
+                  >
                     Active
                   </Badge>
                 </div>
               </div>
-              
+
               <div className="border p-3 rounded-md">
                 <div className="flex justify-between items-center">
                   <div>
@@ -285,7 +315,7 @@ function SettingsPage() {
   };
 
   const renderClinicSettings = () => {
-    if (user?.role !== 'ClinicAdmin' && user?.role !== 'SuperAdmin') {
+    if (user?.role !== "ClinicAdmin" && user?.role !== "SuperAdmin") {
       return null;
     }
 
@@ -303,124 +333,124 @@ function SettingsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <Label htmlFor="clinic-name">Clinic Name</Label>
-              <Input 
-                id="clinic-name" 
-                value={clinicName} 
+              <Input
+                id="clinic-name"
+                value={clinicName}
                 onChange={(e) => setClinicName(e.target.value)}
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="clinic-email">Email</Label>
-              <Input 
-                id="clinic-email" 
-                value={clinicEmail} 
+              <Input
+                id="clinic-email"
+                value={clinicEmail}
                 onChange={(e) => setClinicEmail(e.target.value)}
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="clinic-address">Address</Label>
-              <Input 
-                id="clinic-address" 
-                value={clinicAddress} 
+              <Input
+                id="clinic-address"
+                value={clinicAddress}
                 onChange={(e) => setClinicAddress(e.target.value)}
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="clinic-phone">Phone</Label>
-              <Input 
-                id="clinic-phone" 
-                value={clinicPhone} 
+              <Input
+                id="clinic-phone"
+                value={clinicPhone}
                 onChange={(e) => setClinicPhone(e.target.value)}
               />
             </div>
           </div>
-          
+
           <Separator />
-          
+
           <div>
             <h4 className="font-medium mb-4">Operating Hours</h4>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
               <div className="space-y-2">
                 <Label htmlFor="opening-time">Opening Time</Label>
-                <Input 
-                  id="opening-time" 
-                  type="time" 
-                  value={openingTime} 
+                <Input
+                  id="opening-time"
+                  type="time"
+                  value={openingTime}
                   onChange={(e) => setOpeningTime(e.target.value)}
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="closing-time">Closing Time</Label>
-                <Input 
-                  id="closing-time" 
-                  type="time" 
-                  value={closingTime} 
+                <Input
+                  id="closing-time"
+                  type="time"
+                  value={closingTime}
                   onChange={(e) => setClosingTime(e.target.value)}
                 />
               </div>
             </div>
-            
+
             <div>
               <Label className="mb-2 block">Working Days</Label>
               <div className="flex flex-wrap gap-2">
-                <Button 
-                  variant={workingDays.monday ? "default" : "outline"} 
+                <Button
+                  variant={workingDays.monday ? "default" : "outline"}
                   size="sm"
-                  onClick={() => toggleWorkingDay('monday')}
+                  onClick={() => toggleWorkingDay("monday")}
                 >
                   Monday
                 </Button>
-                <Button 
-                  variant={workingDays.tuesday ? "default" : "outline"} 
+                <Button
+                  variant={workingDays.tuesday ? "default" : "outline"}
                   size="sm"
-                  onClick={() => toggleWorkingDay('tuesday')}
+                  onClick={() => toggleWorkingDay("tuesday")}
                 >
                   Tuesday
                 </Button>
-                <Button 
-                  variant={workingDays.wednesday ? "default" : "outline"} 
+                <Button
+                  variant={workingDays.wednesday ? "default" : "outline"}
                   size="sm"
-                  onClick={() => toggleWorkingDay('wednesday')}
+                  onClick={() => toggleWorkingDay("wednesday")}
                 >
                   Wednesday
                 </Button>
-                <Button 
-                  variant={workingDays.thursday ? "default" : "outline"} 
+                <Button
+                  variant={workingDays.thursday ? "default" : "outline"}
                   size="sm"
-                  onClick={() => toggleWorkingDay('thursday')}
+                  onClick={() => toggleWorkingDay("thursday")}
                 >
                   Thursday
                 </Button>
-                <Button 
-                  variant={workingDays.friday ? "default" : "outline"} 
+                <Button
+                  variant={workingDays.friday ? "default" : "outline"}
                   size="sm"
-                  onClick={() => toggleWorkingDay('friday')}
+                  onClick={() => toggleWorkingDay("friday")}
                 >
                   Friday
                 </Button>
-                <Button 
-                  variant={workingDays.saturday ? "default" : "outline"} 
+                <Button
+                  variant={workingDays.saturday ? "default" : "outline"}
                   size="sm"
-                  onClick={() => toggleWorkingDay('saturday')}
+                  onClick={() => toggleWorkingDay("saturday")}
                 >
                   Saturday
                 </Button>
-                <Button 
-                  variant={workingDays.sunday ? "default" : "outline"} 
+                <Button
+                  variant={workingDays.sunday ? "default" : "outline"}
                   size="sm"
-                  onClick={() => toggleWorkingDay('sunday')}
+                  onClick={() => toggleWorkingDay("sunday")}
                 >
                   Sunday
                 </Button>
               </div>
             </div>
           </div>
-          
+
           <div className="flex justify-end">
             <Button>
               <Save className="mr-2 h-4 w-4" /> Save Clinic Settings
@@ -432,7 +462,7 @@ function SettingsPage() {
   };
 
   const renderSystemSettings = () => {
-    if (user?.role !== 'SuperAdmin') {
+    if (user?.role !== "SuperAdmin") {
       return null;
     }
 
@@ -460,7 +490,7 @@ function SettingsPage() {
                 onCheckedChange={setMaintenanceMode}
               />
             </div>
-            
+
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label>New Clinic Registrations</Label>
@@ -473,9 +503,9 @@ function SettingsPage() {
                 onCheckedChange={setAllowNewRegistrations}
               />
             </div>
-            
+
             <Separator />
-            
+
             <div className="space-y-2">
               <Label htmlFor="system-email">System Email</Label>
               <Input id="system-email" defaultValue="system@saas-clinic.com" />
@@ -483,7 +513,7 @@ function SettingsPage() {
                 Used for system-generated notifications
               </p>
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="storage-limit">Default Storage Limit (GB)</Label>
               <Input id="storage-limit" type="number" defaultValue="5" />
@@ -492,7 +522,7 @@ function SettingsPage() {
               </p>
             </div>
           </div>
-          
+
           <div className="flex justify-end">
             <Button>
               <Save className="mr-2 h-4 w-4" /> Save System Settings
@@ -516,7 +546,8 @@ function SettingsPage() {
         <CardHeader>
           <CardTitle>User Preferences</CardTitle>
           <CardDescription>
-            Manage your account settings, notifications, and security preferences
+            Manage your account settings, notifications, and security
+            preferences
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -531,32 +562,35 @@ function SettingsPage() {
               <TabsTrigger value="security">
                 <Lock className="h-4 w-4 mr-2" /> Security
               </TabsTrigger>
-              {(user?.role === 'ClinicAdmin' || user?.role === 'SuperAdmin') && (
+              {(user?.role === "ClinicAdmin" ||
+                user?.role === "SuperAdmin") && (
                 <TabsTrigger value="clinic">
                   <Building className="h-4 w-4 mr-2" /> Clinic
                 </TabsTrigger>
               )}
-              {user?.role === 'SuperAdmin' && (
+              {user?.role === "ClinicAdmin" && (
+                <TabsTrigger value="pricing">
+                  <CreditCard className="h-4 w-4 mr-2" /> Tarification
+                </TabsTrigger>
+              )}
+              {user?.role === "SuperAdmin" && (
                 <TabsTrigger value="system">
                   <Settings className="h-4 w-4 mr-2" /> System
                 </TabsTrigger>
               )}
             </TabsList>
-            <TabsContent value="account">
-              {renderUserSettings()}
-            </TabsContent>
+            <TabsContent value="account">{renderUserSettings()}</TabsContent>
             <TabsContent value="notifications">
               {renderNotificationSettings()}
             </TabsContent>
             <TabsContent value="security">
               {renderSecuritySettings()}
             </TabsContent>
-            <TabsContent value="clinic">
-              {renderClinicSettings()}
+            <TabsContent value="clinic">{renderClinicSettings()}</TabsContent>
+            <TabsContent value="pricing">
+              <ConsultationPricingSettings />
             </TabsContent>
-            <TabsContent value="system">
-              {renderSystemSettings()}
-            </TabsContent>
+            <TabsContent value="system">{renderSystemSettings()}</TabsContent>
           </Tabs>
         </CardContent>
       </Card>

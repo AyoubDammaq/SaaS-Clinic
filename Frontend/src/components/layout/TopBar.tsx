@@ -1,60 +1,75 @@
-
+import { useEffect, useRef, useState } from "react";
 import { Bell } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useAuth } from "@/hooks/useAuth";
-import { useState } from "react";
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuTrigger 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { NotificationDropdown } from "@/components/notifications/NotificationDropdown";
 import { useNavigate } from "react-router-dom";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
-import { 
-  HoverCard, 
-  HoverCardContent, 
-  HoverCardTrigger 
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { User } from "@/types/auth";
 
 export function TopBar() {
-  const { user } = useAuth();
+  const { user, getUserById } = useAuth();
   const navigate = useNavigate();
   const [notificationsOpen, setNotificationsOpen] = useState(false);
-  
+  const [fullUser, setFullUser] = useState<User | null>(null);
+  const userCache = useRef<Record<string, User>>({});
+
   const getInitials = (name: string) => {
     return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
       .toUpperCase();
   };
 
   const handleProfileClick = () => {
-    if (user?.role === 'Patient') {
-      navigate('/patients');
-    } else if (user?.role === 'Doctor') {
-      navigate('/doctors');
-    } else {
-      navigate('/profile');
-    }
+    navigate("/profile");
   };
-  
+
+  // 🔁 Fetch full user info on mount
+  useEffect(() => {
+    if (user?.id) {
+      // Check cache first
+      if (userCache.current[user.id]) {
+        setFullUser(userCache.current[user.id]);
+        return;
+      }
+
+      // Fetch only if not cached
+      getUserById(user.id).then((data) => {
+        if (data) {
+          userCache.current[user.id] = data;
+          setFullUser(data);
+        }
+      });
+    }
+  }, [user?.id]);
+
   return (
     <header className="fixed top-0 left-0 right-0 h-16 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-10 flex items-center justify-between px-4 lg:px-6">
       <div className="flex items-center gap-2">
         <SidebarTrigger className="h-9 w-9" />
       </div>
-      
+
       <div className="flex items-center gap-4">
         <LanguageSwitcher />
         <ThemeSwitcher />
-        
-        <DropdownMenu 
-          open={notificationsOpen} 
+
+        <DropdownMenu
+          open={notificationsOpen}
           onOpenChange={setNotificationsOpen}
         >
           <DropdownMenuTrigger asChild>
@@ -67,34 +82,36 @@ export function TopBar() {
             <NotificationDropdown onClose={() => setNotificationsOpen(false)} />
           </DropdownMenuContent>
         </DropdownMenu>
-        
+
         {user && (
           <HoverCard>
             <HoverCardTrigger asChild>
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 className="flex items-center gap-3 p-0 px-2 hover:bg-primary/10 transition-colors"
                 onClick={handleProfileClick}
               >
                 <div className="text-right">
-                  <p className="text-sm font-medium">{user.name}</p>
+                  <p className="text-sm font-medium">
+                    {fullUser?.fullName ?? user.name}
+                  </p>
                   <p className="text-xs text-muted-foreground">{user.role}</p>
                 </div>
                 <Avatar>
                   <AvatarImage src="" />
                   <AvatarFallback className="bg-clinic-500 text-white">
-                    {getInitials(user.name)}
+                    {getInitials(fullUser?.fullName ?? user.name)}
                   </AvatarFallback>
                 </Avatar>
               </Button>
             </HoverCardTrigger>
             <HoverCardContent className="p-3">
               <div className="space-y-2">
-                <p className="font-medium">{user.name}</p>
+                <p className="font-medium">{fullUser?.fullName ?? user.name}</p>
                 <p className="text-sm text-muted-foreground">{user.role}</p>
-                <Button 
-                  onClick={handleProfileClick} 
-                  variant="outline" 
+                <Button
+                  onClick={handleProfileClick}
+                  variant="outline"
                   size="sm"
                   className="w-full mt-2"
                 >

@@ -28,6 +28,7 @@ import { ConsultationForm } from "@/components/consultations/ConsultationForm";
 import { useAppointments } from "@/hooks/useAppointments";
 import { useDoctors } from "@/hooks/useDoctors";
 import { usePatients } from "@/hooks/usePatients";
+import { useCliniques } from "@/hooks/useCliniques";
 import {
   AppointmentFormData,
   AppointmentStatusEnum,
@@ -36,9 +37,18 @@ import {
 import { ConsultationDTO } from "@/types/consultation";
 import { Patient } from "@/types/patient";
 import { Doctor } from "@/types/doctor";
+import { Clinique } from "@/types/clinic";
 import { CancelByDoctorDialog } from "@/components/appointments/CancelByDoctorDialog";
 import { CreateFromAppointment } from "@/components/consultations/CreateFromAppointment";
 import { useConsultations } from "@/hooks/useConsultations";
+import {
+  User,
+  Calendar,
+  Clock,
+  Stethoscope,
+  ClipboardList,
+  X,
+} from "lucide-react";
 
 interface Appointment {
   id: string;
@@ -46,12 +56,11 @@ interface Appointment {
   patientId: string;
   doctorName: string;
   medecinId: string;
+  clinicId: string;
   dateHeure: string;
   time: string;
-  duration: number;
   reason: string;
   status: keyof typeof AppointmentStatusEnum;
-  notes?: string;
 }
 
 const mapRendezVousToAppointment = (
@@ -65,12 +74,12 @@ const mapRendezVousToAppointment = (
     id: rdv.id,
     patientId: rdv.patientId,
     medecinId: rdv.medecinId,
+    clinicId: doctor?.cliniqueId ?? "unknown",
     dateHeure: rdv.dateHeure,
     time: new Date(rdv.dateHeure).toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
     }),
-    duration: 30,
     reason: rdv.commentaire ?? "—",
     status: AppointmentStatusEnum[
       rdv.statut
@@ -81,7 +90,6 @@ const mapRendezVousToAppointment = (
     doctorName:
       rdv.medecinNom ||
       (doctor ? `Dr. ${doctor.prenom} ${doctor.nom}` : "Inconnu"),
-    notes: rdv.justificationAnnulation || "",
   };
 };
 
@@ -89,7 +97,8 @@ function AppointmentsPage() {
   const { user } = useAuth();
   const { doctors } = useDoctors();
   const { patients } = usePatients();
-  const { addConsultation } = useConsultations(); 
+  const { cliniques } = useCliniques();
+  const { addConsultation } = useConsultations();
   const { t } = useTranslation("appointments");
   const tConsultations = useTranslation("consultations").t;
   const tCommon = useTranslation("common").t;
@@ -118,6 +127,9 @@ function AppointmentsPage() {
   const [statusFilter, setStatusFilter] = useState<AppointmentStatus | "all">(
     "all"
   );
+  const [clinicFilter, setClinicFilter] = useState<string | "all">("all");
+  const [doctorFilter, setDoctorFilter] = useState<string | "all">("all");
+  const [patientFilter, setPatientFilter] = useState<string | "all">("all");
 
   // State for appointment form
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -145,7 +157,7 @@ function AppointmentsPage() {
   const [appointmentToCancelByDoctor, setAppointmentToCancelByDoctor] =
     useState<Appointment | null>(null);
 
-  // Filter appointments based on user role, search term, date and status
+  // Filter appointments based on user role, search term, date, status, clinic, doctor, and patient
   const getFilteredAppointments = () => {
     if (!user) return { upcoming: [], past: [] };
 
@@ -181,22 +193,33 @@ function AppointmentsPage() {
       });
     }
 
+    if (clinicFilter !== "all") {
+      filtered = filtered.filter((appointment) => appointment.clinicId === clinicFilter);
+    }
+
+    if (doctorFilter !== "all") {
+      filtered = filtered.filter((appointment) => appointment.medecinId === doctorFilter);
+    }
+
+    if (patientFilter !== "all") {
+      filtered = filtered.filter((appointment) => appointment.patientId === patientFilter);
+    }
+
     filtered = filtered.filter(
       (appointment) =>
         statusFilter === "all" || appointment.status === statusFilter
     );
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
 
     const upcoming = filtered.filter((appointment) => {
       const appointmentDate = new Date(appointment.dateHeure);
-      return appointmentDate >= today || appointment.status === "CONFIRME";
+      return appointmentDate >= now;
     });
 
     const past = filtered.filter((appointment) => {
       const appointmentDate = new Date(appointment.dateHeure);
-      return appointmentDate < today && appointment.status !== "CONFIRME";
+      return appointmentDate < now;
     });
 
     upcoming.sort(
@@ -215,7 +238,6 @@ function AppointmentsPage() {
 
   // Handlers for appointment actions
   const handleCancel = (appointmentId: string) => {
-    // Open the cancel confirmation dialog
     setAppointmentToCancel(appointmentId);
     setIsCancelDialogOpen(true);
   };
@@ -231,7 +253,7 @@ function AppointmentsPage() {
         toast.success(t("appointmentCancelled"));
         setIsCancelDialogOpen(false);
         setAppointmentToCancel(null);
-        refetchAppointments(); // <-- Important pour rafraîchir la liste
+        refetchAppointments();
       } catch (error) {
         toast.error(t("appointmentError"));
       }
@@ -253,7 +275,7 @@ function AppointmentsPage() {
         toast.success(t("appointmentCancelledByDoctor"));
         setDoctorCancelDialogOpen(false);
         setAppointmentToCancelByDoctor(null);
-        refetchAppointments(); // Refresh appointments after cancellation
+        refetchAppointments();
       } catch (error) {
         toast.error(t("appointmentError"));
       }
@@ -261,19 +283,16 @@ function AppointmentsPage() {
   };
 
   const handleComplete = (appointmentId: string) => {
-    // Here would be the API call to mark the appointment as completed
     console.log(`Completing appointment ${appointmentId}`);
     toast.success(t("appointmentCompleted"));
   };
 
   const handleReschedule = (appointment: Appointment) => {
-    // Open form with the appointment data for rescheduling
     setSelectedAppointment(appointment);
     setIsFormOpen(true);
   };
 
   const handleViewDetails = (appointment: Appointment) => {
-    // Open the details dialog
     setViewingAppointment(appointment);
     setIsDetailsOpen(true);
   };
@@ -282,15 +301,10 @@ function AppointmentsPage() {
     try {
       await handleConfirmAppointment(appointmentId);
       toast.success(t("appointmentConfirmed"));
-      refetchAppointments(); // Refresh appointments after confirmation
+      refetchAppointments();
     } catch (error) {
       toast.error(t("appointmentError"));
     }
-  };
-
-  const handleAddNotes = (appointment: Appointment) => {
-    // Here would be opening a notes modal for the doctor to add notes
-    console.log(`Adding notes to appointment ${appointment.id}`);
   };
 
   const handleCreateAppointment = () => {
@@ -321,7 +335,6 @@ function AppointmentsPage() {
   };
 
   const handleCreateConsultation = (appointment: Appointment) => {
-    // Only allow doctors to create consultations from appointments
     if (user?.role === "Doctor" && appointment.status === "CONFIRME") {
       setAppointmentForConsultation(appointment);
       setIsConsultationFormOpen(true);
@@ -332,12 +345,8 @@ function AppointmentsPage() {
     try {
       await addConsultation(data);
       toast.success("Consultation créée avec succès");
-
       setIsConsultationFormOpen(false);
       setAppointmentForConsultation(null);
-
-      // Optionnel : tu peux aussi déclencher un refetch des consultations ici si nécessaire
-      // refetchConsultations();
     } catch (error) {
       console.error("Erreur lors de la création de la consultation :", error);
       toast.error("Échec de la création de la consultation");
@@ -366,8 +375,17 @@ function AppointmentsPage() {
         onDateFilterChange={setDateFilter}
         statusFilter={statusFilter}
         onStatusFilterChange={setStatusFilter}
+        clinicFilter={clinicFilter}
+        onClinicFilterChange={setClinicFilter}
+        doctorFilter={doctorFilter}
+        onDoctorFilterChange={setDoctorFilter}
+        patientFilter={patientFilter}
+        onPatientFilterChange={setPatientFilter}
         onCreateAppointment={handleCreateAppointment}
         userRole={user?.role}
+        clinics={cliniques}
+        doctors={doctors}
+        patients={patients}
       />
 
       <div className="space-y-6">
@@ -375,7 +393,7 @@ function AppointmentsPage() {
           <CardHeader className="py-4">
             <CardTitle>{t("upcomingAppointments")}</CardTitle>
             <CardDescription>
-              {tCommon("manage")} {t("upcomingAppointments").toLowerCase()}
+              {tCommon("Manage")} {t("upcomingAppointments").toLowerCase()}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -387,11 +405,11 @@ function AppointmentsPage() {
               onComplete={handleComplete}
               onReschedule={handleReschedule}
               onViewDetails={handleViewDetails}
-              onAddNotes={handleAddNotes}
               onRowClick={
                 user?.role === "Doctor" ? handleCreateConsultation : undefined
               }
               onConfirm={handleConfirm}
+              isPast={false}
             />
           </CardContent>
         </Card>
@@ -414,7 +432,6 @@ function AppointmentsPage() {
         </Card>
       </div>
 
-      {/* Appointment Form Dialog */}
       <AppointmentForm
         isOpen={isFormOpen}
         onClose={() => setIsFormOpen(false)}
@@ -425,64 +442,69 @@ function AppointmentsPage() {
         patientId={user?.role === "Patient" ? user.patientId : undefined}
       />
 
-      {/* Appointment Details Dialog */}
       <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>{t("appointmentDetails")}</DialogTitle>
+            <DialogTitle className="flex items-center gap-2">
+              <ClipboardList className="w-5 h-5 text-primary" />
+              {t("appointmentDetails")}
+            </DialogTitle>
           </DialogHeader>
+
           {viewingAppointment && (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                    <User className="w-4 h-4" />
                     {tCommon("patient")}
-                  </p>
+                  </div>
                   <p>{viewingAppointment.patientName}</p>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                    <Stethoscope className="w-4 h-4" />
                     {tCommon("doctor")}
-                  </p>
+                  </div>
                   <p>{viewingAppointment.doctorName}</p>
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                    <Calendar className="w-4 h-4" />
                     {t("date")}
+                  </div>
+                  <p>
+                    {new Date(viewingAppointment.dateHeure).toLocaleDateString(
+                      "fr-FR",
+                      {
+                        weekday: "short",
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                      }
+                    )}
                   </p>
-                  <p>{viewingAppointment.dateHeure}</p>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                    <Clock className="w-4 h-4" />
                     {t("time")}
-                  </p>
+                  </div>
                   <p>{viewingAppointment.time}</p>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {t("durationMinutes")}
-                  </p>
-                  <p>
-                    {viewingAppointment.duration} {t("min")}
-                  </p>
-                </div>
               </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">
+
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                  <ClipboardList className="w-4 h-4" />
                   {t("reason")}
-                </p>
+                </div>
                 <p>{viewingAppointment.reason}</p>
               </div>
-              {viewingAppointment.notes && (
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {t("additionalNotes")}
-                  </p>
-                  <p>{viewingAppointment.notes}</p>
-                </div>
-              )}
+
               <DialogFooter>
                 <Button
                   variant="outline"
@@ -496,13 +518,12 @@ function AppointmentsPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Cancel Appointment Confirmation Dialog */}
       <Dialog open={isCancelDialogOpen} onOpenChange={setIsCancelDialogOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>{t("cancelAppointment")}</DialogTitle>
             <DialogDescription>
-              {tCommon("confirmActionCannotBeUndone")}
+              {t("confirmActionCannotBeUndone")}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -519,7 +540,6 @@ function AppointmentsPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Consultation Form from Appointment */}
       {appointmentForConsultation && (
         <CreateFromAppointment
           appointment={{

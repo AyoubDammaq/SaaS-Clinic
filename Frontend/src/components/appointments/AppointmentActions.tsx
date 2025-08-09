@@ -11,10 +11,8 @@ export interface Appointment {
   medecinId: string;
   dateHeure: string;
   time: string;
-  duration: number;
   reason: string;
   status: AppointmentStatus;
-  notes?: string;
 }
 
 interface AppointmentActionsProps {
@@ -25,8 +23,8 @@ interface AppointmentActionsProps {
   onComplete?: (appointmentId: string) => void;
   onReschedule?: (appointment: Appointment) => void;
   onViewDetails?: (appointment: Appointment) => void;
-  onAddNotes?: (appointment: Appointment) => void;
   onConfirm?: (appointmentId: string) => void;
+  isPast?: boolean;
 }
 
 export const AppointmentActions = ({
@@ -37,8 +35,8 @@ export const AppointmentActions = ({
   onComplete,
   onReschedule,
   onViewDetails,
-  onAddNotes,
   onConfirm,
+  isPast = false,
 }: AppointmentActionsProps) => {
   const { t } = useTranslation("appointments");
   const tCommon = useTranslation("common").t;
@@ -57,7 +55,7 @@ export const AppointmentActions = ({
             <XCircle className="h-4 w-4 mr-1" /> {tCommon("cancel")}
           </Button>
         )}
-        {canEdit && (
+        {canEdit && !isPast && (
           <Button
             size="sm"
             variant="ghost"
@@ -72,7 +70,7 @@ export const AppointmentActions = ({
     );
   }
 
-  if (userRole === "Doctor") {
+  if (userRole === "Doctor" || userRole === "ClinicAdmin") {
     return (
       <div className="flex gap-2">
         {appointment.status === "EN_ATTENTE" && onConfirm && (
@@ -85,7 +83,7 @@ export const AppointmentActions = ({
             <CheckCircle className="h-4 w-4 mr-1" /> {t("confirm")}
           </Button>
         )}
-        {appointment.status === "CONFIRME" && (
+        {appointment.status === "CONFIRME" && userRole === "Doctor" && (
           <Button
             size="sm"
             variant="ghost"

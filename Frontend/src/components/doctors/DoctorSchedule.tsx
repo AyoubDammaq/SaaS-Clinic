@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDisponibilite } from "@/hooks/useDisponibilites";
-import { Disponibilite, DayOfWeek, dayNames, CreneauDisponibleDto } from "@/types/disponibilite";
+import { Disponibilite, DayOfWeek, CreneauDisponibleDto } from "@/types/disponibilite";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { TimePicker } from "@/components/ui/time-picker";
@@ -15,12 +15,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useTranslation } from "@/hooks/useTranslation";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 interface DoctorScheduleProps {
   doctorId: string;
 }
 
 export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
+  const { t } = useTranslation("doctors");
   const {
     disponibilites,
     isLoading,
@@ -42,12 +52,35 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
   const [creneauxDisponibles, setCreneauxDisponibles] = useState<
     CreneauDisponibleDto[]
   >([]);
-
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-  const [day, setDay] = useState<string>("");
+  const [day, setDay] = useState<string>(""); // Stores English day name for logic
   const [startTime, setStartTime] = useState<string>("");
   const [endTime, setEndTime] = useState<string>("");
   const [formError, setFormError] = useState<string>("");
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [availabilityIdToDelete, setAvailabilityIdToDelete] = useState<string | null>(null);
+
+  // Traduire les noms des jours pour l'affichage
+  const dayNames: Record<number, string> = {
+    0: t("sunday"),
+    1: t("monday"),
+    2: t("tuesday"),
+    3: t("wednesday"),
+    4: t("thursday"),
+    5: t("friday"),
+    6: t("saturday"),
+  };
+
+  // Mappage des jours pour la logique (en anglais pour correspondre à DayOfWeek)
+  const dayOfWeekToNumber: Record<DayOfWeek, number> = {
+    Sunday: 0,
+    Monday: 1,
+    Tuesday: 2,
+    Wednesday: 3,
+    Thursday: 4,
+    Friday: 5,
+    Saturday: 6,
+  };
 
   useEffect(() => {
     if (doctorId) {
@@ -82,7 +115,8 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
 
   const openEditModal = (dispo: Disponibilite) => {
     setEditingDisponibilite(dispo);
-    setDay(dayNames[dispo.jour]);
+    const englishDayName = Object.keys(dayOfWeekToNumber)[dispo.jour];
+    setDay(englishDayName);
     setStartTime(padTime(dispo.heureDebut));
     setEndTime(padTime(dispo.heureFin));
     setSelectedDate(getNextDateForDay(dispo.jour));
@@ -100,24 +134,14 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
     setFormError("");
   };
 
-  const dayOfWeekToNumber: Record<DayOfWeek, number> = {
-    Sunday: 0,
-    Monday: 1,
-    Tuesday: 2,
-    Wednesday: 3,
-    Thursday: 4,
-    Friday: 5,
-    Saturday: 6,
-  };
-
   const handleSubmit = async () => {
     setFormError("");
     if (!day || !startTime || !endTime) {
-      setFormError("Please fill in all fields.");
+      setFormError(t("fillAllFields"));
       return;
     }
     if (startTime >= endTime) {
-      setFormError("Start time must be before end time.");
+      setFormError(t("invalidTimeRange"));
       return;
     }
 
@@ -131,7 +155,7 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
     try {
       if (editingDisponibilite) {
         if (!editingDisponibilite.id) {
-          setFormError("Invalid availability ID.");
+          setFormError(t("invalidAvailabilityId"));
           return;
         }
         await updateDisponibilite(editingDisponibilite.id, dispoData);
@@ -141,30 +165,40 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
       closeModal();
       await getAvailabilitiesByDoctor(doctorId);
     } catch (error) {
-      setFormError("Error saving availability");
+      setFormError(t("errorSavingAvailability"));
       console.error(error);
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm("Are you sure you want to delete this availability?")) {
-      try {
-        await deleteDisponibilite(id);
-        await getAvailabilitiesByDoctor(doctorId);
-      } catch (error) {
-        alert("Error deleting availability");
-        console.error(error);
-      }
+  const openDeleteDialog = (id: string) => {
+    setAvailabilityIdToDelete(id);
+    setDeleteDialogOpen(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setDeleteDialogOpen(false);
+    setAvailabilityIdToDelete(null);
+  };
+
+  const handleDelete = async () => {
+    if (!availabilityIdToDelete) return;
+    try {
+      await deleteDisponibilite(availabilityIdToDelete);
+      await getAvailabilitiesByDoctor(doctorId);
+      closeDeleteDialog();
+    } catch (error) {
+      alert(t("errorDeletingAvailability"));
+      console.error(error);
     }
   };
 
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold">Doctor Schedule</h2>
+        <h2 className="text-xl font-semibold">{t("doctorScheduleTitle")}</h2>
         {permissions.canCreate && (
           <Button onClick={openAddModal} disabled={isSubmitting}>
-            + Add Availability
+            {t("addAvailability")}
           </Button>
         )}
       </div>
@@ -172,22 +206,22 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
         <CardContent className="pt-6">
           {isLoading ? (
             <div className="flex justify-center items-center h-40">
-              <p className="text-muted-foreground">Loading availabilities...</p>
+              <p className="text-muted-foreground">{t("loadingAvailabilities")}</p>
             </div>
           ) : disponibilites.length === 0 ? (
             <div className="flex justify-center items-center h-40 text-muted-foreground">
-              No availabilities found.
+              {t("noAvailabilityFound")}
             </div>
           ) : (
             <div className="rounded-md border">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Day</TableHead>
-                    <TableHead>Start Time</TableHead>
-                    <TableHead>End Time</TableHead>
+                    <TableHead>{t("day")}</TableHead>
+                    <TableHead>{t("startTime")}</TableHead>
+                    <TableHead>{t("endTime")}</TableHead>
                     {(permissions.canEdit || permissions.canDelete) && (
-                      <TableHead>Actions</TableHead>
+                      <TableHead>{t("actions")}</TableHead>
                     )}
                   </TableRow>
                 </TableHeader>
@@ -206,6 +240,7 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
                                 variant="ghost"
                                 onClick={() => openEditModal(dispo)}
                                 disabled={isSubmitting}
+                                aria-label={t("editAvailability")}
                               >
                                 <FileEdit className="h-4 w-4" />
                               </Button>
@@ -215,8 +250,9 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
                                 size="sm"
                                 variant="ghost"
                                 className="text-red-500"
-                                onClick={() => handleDelete(dispo.id)}
+                                onClick={() => openDeleteDialog(dispo.id)}
                                 disabled={isSubmitting}
+                                aria-label={t("deleteAvailability")}
                               >
                                 <Trash2 className="h-4 w-4" />
                               </Button>
@@ -228,7 +264,6 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
                   ))}
                 </TableBody>
               </Table>
-              
             </div>
           )}
         </CardContent>
@@ -240,7 +275,7 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
           isOpen={modalOpen}
           onClose={closeModal}
           title={
-            editingDisponibilite ? "Edit Availability" : "Add Availability"
+            editingDisponibilite ? t("editAvailability") : t("addAvailability")
           }
         >
           <form
@@ -251,7 +286,7 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
             className="min-w-[320px] p-2"
           >
             <div className="mb-4">
-              <label className="block mb-1 font-medium">Day</label>
+              <label className="block mb-1 font-medium">{t("day")}</label>
               <DatePicker
                 date={selectedDate}
                 onChange={(date) => {
@@ -260,7 +295,7 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
                     const dayName = date.toLocaleDateString("en-US", {
                       weekday: "long",
                     });
-                    setDay(dayName);
+                    setDay(dayName); // Store English day name
                   } else {
                     setDay("");
                   }
@@ -268,27 +303,25 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
                 disabled={!!editingDisponibilite}
               />
               <small className="text-muted-foreground">
-                {editingDisponibilite
-                  ? "Day cannot be changed when editing."
-                  : ""}
+                {editingDisponibilite ? t("dayCannotBeChanged") : ""}
               </small>
             </div>
 
             <div className="mb-4">
-              <label className="block mb-1 font-medium">Start Time</label>
+              <label className="block mb-1 font-medium">{t("startTime")}</label>
               <TimePicker
                 value={startTime}
                 onChange={setStartTime}
-                placeholder="e.g. 09:00"
+                placeholder={t("timePlaceholder")}
               />
             </div>
 
             <div className="mb-4">
-              <label className="block mb-1 font-medium">End Time</label>
+              <label className="block mb-1 font-medium">{t("endTime")}</label>
               <TimePicker
                 value={endTime}
                 onChange={setEndTime}
-                placeholder="e.g. 12:00"
+                placeholder={t("timePlaceholder")}
               />
             </div>
 
@@ -296,20 +329,40 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
 
             <div className="flex justify-end gap-2">
               <Button type="button" variant="outline" onClick={closeModal}>
-                Cancel
+                {t("cancel")}
               </Button>
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting
                   ? editingDisponibilite
-                    ? "Updating..."
-                    : "Adding..."
+                    ? t("saving")
+                    : t("saving")
                   : editingDisponibilite
-                  ? "Update"
-                  : "Add"}
+                  ? t("update")
+                  : t("create")}
               </Button>
             </div>
           </form>
         </Modal>
+      )}
+
+      {/* Confirm Delete Dialog */}
+      {deleteDialogOpen && (
+        <Dialog open={deleteDialogOpen} onOpenChange={closeDeleteDialog}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{t("deleteAvailability")}</DialogTitle>
+              <DialogDescription>{t("confirmDeleteAvailability")}</DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="outline" onClick={closeDeleteDialog}>
+                {t("cancel")}
+              </Button>
+              <Button variant="destructive" onClick={handleDelete}>
+                {t("confirm")}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       )}
     </div>
   );

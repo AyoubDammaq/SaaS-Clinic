@@ -1,27 +1,48 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Label } from '@/components/ui/label';
-import { Filter, X } from 'lucide-react';
-import { TypeClinique, StatutClinique } from '@/types/clinic';
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { Filter, X } from "lucide-react";
+import { TypeClinique, StatutClinique } from "@/types/clinic";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface ClinicFiltersProps {
   types: { value: number; label: string }[];
   statuses: { value: number; label: string }[];
-  onFilterChange: (filters: { typeClinique: number | null; statut: number | null }) => void;
+  onFilterChange: (filters: {
+    typeClinique: number | null;
+    statut: number | null;
+  }) => void;
 }
 
-export function ClinicFilters({ types, statuses, onFilterChange }: ClinicFiltersProps) {
+export function ClinicFilters({
+  types,
+  statuses,
+  onFilterChange,
+}: ClinicFiltersProps) {
+  const { t } = useTranslation("clinics");
   const [showFilters, setShowFilters] = useState(false);
   const [typeClinique, setTypeClinique] = useState<number | null>(null);
   const [statut, setStatut] = useState<number | null>(null);
+
+  // Translate type labels using the enum translations
+  const translatedTypes = types.map((type) => ({
+    value: type.value,
+    label: t(TypeClinique[type.value].toLowerCase()),
+  }));
+
+  // Translate status labels using the enum translations
+  const translatedStatuses = statuses.map((status) => ({
+    value: status.value,
+    label: t(StatutClinique[status.value].toLowerCase()),
+  }));
 
   const handleTypeChange = (value: string) => {
     const newValue = value === "all_types" ? null : Number(value);
@@ -51,7 +72,7 @@ export function ClinicFilters({ types, statuses, onFilterChange }: ClinicFilters
           onClick={() => setShowFilters(!showFilters)}
         >
           <Filter className="h-4 w-4" />
-          Filters
+          {t("filters")}
         </Button>
         {(typeClinique !== null || statut !== null) && (
           <Button
@@ -61,7 +82,7 @@ export function ClinicFilters({ types, statuses, onFilterChange }: ClinicFilters
             onClick={clearFilters}
           >
             <X className="h-4 w-4" />
-            Clear Filters
+            {t("clear_filters")}
           </Button>
         )}
       </div>
@@ -70,18 +91,25 @@ export function ClinicFilters({ types, statuses, onFilterChange }: ClinicFilters
           <CardContent className="p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="type-filter">Clinic Type</Label>
+                <Label htmlFor="type-filter">{t("clinic_type")}</Label>
                 <Select
-                  value={typeClinique !== null ? typeClinique.toString() : "all_types"}
+                  value={
+                    typeClinique !== null
+                      ? typeClinique.toString()
+                      : "all_types"
+                  }
                   onValueChange={handleTypeChange}
                 >
                   <SelectTrigger id="type-filter">
-                    <SelectValue placeholder="All Types" />
+                    <SelectValue placeholder={t("all_types")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all_types">All Types</SelectItem>
-                    {types.map(type => (
-                      <SelectItem key={type.value} value={type.value.toString()}>
+                    <SelectItem value="all_types">{t("all_types")}</SelectItem>
+                    {translatedTypes.map((type) => (
+                      <SelectItem
+                        key={type.value}
+                        value={type.value.toString()}
+                      >
                         {type.label}
                       </SelectItem>
                     ))}
@@ -89,18 +117,23 @@ export function ClinicFilters({ types, statuses, onFilterChange }: ClinicFilters
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="status-filter">Status</Label>
+                <Label htmlFor="status-filter">{t("status")}</Label>
                 <Select
                   value={statut !== null ? statut.toString() : "all_statuses"}
                   onValueChange={handleStatusChange}
                 >
                   <SelectTrigger id="status-filter">
-                    <SelectValue placeholder="All Statuses" />
+                    <SelectValue placeholder={t("all_statuses")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all_statuses">All Statuses</SelectItem>
-                    {statuses.map(status => (
-                      <SelectItem key={status.value} value={status.value.toString()}>
+                    <SelectItem value="all_statuses">
+                      {t("all_statuses")}
+                    </SelectItem>
+                    {translatedStatuses.map((status) => (
+                      <SelectItem
+                        key={status.value}
+                        value={status.value.toString()}
+                      >
                         {status.label}
                       </SelectItem>
                     ))}

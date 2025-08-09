@@ -1,4 +1,3 @@
-
 export default {
   // Doctors
   doctorsList: "Doctors List",
@@ -6,6 +5,7 @@ export default {
   editDoctor: "Edit Doctor",
   deleteDoctor: "Delete Doctor",
   doctorDetails: "Doctor Details",
+  fullName: "Full Name",
   firstName: "First Name",
   lastName: "Last Name",
   specialty: "Specialty",
@@ -14,9 +14,24 @@ export default {
   clinic: "Clinic",
   photo: "Photo",
   assignToClinic: "Assign to Clinic",
+  actions: "Actions",
   removeFromClinic: "Remove from Clinic",
   noClinicAssigned: "No clinic assigned",
-  
+  doctorsOfClinic: "Doctors of the Clinic",
+  availableDoctors: "Available Doctors",
+  noDoctorsInClinic: "No doctors assigned to this clinic",
+  noAvailableDoctors: "No doctors available for assignment",
+  noDoctorsFound: "No doctors found matching your search criteria",
+  takeAppointment: "Book an Appointment",
+  backToDoctorsList: "Back to Doctors List",
+  loadingDoctors: "Loading doctors...",
+  loginRequired: "Please log in to access this page",
+  doctorDataNotFound: "Doctor data not found",
+  manageProfile: "Manage your professional information and settings",
+  previous: "Previous",
+  next: "Next",
+  pageOf: "Page {current} of {total}",
+
   // Doctor Availability
   availability: "Availability",
   addAvailability: "Add Availability",
@@ -27,17 +42,27 @@ export default {
   endTime: "End Time",
   isAvailable: "Is Available",
   noAvailabilityFound: "No availability found",
-  
+
   // Filters
+  filters: "Filters",
+  clearFilters: "Clear Filters",
+  allSpecialties: "All Specialties",
+  allClinics: "All Clinics",
+  all: "All",
+  assignment: "Assignment",
+  assigned: "Assigned",
+  unassigned: "Unassigned",
+  availabilityDate: "Availibility Date",
+  clinicDoctors: "Clinic Doctors",
   filterBySpecialty: "Filter by Specialty",
   filterByName: "Filter by Name",
   filterByClinic: "Filter by Clinic",
   search: "Search",
-  
+
   // Statistics
   doctorsBySpecialty: "Doctors by Specialty",
   doctorsByClinic: "Doctors by Clinic",
-  
+
   // Messages
   doctorAddSuccess: "Doctor added successfully",
   doctorUpdateSuccess: "Doctor updated successfully",
@@ -45,7 +70,7 @@ export default {
   availabilityAddSuccess: "Availability added successfully",
   availabilityDeleteSuccess: "Availability deleted successfully",
   confirmDelete: "Are you sure you want to delete this doctor?",
-  
+
   // Errors
   errorFetchingDoctors: "Error fetching doctors",
   errorAddingDoctor: "Error adding doctor",
@@ -53,4 +78,86 @@ export default {
   errorDeletingDoctor: "Error deleting doctor",
   errorAddingAvailability: "Error adding availability",
   errorDeletingAvailability: "Error deleting availability",
+
+  sur: "of",
+
+  // Validation messages
+  firstNameRequired: "First name is required",
+  lastNameRequired: "Last name is required",
+  invalidEmail: "Please enter a valid email address.",
+  phoneLength: "Phone number must be at least 5 characters.",
+  specialtyRequired: "Please select a specialty.",
+
+  // Specialties
+  generalPractitioner: "General Practitioner",
+  pediatrician: "Pediatrician",
+  cardiologist: "Cardiologist",
+  dermatologist: "Dermatologist",
+  neurologist: "Neurologist",
+  psychiatrist: "Psychiatrist",
+  ophthalmologist: "Ophthalmologist",
+  gynecologist: "Gynecologist",
+  orthopedist: "Orthopedist",
+  dentist: "Dentist",
+  unknownSpecialty: "Unknown Specialty",
+
+  // Form Buttons
+  cancel: "Cancel",
+  saving: "Saving...",
+  update: "Update",
+  create: "Create",
+  saveSettings: "Save Settings",
+
+  // DoctorsList Specific
+  searchDoctors: "Search doctors...",
+  notAssigned: "Not assigned",
+
+  assignDoctorToClinic: "Assign Doctor to Clinic",
+  selectClinic: "Select Clinic",
+  confirm: "Confirm",
+  confirmUnassignTitle: "Confirm Unassignment",
+  confirmUnassignDescription:
+    "Are you sure you want to unassign this doctor from the clinic? This action is irreversible.",
+  unassignDoctor: "Unassign",
+  confirmDeleteDoctorTitle: "Confirm Doctor Deletion",
+  confirmDeleteDoctorMessage:
+    "Are you sure you want to delete this doctor? This action is irreversible.",
+
+  // DoctorProfile Specific
+  doctorProfileTitle: "Doctor Profile",
+  profileTab: "Profile",
+  settingsTab: "Settings",
+  scheduleTab: "Schedule",
+  viewClinic: "View Clinic",
+  unknownClinic: "Unknown",
+  notificationPreferences: "Notification Preferences",
+  emailNotifications: "Email Notifications",
+  emailNotificationsDescription:
+    "Receive updates about appointments and patient results",
+  smsNotifications: "SMS Notifications",
+  smsNotificationsDescription: "Receive SMS for urgent notifications",
+  settingsSavedSuccess: "Settings saved successfully",
+  accountSettings: "Account Settings",
+  changePassword: "Change Password",
+  disableAccount: "Disable Account",
+
+  // DoctorSchedule Specific
+  doctorScheduleTitle: "Doctor Schedule",
+  loadingAvailabilities: "Loading availabilities...",
+  confirmDeleteAvailability:
+    "Are you sure you want to delete this availability?",
+  errorSavingAvailability: "Error saving availability",
+  fillAllFields: "Please fill in all fields.",
+  invalidTimeRange: "Start time must be before end time.",
+  invalidAvailabilityId: "Invalid availability ID.",
+  dayCannotBeChanged: "Day cannot be changed when editing.",
+  timePlaceholder: "e.g. 09:00",
+  day: "Day",
+  sunday: "Sunday",
+  monday: "Monday",
+  tuesday: "Tuesday",
+  wednesday: "Wednesday",
+  thursday: "Thursday",
+  friday: "Friday",
+  saturday: "Saturday",
 };
