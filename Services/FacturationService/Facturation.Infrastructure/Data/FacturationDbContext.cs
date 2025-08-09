@@ -8,7 +8,7 @@ namespace Facturation.Infrastructure.Data
     public class FacturationDbContext : DbContext
     {
         private readonly IMediator _mediator;
-        public FacturationDbContext(DbContextOptions<FacturationDbContext> options, IMediator mediator) : base(options) 
+        public FacturationDbContext(DbContextOptions<FacturationDbContext> options, IMediator mediator) : base(options)
         {
             _mediator = mediator;
         }
@@ -17,18 +17,46 @@ namespace Facturation.Infrastructure.Data
 
         public DbSet<Paiement> Paiements { get; set; }
 
+        public DbSet<TarifConsultation> TarifsConsultation { get; set; }
+
+        public DbSet<CardDetails> CardDetails { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Facture>()
-                .Property(f => f.MontantTotal)
-                .HasColumnType("decimal(18,2)");
+            .Property(f => f.MontantTotal)
+            .HasPrecision(18, 2);
+
             modelBuilder.Entity<Facture>()
                 .Property(f => f.MontantPaye)
                 .HasPrecision(18, 2);
+
             modelBuilder.Entity<Paiement>()
                 .HasOne(p => p.Facture)
                 .WithOne(f => f.Paiement)
                 .HasForeignKey<Paiement>(p => p.FactureId);
+
+            modelBuilder.Entity<Paiement>()
+                .HasOne(p => p.CardDetails)
+                .WithOne(cd => cd.Paiement)
+                .HasForeignKey<CardDetails>(cd => cd.PaiementId);
+
+            modelBuilder.Entity<TarifConsultation>(entity =>
+            {
+                entity.HasKey(t => t.Id);
+                entity.Property(t => t.Prix)
+                    .HasPrecision(18, 2);
+                entity.Property(t => t.ClinicId)
+                    .IsRequired();
+                entity.Property(t => t.ConsultationType)
+                    .IsRequired();
+
+            });
+
+            modelBuilder.Entity<TarifConsultation>()
+                .HasIndex(t => new { t.ClinicId, t.ConsultationType })
+                .IsUnique();
+
             base.OnModelCreating(modelBuilder);
         }
 

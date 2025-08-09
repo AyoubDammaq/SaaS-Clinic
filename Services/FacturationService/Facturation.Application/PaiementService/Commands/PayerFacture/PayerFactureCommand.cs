@@ -1,7 +1,7 @@
-﻿using Facturation.Domain.Enums;
+﻿using Facturation.Application.DTOs;
 using MediatR;
 
 namespace Facturation.Application.PaiementService.Commands.PayerFacture
 {
-    public record PayerFactureCommand(Guid factureId, ModePaiement moyenPaiement, decimal montant) : IRequest<bool>;
+    public record PayerFactureCommand(Guid factureId, PaiementDto PaiementDto) : IRequest<bool>;
 }

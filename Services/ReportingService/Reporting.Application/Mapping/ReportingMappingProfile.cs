@@ -18,6 +18,7 @@ namespace Reporting.Application.Mapping
             CreateMap<ActiviteMedecin, ActiviteMedecinDTO>();
             CreateMap<StatistiqueClinique, ComparaisonCliniqueDTO>();
             CreateMap<DashboardStats, DashboardStatsDTO>();
+            CreateMap<AppointmentDayStat, AppointmentDayStatDto>();
         }
     }
 }

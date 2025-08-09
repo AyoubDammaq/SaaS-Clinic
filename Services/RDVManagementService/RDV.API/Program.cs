@@ -27,6 +27,7 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddHttpClient();
 
 builder.Services.AddDbContext<RendezVousDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("RDVDatabase")));

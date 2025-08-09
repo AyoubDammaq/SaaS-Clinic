@@ -87,6 +87,11 @@ namespace Clinic.Infrastructure.Repositories
             return await _context.Cliniques.CountAsync();
         }
 
+        public async Task<int> GetNombreDeCliniquesParDateAsync(DateTime startDate, DateTime endDate)
+        {
+            return await _context.Cliniques.CountAsync(c => c.DateCreation >= startDate && c.DateCreation <= endDate);
+        }
+
         public async Task<int> GetNombreNouvellesCliniquesDuMoisAsync()
         {
             var debutMois = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);

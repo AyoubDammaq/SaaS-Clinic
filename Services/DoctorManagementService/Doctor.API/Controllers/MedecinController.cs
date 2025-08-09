@@ -14,6 +14,8 @@ using Doctor.Application.DoctorServices.Queries.GetMedecinsIdsByCliniqueId;
 using Doctor.Application.DoctorServices.Queries.GetNombreMedecinByClinique;
 using Doctor.Application.DoctorServices.Queries.GetNombreMedecinBySpecialite;
 using Doctor.Application.DoctorServices.Queries.GetNombreMedecinBySpecialiteDansUneClinique;
+using Doctor.Application.DoctorServices.Queries.GetNombreTotalMedecins;
+using Doctor.Application.DoctorServices.Queries.GetNouveauxMedecins;
 using Doctor.Application.DTOs;
 using Doctor.Domain.Entities;
 using MediatR;
@@ -278,6 +280,34 @@ namespace Doctor.API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { Message = "Une erreur est survenue lors de la récupération des statistiques", Details = ex.Message });
+            }
+        }
+
+        [HttpGet("statistiques/total-medecins")]
+        public async Task<IActionResult> ObtenirNombreTotalMedecins()
+        {
+            try
+            {
+                var nombreTotalMedecins = await _mediator.Send(new GetNombreTotalMedecinsQuery());
+                return Ok(nombreTotalMedecins);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors de la récupération du nombre total de médecins", Details = ex.Message });
+            }
+        }
+
+        [HttpGet("statistiques/nouveaux-medecins")]
+        public async Task<IActionResult> ObtenirNombreNouveauxMedecins(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                var nombreNouveauxMedecins = await _mediator.Send(new GetNouveauxMedecinsQuery(startDate, endDate));
+                return Ok(nombreNouveauxMedecins);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Une erreur est survenue lors de la récupération du nombre de nouveaux médecins", Details = ex.Message });
             }
         }
 

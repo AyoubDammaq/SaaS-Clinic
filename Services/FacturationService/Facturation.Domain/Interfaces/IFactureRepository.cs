@@ -13,11 +13,15 @@ namespace Facturation.Domain.Interfaces
         Task DeleteFactureAsync(Guid id);
         Task<IEnumerable<Facture>> GetAllFacturesByRangeOfDateAsync(DateTime startDate, DateTime endDate);
         Task<List<Facture>> GetByFilterAsync(Guid? patientId, Guid? clinicId, FactureStatus? status);
-
+        Task<IEnumerable<Facture>> GetFactureByCliniqueIdAsync(Guid cliniqueId);
+        Task<Facture?> GetFactureByConsultationIdAsync(Guid consultationId);
+        Task<IEnumerable<Facture>> GetFactureByPatientIdAsync(Guid patientId);
         Task<IEnumerable<FactureStats>> GetNombreDeFactureByStatusAsync();
         Task<IEnumerable<FactureStats>> GetNombreDeFactureParCliniqueAsync();
         Task<IEnumerable<FactureStats>> GetNombreDeFacturesByStatusParCliniqueAsync();
         Task<IEnumerable<FactureStats>> GetNombreDeFacturesByStatusDansUneCliniqueAsync(Guid cliniqueId);
         Task<List<Facture>> GetFacturesParPeriode(DateTime dateDebut, DateTime dateFin);
+        Task<decimal> GetRevenusMensuelsAsync(Guid clinicId);
+        Task<(decimal currentMonth, decimal previousMonth)> GetRevenusMensuelTrendAsync(Guid clinicId);
     }
 }

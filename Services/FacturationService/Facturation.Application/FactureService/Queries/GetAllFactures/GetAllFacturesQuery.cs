@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Facturation.Application.FactureService.Queries.GetAllFactures
 {
-    public record GetAllFacturesQuery() : IRequest<IEnumerable<GetFacturesResponse>>;
+    public record GetAllFacturesQuery() : IRequest<IEnumerable<FactureDto>>;
 }

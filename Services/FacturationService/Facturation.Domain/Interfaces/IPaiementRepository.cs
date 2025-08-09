@@ -1,5 +1,4 @@
-﻿
-using Facturation.Domain.Entities;
+﻿using Facturation.Domain.Entities;
 
 namespace Facturation.Domain.Interfaces
 {
@@ -7,5 +6,6 @@ namespace Facturation.Domain.Interfaces
     {
         Task<Paiement?> GetByFactureIdAsync(Guid factureId);
         Task AddAsync(Paiement paiement);
+        Task<Paiement?> GetDernierPaiementByPatientIdAsync(Guid patientId);
     }
 }

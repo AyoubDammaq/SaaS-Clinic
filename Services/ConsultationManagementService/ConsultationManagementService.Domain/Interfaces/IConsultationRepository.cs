@@ -21,5 +21,11 @@ namespace ConsultationManagementService.Repositories
         Task<bool> DeleteDocumentMedicalAsync(Guid id);
         Task<bool> ExistsAsync(Guid consultationId);
         Task<IEnumerable<Consultation>> GetConsultationsByClinicIdAsync(Guid clinicId);
+        Task<int> CountNouveauxPatientsByDoctorAsync(Guid medecinId, DateTime startDate, DateTime endDate);
+        Task<int> CountNouveauxPatientsByClinicAsync(Guid medecinId, DateTime startDate, DateTime endDate);
+        Task<int> CountConsultationByDateAsync(Guid? cliniqueId, Guid? medecinId, Guid? patientId, DateTime dateDebut, DateTime dateFin);
+        Task<int> CountConsultationByPatient(Guid patientId, DateTime? startDate, DateTime? endDate);
+        Task<int> CountConsultationByDoctor(Guid medecinId, DateTime? startDate, DateTime? endDate);
+        Task<int> CountConsultationByClinic(Guid clinicId, DateTime? startDate, DateTime? endDate);
     }
 }

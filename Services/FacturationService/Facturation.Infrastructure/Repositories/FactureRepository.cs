@@ -48,6 +48,20 @@ namespace Facturation.Infrastructure.Repositories
             }
         }
 
+        public async Task<IEnumerable<Facture>> GetFactureByCliniqueIdAsync(Guid cliniqueId)
+        {
+            return await _context.Factures
+                         .Where(f => f.ClinicId == cliniqueId)
+                         .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Facture>> GetFactureByPatientIdAsync(Guid patientId)
+        {
+            return await _context.Factures
+                         .Where(f => f.PatientId == patientId)
+                         .ToListAsync();
+        }
+
         public async Task<IEnumerable<Facture>> GetAllFacturesByRangeOfDateAsync(DateTime startDate, DateTime endDate)
         {
             return await _context.Factures
@@ -74,6 +88,12 @@ namespace Facturation.Infrastructure.Repositories
             return await _context.Factures
                 .Where(f => f.ClinicId == clinicId)
                 .ToListAsync();
+        }
+
+        public async Task<Facture?> GetFactureByConsultationIdAsync(Guid consultationId)
+        {
+            return await _context.Factures
+                .FirstOrDefaultAsync(f => f.ConsultationId == consultationId);
         }
 
         public async Task<IEnumerable<FactureStats>> GetNombreDeFactureByStatusAsync()
@@ -147,6 +167,46 @@ namespace Facturation.Infrastructure.Repositories
             return await _context.Factures
                 .Where(f => f.DateEmission >= dateDebut && f.DateEmission <= dateFin)
                 .ToListAsync();
+        }
+
+        public async Task<decimal> GetRevenusMensuelsAsync(Guid clinicId)
+        {
+            var now = DateTime.UtcNow;
+            var startOfMonth = new DateTime(now.Year, now.Month, 1);
+            var startOfNextMonth = startOfMonth.AddMonths(1);
+
+            var revenus = await _context.Set<Paiement>()
+                .Where(p => p.DatePaiement >= startOfMonth &&
+                            p.DatePaiement < startOfNextMonth &&
+                            p.Facture != null &&
+                            p.Facture.ClinicId == clinicId)
+                .SumAsync(p => p.Montant);
+
+            return revenus;
+        }
+
+        public async Task<(decimal currentMonth, decimal previousMonth)> GetRevenusMensuelTrendAsync(Guid clinicId)
+        {
+            var now = DateTime.UtcNow;
+            var startCurrentMonth = new DateTime(now.Year, now.Month, 1);
+            var startPreviousMonth = startCurrentMonth.AddMonths(-1);
+            var startNextMonth = startCurrentMonth.AddMonths(1);
+
+            var paiements = _context.Set<Paiement>().Include(p => p.Facture);
+
+            var currentMonthRevenus = await paiements
+                .Where(p => p.DatePaiement >= startCurrentMonth &&
+                            p.DatePaiement < startNextMonth &&
+                            p.Facture.ClinicId == clinicId)
+                .SumAsync(p => p.Montant);
+
+            var previousMonthRevenus = await paiements
+                .Where(p => p.DatePaiement >= startPreviousMonth &&
+                            p.DatePaiement < startCurrentMonth &&
+                            p.Facture.ClinicId == clinicId)
+                .SumAsync(p => p.Montant);
+
+            return (currentMonthRevenus, previousMonthRevenus);
         }
     }
 }

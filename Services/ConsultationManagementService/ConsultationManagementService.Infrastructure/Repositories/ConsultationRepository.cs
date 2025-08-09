@@ -46,7 +46,7 @@ namespace ConsultationManagementService.Repositories
 
             _context.Consultations.Update(consultationDto);
             await _context.SaveChangesAsync();
-        }  
+        }
 
         public async Task<bool> DeleteConsultationAsync(Guid id)
         {
@@ -138,6 +138,96 @@ namespace ConsultationManagementService.Repositories
                 .Include(c => c.Documents)
                 .Where(c => c.ClinicId == clinicId)
                 .ToListAsync();
+        }
+
+        public async Task<int> CountNouveauxPatientsByDoctorAsync(Guid medecinId, DateTime startDate, DateTime endDate)
+        {
+            // 1. Récupérer toutes les consultations de ce médecin
+            var consultations = await _context.Consultations
+                .Where(c => c.MedecinId == medecinId)
+                .OrderBy(c => c.DateConsultation)
+                .ToListAsync();
+
+            // 2. Grouper par patient et ne garder que la première consultation pour chaque
+            var firstConsultations = consultations
+                .GroupBy(c => c.PatientId)
+                .Select(g => g.First()) // La première consultation chronologiquement
+                .ToList();
+
+            // 3. Compter combien ont leur première consultation dans l’intervalle donné
+            var nouveauxPatientsCount = firstConsultations
+                .Count(c => c.DateConsultation >= startDate && c.DateConsultation <= endDate);
+
+            return nouveauxPatientsCount;
+        }
+
+        public async Task<int> CountNouveauxPatientsByClinicAsync(Guid clinicId, DateTime startDate, DateTime endDate)
+        {
+            // 1. Récupérer toutes les consultations de cette clinique
+            var consultations = await _context.Consultations
+                .Where(c => c.ClinicId == clinicId)
+                .OrderBy(c => c.DateConsultation)
+                .ToListAsync();
+            // 2. Grouper par patient et ne garder que la première consultation pour chaque
+            var firstConsultations = consultations
+                .GroupBy(c => c.PatientId)
+                .Select(g => g.First()) // La première consultation chronologiquement
+                .ToList();
+            // 3. Compter combien ont leur première consultation dans l’intervalle donné
+            var nouveauxPatientsCount = firstConsultations
+                .Count(c => c.DateConsultation >= startDate && c.DateConsultation <= endDate);
+            return nouveauxPatientsCount;
+        }
+
+        public async Task<int> CountConsultationByDateAsync(Guid? cliniqueId, Guid? medecinId, Guid? patientId, DateTime dateDebut, DateTime dateFin)
+        {
+            var query = _context.Consultations.AsQueryable();
+
+            query = query.Where(c => c.DateConsultation >= dateDebut && c.DateConsultation <= dateFin);
+
+            if (cliniqueId.HasValue)
+                query = query.Where(c => c.ClinicId == cliniqueId.Value);
+
+            if (medecinId.HasValue)
+                query = query.Where(c => c.MedecinId == medecinId.Value);
+
+            if (patientId.HasValue)
+                query = query.Where(c => c.PatientId == patientId.Value);
+
+            return await query.CountAsync();
+        }
+
+        public async Task<int> CountConsultationByPatient(Guid patientId, DateTime? startDate, DateTime? endDate)
+        {
+            var query = _context.Consultations.AsQueryable();
+            query = query.Where(c => c.PatientId == patientId);
+            if (startDate.HasValue)
+                query = query.Where(c => c.DateConsultation >= startDate.Value);
+            if (endDate.HasValue)
+                query = query.Where(c => c.DateConsultation <= endDate.Value);
+            return await query.CountAsync();
+        }
+
+        public async Task<int> CountConsultationByDoctor(Guid medecinId, DateTime? startDate, DateTime? endDate)
+        {
+            var query = _context.Consultations.AsQueryable();
+            query = query.Where(c => c.MedecinId == medecinId);
+            if (startDate.HasValue)
+                query = query.Where(c => c.DateConsultation >= startDate.Value);
+            if (endDate.HasValue)
+                query = query.Where(c => c.DateConsultation <= endDate.Value);
+            return await query.CountAsync();
+        }
+
+        public async Task<int> CountConsultationByClinic(Guid clinicId, DateTime? startDate, DateTime? endDate)
+        {
+            var query = _context.Consultations.AsQueryable();
+            query = query.Where(c => c.ClinicId == clinicId);
+            if (startDate.HasValue)
+                query = query.Where(c => c.DateConsultation >= startDate.Value);
+            if (endDate.HasValue)
+                query = query.Where(c => c.DateConsultation <= endDate.Value);
+            return await query.CountAsync();
         }
     }
 }

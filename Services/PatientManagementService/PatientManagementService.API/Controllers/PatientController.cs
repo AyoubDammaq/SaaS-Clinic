@@ -6,7 +6,9 @@ using PatientManagementService.Application.PatientService.Commands.AddPatient;
 using PatientManagementService.Application.PatientService.Commands.DeletePatient;
 using PatientManagementService.Application.PatientService.Commands.LinkUserToPatient;
 using PatientManagementService.Application.PatientService.Commands.UpdatePatient;
+using PatientManagementService.Application.PatientService.Queries.CountTotalPatients;
 using PatientManagementService.Application.PatientService.Queries.GetAllPatients;
+using PatientManagementService.Application.PatientService.Queries.GetNombreDeNouveauxPatientsParMois;
 using PatientManagementService.Application.PatientService.Queries.GetPatientById;
 using PatientManagementService.Application.PatientService.Queries.GetPatientsByName;
 using PatientManagementService.Application.PatientService.Queries.GetStatistiques;
@@ -146,6 +148,35 @@ namespace PatientManagementService.API.Controllers
 
             var result = await _mediator.Send(new GetStatistiquesQuery(dateDebut, dateFin));
             return Ok(result);
+        }
+
+        [HttpGet("count/total-patients")]
+        public async Task<ActionResult<int>> CountTotalPatients()
+        {
+            try
+            {
+                var totalPatients = await _mediator.Send(new CountTotalPatientsQuery());
+                return Ok(totalPatients);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur interne du serveur : {ex.Message}");
+            }
+        }
+
+        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor"))]
+        [HttpGet("nouveaux-patients/mois")]
+        public async Task<ActionResult<Dictionary<string, int>>> GetNombreDeNouveauxPatientsParMois([FromQuery] DateTime dateActuel)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetNombreDeNouveauxPatientsParMoisQuery(dateActuel));
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur interne du serveur : {ex.Message}");
+            }
         }
 
         [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor, Patient"))]

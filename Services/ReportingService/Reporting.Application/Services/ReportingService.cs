@@ -198,9 +198,61 @@ namespace Reporting.Application.Services
             return result;
         }
 
-        public async Task<DashboardStatsDTO> GetDashboardStatsAsync(DateTime dateDebut, DateTime dateFin)
+        public async Task<IEnumerable<AppointmentDayStatDto>> GetStatistiquesHebdomadairesRendezVousByDoctorAsync(Guid medecinId, DateTime dateDebut, DateTime dateFin)
         {
-            var cacheKey = $"DashboardStats:{dateDebut:yyyyMMdd}:{dateFin:yyyyMMdd}";
+            if (dateDebut > dateFin)
+            {
+                _logger.LogWarning("Date de début supérieure à la date de fin dans GetStatistiquesHebdomadairesRendezVousByDoctorAsync : {DateDebut} > {DateFin}", dateDebut, dateFin);
+                throw new InvalidOperationException("La date de début ne peut pas être supérieure à la date de fin.");
+            }
+
+            var cacheKey = $"RdvHebdoStats:{dateDebut:yyyyMMdd}:{dateFin:yyyyMMdd}";
+
+            if (_cache.TryGetValue(cacheKey, out IEnumerable<AppointmentDayStatDto> cachedStats))
+            {
+                _logger.LogInformation("Cache hit pour GetStatistiquesHebdomadairesRendezVousByDoctorAsync avec la clé {CacheKey}", cacheKey);
+                return cachedStats;
+            }
+
+            _logger.LogInformation("Cache miss pour GetStatistiquesHebdomadairesRendezVousByDoctorAsync avec la clé {CacheKey}", cacheKey);
+
+            var stats = await _repository.GetStatistiquesHebdomadairesRendezVousByDoctorAsync(medecinId, dateDebut, dateFin);
+
+            var result = _mapper.Map<List<AppointmentDayStatDto>>(stats);
+            _cache.Set(cacheKey, result, _defaultCacheDuration);
+
+            return result;
+        }
+
+        public async Task<IEnumerable<AppointmentDayStatDto>> GetStatistiquesHebdomadairesRendezVousByClinicAsync(Guid cliniqueId, DateTime dateDebut, DateTime dateFin)
+        {
+            if (dateDebut > dateFin)
+            {
+                _logger.LogWarning("Date de début supérieure à la date de fin dans GetStatistiquesHebdomadairesRendezVousByClinicAsync : {DateDebut} > {DateFin}", dateDebut, dateFin);
+                throw new InvalidOperationException("La date de début ne peut pas être supérieure à la date de fin.");
+            }
+
+            var cacheKey = $"RdvHebdoStats:{dateDebut:yyyyMMdd}:{dateFin:yyyyMMdd}";
+
+            if (_cache.TryGetValue(cacheKey, out IEnumerable<AppointmentDayStatDto> cachedStats))
+            {
+                _logger.LogInformation("Cache hit pour GetStatistiquesHebdomadairesRendezVousByClinicAsync avec la clé {CacheKey}", cacheKey);
+                return cachedStats;
+            }
+
+            _logger.LogInformation("Cache miss pour GetStatistiquesHebdomadairesRendezVousByClinicAsync avec la clé {CacheKey}", cacheKey);
+
+            var stats = await _repository.GetStatistiquesHebdomadairesRendezVousByClinicAsync(cliniqueId, dateDebut, dateFin);
+
+            var result = _mapper.Map<List<AppointmentDayStatDto>>(stats);
+            _cache.Set(cacheKey, result, _defaultCacheDuration);
+
+            return result;
+        }
+
+        public async Task<DashboardStatsDTO> GetDashboardStatsAsync(DateTime dateDebut, DateTime dateFin, Guid? patientId = null, Guid? medecinId = null, Guid? cliniqueId = null)
+        {
+            var cacheKey = $"DashboardStats:{dateDebut:yyyyMMdd}:{dateFin:yyyyMMdd}:{patientId}:{medecinId}:{cliniqueId}";
 
             try
             {
@@ -211,8 +263,7 @@ namespace Reporting.Application.Services
                 }
 
                 _logger.LogInformation("Cache miss pour GetDashboardStatsAsync avec la clé {CacheKey}", cacheKey);
-                var data = await _repository.GetDashboardStatsAsync(dateDebut, dateFin);
-
+                var data = await _repository.GetDashboardStatsAsync(dateDebut, dateFin, patientId, medecinId, cliniqueId);
                 var result = _mapper.Map<DashboardStatsDTO>(data);
                 _cache.Set(cacheKey, result, _defaultCacheDuration);
                 return result;

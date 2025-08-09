@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ConsultationManagementService.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace ConsultationManagementService.Application.DTOs
 {
@@ -14,6 +15,9 @@ namespace ConsultationManagementService.Application.DTOs
 
         [Required]
         public Guid ClinicId { get; set; }
+
+        [Required]
+        public TypeConsultation Type { get; set; }
 
         [Required]
         public DateTime DateConsultation { get; set; }

@@ -21,6 +21,7 @@ namespace Clinic.Domain.Interfaces
 
         /// Statistics operations
         Task<int> GetNombreCliniquesAsync();
+        Task<int> GetNombreDeCliniquesParDateAsync(DateTime startDate, DateTime endDate);  
         Task<int> GetNombreNouvellesCliniquesDuMoisAsync();
         Task<IEnumerable<Statistique>> GetNombreNouvellesCliniquesParMoisAsync();
         Task<StatistiqueClinique> GetStatistiquesDesCliniquesAsync(Guid cliniqueId);

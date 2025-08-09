@@ -1,4 +1,5 @@
-﻿using Facturation.Application.PaiementService.Commands.PayerFacture;
+﻿using Facturation.Application.DTOs;
+using Facturation.Application.PaiementService.Commands.PayerFacture;
 using Facturation.Domain.Entities;
 using Facturation.Domain.Enums;
 using Facturation.Domain.Interfaces;
@@ -13,6 +14,7 @@ namespace Facturation.Tests.PaiementTests.Commands
         private readonly Mock<IFactureRepository> _factureRepositoryMock;
         private readonly Mock<IPaiementRepository> _paiementRepositoryMock;
         private readonly Mock<ILogger<PayerFactureCommandHandler>> _loggerMock;
+        private readonly Mock<IUnitOfWork> _unitOfWorkMock;
         private readonly PayerFactureCommandHandler _handler;
 
         public PayerFactureCommandHandlerTests()
@@ -20,45 +22,30 @@ namespace Facturation.Tests.PaiementTests.Commands
             _factureRepositoryMock = new Mock<IFactureRepository>();
             _paiementRepositoryMock = new Mock<IPaiementRepository>();
             _loggerMock = new Mock<ILogger<PayerFactureCommandHandler>>();
-            _handler = new PayerFactureCommandHandler(_paiementRepositoryMock.Object, _factureRepositoryMock.Object, _loggerMock.Object);
+            _unitOfWorkMock = new Mock<IUnitOfWork>();
+            _handler = new PayerFactureCommandHandler(_paiementRepositoryMock.Object, _factureRepositoryMock.Object, _loggerMock.Object, _unitOfWorkMock.Object);
         }
 
         [Fact]
         public async Task Handle_Should_ReturnFalse_When_FactureNotFound()
         {
-            // Arrange
-            var request = new PayerFactureCommand(Guid.NewGuid(), ModePaiement.Especes, 100m);
+            var request = new PayerFactureCommand(Guid.NewGuid(), new PaiementDto { MoyenPaiement = ModePaiement.Especes, Montant = 100m });
+            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(request.factureId)).ReturnsAsync((Facture?)null);
 
-            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(request.factureId))
-                .ReturnsAsync((Facture?)null);
-
-            // Act
             var result = await _handler.Handle(request, CancellationToken.None);
 
-            // Assert
             result.Should().BeFalse();
         }
 
         [Fact]
         public async Task Handle_Should_ReturnFalse_When_FactureAlreadyPayee()
         {
-            // Arrange
-            var facture = new Facture
-            {
-                Id = Guid.NewGuid(),
-                MontantTotal = 100m,
-                MontantPaye = 100m,
-                Status = FactureStatus.PAYEE
-            };
-            var request = new PayerFactureCommand(facture.Id, ModePaiement.Especes, 100m);
+            var facture = new Facture { Id = Guid.NewGuid(), MontantTotal = 100m, MontantPaye = 100m, Status = FactureStatus.PAYEE };
+            var request = new PayerFactureCommand(facture.Id, new PaiementDto { MoyenPaiement = ModePaiement.Especes, Montant = 100m });
+            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(facture.Id)).ReturnsAsync(facture);
 
-            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(facture.Id))
-                .ReturnsAsync(facture);
-
-            // Act
             var result = await _handler.Handle(request, CancellationToken.None);
 
-            // Assert
             result.Should().BeFalse();
         }
 
@@ -67,77 +54,76 @@ namespace Facturation.Tests.PaiementTests.Commands
         [InlineData(-10)]
         public async Task Handle_Should_Throw_When_MontantIsInvalid(decimal montant)
         {
-            // Arrange
-            var facture = new Facture
-            {
-                Id = Guid.NewGuid(),
-                MontantTotal = 100m,
-                MontantPaye = 0m,
-                Status = FactureStatus.IMPAYEE
-            };
-            var request = new PayerFactureCommand(facture.Id, ModePaiement.Especes, montant);
+            var facture = new Facture { Id = Guid.NewGuid(), MontantTotal = 100m, MontantPaye = 0m, Status = FactureStatus.IMPAYEE };
+            var request = new PayerFactureCommand(facture.Id, new PaiementDto { MoyenPaiement = ModePaiement.Especes, Montant = montant });
+            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(facture.Id)).ReturnsAsync(facture);
 
-            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(facture.Id))
-                .ReturnsAsync(facture);
-
-            // Act
             Func<Task> act = async () => await _handler.Handle(request, CancellationToken.None);
 
-            // Assert
-            await act.Should().ThrowAsync<InvalidOperationException>()
-                .WithMessage("*Le montant payé est invalide*");
+            await act.Should().ThrowAsync<InvalidOperationException>().WithMessage("*Le montant payé est invalide*");
         }
 
         [Fact]
         public async Task Handle_Should_Throw_When_MontantIsGreaterThanRestant()
         {
-            // Arrange
-            var facture = new Facture
-            {
-                Id = Guid.NewGuid(),
-                MontantTotal = 100m,
-                MontantPaye = 50m,
-                Status = FactureStatus.PARTIELLEMENT_PAYEE
-            };
-            var request = new PayerFactureCommand(facture.Id, ModePaiement.Especes, 60m);
+            var facture = new Facture { Id = Guid.NewGuid(), MontantTotal = 100m, MontantPaye = 50m, Status = FactureStatus.PARTIELLEMENT_PAYEE };
+            var request = new PayerFactureCommand(facture.Id, new PaiementDto { MoyenPaiement = ModePaiement.Especes, Montant = 60m });
+            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(facture.Id)).ReturnsAsync(facture);
 
-            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(facture.Id))
-                .ReturnsAsync(facture);
-
-            // Act
             Func<Task> act = async () => await _handler.Handle(request, CancellationToken.None);
 
-            // Assert
-            await act.Should().ThrowAsync<InvalidOperationException>()
-                .WithMessage("*Le montant payé est invalide*");
+            await act.Should().ThrowAsync<InvalidOperationException>().WithMessage("*Le montant payé est invalide*");
+        }
+
+        [Fact]
+        public async Task Handle_Should_Throw_When_CardDetailsMissing_ForCarteBancaire()
+        {
+            var facture = new Facture { Id = Guid.NewGuid(), MontantTotal = 100m, MontantPaye = 0m, Status = FactureStatus.IMPAYEE };
+            var request = new PayerFactureCommand(facture.Id, new PaiementDto { MoyenPaiement = ModePaiement.CarteBancaire, Montant = 50m, CardDetails = null });
+            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(facture.Id)).ReturnsAsync(facture);
+
+            Func<Task> act = async () => await _handler.Handle(request, CancellationToken.None);
+
+            await act.Should().ThrowAsync<InvalidOperationException>().WithMessage("*Détails de la carte requis*");
+        }
+
+        [Fact]
+        public async Task Handle_Should_Throw_When_CardDetailsInvalid_ForCarteBancaire()
+        {
+            var facture = new Facture { Id = Guid.NewGuid(), MontantTotal = 100m, MontantPaye = 0m, Status = FactureStatus.IMPAYEE };
+            var cardDetails = new CardDetailsDto
+            {
+                CardholderName = "Jean Dupont",
+                CardNumber = "1234567890123456", // Numéro non valide Luhn
+                ExpiryDate = "12/99",
+                Cvv = "123"
+            };
+            var request = new PayerFactureCommand(facture.Id, new PaiementDto { MoyenPaiement = ModePaiement.CarteBancaire, Montant = 50m, CardDetails = cardDetails });
+            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(facture.Id)).ReturnsAsync(facture);
+
+            Func<Task> act = async () => await _handler.Handle(request, CancellationToken.None);
+
+            await act.Should().ThrowAsync<InvalidOperationException>().WithMessage("*Détails de la carte invalides*");
         }
 
         [Fact]
         public async Task Handle_Should_PayFactureCompletely_When_MontantEqualsRestant()
         {
-            // Arrange
-            var facture = new Facture
-            {
-                Id = Guid.NewGuid(),
-                MontantTotal = 100m,
-                MontantPaye = 50m,
-                Status = FactureStatus.PARTIELLEMENT_PAYEE
-            };
-            var request = new PayerFactureCommand(facture.Id, ModePaiement.CarteBancaire, 50m);
+            var facture = new Facture { Id = Guid.NewGuid(), MontantTotal = 100m, MontantPaye = 50m, Status = FactureStatus.PARTIELLEMENT_PAYEE };
+            var request = new PayerFactureCommand(facture.Id, new PaiementDto { MoyenPaiement = ModePaiement.Especes, Montant = 50m });
+            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(facture.Id)).ReturnsAsync(facture);
 
-            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(facture.Id))
-                .ReturnsAsync(facture);
+            _unitOfWorkMock.Setup(u => u.BeginTransactionAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            _unitOfWorkMock.Setup(u => u.CommitTransactionAsync()).Returns(Task.CompletedTask);
 
-            // Act
             var result = await _handler.Handle(request, CancellationToken.None);
 
-            // Assert
             result.Should().BeTrue();
             facture.MontantPaye.Should().Be(100m);
             facture.Status.Should().Be(FactureStatus.PAYEE);
             _paiementRepositoryMock.Verify(r => r.AddAsync(It.Is<Paiement>(p =>
                 p.FactureId == facture.Id &&
-                p.Mode == ModePaiement.CarteBancaire &&
+                p.Mode == ModePaiement.Especes &&
                 p.Montant == 50m
             )), Times.Once);
             _factureRepositoryMock.Verify(r => r.UpdateFactureAsync(facture), Times.Once);
@@ -146,23 +132,15 @@ namespace Facturation.Tests.PaiementTests.Commands
         [Fact]
         public async Task Handle_Should_PartiallyPayFacture_When_MontantIsLessThanRestant()
         {
-            // Arrange
-            var facture = new Facture
-            {
-                Id = Guid.NewGuid(),
-                MontantTotal = 100m,
-                MontantPaye = 20m,
-                Status = FactureStatus.IMPAYEE
-            };
-            var request = new PayerFactureCommand(facture.Id, ModePaiement.Virement, 30m);
+            var facture = new Facture { Id = Guid.NewGuid(), MontantTotal = 100m, MontantPaye = 20m, Status = FactureStatus.IMPAYEE };
+            var request = new PayerFactureCommand(facture.Id, new PaiementDto { MoyenPaiement = ModePaiement.Virement, Montant = 30m });
+            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(facture.Id)).ReturnsAsync(facture);
 
-            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(facture.Id))
-                .ReturnsAsync(facture);
+            _unitOfWorkMock.Setup(u => u.BeginTransactionAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            _unitOfWorkMock.Setup(u => u.CommitTransactionAsync()).Returns(Task.CompletedTask);
 
-            // Act
             var result = await _handler.Handle(request, CancellationToken.None);
 
-            // Assert
             result.Should().BeTrue();
             facture.MontantPaye.Should().Be(50m);
             facture.Status.Should().Be(FactureStatus.PARTIELLEMENT_PAYEE);
@@ -175,31 +153,21 @@ namespace Facturation.Tests.PaiementTests.Commands
         }
 
         [Fact]
-        public async Task Handle_Should_CallPayerFactureEvent_And_UpdateFactureEvent()
+        public async Task Handle_Should_RollbackTransaction_And_LogError_OnException()
         {
-            // Arrange
-            var facture = new Mock<Facture>();
-            facture.SetupAllProperties();
-            facture.Object.Id = Guid.NewGuid();
-            facture.Object.MontantTotal = 100m;
-            facture.Object.MontantPaye = 0m;
-            facture.Object.Status = FactureStatus.IMPAYEE;
+            var facture = new Facture { Id = Guid.NewGuid(), MontantTotal = 100m, MontantPaye = 0m, Status = FactureStatus.IMPAYEE };
+            var request = new PayerFactureCommand(facture.Id, new PaiementDto { MoyenPaiement = ModePaiement.Especes, Montant = 100m });
+            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(facture.Id)).ReturnsAsync(facture);
 
-            var request = new PayerFactureCommand(facture.Object.Id, ModePaiement.Mobile, 100m);
+            _unitOfWorkMock.Setup(u => u.BeginTransactionAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            _paiementRepositoryMock.Setup(r => r.AddAsync(It.IsAny<Paiement>())).ThrowsAsync(new Exception("Erreur DB"));
+            _unitOfWorkMock.Setup(u => u.RollbackTransactionAsync()).Returns(Task.CompletedTask);
 
-            _factureRepositoryMock.Setup(r => r.GetFactureByIdAsync(facture.Object.Id))
-                .ReturnsAsync(facture.Object);
+            Func<Task> act = async () => await _handler.Handle(request, CancellationToken.None);
 
-            // Act
-            var result = await _handler.Handle(request, CancellationToken.None);
-
-            // Assert
-            result.Should().BeTrue();
-            _paiementRepositoryMock.Verify(r => r.AddAsync(It.Is<Paiement>(p =>
-                p.FactureId == facture.Object.Id &&
-                p.Mode == ModePaiement.Mobile &&
-                p.Montant == 100m
-            )), Times.Once);
+            await act.Should().ThrowAsync<Exception>().WithMessage("Erreur DB");
+            _unitOfWorkMock.Verify(u => u.RollbackTransactionAsync(), Times.Once);
+            _loggerMock.Verify(l => l.LogError(It.IsAny<Exception>(), It.IsAny<string>(), request.factureId), Times.Once);
         }
     }
 }

@@ -163,6 +163,17 @@ namespace Doctor.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<int> GetNombreTotalMedecinsAsync()
+        {
+            return await _context.Medecins.CountAsync();
+        }
+
+        public async Task<int> GetNouveauxMedecinsAsync(DateTime startDate, DateTime endDate)
+        {
+            return await _context.Medecins
+                .CountAsync(m => m.DateCreation >= startDate && m.DateCreation <= endDate);
+        }
+
         public async Task<IEnumerable<Guid>> GetMedecinsIdsByCliniqueId(Guid cliniqueId)
         {
             return await _context.Medecins

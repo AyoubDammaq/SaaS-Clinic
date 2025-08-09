@@ -30,6 +30,8 @@ namespace Reporting.Application.Interfaces
         Task<decimal> GetMontantPaiementsAsync(string statut, DateTime dateDebut, DateTime dateFin);
         Task<StatistiquesFactureDto> GetStatistiquesFacturesAsync(DateTime dateDebut, DateTime dateFin);
         Task<List<ComparaisonCliniqueDTO>> ComparerCliniquesAsync(List<Guid> cliniqueIds);
-        Task<DashboardStatsDTO> GetDashboardStatsAsync(DateTime dateDebut, DateTime dateFin);
+        Task<IEnumerable<AppointmentDayStatDto>> GetStatistiquesHebdomadairesRendezVousByDoctorAsync(Guid medecinId, DateTime start, DateTime end);
+        Task<IEnumerable<AppointmentDayStatDto>> GetStatistiquesHebdomadairesRendezVousByClinicAsync(Guid cliniqueId, DateTime start, DateTime end);
+        Task<DashboardStatsDTO> GetDashboardStatsAsync(DateTime dateDebut, DateTime dateFin, Guid? patientId = null, Guid? medecinId = null, Guid? cliniqueId = null);
     }
 }

@@ -11,6 +11,7 @@ using Facturation.Infrastructure.Messaging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Facturation.Application.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +32,12 @@ builder.Services.AddDbContext<FacturationDbContext>(options =>
 
 builder.Services.AddScoped<IFactureRepository, FactureRepository>();
 builder.Services.AddScoped<IPaiementRepository, PaiementRepository>();
+builder.Services.AddScoped<ITarificationConsultationRepository, TarificationConsultationRepository>();
 builder.Services.AddSingleton<IKafkaProducer, KafkaProducer>();
+builder.Services.AddHostedService<ConsultationCreatedConsumer>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddAutoMapper(typeof(TarifConsultationProfile).Assembly);
 
 
 

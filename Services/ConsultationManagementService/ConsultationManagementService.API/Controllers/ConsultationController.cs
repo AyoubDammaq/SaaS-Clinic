@@ -16,6 +16,12 @@ using ConsultationManagementService.Application.Commands.DeleteDocumentMedical;
 using ConsultationManagementService.Application.Queries.GetNombreConsultations;
 using ConsultationManagementService.Application.Queries.CountByMedecinIds;
 using ConsultationManagementService.Application.Queries.GetConsultationsByClinicId;
+using ConsultationManagementService.Application.Queries.CountNouveauxPatientsByDoctor;
+using ConsultationManagementService.Application.Queries.CountNouveauxPatientsByClinic;
+using ConsultationManagementService.Application.Queries.CountConsultationByDate;
+using ConsultationManagementService.Application.Queries.CountConsultationByPatient;
+using ConsultationManagementService.Application.Queries.CountConsultationByDoctor;
+using ConsultationManagementService.Application.Queries.CountConsultationByClinic;
 
 namespace ConsultationManagementService.Controllers
 {
@@ -357,6 +363,76 @@ namespace ConsultationManagementService.Controllers
 
             var consultations = await _mediator.Send(new GetConsultationsByClinicIdQuery(clinicId));
             return Ok(consultations);
+        }
+
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor, Patient")]
+        [HttpGet("count-by-date")]
+        public async Task<IActionResult> CountConsultation(
+            [FromQuery] DateTime dateDebut,
+            [FromQuery] DateTime dateFin,
+            [FromQuery] Guid? cliniqueId,
+            [FromQuery] Guid? medecinId,
+            [FromQuery] Guid? patientId)
+        {
+            if (dateDebut >= dateFin)
+                return BadRequest("Start date must be earlier than end date");
+
+            var count = await _mediator.Send(new CountConsultationByDateQuery(cliniqueId, medecinId, patientId, dateDebut, dateFin));
+            return Ok(count);
+        }
+
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
+        [HttpGet("nouveaux-patients-count-by-doctor/{medecinId}")]
+        public async Task<IActionResult> GetNouveauxPatientsCount(Guid medecinId, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        {
+            if (medecinId == Guid.Empty)
+                return BadRequest("Invalid MedecinId");
+            if (startDate >= endDate)
+                return BadRequest("Start date must be earlier than end date");
+            var count = await _mediator.Send(new CountNouveauxPatientsByDoctorQuery(medecinId, startDate, endDate));
+            return Ok(count);
+        }
+
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
+        [HttpGet("nouveaux-patients-count-by-clinic/{clinicId}")]
+        public async Task<IActionResult> GetNouveauxPatientsCountByClinic(Guid clinicId, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        {
+            if (clinicId == Guid.Empty)
+                return BadRequest("Invalid clinicId");
+            if (startDate >= endDate)
+                return BadRequest("Start date must be earlier than end date");
+            var count = await _mediator.Send(new CountNouveauxPatientsByClinicQuery(clinicId, startDate, endDate));
+            return Ok(count);
+        }
+
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor, Patient")]
+        [HttpGet("count-consultation-by-patient/{patientId}")]
+        public async Task<IActionResult> CountConsultationByPatient(Guid patientId, [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+        {
+            if (patientId == Guid.Empty)
+                return BadRequest("Invalid PatientId");
+            var count = await _mediator.Send(new CountConsultationByPatientQuery(patientId, startDate, endDate));
+            return Ok(count);
+        }
+
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor, Patient")]
+        [HttpGet("count-consultation-by-doctor/{medecinId}")]
+        public async Task<IActionResult> CountConsultationByDoctor(Guid medecinId, [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+        {
+            if (medecinId == Guid.Empty)
+                return BadRequest("Invalid MedecinId");
+            var count = await _mediator.Send(new CountConsultationByDoctorQuery(medecinId, startDate, endDate));
+            return Ok(count);
+        }
+
+        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor, Patient")]
+        [HttpGet("count-consultation-by-clinic/{clinicId}")]
+        public async Task<IActionResult> CountConsultationByClinic(Guid clinicId, [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+        {
+            if (clinicId == Guid.Empty)
+                return BadRequest("Invalid ClinicId");
+            var count = await _mediator.Send(new CountConsultationByClinicQuery(clinicId, startDate, endDate));
+            return Ok(count);
         }
     }
 }

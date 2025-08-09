@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Facturation.Application.FactureService.Queries.GetFacturesByFilter
 {
-    public class GetFacturesByFilterQuery : IRequest<IEnumerable<GetFacturesResponse>>
+    public class GetFacturesByFilterQuery : IRequest<IEnumerable<FactureDto>>
     {
         public Guid? ClinicId { get; set; }
         public Guid? PatientId { get; set; }

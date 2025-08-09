@@ -31,6 +31,8 @@ namespace Reporting.Domain.Interfaces
 
         Task<decimal> GetMontantPaiementsAsync(string statut, DateTime dateDebut, DateTime dateFin);
         Task<StatistiquesFacture> GetStatistiquesFacturesAsync(DateTime dateDebut, DateTime dateFin);
-        Task<DashboardStats> GetDashboardStatsAsync(DateTime dateDebut, DateTime dateFin);
+        Task<IEnumerable<AppointmentDayStat>> GetStatistiquesHebdomadairesRendezVousByDoctorAsync(Guid medecinId, DateTime dateDebut, DateTime dateFin);
+        Task<IEnumerable<AppointmentDayStat>> GetStatistiquesHebdomadairesRendezVousByClinicAsync(Guid cliniqueId, DateTime dateDebut, DateTime dateFin);
+        Task<DashboardStats> GetDashboardStatsAsync(DateTime dateDebut, DateTime dateFin, Guid? patientId = null, Guid? medecinId = null, Guid? cliniqueId = null);
     }
 }

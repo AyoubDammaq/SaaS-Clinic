@@ -10,5 +10,7 @@ namespace Facturation.Application.DTOs
 
         [Range(0.01, double.MaxValue, ErrorMessage = "Le montant doit être supérieur à zéro.")]
         public decimal Montant { get; set; }
+
+        public CardDetailsDto? CardDetails { get; set; }
     }
 }

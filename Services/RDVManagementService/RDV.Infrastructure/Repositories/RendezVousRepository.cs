@@ -3,16 +3,20 @@ using RDV.Domain.Entities;
 using RDV.Domain.Enums;
 using RDV.Domain.Interfaces;
 using RDV.Infrastructure.Data;
+using System.Net.Http;
+using System.Text.Json;
 
 namespace RDV.Infrastructure.Repositories
 {
     public class RendezVousRepository : IRendezVousRepository
     {
         private readonly RendezVousDbContext _context;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public RendezVousRepository(RendezVousDbContext context)
+        public RendezVousRepository(RendezVousDbContext context, IHttpClientFactory httpClientFactory)
         {
             _context = context;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<IEnumerable<RendezVous>> GetAllRendezVousAsync()
@@ -83,6 +87,38 @@ namespace RDV.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<int> CountPendingRDVByDoctorAsync(Guid medecinId)
+        {
+            return await _context.RendezVous
+                .CountAsync(r => r.MedecinId == medecinId && r.Statut == RDVstatus.EN_ATTENTE);
+        }
+
+        public async Task<int> CountPendingRDVByClinicAsync(Guid clinicId)
+        {
+            var httpClient = _httpClientFactory.CreateClient();
+
+            var response = await httpClient.GetAsync($"http://doctorService:8085/api/Medecin/medecinsIds/clinique/{clinicId}");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Erreur lors de l'appel à l'API Doctor pour la clinique {clinicId}");
+            }
+
+
+            var json = await response.Content.ReadAsStringAsync();
+            var medecinIds = JsonSerializer.Deserialize<List<Guid>>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            if (medecinIds == null || !medecinIds.Any())
+            {
+                return 0;
+            }
+
+            return await _context.RendezVous
+                .Where(r => medecinIds.Contains(r.MedecinId) && r.Statut == RDVstatus.EN_ATTENTE)
+                .CountAsync();
+        }
 
         public async Task<int> CountByMedecinIdsAsync(List<Guid> medecinIds)
         {
@@ -126,6 +162,16 @@ namespace RDV.Infrastructure.Repositories
         {
             return await _context.RendezVous
                 .AnyAsync(r => r.MedecinId == medecinId && r.DateHeure == dateHeure);
+        }
+
+        public async Task<int> CountByMedecinsIdsAndDateAsync(List<Guid> medecinsIds, DateTime date)
+        {
+            var dateOnly = date.Date;
+
+            return await _context.RendezVous
+                .Where(r => medecinsIds.Contains(r.MedecinId) &&
+                            r.DateHeure.Date == dateOnly)
+                .CountAsync();
         }
     }
 }

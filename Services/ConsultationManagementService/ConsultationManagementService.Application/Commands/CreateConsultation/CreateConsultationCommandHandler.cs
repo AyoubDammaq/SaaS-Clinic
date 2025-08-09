@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using ConsultationManagementService.Application.DTOs;
 using ConsultationManagementService.Application.Interfaces;
-using ConsultationManagementService.Application.Services;
 using ConsultationManagementService.Domain.Entities;
+using ConsultationManagementService.Domain.Enums;
 using ConsultationManagementService.Repositories;
 using MediatR;
 
@@ -59,6 +59,10 @@ namespace ConsultationManagementService.Application.Commands.CreateConsultation
             if (consultation.ClinicId == Guid.Empty)
             {
                 throw new ArgumentException("L'identifiant de la clinique ne peut pas être vide.");
+            }
+            if (!Enum.IsDefined(typeof(TypeConsultation), consultation.Type))
+            {
+                throw new ArgumentException("Type de consultation invalide.");
             }
             if (consultation.DateConsultation == default)
             {

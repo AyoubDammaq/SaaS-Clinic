@@ -22,6 +22,43 @@ namespace Facturation.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Facturation.Domain.Entities.CardDetails", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CardNumber")
+                        .IsRequired()
+                        .HasMaxLength(19)
+                        .HasColumnType("nvarchar(19)");
+
+                    b.Property<string>("CardholderName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Cvv")
+                        .IsRequired()
+                        .HasMaxLength(4)
+                        .HasColumnType("nvarchar(4)");
+
+                    b.Property<string>("ExpiryDate")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
+
+                    b.Property<Guid>("PaiementId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PaiementId")
+                        .IsUnique();
+
+                    b.ToTable("CardDetails");
+                });
+
             modelBuilder.Entity("Facturation.Domain.Entities.Facture", b =>
                 {
                     b.Property<Guid>("Id")
@@ -42,6 +79,7 @@ namespace Facturation.Infrastructure.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("MontantTotal")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("PatientId")
@@ -81,6 +119,44 @@ namespace Facturation.Infrastructure.Migrations
                     b.ToTable("Paiements");
                 });
 
+            modelBuilder.Entity("Facturation.Domain.Entities.TarifConsultation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ClinicId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ConsultationType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Prix")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClinicId", "ConsultationType")
+                        .IsUnique();
+
+                    b.ToTable("TarifsConsultation");
+                });
+
+            modelBuilder.Entity("Facturation.Domain.Entities.CardDetails", b =>
+                {
+                    b.HasOne("Facturation.Domain.Entities.Paiement", "Paiement")
+                        .WithOne("CardDetails")
+                        .HasForeignKey("Facturation.Domain.Entities.CardDetails", "PaiementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Paiement");
+                });
+
             modelBuilder.Entity("Facturation.Domain.Entities.Paiement", b =>
                 {
                     b.HasOne("Facturation.Domain.Entities.Facture", "Facture")
@@ -95,6 +171,11 @@ namespace Facturation.Infrastructure.Migrations
             modelBuilder.Entity("Facturation.Domain.Entities.Facture", b =>
                 {
                     b.Navigation("Paiement");
+                });
+
+            modelBuilder.Entity("Facturation.Domain.Entities.Paiement", b =>
+                {
+                    b.Navigation("CardDetails");
                 });
 #pragma warning restore 612, 618
         }

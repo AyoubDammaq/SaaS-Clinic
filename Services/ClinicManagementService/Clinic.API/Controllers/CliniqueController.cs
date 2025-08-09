@@ -4,6 +4,7 @@ using Clinic.Application.Commands.ModifierClinique;
 using Clinic.Application.Commands.SupprimerClinique;
 using Clinic.Application.DTOs;
 using Clinic.Application.Queries.GetNombreCliniques;
+using Clinic.Application.Queries.GetNombreDeCliniquesParDate;
 using Clinic.Application.Queries.GetNombreNouvellesCliniquesDuMois;
 using Clinic.Application.Queries.GetNombreNouvellesCliniquesParMois;
 using Clinic.Application.Queries.GetStatistiquesDesCliniques;
@@ -212,6 +213,23 @@ namespace Clinic.API.Controllers
                 return StatusCode(500, $"Erreur lors de la récupération du nombre des cliniques : {ex.Message}");
             }
 
+        }
+
+        [AllowAnonymous]
+        [HttpGet("nombre-cliniques-par-date")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<int>> GetNombreDeCliniquesParDate([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        {
+            try
+            {
+                var nombreCliniques = await _mediator.Send(new GetNombreDeCliniquesParDateQuery(startDate, endDate));
+                return Ok(nombreCliniques);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur lors de la récupération du nombre des cliniques par date : {ex.Message}");
+            }
         }
 
         [HttpGet("nouvelles-cliniques-mois")]

@@ -13,7 +13,9 @@ namespace Facturation.Domain.Entities
         [Required]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Montant { get; set; }
-        public DateTime DatePaiement { get; set; }
+
+        [Required]
+        public DateTime DatePaiement { get; set; } = DateTime.Now;
 
         [Required]
         public ModePaiement Mode { get; set; }
@@ -22,6 +24,8 @@ namespace Facturation.Domain.Entities
         [Required]
         public Guid FactureId { get; set; }
         public virtual Facture? Facture { get; set; }
+
+        public virtual CardDetails? CardDetails { get; set; }
 
         public void PayerFactureEvent()
         {

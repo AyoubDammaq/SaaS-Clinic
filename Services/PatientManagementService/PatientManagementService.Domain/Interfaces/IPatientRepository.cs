@@ -12,6 +12,8 @@ namespace PatientManagementService.Domain.Interfaces
         Task DeletePatientAsync(Guid id);
         Task<IEnumerable<Patient>> GetPatientsByNameAsync(string firstName, string lastName);
         Task<int> GetStatistiquesAsync(DateTime dateDebut, DateTime dateFin);
+        Task<int> CountTotalPatientsAsync();
+        Task<Dictionary<string, int>> GetNombreDeNouveauxPatientsParMoisAsync(DateTime year);
         Task<bool> LinkUserToPatientEntityAsync(Guid patientId, Guid userId);
     }
 }

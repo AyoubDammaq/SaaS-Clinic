@@ -32,8 +32,8 @@ namespace Facturation.Tests.ControllersTests
         {
             // Arrange
             var id = Guid.NewGuid();
-            var response = new GetFacturesResponse { PatientId = Guid.NewGuid() };
-            _mediatorMock.Setup(m => m.Send(It.Is<GetFactureByIdQuery>(q => q.id == id), default))
+            var response = new FactureDto { PatientId = Guid.NewGuid() }; 
+            _mediatorMock.Setup(m => m.Send(It.Is<GetFactureByIdQuery>(q => q.id == id), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(response);
 
             // Act
@@ -119,7 +119,7 @@ namespace Facturation.Tests.ControllersTests
         {
             // Arrange
             var id = Guid.NewGuid();
-            var response = new GetFacturesResponse { PatientId = Guid.NewGuid() };
+            var response = new FactureDto { PatientId = Guid.NewGuid() };
             _mediatorMock.Setup(m => m.Send(It.Is<GetFactureByIdQuery>(q => q.id == id), default))
                 .ReturnsAsync(response);
 
@@ -136,7 +136,7 @@ namespace Facturation.Tests.ControllersTests
             // Arrange
             var id = Guid.NewGuid();
             _mediatorMock.Setup(m => m.Send(It.Is<GetFactureByIdQuery>(q => q.id == id), default))
-                .ReturnsAsync((GetFacturesResponse?)null);
+                .ReturnsAsync((FactureDto?)null);
 
             // Act
             var result = await _controller.DeleteFacture(id);
@@ -150,7 +150,7 @@ namespace Facturation.Tests.ControllersTests
         public async Task GetAllFactures_Should_ReturnOk()
         {
             // Arrange
-            var list = new List<GetFacturesResponse>();
+            var list = new List<FactureDto>();
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetAllFacturesQuery>(), default))
                 .ReturnsAsync(list);
 
@@ -183,7 +183,7 @@ namespace Facturation.Tests.ControllersTests
         {
             // Arrange
             var id = Guid.NewGuid();
-            var facture = new GetFacturesResponse
+            var facture = new FactureDto
             {
                 PatientId = Guid.NewGuid(),
                 ConsultationId = Guid.NewGuid(),
@@ -210,7 +210,7 @@ namespace Facturation.Tests.ControllersTests
             // Arrange
             var id = Guid.NewGuid();
             _mediatorMock.Setup(m => m.Send(It.Is<GetFactureByIdQuery>(q => q.id == id), default))
-                .ReturnsAsync((GetFacturesResponse?)null);
+                .ReturnsAsync((FactureDto?)null);
 
             // Act
             var result = await _controller.ExportFacture(id);

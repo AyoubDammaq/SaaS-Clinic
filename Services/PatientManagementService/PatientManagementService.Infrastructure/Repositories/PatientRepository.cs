@@ -80,6 +80,30 @@ namespace PatientManagementService.Infrastructure.Repositories
             return count;
         }
 
+        public async Task<int> CountTotalPatientsAsync()
+        {
+            return await _context.Patients.CountAsync();
+        }
+
+        public async Task<Dictionary<string, int>> GetNombreDeNouveauxPatientsParMoisAsync(DateTime date)
+        {
+            var startDate = new DateTime(date.Year, 1, 1);
+            var endDate = new DateTime(date.Year, 12, 31);
+            var result = await _context.Patients
+                .Where(p => p.DateCreation >= startDate && p.DateCreation <= endDate)
+                .GroupBy(p => new { p.DateCreation.Year, p.DateCreation.Month })
+                .Select(g => new
+                {
+                    Month = g.Key.Month,
+                    Count = g.Count()
+                })
+                .ToListAsync();
+            return result.ToDictionary(
+                x => new DateTime(date.Year, x.Month, 1).ToString("MMMM"),
+                x => x.Count
+            );
+        }
+
         public async Task<bool> LinkUserToPatientEntityAsync(Guid patientId, Guid userId)
         {
             var patient = await _context.Patients.FindAsync(patientId);

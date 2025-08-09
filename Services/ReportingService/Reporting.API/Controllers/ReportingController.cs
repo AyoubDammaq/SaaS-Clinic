@@ -62,15 +62,35 @@ namespace Reporting.API.Controllers
         [HttpGet("patients/nouveaux/count")]
         public async Task<IActionResult> GetNombreNouveauxPatients([FromQuery] DateTime start, [FromQuery] DateTime end)
         {
-            var result = await _reportingService.GetNombreNouveauxPatientsAsync(start, end);
-            return Ok(result);
+            try
+            {
+                var result = await _reportingService.GetNombreNouveauxPatientsAsync(start, end);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erreur lors de la récupération du nombre de nouveaux patients.");
+                return StatusCode(500, "Erreur interne du serveur.");
+            }
         }
 
         [HttpGet("medecins/specialites/count")]
         public async Task<IActionResult> GetNombreMedecinParSpecialite()
         {
-            var result = await _reportingService.GetNombreMedecinParSpecialite();
-            return Ok(result);
+            try
+            {
+                var result = await _reportingService.GetNombreMedecinParSpecialite();
+                if (result == null || !result.Any())
+                {
+                    return NotFound("Aucune statistique de médecins par spécialité trouvée.");
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erreur lors de la récupération des médecins par spécialité.");
+                return StatusCode(500, "Erreur interne du serveur.");
+            }
         }
 
         [HttpGet("medecins/cliniques/count")]
@@ -175,11 +195,16 @@ namespace Reporting.API.Controllers
         }
 
         [HttpGet("dashboard")]
-        public async Task<IActionResult> GetDashboardStats(DateTime start, DateTime end)
+        public async Task<IActionResult> GetDashboardStats(
+            [FromQuery] DateTime start,
+            [FromQuery] DateTime end,
+            [FromQuery] Guid? patientId = null,
+            [FromQuery] Guid? medecinId = null,
+            [FromQuery] Guid? cliniqueId = null)
         {
             try
             {
-                var stats = await _reportingService.GetDashboardStatsAsync(start, end);
+                var stats = await _reportingService.GetDashboardStatsAsync(start, end, patientId, medecinId, cliniqueId);
                 return Ok(stats);
             }
             catch (Exception ex)
@@ -188,6 +213,7 @@ namespace Reporting.API.Controllers
                 return StatusCode(500, "Erreur interne du serveur");
             }
         }
+
         [HttpGet("dashboard/pdf")]
         public async Task<IActionResult> ExportDashboardPdf([FromQuery] DateTime start, [FromQuery] DateTime end)
         {
@@ -197,6 +223,37 @@ namespace Reporting.API.Controllers
             var pdfBytes = DashboardPdfGenerator.Generate(stats);
             return File(pdfBytes, "application/pdf", $"dashboard_{start:yyyyMMdd}_{end:yyyyMMdd}.pdf");
         }
+
+        [HttpGet("rendezvous/weekly-stats/by-doctor/{medecinId}")]
+        public async Task<IActionResult> GetStatistiquesHebdomadairesRendezVousByDoctor(Guid medecinId, [FromQuery] DateTime start, [FromQuery] DateTime end)
+        {
+            try
+            {
+                var result = await _reportingService.GetStatistiquesHebdomadairesRendezVousByDoctorAsync(medecinId, start, end);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erreur lors de la récupération des statistiques hebdomadaires des rendez-vous.");
+                return StatusCode(500, "Erreur interne du serveur.");
+            }
+        }
+
+        [HttpGet("rendezvous/weekly-stats/by-clinic/{cliniqueId}")]
+        public async Task<IActionResult> GetStatistiquesHebdomadairesRendezVousByClinic(Guid cliniqueId, [FromQuery] DateTime start, [FromQuery] DateTime end)
+        {
+            try
+            {
+                var result = await _reportingService.GetStatistiquesHebdomadairesRendezVousByClinicAsync(cliniqueId, start, end);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erreur lors de la récupération des statistiques hebdomadaires des rendez-vous par clinique.");
+                return StatusCode(500, "Erreur interne du serveur.");
+            }
+        }   
+
 
         [HttpGet("dashboard/excel")]
         public async Task<IActionResult> ExportDashboardExcel([FromQuery] DateTime start, [FromQuery] DateTime end)

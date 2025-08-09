@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Facturation.Application.FactureService.Queries.GetFacturesByFilter
 {
-    public class GetFacturesByFilterQueryHandler : IRequestHandler<GetFacturesByFilterQuery, IEnumerable<GetFacturesResponse>>
+    public class GetFacturesByFilterQueryHandler : IRequestHandler<GetFacturesByFilterQuery, IEnumerable<FactureDto>>
     {
         private readonly IFactureRepository _factureRepository;
 
@@ -13,12 +13,13 @@ namespace Facturation.Application.FactureService.Queries.GetFacturesByFilter
             _factureRepository = factureRepository;
         }
 
-        public async Task<IEnumerable<GetFacturesResponse>> Handle(GetFacturesByFilterQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<FactureDto>> Handle(GetFacturesByFilterQuery request, CancellationToken cancellationToken)
         {
             var factures = await _factureRepository.GetByFilterAsync(request.PatientId, request.ClinicId, request.Status);
 
-            return factures.Select(f => new GetFacturesResponse
+            return factures.Select(f => new FactureDto
             {
+                Id = f.Id,
                 PatientId = f.PatientId,
                 ConsultationId = f.ConsultationId,
                 ClinicId = f.ClinicId,

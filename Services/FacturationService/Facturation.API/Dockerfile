@@ -16,6 +16,7 @@ COPY ["Facturation.API/Facturation.API.csproj", "Facturation.API/"]
 COPY ["Facturation.Application/Facturation.Application.csproj", "Facturation.Application/"]
 COPY ["Facturation.Domain/Facturation.Domain.csproj", "Facturation.Domain/"]
 COPY ["Facturation.Infrastructure/Facturation.Infrastructure.csproj", "Facturation.Infrastructure/"]
+#ENV NUGET_PACKAGES=/root/.nuget/packages
 RUN dotnet restore "./Facturation.API/Facturation.API.csproj"
 COPY . .
 WORKDIR "/src/Facturation.API"

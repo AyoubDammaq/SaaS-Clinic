@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using ConsultationManagementService.Domain.Common;
 using ConsultationManagementService.Domain.Events;
+using ConsultationManagementService.Domain.Enums;
 
 namespace ConsultationManagementService.Domain.Entities
 {
@@ -19,6 +20,9 @@ namespace ConsultationManagementService.Domain.Entities
 
         [Required]
         public Guid ClinicId { get; set; }
+
+        [Required]
+        public TypeConsultation Type { get; set; }
 
         [Required]
         public DateTime DateConsultation { get; set; }

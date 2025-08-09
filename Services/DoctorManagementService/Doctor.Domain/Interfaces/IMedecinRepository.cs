@@ -20,6 +20,8 @@ namespace Doctor.Domain.Interfaces
         Task<IEnumerable<StatistiqueMedecin>> GetNombreMedecinBySpecialiteAsync();
         Task<IEnumerable<StatistiqueMedecin>> GetNombreMedecinByCliniqueAsync();
         Task<IEnumerable<StatistiqueMedecin>> GetNombreMedecinBySpecialiteDansUneCliniqueAsync(Guid cliniqueId);
+        Task<int> GetNombreTotalMedecinsAsync();
+        Task<int> GetNouveauxMedecinsAsync(DateTime startDate, DateTime endDate); 
         Task<IEnumerable<Guid>> GetMedecinsIdsByCliniqueId(Guid cliniqueId);
 
         Task<IEnumerable<ActiviteMedecin>> GetActivitesMedecinAsync(Guid medecinId);
