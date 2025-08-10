@@ -38,8 +38,8 @@ export interface DashboardStatsDTO {
   nouvellesCliniques: number;
   totalMedecins: number;
   nouveauxMedecins: number;
-  WeeklyAppointmentStatsByDoctor?: AppointmentDayStat[];
-  WeeklyAppointmentStatsByClinic?: AppointmentDayStat[];
+  weeklyAppointmentStatsByDoctor?: AppointmentDayStat[];
+  weeklyAppointmentStatsByClinic?: AppointmentDayStat[];
 }
 
 export interface DoctorStatsDTO {

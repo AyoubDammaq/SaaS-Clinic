@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { reportingService } from "@/services/reportingService";
 import { DashboardStatsDTO, RevenuTrend } from "@/types/statistics";
 import { consultationService } from "@/services/consultationService";
@@ -105,6 +105,7 @@ interface UseReportingsState {
 }
 
 export function useReportings(): UseReportingsState {
+  // State variables
   const [dashboardStats, setDashboardStats] =
     useState<DashboardStatsDTO | null>(null);
   const [newPatientsByDoctor, setNewPatientsByDoctor] = useState<number | null>(

@@ -499,7 +499,7 @@ function DashboardPage() {
   const appointmentDataForDoctor = useMemo(
     () =>
       normalizeWeeklyStats(
-        dashboardStats?.WeeklyAppointmentStatsByDoctor || []
+        dashboardStats?.weeklyAppointmentStatsByDoctor || []
       ),
     [dashboardStats]
   );
@@ -507,7 +507,7 @@ function DashboardPage() {
   const appointmentDataForClinic = useMemo(
     () =>
       normalizeWeeklyStats(
-        dashboardStats?.WeeklyAppointmentStatsByClinic || []
+        dashboardStats?.weeklyAppointmentStatsByClinic || []
       ),
     [dashboardStats]
   );
