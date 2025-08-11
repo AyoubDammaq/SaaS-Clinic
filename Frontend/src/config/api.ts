@@ -352,8 +352,16 @@ export const API_ENDPOINTS = {
     BASE: `${GATEWAY_BASE}/notifications`,
     GET_ALL: `${GATEWAY_BASE}/notifications`,
     GET_BY_ID: (id: string) => `${GATEWAY_BASE}/notifications/${id}`,
-    MARK_AS_READ: (id: string) => `${GATEWAY_BASE}/notifications/${id}/read`,
-    MARK_ALL_AS_READ: `${GATEWAY_BASE}/notifications/read-all`,
+    SEND: `${GATEWAY_BASE}/notifications/send`,
+    MARK_AS_SENT: `${GATEWAY_BASE}/notifications/mark-as-sent`,
+    GET_BY_RECIPIENT_ID: (recipientId: string) =>
+      `${GATEWAY_BASE}/notifications/recipient/${recipientId}`,
+    DELETE: (notificationId: string) =>
+      `${GATEWAY_BASE}/notifications/${notificationId}`,
+    MARK_AS_READ: (id: string) =>
+      `${GATEWAY_BASE}/notifications/mark-as-read/${id}`,
+    MARK_ALL_AS_READ: (recipientId: string) =>
+      `${GATEWAY_BASE}/notifications/mark-all-as-read/${recipientId}`,
   },
 
   // Availability endpoints
