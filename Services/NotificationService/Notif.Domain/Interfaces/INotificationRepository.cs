@@ -13,5 +13,10 @@ namespace Notif.Domain.Interfaces
         Task<List<Notification>> GetByRecipientAsync(Guid recipientId, int skip = 0, int take = 50);
         Task<List<Notification>> FilterAsync(Guid? recipientId = null, UserType? recipientType = null, NotificationStatus? status = null, NotificationType? type = null,
             DateTime? from = null, DateTime? to = null, int skip = 0, int take = 50);
+
+        Task<List<Notification>> GetNotificationsByRecipientIdAsync(Guid RecipientId);
+        Task DeleteNotificationAsync(Guid NotificationId);
+        Task MarkNotificationAsReadAsync(Notification notification);
+        Task MarkAllNotificationsAsReadAsync(Guid RecipientId);
     }
 }

@@ -94,5 +94,50 @@ namespace Notif.Infrastructure.Repositories
                 .Take(take)
                 .ToListAsync();
         }
+
+        public async Task<List<Notification>> GetNotificationsByRecipientIdAsync(Guid RecipientId)
+        {
+            return await _context.Notifications
+                .Where(n => n.RecipientId == RecipientId)
+                .OrderByDescending(n => n.CreatedAt)
+                .ToListAsync();
+        }
+
+        public async Task DeleteNotificationAsync(Guid NotificationId)
+        {
+            var notification = await _context.Notifications.FindAsync(NotificationId);
+            if (notification != null)
+            {
+                _context.Notifications.Remove(notification);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task MarkNotificationAsReadAsync(Notification notification)
+        {
+            var entity = await _context.Notifications.FindAsync(notification.Id);
+            if (entity == null) return; 
+
+            if (entity.Status != NotificationStatus.IsRead)
+            {
+                entity.Status = NotificationStatus.IsRead;
+                _context.Notifications.Update(entity);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task MarkAllNotificationsAsReadAsync(Guid RecipientId)
+        {
+            var notifications = await _context.Notifications
+                .Where(n => n.RecipientId == RecipientId && n.Status != NotificationStatus.IsRead)
+                .ToListAsync();
+
+            foreach (var notification in notifications)
+            {
+                notification.Status = NotificationStatus.IsRead;
+            }
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

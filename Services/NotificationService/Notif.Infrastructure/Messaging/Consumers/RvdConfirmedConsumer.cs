@@ -49,7 +49,7 @@ namespace Notif.Infrastructure.Messaging.Consumers
             var patientNotification = new CreateNotificationRequest(
                 RecipientId: rdv.PatientId,
                 RecipientType: UserType.Patient,
-                Type: NotificationType.AppointmentReminder,
+                Type: NotificationType.AppointmentConfirmation,
                 Title: "Rendez-vous confirmé",
                 Content: $"Votre rendez-vous est confirmé pour le {rdv.DateHeure:dd/MM/yyyy à HH:mm}.",
                 Metadata: new Dictionary<string, object>
@@ -62,7 +62,7 @@ namespace Notif.Infrastructure.Messaging.Consumers
             var medecinNotification = new CreateNotificationRequest(
                 RecipientId: rdv.MedecinId,
                 RecipientType: UserType.Doctor,
-                Type: NotificationType.AppointmentReminder,
+                Type: NotificationType.AppointmentConfirmation,
                 Title: "Nouveau rendez-vous assigné",
                 Content: $"Un rendez-vous avec le patient {patientNom} est confirmé pour le {rdv.DateHeure:dd/MM/yyyy à HH:mm}.",
                 Metadata: new Dictionary<string, object>

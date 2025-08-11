@@ -44,7 +44,7 @@ namespace Notif.Infrastructure.Messaging.Consumers
             var command = new CreateNotificationRequest(
                 RecipientId: rdv.PatientId,
                 RecipientType: UserType.Patient,
-                Type: NotificationType.SystemAlert,
+                Type: NotificationType.AppointmentCancellation,
                 Title: "Rendez-vous annulé",
                 Content: $"Votre rendez-vous prévu le {rdv.DateHeure:dd/MM/yyyy HH:mm} a été annulé."
             );

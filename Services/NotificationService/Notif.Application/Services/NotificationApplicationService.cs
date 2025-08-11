@@ -212,6 +212,63 @@ namespace Notif.Application.Services
         }
 
         */
+
+        public async Task<List<NotificationDto>> GetNotificationsByRecipientId(Guid recipientId)
+        {
+            var notifications = await _notificationRepository.GetNotificationsByRecipientIdAsync(recipientId);
+            return notifications.Select(n => new NotificationDto(
+                Id: n.Id,
+                RecipientId: n.RecipientId,
+                RecipientType: n.RecipientType,
+                Type: n.Type,
+                Channel: n.Channel,
+                Title: n.Title,
+                Content: n.Content,
+                Priority: n.Priority,
+                Status: n.Status,
+                CreatedAt: n.CreatedAt,
+                SentAt: n.SentAt
+            )).ToList();
+        }
+
+        public async Task DeleteNotification(Guid notificationId)
+        {
+            await _notificationRepository.DeleteNotificationAsync(notificationId);
+        }
+
+
+        public async Task MarkNotificationAsRead(NotificationDto notificationDto)
+        {
+            if (notificationDto == null)
+                throw new ArgumentNullException(nameof(notificationDto));
+
+            // Map NotificationDto to Notification
+            var notification = new Notification
+            {
+                Id = notificationDto.Id,
+                RecipientId = notificationDto.RecipientId,
+                RecipientType = notificationDto.RecipientType,
+                Type = notificationDto.Type,
+                Channel = notificationDto.Channel,
+                Title = notificationDto.Title,
+                Content = notificationDto.Content,
+                Priority = notificationDto.Priority,
+                Status = notificationDto.Status,
+                CreatedAt = notificationDto.CreatedAt,
+                SentAt = notificationDto.SentAt,
+                // Note: RetryCount, ErrorMessage, and ScheduledAt are not in NotificationDto
+                RetryCount = 0, // Default or fetch from repository if needed
+                ErrorMessage = null,
+                ScheduledAt = null
+            };
+
+            await _notificationRepository.MarkNotificationAsReadAsync(notification);
+        }
+
+        public async Task MarkAllNotificationsAsRead(Guid recipientId)
+        {
+            await _notificationRepository.MarkAllNotificationsAsReadAsync(recipientId);
+        }
     }
 
 }

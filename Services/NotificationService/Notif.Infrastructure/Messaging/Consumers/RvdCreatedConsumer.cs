@@ -40,7 +40,7 @@ namespace Notif.Infrastructure.Messaging.Consumers
             var notification = new CreateNotificationRequest(
                 RecipientId: evt.RendezVous.PatientId,
                 RecipientType: UserType.Patient,
-                Type: NotificationType.AppointmentReminder,
+                Type: NotificationType.AppointmentCreatetd,
                 Title: "Nouveau rendez-vous créé",
                 Content: $"Votre rendez-vous a été créé pour le {evt.RendezVous.DateHeure:dd/MM/yyyy à HH:mm}.",
                 Metadata: new Dictionary<string, object>

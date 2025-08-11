@@ -45,9 +45,9 @@ namespace Notif.Infrastructure.Messaging.Consumers
             var notifyPatient = new CreateNotificationRequest(
                 RecipientId: rdv.PatientId,
                 RecipientType: UserType.Patient,
-                Type: NotificationType.AppointmentReminder,
+                Type: NotificationType.AppointmentUpdated,
                 Title: "Rendez-vous modifié",
-                Content: $"Votre rendez-vous a été mis à jour : nouvelle date {rdv.DateHeure:dd/MM/yyyy à HH:mm}.",
+                Content: $"Votre rendez-vous a été mis à jour : nouvelle date {rdv.DateHeure:dd/MM/yyyy 'à' HH:mm}.",
                 Metadata: new Dictionary<string, object>
                 {
                 { "RdvId", rdv.Id }
@@ -57,9 +57,9 @@ namespace Notif.Infrastructure.Messaging.Consumers
             var notifyMedecin = new CreateNotificationRequest(
                 RecipientId: rdv.MedecinId,
                 RecipientType: UserType.Doctor,
-                Type: NotificationType.AppointmentReminder,
+                Type: NotificationType.AppointmentUpdated,
                 Title: "Modification de rendez-vous",
-                Content: $"Le rendez-vous du patient prévu le {rdv.DateHeure:dd/MM/yyyy à HH:mm} a été mis à jour.",
+                Content: $"Le rendez-vous du patient prévu le {rdv.DateHeure:dd/MM/yyyy 'à' HH:mm} a été mis à jour.",
                 Metadata: new Dictionary<string, object>
                 {
                     { "RdvId", rdv.Id }

@@ -2,24 +2,22 @@
 
 namespace Notif.Domain.Entities
 {
-
     public class Notification
     {
-        public Guid Id { get; private set; }
-        public Guid RecipientId { get; private set; }
-        public UserType RecipientType { get; private set; }
-        public NotificationType Type { get; private set; }
-        public NotificationChannel Channel { get; private set; }
-        public string Title { get; private set; }
-        public string Content { get; private set; }
-        public NotificationPriority Priority { get; private set; }
-        public NotificationStatus Status { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime? ScheduledAt { get; private set; }
-        public DateTime? SentAt { get; private set; }
-        public int RetryCount { get; private set; }
-        public string? ErrorMessage { get; private set; }
-        protected Notification() { }
+        public Guid Id { get; set; }
+        public Guid RecipientId { get; set; }
+        public UserType RecipientType { get; set; }
+        public NotificationType Type { get; set; }
+        public NotificationChannel Channel { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public NotificationPriority Priority { get; set; }
+        public NotificationStatus Status { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? ScheduledAt { get; set; }
+        public DateTime? SentAt { get; set; }
+        public int RetryCount { get; set; }
+        public string? ErrorMessage { get; set; }
 
         public static Notification Create(
             Guid recipientId,

@@ -35,6 +35,7 @@ namespace Notif.Infrastructure.Messaging.Consumers
             IServiceScopeFactory scopeFactory)
             : base("facture-created", config, logger, scopeFactory)
         {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         protected override async Task HandleEventAsync(FactureAddedEvent evt, IServiceProvider serviceProvider)
@@ -54,7 +55,7 @@ namespace Notif.Infrastructure.Messaging.Consumers
                 var command = new CreateNotificationRequest(
                     RecipientId: facture.PatientId,
                     RecipientType: UserType.Patient,
-                    Type: NotificationType.SystemAlert,
+                    Type: NotificationType.FactureAdded,
                     Title: "Nouvelle facture disponible",
                     Content: $"Une nouvelle facture de {facture.MontantTotal:C} est disponible dans votre espace patient."
                 );

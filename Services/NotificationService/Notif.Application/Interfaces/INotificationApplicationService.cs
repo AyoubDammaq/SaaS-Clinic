@@ -1,5 +1,5 @@
 ﻿using Notif.Application.DTOs;
-using Notif.Domain.Enums;
+using Notif.Domain.Entities;
 
 namespace Notif.Application.Interfaces
 {
@@ -12,5 +12,10 @@ namespace Notif.Application.Interfaces
         Task MarkAsSentAsync(MarkNotificationAsSentRequest request);
         //Task<NotificationPreferenceDto?> GetUserPreferencesAsync(Guid userId, UserType userType);
         //Task UpdateUserPreferencesAsync(UpdateNotificationPreferenceRequest request);
+
+        Task<List<NotificationDto>> GetNotificationsByRecipientId(Guid recipientId);
+        Task DeleteNotification(Guid notificationId);
+        Task MarkNotificationAsRead(NotificationDto notificationDto);
+        Task MarkAllNotificationsAsRead(Guid recipientId);
     }
 }

@@ -11,6 +11,9 @@
         PaymentDue = 6,
         PaymentConfirmation = 7,
         AppointmentCancelledByDoctor = 8, 
+        FactureAdded = 9,
+        AppointmentCreatetd = 10,
+        AppointmentUpdated = 11,
 
         // Doctor notifications
         NewAppointment = 20,

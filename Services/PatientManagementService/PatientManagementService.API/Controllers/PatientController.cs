@@ -28,8 +28,8 @@ namespace PatientManagementService.API.Controllers
         }
 
         // GET: api/Patients
-        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor,Patient"))]
         [HttpGet]
+        [Authorize(Roles = ("SuperAdmin, ClinicAdmin, Doctor,Patient"))]
         public async Task<ActionResult<IEnumerable<Patient>>> GetAllPatients()
         {
             try
@@ -44,7 +44,6 @@ namespace PatientManagementService.API.Controllers
         }
 
         // GET: api/Patients/5
-        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor,Patient")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Patient>> GetPatientById(Guid id)
         {
