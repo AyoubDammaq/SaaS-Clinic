@@ -281,8 +281,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "notificationservice",
-          "Port": 8097
+          "Host": "reportingservice",
+          "Port": 8095
         }
       ],
       "UpstreamPathTemplate": "/gateway/notifications/{everything}",
