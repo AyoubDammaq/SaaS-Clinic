@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Notif.Application.Interfaces;
 using Notif.Domain.Enums;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace Notif.Application.Services

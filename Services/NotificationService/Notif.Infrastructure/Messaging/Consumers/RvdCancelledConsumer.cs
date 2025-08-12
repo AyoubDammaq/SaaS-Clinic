@@ -46,6 +46,7 @@ namespace Notif.Infrastructure.Messaging.Consumers
                 RecipientType: UserType.Patient,
                 Type: NotificationType.AppointmentCancellation,
                 Title: "Rendez-vous annulé",
+                Priority: NotificationPriority.High,
                 Content: $"Votre rendez-vous prévu le {rdv.DateHeure:dd/MM/yyyy HH:mm} a été annulé."
             );
 

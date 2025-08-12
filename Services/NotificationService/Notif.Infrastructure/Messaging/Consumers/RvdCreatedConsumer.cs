@@ -42,6 +42,7 @@ namespace Notif.Infrastructure.Messaging.Consumers
                 RecipientType: UserType.Patient,
                 Type: NotificationType.AppointmentCreatetd,
                 Title: "Nouveau rendez-vous créé",
+                Priority: NotificationPriority.Low,
                 Content: $"Votre rendez-vous a été créé pour le {evt.RendezVous.DateHeure:dd/MM/yyyy à HH:mm}.",
                 Metadata: new Dictionary<string, object>
                 {

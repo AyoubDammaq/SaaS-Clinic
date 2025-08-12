@@ -57,7 +57,8 @@ namespace Notif.Infrastructure.Messaging.Consumers
                     RecipientType: UserType.Patient,
                     Type: NotificationType.FactureAdded,
                     Title: "Nouvelle facture disponible",
-                    Content: $"Une nouvelle facture de {facture.MontantTotal:C} est disponible dans votre espace patient."
+                    Priority: NotificationPriority.High,
+                    Content: $"Une nouvelle facture de {facture.MontantTotal:C}€ est disponible dans votre espace patient."
                 );
 
                 await notificationService.CreateNotificationAsync(command);

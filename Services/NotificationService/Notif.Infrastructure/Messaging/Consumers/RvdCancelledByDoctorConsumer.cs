@@ -33,6 +33,7 @@ namespace Notif.Infrastructure.Messaging.Consumers
                 Type: NotificationType.AppointmentCancelledByDoctor,
                 Title: "Rendez-vous annulé",
                 Content: $"Votre rendez-vous prévu le {evt.RendezVous.DateHeure:dd/MM/yyyy à HH:mm} a été annulé. Raison : {evt.Raison}",
+                Priority: NotificationPriority.High,
                 Metadata: new Dictionary<string, object> {
                     { "RdvId", evt.RendezVous.Id },
                     { "Raison", evt.Raison }

@@ -15,17 +15,6 @@ namespace Notif.API.Controllers
             _notificationService = notificationService;
         }
 
-        // POST: api/notification
-        [HttpPost]
-        public async Task<IActionResult> CreateNotification([FromBody] CreateNotificationRequest request)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var id = await _notificationService.CreateNotificationAsync(request);
-            return CreatedAtAction(nameof(GetById), new { id }, new { id });
-        }
-
         // GET: api/notification/{id}
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<NotificationDto>> GetById(Guid id)
@@ -43,14 +32,6 @@ namespace Notif.API.Controllers
         {
             var result = await _notificationService.GetNotificationsAsync(filter);
             return Ok(result);
-        }
-
-        // POST: api/notification/send
-        [HttpPost("send")]
-        public async Task<IActionResult> SendNotification([FromBody] SendNotificationRequest request)
-        {
-            await _notificationService.SendNotificationAsync(request);
-            return Ok();
         }
 
         // PUT: api/notification/mark-as-sent
@@ -77,6 +58,14 @@ namespace Notif.API.Controllers
             return NoContent();
         }
 
+        // DELETE: api/notification/recipient/{recipientId}
+        [HttpDelete("recipient/{recipientId:guid}")]
+        public async Task<IActionResult> DeleteAllNotifications(Guid recipientId)
+        {
+            await _notificationService.DeleteAllNotifications(recipientId);
+            return NoContent();
+        }
+
         // PUT: api/notification/mark-as-read/{notificationId}
         [HttpPut("mark-as-read/{notificationId:guid}")]
         public async Task<IActionResult> MarkNotificationAsRead(Guid notificationId)
@@ -100,26 +89,5 @@ namespace Notif.API.Controllers
 
         [HttpGet("test")]
         public IActionResult Test() => Ok("API is running");
-
-        /*
-        // GET: api/notification/preferences/{userId}?userType=...
-        [HttpGet("preferences/{userId:guid}")]
-        public async Task<ActionResult<NotificationPreferenceDto>> GetPreferences(Guid userId, [FromQuery] UserType userType)
-        {
-            var prefs = await _notificationService.GetUserPreferencesAsync(userId, userType);
-            if (prefs == null)
-                return NotFound();
-
-            return Ok(prefs);
-        }
-
-        // PUT: api/notification/preferences
-        [HttpPut("preferences")]
-        public async Task<IActionResult> UpdatePreferences([FromBody] UpdateNotificationPreferenceRequest request)
-        {
-            await _notificationService.UpdateUserPreferencesAsync(request);
-            return NoContent();
-        }
-        */
     }
 }

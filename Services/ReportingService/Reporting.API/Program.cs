@@ -11,6 +11,12 @@ using Reporting.Infrastructure.Handlers;
 using Reporting.Infrastructure.Repositories;
 using Scalar.AspNetCore;
 using System.Text;
+using Notif.Domain.Interfaces;
+using Notif.Application.Interfaces;
+using Notif.Infrastructure.Repositories;
+using Notif.Application.Services;
+using Microsoft.EntityFrameworkCore;
+using Notif.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +30,9 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
     serverOptions.ListenAnyIP(8096);
 });
 
+builder.Services.AddDbContext<NotificationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("NotificationDatabase")));
+
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -34,6 +43,10 @@ builder.Services.AddHttpClient<IConsultationStateRepository, ConsultationStateRe
 {
     client.BaseAddress = new Uri("http://localhost:5011"); // Adresse de base du microservice Consultation
 });
+
+//notification
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<INotificationApplicationService, NotificationApplicationService>();
 
 builder.Services.AddScoped<IReportingService, ReportingService>();
 builder.Services.AddScoped<IReportingRepository, ReportingRepository>();

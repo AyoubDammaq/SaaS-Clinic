@@ -47,6 +47,7 @@ namespace Notif.Infrastructure.Messaging.Consumers
                 RecipientType: UserType.Patient,
                 Type: NotificationType.AppointmentUpdated,
                 Title: "Rendez-vous modifié",
+                Priority: NotificationPriority.Low,
                 Content: $"Votre rendez-vous a été mis à jour : nouvelle date {rdv.DateHeure:dd/MM/yyyy 'à' HH:mm}.",
                 Metadata: new Dictionary<string, object>
                 {
@@ -59,6 +60,7 @@ namespace Notif.Infrastructure.Messaging.Consumers
                 RecipientType: UserType.Doctor,
                 Type: NotificationType.AppointmentUpdated,
                 Title: "Modification de rendez-vous",
+                Priority: NotificationPriority.High,
                 Content: $"Le rendez-vous du patient prévu le {rdv.DateHeure:dd/MM/yyyy 'à' HH:mm} a été mis à jour.",
                 Metadata: new Dictionary<string, object>
                 {

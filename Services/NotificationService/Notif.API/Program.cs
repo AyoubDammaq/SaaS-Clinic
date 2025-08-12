@@ -12,8 +12,6 @@ using Notif.Infrastructure.Messaging.Consumers;
 using Confluent.Kafka;
 using Notif.Infrastructure.Channels;
 using Notif.Infrastructure.Factories;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -211,7 +209,7 @@ builder.Services.AddDataProtection()
 // ---------------------------------------------------
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("AllowAllOrigins", policy =>
     {
         policy.AllowAnyOrigin()
               .AllowAnyMethod()
@@ -231,7 +229,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.ApplyMigrations();         // Extension custom migration EF
 }
 
-app.UseCors("AllowAll");
+app.UseCors("AllowAllOrigins");
 
 app.UseAuthentication();
 app.UseAuthorization();
