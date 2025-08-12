@@ -358,6 +358,8 @@ export const API_ENDPOINTS = {
       `${GATEWAY_BASE}/notifications/recipient/${recipientId}`,
     DELETE: (notificationId: string) =>
       `${GATEWAY_BASE}/notifications/${notificationId}`,
+    DELETE_ALL: (recipientId: string) =>
+      `${GATEWAY_BASE}/notifications/recipient/${recipientId}`,
     MARK_AS_READ: (id: string) =>
       `${GATEWAY_BASE}/notifications/mark-as-read/${id}`,
     MARK_ALL_AS_READ: (recipientId: string) =>

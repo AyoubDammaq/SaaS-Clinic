@@ -11,6 +11,7 @@ import {
   SendNotificationRequest,
   NotificationPriority,
 } from "@/types/notification";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface UseNotificationsState {
   notifications: NotificationDto[];
@@ -37,12 +38,14 @@ interface UseNotificationsState {
   markAsSent: (data: MarkNotificationAsSentRequest) => Promise<void>;
   getNotificationsByRecipientId: (recipientId: string) => Promise<void>;
   deleteNotification: (notificationId: string) => Promise<void>;
+  deleteAllNotifications: (recipientId: string) => Promise<void>;
   markNotificationAsRead: (id: string) => Promise<void>;
   markAllNotificationsAsRead: (recipientId: string) => Promise<void>;
   refetchNotifications: () => Promise<void>;
 }
 
 export function useNotifications(): UseNotificationsState {
+  const { t } = useTranslation("notifications");
   const { user } = useAuth();
   const [notifications, setNotifications] = useState<NotificationDto[]>([]);
   const [filteredNotifications, setFilteredNotifications] = useState<
@@ -67,7 +70,7 @@ export function useNotifications(): UseNotificationsState {
       const canCreate =
         user.role === "SuperAdmin" || user.role === "ClinicAdmin";
       const canEdit = user.role === "SuperAdmin" || user.role === "ClinicAdmin";
-      const canDelete = user.role === "SuperAdmin";
+      const canDelete = true;
       const canView = true;
       const canMarkAsRead = user.role === "Doctor" || user.role === "Patient";
       setPermissions({ canCreate, canEdit, canDelete, canView, canMarkAsRead });
@@ -100,12 +103,12 @@ export function useNotifications(): UseNotificationsState {
       setNotifications(data);
       setFilteredNotifications(data);
     } catch (error) {
-      console.error("Erreur lors de la récupération des notifications:", error);
-      toast.error("Échec du chargement des notifications");
+      console.error("Error fetching notifications:", error);
+      toast.error(t("no_notifications_found"));
     } finally {
       setIsLoading(false);
     }
-  }, [user]);
+  }, [user, t]);
 
   // Filter notifications based on search term
   useEffect(() => {
@@ -148,11 +151,11 @@ export function useNotifications(): UseNotificationsState {
       };
       setNotifications((prev) => [...prev, newDto]);
       setFilteredNotifications((prev) => [...prev, newDto]);
-      toast.success("Notification créée avec succès");
+      toast.success(t("notification_created"));
       return newNotification;
     } catch (error) {
-      console.error("Erreur lors de la création de la notification:", error);
-      toast.error("Échec de la création de la notification");
+      console.error("Error creating notification:", error);
+      toast.error(t("notification_created_failed"));
       throw error;
     } finally {
       setIsSubmitting(false);
@@ -167,14 +170,11 @@ export function useNotifications(): UseNotificationsState {
       if (data) {
         setSelectedNotification(data);
       } else {
-        toast.error("Notification non trouvée");
+        toast.error(t("notification_not_found"));
       }
     } catch (error) {
-      console.error(
-        "Erreur lors de la récupération de la notification:",
-        error
-      );
-      toast.error("Échec de la récupération de la notification");
+      console.error("Error fetching notification:", error);
+      toast.error(t("notification_fetch_failed"));
     } finally {
       setIsLoading(false);
     }
@@ -189,8 +189,8 @@ export function useNotifications(): UseNotificationsState {
       )) as NotificationDto[];
       setFilteredNotifications(data);
     } catch (error) {
-      console.error("Erreur lors de la récupération des notifications:", error);
-      toast.error("Échec de la récupération des notifications");
+      console.error("Error fetching notifications:", error);
+      toast.error(t("no_notifications_found"));
     } finally {
       setIsLoading(false);
     }
@@ -201,10 +201,10 @@ export function useNotifications(): UseNotificationsState {
     setIsSubmitting(true);
     try {
       await notificationService.sendNotification(data);
-      toast.success("Notification envoyée avec succès");
+      toast.success(t("notification_sent"));
     } catch (error) {
-      console.error("Erreur lors de l'envoi de la notification:", error);
-      toast.error("Échec de l'envoi de la notification");
+      console.error("Error sending notification:", error);
+      toast.error(t("notification_sent_failed"));
       throw error;
     } finally {
       setIsSubmitting(false);
@@ -238,13 +238,10 @@ export function useNotifications(): UseNotificationsState {
             : notification
         )
       );
-      toast.success("Notification marquée comme envoyée avec succès");
+      toast.success(t("notification_marked_as_sent"));
     } catch (error) {
-      console.error(
-        "Erreur lors du marquage de la notification comme envoyée:",
-        error
-      );
-      toast.error("Échec du marquage de la notification comme envoyée");
+      console.error("Error marking notification as sent:", error);
+      toast.error(t("notification_marked_as_sent_failed"));
       throw error;
     } finally {
       setIsSubmitting(false);
@@ -261,13 +258,8 @@ export function useNotifications(): UseNotificationsState {
       setNotifications(data);
       setFilteredNotifications(data);
     } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des notifications par destinataire:",
-        error
-      );
-      toast.error(
-        "Échec de la récupération des notifications par destinataire"
-      );
+      console.error("Error fetching notifications by recipient:", error);
+      toast.error(t("no_notifications_found"));
     } finally {
       setIsLoading(false);
     }
@@ -275,12 +267,6 @@ export function useNotifications(): UseNotificationsState {
 
   // Delete a notification
   const deleteNotification = async (notificationId: string) => {
-    if (
-      !window.confirm("Êtes-vous sûr de vouloir supprimer cette notification ?")
-    ) {
-      return;
-    }
-
     setIsSubmitting(true);
     try {
       await notificationService.deleteNotification(notificationId);
@@ -290,10 +276,31 @@ export function useNotifications(): UseNotificationsState {
       setFilteredNotifications((prev) =>
         prev.filter((notification) => notification.id !== notificationId)
       );
-      toast.success("Notification supprimée avec succès");
+      toast.success(t("notification_deleted"));
     } catch (error) {
-      console.error("Erreur lors de la suppression de la notification:", error);
-      toast.error("Échec de la suppression de la notification");
+      console.error("Error deleting notification:", error);
+      toast.error(t("notification_deleted_failed"));
+      throw error;
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Delete all notifications for a recipient
+  const deleteAllNotifications = async (recipientId: string) => {
+    setIsSubmitting(true);
+    try {
+      await notificationService.deleteAllNotifications(recipientId);
+      setNotifications((prev) =>
+        prev.filter((notification) => notification.recipientId !== recipientId)
+      );
+      setFilteredNotifications((prev) =>
+        prev.filter((notification) => notification.recipientId !== recipientId)
+      );
+      toast.success(t("all_notifications_deleted"));
+    } catch (error) {
+      console.error("Error deleting all notifications:", error);
+      toast.error(t("all_notifications_deleted_failed"));
       throw error;
     } finally {
       setIsSubmitting(false);
@@ -319,13 +326,10 @@ export function useNotifications(): UseNotificationsState {
             : notification
         )
       );
-      toast.success("Notification marquée comme lue avec succès");
+      toast.success(t("notification_marked_as_read"));
     } catch (error) {
-      console.error(
-        "Erreur lors du marquage de la notification comme lue:",
-        error
-      );
-      toast.error("Échec du marquage de la notification comme lue");
+      console.error("Error marking notification as read:", error);
+      toast.error(t("notification_marked_as_read_failed"));
       throw error;
     } finally {
       setIsSubmitting(false);
@@ -351,13 +355,10 @@ export function useNotifications(): UseNotificationsState {
             : notification
         )
       );
-      toast.success("Toutes les notifications marquées comme lues avec succès");
+      toast.success(t("all_notifications_marked_as_read"));
     } catch (error) {
-      console.error(
-        "Erreur lors du marquage de toutes les notifications comme lues:",
-        error
-      );
-      toast.error("Échec du marquage de toutes les notifications comme lues");
+      console.error("Error marking all notifications as read:", error);
+      toast.error(t("all_notifications_marked_as_read_failed"));
       throw error;
     } finally {
       setIsSubmitting(false);
@@ -381,6 +382,7 @@ export function useNotifications(): UseNotificationsState {
     markAsSent,
     getNotificationsByRecipientId,
     deleteNotification,
+    deleteAllNotifications,
     markNotificationAsRead,
     markAllNotificationsAsRead,
     refetchNotifications: fetchNotifications,

@@ -9,6 +9,7 @@ import en_pagination from "./en/pagination";
 import en_clinics from "./en/clinics";
 import en_profil from "./en/profile"
 import en_dashboard from "./en/dashboard";
+import en_notifications from "./en/notifications";
 
 import fr_auth from "./fr/auth";
 import fr_common from "./fr/common";
@@ -21,6 +22,7 @@ import fr_pagination from "./fr/pagination";
 import fr_clinics from "./fr/clinics";
 import fr_profil from "./fr/profile"
 import fr_dashboard from "./fr/dashboard";
+import fr_notifications from "./fr/notifications";
 
 // Re-export the types
 export * from "./types";
@@ -38,6 +40,7 @@ export const resources = {
     clinics: en_clinics,
     profil: en_profil,
     dashboard: en_dashboard,
+    notifications: en_notifications,
   },
   fr: {
     auth: fr_auth,
@@ -51,6 +54,7 @@ export const resources = {
     clinics: fr_clinics,
     profil: fr_profil,
     dashboard: fr_dashboard,
+    notifications: fr_notifications,
   },
 };
 

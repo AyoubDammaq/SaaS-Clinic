@@ -134,6 +134,24 @@ export const notificationService = {
     }
   },
 
+  // Delete all notifications for a recipient
+  deleteAllNotifications: async (
+    recipientId: string
+  ): Promise<void> => {
+    try {
+      await api.delete<void>(
+        API_ENDPOINTS.NOTIFICATIONS.DELETE_ALL(recipientId)
+      );
+    } catch (error) {
+      console.error(
+        `Échec lors de la suppression de toutes les notifications pour le destinataire ${recipientId}:`,
+        error
+      );
+      toast.error("Échec lors de la suppression des notifications");
+      throw error;
+    }
+  },
+
   // Mark a notification as read
   markNotificationAsRead: async (id: string): Promise<void> => {
     try {
