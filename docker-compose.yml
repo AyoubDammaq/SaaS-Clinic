@@ -1,5 +1,6 @@
 services:
   zookeeper:
+    container_name: zookeeper
     image: confluentinc/cp-zookeeper:7.0.1
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
@@ -9,6 +10,7 @@ services:
       - mynetwork
 
   kafka:
+    container_name: kafka
     image: confluentinc/cp-kafka:7.0.1
     depends_on:
       - zookeeper
@@ -21,29 +23,26 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+    networks:
+      - mynetwork
+      
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKER_CONNECT: kafka:9092
+    depends_on:
+      - kafka
     networks:
       - mynetwork
     deploy:
       resources:
         limits:
-          memory: 768M
-          cpus: '0.7'
-      
-  # kafdrop:
-  #   image: obsidiandynamics/kafdrop
-  #   ports:
-  #     - "9000:9000"
-  #   environment:
-  #     KAFKA_BROKER_CONNECT: kafka:9092
-  #   depends_on:
-  #     - kafka
-  #   networks:
-  #     - mynetwork
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 256M
-  #         cpus: '0.3'
+          memory: 256M
+          cpus: '0.3'
         
   api-gateway:
     container_name: api-gateway
@@ -63,9 +62,9 @@ services:
       - patientservice
       - rdvservice
       - consultationservice
-      #- facturationservice
-      #- reportingservice
-      #- notificationservice
+      - facturationservice
+      - reportingservice
+      - notificationservice
     deploy:
       resources:
         limits:
@@ -133,7 +132,7 @@ services:
       ConnectionStrings__DefaultConnection: Server=host.docker.internal,1435;Database=ClinicDb;User Id=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;
     depends_on:
       - kafka
-      # - clinic.database
+    # - clinic.database
     networks:
       - mynetwork
     restart: unless-stopped
@@ -172,7 +171,7 @@ services:
       ConnectionStrings__DefaultConnection: Server=host.docker.internal,1435;Database=MedecinDb;User Id=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;
     depends_on:
       - kafka
-      # - doctor.database
+    # - doctor.database
     networks:
       - mynetwork
     restart: unless-stopped
@@ -211,7 +210,7 @@ services:
       ConnectionStrings__DefaultConnection: Server=host.docker.internal,1435;Database=PatientDb;User Id=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;
     depends_on:
       - kafka
-      # - patient.database
+    # - patient.database
     networks:
       - mynetwork
     restart: unless-stopped
@@ -250,7 +249,7 @@ services:
       ConnectionStrings__DefaultConnection: Server=host.docker.internal,1435;Database=RDVDb;User Id=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;
     depends_on:
       - kafka
-      # - rdv.database
+    # - rdv.database
     networks:
       - mynetwork
     restart: unless-stopped
@@ -289,7 +288,7 @@ services:
       ConnectionStrings__DefaultConnection: Server=host.docker.internal,1435;Database=ConsultationDb;User Id=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;
     depends_on:
       - kafka
-      # - consultation.database
+    # - consultation.database
     networks:
       - mynetwork
     restart: unless-stopped
@@ -298,6 +297,8 @@ services:
         limits:
           memory: 384M
           cpus: '0.3'
+    volumes:
+      - ./ConsultationManagementService.API/wwwroot/uploads:/app/wwwroot/uploads
 
   # consultation.database:
   #   image: mcr.microsoft.com/mssql/server:2022-latest
@@ -328,7 +329,7 @@ services:
       ConnectionStrings__DefaultConnection: Server=host.docker.internal,1435;Database=FactureDb;User Id=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;
     depends_on:
       - kafka
-      #- facturation.database
+    #- facturation.database
     networks:
       - mynetwork
     restart: unless-stopped
@@ -402,28 +403,29 @@ services:
           memory: 384M
           cpus: '0.3'
 
-  # notification.database:
-  #   image: mcr.microsoft.com/mssql/server:2022-latest
-  #   container_name: notification.database
-  #   environment:
-  #     - ACCEPT_EULA=Y
-  #     - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
-  #     - MSSQL_PID=Express
-  #   command: /opt/mssql/bin/sqlservr
-  #   ports:
-  #     - "1441:1433"      
-  #   networks:
-  #     - mynetwork
-  #   volumes:
-  #     - sqlvolume_notification:/var/opt/mssql
-  #   restart: unless-stopped
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 1G
-  #         cpus: '0.7'
+# notification.database:
+#   image: mcr.microsoft.com/mssql/server:2022-latest
+#   container_name: notification.database
+#   environment:
+#     - ACCEPT_EULA=Y
+#     - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+#     - MSSQL_PID=Express
+#   command: /opt/mssql/bin/sqlservr
+#   ports:
+#     - "1441:1433"      
+#   networks:
+#     - mynetwork
+#   volumes:
+#     - sqlvolume_notification:/var/opt/mssql
+#   restart: unless-stopped
+#   deploy:
+#     resources:
+#       limits:
+#         memory: 1G
+#         cpus: '0.7'
 
 volumes:
+  kafka-data:
   dataprotection_keys:
   sqlvolume_auth_data:
   sqlvolume_auth_log:
@@ -438,3 +440,4 @@ volumes:
 
 networks:
   mynetwork:
+    driver: bridge
