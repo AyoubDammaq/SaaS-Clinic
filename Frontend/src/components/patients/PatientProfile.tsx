@@ -28,7 +28,7 @@ interface PatientProfileProps {
     email: string;
     phone: string;
     dateOfBirth: string;
-    gender: "M" | "F" | "Autre";
+    gender: "M" | "F";
     address?: string;
     lastVisit?: string;
   };
@@ -65,8 +65,6 @@ export function PatientProfile({
         return t("male") || "Male";
       case "F":
         return t("female") || "Female";
-      case "Autre":
-        return t("other") || "Other";
       default:
         return gender;
     }

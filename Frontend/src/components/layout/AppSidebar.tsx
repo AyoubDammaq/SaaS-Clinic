@@ -28,81 +28,88 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export function AppSidebar() {
   const { user, logout } = useAuth();
   const location = useLocation();
+  const { t } = useTranslation("common");
 
   const roleBasedMenuItems = useMemo(() => {
     const items = [
       {
-        name: "Dashboard",
+        name: t("dashboard"), // Translate
+        key: "dashboard", // Key for fallback
         path: "/dashboard",
         icon: Home,
         roles: ["SuperAdmin", "ClinicAdmin", "Doctor", "Patient"],
       },
       {
-        name: "Medical Record",
+        name: t("medical_record"),
+        key: "medical_record",
         path: "/medicalrecord",
         icon: BookText,
         roles: ["Patient"],
       },
       {
-        name: "Clinics",
+        name: t("clinics"),
+        key: "clinics",
         path: "/clinics",
         icon: Building,
         roles: ["SuperAdmin", "Patient", "Doctor"],
       },
       {
-        name: "Patients",
+        name: t("patients"),
+        key: "patients",
         path: "/patients",
         icon: Users,
         roles: ["SuperAdmin", "ClinicAdmin", "Doctor"],
       },
       {
-        name: "Doctors",
+        name: t("doctors"),
+        key: "doctors",
         path: "/doctors",
         icon: User,
         roles: ["SuperAdmin", "ClinicAdmin", "Patient"],
       },
       {
-        name: "Appointments",
+        name: t("appointments"),
+        key: "appointments",
         path: "/appointments",
         icon: Calendar,
         roles: ["SuperAdmin", "ClinicAdmin", "Doctor", "Patient"],
       },
       {
-        name: "Consultations",
+        name: t("consultations"),
+        key: "consultations",
         path: "/consultations",
         icon: ClipboardList,
         roles: ["SuperAdmin", "ClinicAdmin", "Doctor", "Patient"],
       },
       {
-        name: "Billing",
+        name: t("billing"),
+        key: "billing",
         path: "/billing",
         icon: CreditCard,
         roles: ["SuperAdmin", "ClinicAdmin", "Patient"],
       },
       {
-        name: "Notifications",
+        name: t("notifications"),
+        key: "notifications",
         path: "/notifications",
         icon: Bell,
         roles: ["SuperAdmin", "ClinicAdmin", "Doctor", "Patient"],
       },
-      // {
-      //   name: "Reports",
-      //   path: "/reports",
-      //   icon: BarChart2,
-      //   roles: ["SuperAdmin", "ClinicAdmin", "Doctor"],
-      // },
       {
-        name: "Settings",
+        name: t("settings"),
+        key: "settings",
         path: "/settings",
         icon: Settings,
         roles: ["SuperAdmin", "ClinicAdmin"],
       },
       {
-        name: "User Management",
+        name: t("user_management"),
+        key: "user_management",
         path: "/users",
         icon: FileText,
         roles: ["SuperAdmin"],
@@ -112,7 +119,7 @@ export function AppSidebar() {
     if (!user) return [];
 
     return items.filter((item) => item.roles.includes(user.role));
-  }, [user]);
+  }, [user, t]); // Add t to dependencies to update translations if language changes
 
   return (
     <Sidebar>
@@ -159,7 +166,7 @@ export function AppSidebar() {
           onClick={logout}
         >
           <LogOut className="h-5 w-5" />
-          <span>Logout</span>
+          <span>{t("logout")}</span>
         </Button>
       </SidebarFooter>
     </Sidebar>

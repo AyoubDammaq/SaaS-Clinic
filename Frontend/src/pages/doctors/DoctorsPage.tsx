@@ -27,6 +27,14 @@ import { useAppointments } from "@/hooks/useAppointments";
 import { useDisponibilite } from "@/hooks/useDisponibilites";
 import { useTranslation } from "@/hooks/useTranslation";
 import { ConfirmDeleteDialog } from "@/components/consultations/ConfirmDeleteDialog";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { cn } from "@/lib/utils";
 
 export interface Doctor {
   id: string;
@@ -42,6 +50,7 @@ export interface Doctor {
 
 function DoctorsPage() {
   const { user } = useAuth();
+  const { t: tCommon } = useTranslation("common");
   const { t } = useTranslation("doctors");
   const {
     doctors,
@@ -72,6 +81,9 @@ function DoctorsPage() {
     heureDebut: null as string | null,
     heureFin: null as string | null,
   });
+  const [availableDoctorIds, setAvailableDoctorIds] = useState<string[] | null>(
+    null
+  );
   const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
   const [doctorToAssign, setDoctorToAssign] = useState<Doctor | null>(null);
   const [selectedClinicId, setSelectedClinicId] = useState<string | null>(null);
@@ -82,7 +94,6 @@ function DoctorsPage() {
   const [doctorIdToDelete, setDoctorIdToDelete] = useState<string | null>(null);
   const hasFetchedDoctorsRef = useRef(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
 
   // Define specialty values and translation keys
   const specialtyValues = [
@@ -110,19 +121,22 @@ function DoctorsPage() {
     "dentist",
   ];
 
-  // Calculate total pages and ensure currentPage is valid
-  const totalPages = Math.ceil(filteredDoctors.length / itemsPerPage);
+  // Pagination constants
+  const ITEMS_PER_PAGE = 7; // Match ClinicsPage.tsx
+  const totalPages = Math.ceil(filteredDoctors.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+
   const paginatedDoctors = filteredDoctors.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
   );
 
-  // Adjust currentPage if it exceeds totalPages
+  // Reset currentPage when filters change or filteredDoctors is updated
   useEffect(() => {
-    if (currentPage > totalPages && totalPages > 0) {
-      setCurrentPage(totalPages);
-    } else if (filteredDoctors.length === 0) {
+    if (filteredDoctors.length === 0) {
       setCurrentPage(1);
+    } else if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages);
     }
   }, [filteredDoctors, totalPages, currentPage]);
 
@@ -136,7 +150,7 @@ function DoctorsPage() {
   useEffect(() => {
     const { date, heureDebut, heureFin } = availabilityFilters;
     if (!date || !heureDebut || !heureFin) {
-      setFilteredDoctors(doctors); // Reset to all doctors if filters are incomplete
+      setAvailableDoctorIds(null);
       return;
     }
 
@@ -147,21 +161,27 @@ function DoctorsPage() {
           heureDebut,
           heureFin
         );
-        const filtered = doctors.filter((doc) =>
-          availableDoctorIds.includes(doc.id)
-        );
-        setFilteredDoctors(filtered);
-        setCurrentPage(1);
+        console.log("Available Doctor IDs:", availableDoctorIds);
+        setAvailableDoctorIds(availableDoctorIds);
       } catch (error) {
         console.error(t("errorFetchingDoctors"), error);
         toast.error(t("errorFetchingDoctors"));
+        setAvailableDoctorIds([]);
       }
     };
     fetchAvailableDoctors();
-  }, [availabilityFilters, doctors, getAvailableDoctors, t]);
+  }, [availabilityFilters, getAvailableDoctors, t]);
 
   useEffect(() => {
     const results = doctors.filter((doctor) => {
+      // Apply availability filter if set
+      if (
+        availableDoctorIds !== null &&
+        !availableDoctorIds.includes(doctor.id)
+      ) {
+        return false;
+      }
+
       const matchesSearch =
         `${doctor.prenom} ${doctor.nom}`
           .toLowerCase()
@@ -189,16 +209,22 @@ function DoctorsPage() {
         return true;
       })();
 
+      // For patients, only show doctors with a cliniqueId (assigned to a clinic)
+      const matchesPatientRequirement =
+        user.role === "Patient" ? !!doctor.cliniqueId : true;
+
       return (
         matchesSearch &&
         matchesSpecialty &&
         matchesClinic &&
-        matchesAssignedStatus
+        matchesAssignedStatus &&
+        matchesPatientRequirement
       );
     });
 
     setFilteredDoctors(results);
-  }, [searchTerm, doctors, filters, user]);
+    setCurrentPage(1); // Reset to page 1 when search or filters change
+  }, [searchTerm, doctors, filters, user, availableDoctorIds]);
 
   const clinicsForForm = cliniques.map((c) => ({
     id: c.id,
@@ -211,7 +237,7 @@ function DoctorsPage() {
     heureFin: string | null;
   }) => {
     setAvailabilityFilters(filters);
-    setCurrentPage(1); // Reset to page 1 when filters change
+    setCurrentPage(1); // Reset to page 1 when availability filters change
   };
 
   const handleFilterChange = (newFilters: {
@@ -236,7 +262,6 @@ function DoctorsPage() {
   };
 
   const handleEditDoctor = (doctor: Doctor) => {
-    console.log(t("editDoctor"), doctor);
     setSelectedDoctor(doctor);
     setIsFormOpen(true);
   };
@@ -606,30 +631,38 @@ function DoctorsPage() {
                 )}
               </TableBody>
             </Table>
-            {user.role !== "ClinicAdmin" && (
-              <div className="flex justify-center items-center gap-2 mt-4">
-                <Button
-                  variant="outline"
-                  disabled={currentPage === 1}
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.max(prev - 1, 1))
-                  }
-                >
-                  {t("previous")}
-                </Button>
-                <span className="px-2 text-muted-foreground">
-                  Page {currentPage} {t("sur")} {totalPages || 1}
-                </span>
-                <Button
-                  variant="outline"
-                  disabled={currentPage >= totalPages || totalPages === 0}
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                  }
-                >
-                  {t("next")}
-                </Button>
-              </div>
+            {user.role !== "ClinicAdmin" && totalPages > 1 && (
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.max(prev - 1, 1))
+                      }
+                      className={cn(
+                        currentPage <= 1 && "pointer-events-none opacity-50"
+                      )}
+                    />
+                  </PaginationItem>
+                  <PaginationItem className="flex items-center">
+                    <span className="text-sm">
+                      {tCommon("page")} {currentPage} {tCommon("of")}{" "}
+                      {totalPages}
+                    </span>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationNext
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                      }
+                      className={cn(
+                        currentPage >= totalPages &&
+                          "pointer-events-none opacity-50"
+                      )}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
             )}
           </div>
         </CardContent>

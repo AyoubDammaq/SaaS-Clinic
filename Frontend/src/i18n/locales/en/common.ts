@@ -1,3 +1,5 @@
+import { log } from "console";
+
 export default {
   // Common UI elements
   home: "Home",
@@ -25,6 +27,7 @@ export default {
   close: "Close",
   page: "Page",
   of: "of",
+  logout: "Log Out",
 
   // Language
   language: "Language",
@@ -45,4 +48,16 @@ export default {
   //Pagination
   next: "Next",
   previous: "Previous",
+
+  // Sidebar items
+  dashboard: "Dashboard",
+  clinics: "Clinics",
+  patients: "Patients",
+  doctors: "Doctors",
+  appointments: "Appointments",
+  medical_record: "Medical Record",
+  consultations: "Consultations",
+  billing: "Billing",
+  notifications: "Notifications",
+  user_management: "Users",
 };

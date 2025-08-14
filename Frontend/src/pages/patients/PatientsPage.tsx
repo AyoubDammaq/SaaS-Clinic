@@ -9,8 +9,8 @@ import { PatientSettings } from '@/components/patients/PatientSettings';
 import { usePatients } from '@/hooks/usePatients';
 import { Button } from '@/components/ui/button';
 import { FileText, Settings, User } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { useTranslation } from '@/hooks/useTranslation';
 import {
   Dialog,
@@ -20,6 +20,14 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { cn } from "@/lib/utils";
 
 type PatientFormValues = Omit<Patient, 'id' | 'dateCreation'>;
 
@@ -45,6 +53,25 @@ function PatientsPage() {
   const [activeTab, setActiveTab] = useState("profile");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [patientToDelete, setPatientToDelete] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Pagination constants
+  const ITEMS_PER_PAGE = 10;
+  const totalPages = Math.ceil(filteredPatients.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedPatients = filteredPatients.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
+
+  // Reset currentPage when filteredPatients changes
+  useEffect(() => {
+    if (filteredPatients.length === 0) {
+      setCurrentPage(1);
+    } else if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages);
+    }
+  }, [filteredPatients, totalPages, currentPage]);
 
   // Load patient data if user is a patient
   useEffect(() => {
@@ -90,7 +117,6 @@ function PatientsPage() {
         setPatientToDelete(null);
       } catch (error) {
         console.error("Error deleting patient:", error);
-        // Vous pouvez ajouter un toast ici si nécessaire
       }
     }
   };
@@ -151,7 +177,7 @@ function PatientsPage() {
                 const updatedPatient: Partial<Patient> = {
                   id: patient.id,
                   nom: patient.nom.split(' ')[1] || patientData?.nom || '',
-                  prenom: patient.prenom.split(' ')[0] || patientData?.prenom || '',
+                  prenom: patient.nom.split(' ')[0] || patientData?.prenom || '',
                   email: patient.email,
                   telephone: patient.telephone,
                   dateNaissance: patient.dateNaissance,
@@ -202,19 +228,44 @@ function PatientsPage() {
     }
 
     return (
-      <PatientsList 
-        userRole={user.role}
-        patients={patients}
-        filteredPatients={filteredPatients}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        isLoading={isLoading}
-        permissions={permissions}
-        onAddPatient={() => { setSelectedPatient(null); setIsFormOpen(true); }}
-        onEditPatient={handleEditPatient}
-        onDeletePatient={handleDeletePatientRequest} // Mise à jour ici
-        fetchMedicalRecord={fetchMedicalRecord}
-      />
+      <>
+        <PatientsList 
+          userRole={user.role}
+          patients={patients}
+          filteredPatients={paginatedPatients} // Use paginatedPatients instead of filteredPatients
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          isLoading={isLoading}
+          permissions={permissions}
+          onAddPatient={() => { setSelectedPatient(null); setIsFormOpen(true); }}
+          onEditPatient={handleEditPatient}
+          onDeletePatient={handleDeletePatientRequest}
+          fetchMedicalRecord={fetchMedicalRecord}
+        />
+        {totalPages > 1 && (
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  className={cn(currentPage <= 1 && "pointer-events-none opacity-50")}
+                />
+              </PaginationItem>
+              <PaginationItem className="flex items-center">
+                <span className="text-sm">
+                  {t("page")} {currentPage} {t("of")} {totalPages}
+                </span>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                  className={cn(currentPage >= totalPages && "pointer-events-none opacity-50")}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        )}
+      </>
     );
   };
 

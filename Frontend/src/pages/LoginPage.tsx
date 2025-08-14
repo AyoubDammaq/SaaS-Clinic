@@ -18,7 +18,7 @@ function LoginPage() {
   const { login, isLoading, error, user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   
   // Get the return URL from location state or default to dashboard
   const from = ((location.state as unknown) as { from?: string })?.from || '/dashboard';

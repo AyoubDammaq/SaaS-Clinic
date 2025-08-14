@@ -21,7 +21,7 @@ export default {
   signingIn: "Signing in...",
   demoCredentials: "Demo Credentials",
   superAdmin: "Super Admin",
-  clinicAdmin: "Clinic Admin",
+  clinicAdmin: "Clinic Administrator",
   noAccount: "Don't have an account?",
   registerNow: "Register now",
   
@@ -35,6 +35,7 @@ export default {
   
   // Role selection page
   selectRole: "Select Your Role",
+  selectRolePlaceholder: "Choose your role",
   selectRoleDescription: "Choose the role that best describes you",
   continue: "Continue",
   doctor: "Doctor",

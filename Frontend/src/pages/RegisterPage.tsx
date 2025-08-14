@@ -21,7 +21,7 @@ function RegisterPage() {
   const [passwordError, setPasswordError] = useState('');
   const { register, isLoading, error } = useAuth();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   
   const validatePassword = () => {
     if (Password !== ConfirmPassword) {

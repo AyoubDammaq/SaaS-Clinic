@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Filter, X } from "lucide-react";
 import { Input } from "../ui/input";
 import { useTranslation } from "@/hooks/useTranslation";
+import { debounce } from "lodash"; // Import lodash debounce (or implement your own)
 
 interface DoctorFiltersProps {
   specialties: string[];
@@ -36,7 +37,7 @@ export function DoctorFilters({
   onFilterChange,
   onAvailabilityFilterChange,
 }: DoctorFiltersProps) {
-  const { t } = useTranslation("doctors"); // Utilisation du namespace "doctors"
+  const { t } = useTranslation("doctors");
   const [showFilters, setShowFilters] = useState(false);
   const [specialty, setSpecialty] = useState<string | null>(null);
   const [clinicId, setClinicId] = useState<string | null>(null);
@@ -47,23 +48,56 @@ export function DoctorFilters({
   const [heureDebut, setHeureDebut] = useState<string | null>(null);
   const [heureFin, setHeureFin] = useState<string | null>(null);
 
+  // Debounced filter change handler (for specialty, clinic, assigned status)
+  const debouncedFilterChange = useRef(
+    debounce((filters: {
+      specialty: string | null;
+      clinicId: string | null;
+      assignedStatus: "all" | "assigned" | "unassigned";
+    }) => {
+      onFilterChange(filters);
+    }, 300) // 300ms delay
+  ).current;
+
+  // Debounced availability change handler
+  const debouncedAvailabilityChange = useRef(
+    debounce(
+      (availability: {
+        date: string | null;
+        heureDebut: string | null;
+        heureFin: string | null;
+      }) => {
+        onAvailabilityFilterChange?.(availability);
+      },
+      500 // 500ms delay for availability (slightly longer due to API call)
+    )
+  ).current;
+
+  // Cleanup debounced functions on component unmount
+  useEffect(() => {
+    return () => {
+      debouncedFilterChange.cancel();
+      debouncedAvailabilityChange.cancel();
+    };
+  }, []);
+
   const handleSpecialtyChange = (value: string) => {
     const newValue = value === "all_specialties" ? null : value;
     setSpecialty(newValue);
-    onFilterChange({ specialty: newValue, clinicId, assignedStatus });
+    debouncedFilterChange({ specialty: newValue, clinicId, assignedStatus });
   };
 
   const handleClinicChange = (value: string) => {
     const newValue = value === "all_clinics" ? null : value;
     setClinicId(newValue);
-    onFilterChange({ specialty, clinicId: newValue, assignedStatus });
+    debouncedFilterChange({ specialty, clinicId: newValue, assignedStatus });
   };
 
   const handleAssignedStatusChange = (
     value: "all" | "assigned" | "unassigned"
   ) => {
     setAssignedStatus(value);
-    onFilterChange({ specialty, clinicId, assignedStatus: value });
+    debouncedFilterChange({ specialty, clinicId, assignedStatus: value });
   };
 
   const handleAvailabilityChange = (
@@ -74,17 +108,18 @@ export function DoctorFilters({
     setAvailabilityDate(date);
     setHeureDebut(debut);
     setHeureFin(fin);
-    onAvailabilityFilterChange?.({
-      date,
-      heureDebut: debut,
-      heureFin: fin,
-    });
+    debouncedAvailabilityChange({ date, heureDebut: debut, heureFin: fin });
   };
 
   const clearFilters = () => {
     setSpecialty(null);
     setClinicId(null);
-    onFilterChange({ specialty: null, clinicId: null, assignedStatus: "all" });
+    setAssignedStatus("all");
+    setAvailabilityDate(null);
+    setHeureDebut(null);
+    setHeureFin(null);
+    debouncedFilterChange({ specialty: null, clinicId: null, assignedStatus: "all" });
+    debouncedAvailabilityChange({ date: null, heureDebut: null, heureFin: null });
   };
 
   return (
@@ -100,7 +135,7 @@ export function DoctorFilters({
           {t("filters")}
         </Button>
 
-        {(specialty || clinicId || assignedStatus !== "all") && (
+        {(specialty || clinicId || assignedStatus !== "all" || availabilityDate || heureDebut || heureFin) && (
           <Button
             variant="ghost"
             size="sm"

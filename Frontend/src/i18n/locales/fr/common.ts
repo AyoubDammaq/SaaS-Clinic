@@ -25,6 +25,7 @@ export default {
   close: "Fermer",
   page: "Page",
   of: "de",
+  logout: "Se déconnecter",
 
   // Language
   language: "Langue",
@@ -45,4 +46,16 @@ export default {
   // Pagination
   next: "Suivant",
   previous: "Précédent",
+
+  // Sidebar items
+  dashboard: "Tableau de bord",
+  clinics: "Cliniques",
+  patients: "Patients",
+  doctors: "Médecins",
+  appointments: "Rendez-vous",
+  medical_record: "Dossier médical",
+  consultations: "Consultations",
+  billing: "Facturation",
+  notifications: "Notifications",
+  user_management: "Utilisateurs",
 };

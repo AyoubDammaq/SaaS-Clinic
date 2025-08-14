@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { useTranslation } from "@/hooks/useTranslation";
 import jwt_decode from "jwt-decode";
 import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -26,6 +27,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const { t } = useTranslation("auth");
   const userCache = new Map<string, User>();
+  const navigate = useNavigate();
 
   const roleMap: Record<UserRole, number> = {
     SuperAdmin: 2,
@@ -185,6 +187,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.removeItem("user");
 
       toast.success(t("logoutSuccess"));
+      navigate("/");
     } catch (err: unknown) {
       console.error("🔴 Erreur logout :", err);
 

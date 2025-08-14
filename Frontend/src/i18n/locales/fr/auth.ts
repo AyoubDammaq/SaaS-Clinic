@@ -35,6 +35,7 @@ export default {
   
   // Role selection page
   selectRole: "Sélectionnez votre rôle",
+  selectRolePlaceholder: "Choisissez votre rôle",
   selectRoleDescription: "Choisissez le rôle qui vous décrit le mieux",
   continue: "Continuer",
   doctor: "Médecin",
