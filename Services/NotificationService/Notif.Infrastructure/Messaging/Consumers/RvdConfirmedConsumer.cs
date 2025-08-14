@@ -60,23 +60,7 @@ namespace Notif.Infrastructure.Messaging.Consumers
                 }
             );
 
-            var medecinNotification = new CreateNotificationRequest(
-                RecipientId: rdv.MedecinId,
-                RecipientType: UserType.Doctor,
-                Type: NotificationType.AppointmentConfirmation,
-                Title: "Nouveau rendez-vous assigné",
-                Priority: NotificationPriority.Low,
-                Content: $"Un rendez-vous avec le patient {patientNom} est confirmé pour le {rdv.DateHeure:dd/MM/yyyy à HH:mm}.",
-                Metadata: new Dictionary<string, object>
-                {
-                { "RdvId", rdv.Id },
-                { "Specialty", specialty }
-                }
-            );
-
             await _notificationService.CreateNotificationAsync(patientNotification);
-            await _notificationService.CreateNotificationAsync(medecinNotification);
         }
     }
-
 }

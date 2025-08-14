@@ -37,20 +37,20 @@ namespace Notif.Infrastructure.Messaging.Consumers
         {
             var notificationService = sp.GetRequiredService<INotificationApplicationService>();
 
-            var notification = new CreateNotificationRequest(
-                RecipientId: evt.RendezVous.PatientId,
-                RecipientType: UserType.Patient,
+            var medecinNotification = new CreateNotificationRequest(
+                RecipientId: evt.RendezVous.MedecinId,
+                RecipientType: UserType.Doctor,
                 Type: NotificationType.AppointmentCreatetd,
-                Title: "Nouveau rendez-vous créé",
+                Title: "Nouveau rendez-vous assigné",
                 Priority: NotificationPriority.Low,
-                Content: $"Votre rendez-vous a été créé pour le {evt.RendezVous.DateHeure:dd/MM/yyyy à HH:mm}.",
+                Content: $"Un nouveau rendez-vous a été créé pour le patient le {evt.RendezVous.DateHeure:dd/MM/yyyy à HH:mm}.",
                 Metadata: new Dictionary<string, object>
                 {
                     { "RdvId", evt.RendezVous.Id }
                 }
             );
 
-            await notificationService.CreateNotificationAsync(notification);
+            await notificationService.CreateNotificationAsync(medecinNotification);
         }
     }
 }

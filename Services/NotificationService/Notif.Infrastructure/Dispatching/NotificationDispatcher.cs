@@ -10,20 +10,29 @@ namespace Notif.Infrastructure.Dispatching
     {
         private readonly INotificationChannelFactory _channelFactory;
         private readonly ILogger<NotificationDispatcher> _logger;
+        private readonly INotificationRepository _notificationRepository;
 
 
-        public NotificationDispatcher(INotificationChannelFactory channelFactory, ILogger<NotificationDispatcher> logger)
+        public NotificationDispatcher(INotificationChannelFactory channelFactory, ILogger<NotificationDispatcher> logger, INotificationRepository notificationRepository)
         {
             _channelFactory = channelFactory;
             _logger = logger;
+            _notificationRepository = notificationRepository;
         }
 
         public async Task DispatchAsync(Notification notification)
         {
+            // ✅ Vérification si déjà envoyé
+            var existing = await _notificationRepository.GetByIdAsync(notification.Id);
+            if (existing != null && existing.Status == NotificationStatus.Sent)
+            {
+                _logger.LogInformation("Notification {NotificationId} déjà envoyée, ignorée.", notification.Id);
+                return;
+            }
+
             var channelsToSend = new[]
             {
                 NotificationChannel.Email,
-                NotificationChannel.InApp
             };
 
             bool atLeastOneSuccess = false;

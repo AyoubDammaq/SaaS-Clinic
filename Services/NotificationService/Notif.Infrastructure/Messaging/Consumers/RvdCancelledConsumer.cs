@@ -41,16 +41,16 @@ namespace Notif.Infrastructure.Messaging.Consumers
 
             var rdv = evt.RendezVous;
 
-            var command = new CreateNotificationRequest(
-                RecipientId: rdv.PatientId,
-                RecipientType: UserType.Patient,
+            var medecinNotification = new CreateNotificationRequest(
+                RecipientId: rdv.MedecinId,
+                RecipientType: UserType.Doctor,
                 Type: NotificationType.AppointmentCancellation,
                 Title: "Rendez-vous annulé",
                 Priority: NotificationPriority.High,
-                Content: $"Votre rendez-vous prévu le {rdv.DateHeure:dd/MM/yyyy HH:mm} a été annulé."
+                Content: $"Le rendez-vous du patient prévu le {rdv.DateHeure:dd/MM/yyyy HH:mm} a été annulé."
             );
 
-            await _notificationService.CreateNotificationAsync(command);
+            await _notificationService.CreateNotificationAsync(medecinNotification);
         }
     }
 }
