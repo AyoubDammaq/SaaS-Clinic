@@ -14,13 +14,6 @@
       "FileCacheOptions": {
         "TtlSeconds": 30,
         "Region": "usersregion"
-      },
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "1m",
-        "PeriodTimespan": 60,
-        "Limit": 100
       }
     },
     {
@@ -37,13 +30,6 @@
       "FileCacheOptions": {
         "TtlSeconds": 30,
         "Region": "clinicsregion"
-      },
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "1m",
-        "PeriodTimespan": 60,
-        "Limit": 100
       }
     },
     {
@@ -60,13 +46,6 @@
       "FileCacheOptions": {
         "TtlSeconds": 30,
         "Region": "doctorsregion"
-      },
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "1m",
-        "PeriodTimespan": 60,
-        "Limit": 100
       }
     },
     {
@@ -83,13 +62,6 @@
       "FileCacheOptions": {
         "TtlSeconds": 30,
         "Region": "avalibilitiesregion"
-      },
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "1m",
-        "PeriodTimespan": 60,
-        "Limit": 100
       }
     },
     {
@@ -106,13 +78,6 @@
       "FileCacheOptions": {
         "TtlSeconds": 30,
         "Region": "patientsregion"
-      },
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "1m",
-        "PeriodTimespan": 60,
-        "Limit": 100
       }
     },
     {
@@ -129,13 +94,6 @@
       "FileCacheOptions": {
         "TtlSeconds": 30,
         "Region": "dossiersregion"
-      },
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "1m",
-        "PeriodTimespan": 60,
-        "Limit": 100
       }
     },
     {
@@ -152,13 +110,6 @@
       "FileCacheOptions": {
         "TtlSeconds": 30,
         "Region": "consultationsregion"
-      },
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "1m",
-        "PeriodTimespan": 60,
-        "Limit": 1000
       }
     },
     {
@@ -175,13 +126,6 @@
       "FileCacheOptions": {
         "TtlSeconds": 30,
         "Region": "appointmentsregion"
-      },
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "1m",
-        "PeriodTimespan": 60,
-        "Limit": 100
       }
     },
     {
@@ -198,13 +142,6 @@
       "FileCacheOptions": {
         "TtlSeconds": 30,
         "Region": "facturationregion"
-      },
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "1m",
-        "PeriodTimespan": 60,
-        "Limit": 100
       }
     },
     {
@@ -221,13 +158,6 @@
       "FileCacheOptions": {
         "TtlSeconds": 30,
         "Region": "paymentsregion"
-      },
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "1m",
-        "PeriodTimespan": 60,
-        "Limit": 100
       }
     },
     {
@@ -244,13 +174,6 @@
       "FileCacheOptions": {
         "TtlSeconds": 30,
         "Region": "tarificationsregion"
-      },
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "1m",
-        "PeriodTimespan": 60,
-        "Limit": 100
       }
     },
     {
@@ -267,13 +190,6 @@
       "FileCacheOptions": {
         "TtlSeconds": 30,
         "Region": "reportsregion"
-      },
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "1m",
-        "PeriodTimespan": 60,
-        "Limit": 100
       }
     },
     {
@@ -290,24 +206,11 @@
       "FileCacheOptions": {
         "TtlSeconds": 30,
         "Region": "notificationsregion"
-      },
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "1m",
-        "PeriodTimespan": 60,
-        "Limit": 100
       }
     }
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:8000",
-    "RequestIdKey": "RequestId",
-    "RateLimitOptions": {
-      "ClientIdHeader": "Client-Id",
-      "DisableRateLimitHeaders": false,
-      "QuotaExceededMessage": "Limite de requêtes atteinte",
-      "HttpStatusCode": 429
-    }
+    "RequestIdKey": "RequestId"
   }
 }
