@@ -23,8 +23,6 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
-    volumes:
-      - kafka-data:/var/lib/kafka/data
     networks:
       - mynetwork
       
@@ -423,6 +421,25 @@ services:
 #       limits:
 #         memory: 1G
 #         cpus: '0.7'
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./Frontend      
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"            
+    environment:
+      REACT_APP_API_GATEWAY_URL: http://host.docker.internal:8000
+    networks:
+      - mynetwork
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.3'
+
 
 volumes:
   kafka-data:
