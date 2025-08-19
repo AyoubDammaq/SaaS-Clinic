@@ -16,6 +16,7 @@ namespace Doctor.Domain.Interfaces
         // 🔍 By Foreign Key
         Task<List<Disponibilite>> ObtenirDisponibilitesParMedecinIdAsync(Guid medecinId);
         Task<List<Disponibilite>> ObtenirDisponibilitesParJourAsync(Guid medecinId, DayOfWeek jour);
+        Task<List<Medecin>> ObtenirMedecinsAvecDisponibilitesAsync();
 
         // 🔎 Availabilities Lookup
         Task<List<Medecin>> ObtenirMedecinsDisponiblesAsync(DateTime date, TimeSpan? heureDebut, TimeSpan? heureFin);

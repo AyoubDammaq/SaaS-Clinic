@@ -15,9 +15,14 @@ namespace RDV.Domain.Interfaces
         Task<IEnumerable<RendezVous>> GetRendezVousByDateAsync(DateTime date);
         Task<IEnumerable<RendezVous>> GetRendezVousByStatutAsync(RDVstatus statut);
         Task<IEnumerable<RendezVous>> GetRendezVousByPeriod(DateTime start, DateTime end);
+        Task<IEnumerable<RendezVous>> GetRendezVousByPeriodByPatientAsync(Guid patientId, DateTime start, DateTime end);
+        Task<IEnumerable<RendezVous>> GetRendezVousByPeriodByDoctorAsync(Guid medecinId, DateTime start, DateTime end);
+        Task<IEnumerable<RendezVous>> GetRendezVousByPeriodByClinicAsync(Guid cliniqueId, DateTime start, DateTime end);
         Task<IEnumerable<RendezVous>> GetRendezVousByMedecinAndDateAsync(Guid medecinId, DateTime date);
+        Task<int> GetNombreRendezVousByMedecinAndTodayAsync(Guid medecinId, DateTime date);
+        Task<int> GetNombreRendezVousByClinicAndTodayAsync(Guid clinicId, DateTime date);
         Task<int> CountPendingRDVByDoctorAsync(Guid medecinId);
-        Task<int>CountPendingRDVByClinicAsync(Guid clinicId);
+        Task<int> CountPendingRDVByClinicAsync(Guid clinicId);
         Task<int> CountByMedecinsIdsAndDateAsync(List<Guid> medecinsIds, DateTime date);
         Task<int> CountDistinctPatientsByMedecinIdsAsync(List<Guid> medecinIds);
         Task<int> CountByMedecinIdsAsync(List<Guid> medecinIds);
@@ -26,5 +31,6 @@ namespace RDV.Domain.Interfaces
         Task AnnulerRendezVousParMedecin(Guid rendezVousId, string justification);
 
         Task<bool> ExisteRendezVousPourMedecinEtDate(Guid medecinId, DateTime dateHeure);
+        Task<bool> ExisteRendezVousPourMedecinEtDate(Guid medecinId, DateTime dateHeure, Guid excludeId);
     }
 }

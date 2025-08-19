@@ -1,4 +1,5 @@
-﻿using Facturation.Domain.Entities;
+﻿using Facturation.Application.DTOs;
+using Facturation.Domain.Entities;
 using Facturation.Domain.Enums;
 using Facturation.Domain.Interfaces;
 using Facturation.Domain.ValueObjects;
@@ -207,6 +208,55 @@ namespace Facturation.Infrastructure.Repositories
                 .SumAsync(p => p.Montant);
 
             return (currentMonthRevenus, previousMonthRevenus);
+        }
+
+        public async Task<decimal> GetRevenusParMoisAsync(Guid clinicId, DateTime debutMois, DateTime finMois)
+        {
+            var revenus = await _context.Set<Paiement>()
+                .Where(p => p.DatePaiement >= debutMois &&
+                            p.DatePaiement < finMois &&
+                            p.Facture != null &&
+                            p.Facture.ClinicId == clinicId)
+                .SumAsync(p => p.Montant);
+
+            return revenus;
+        }
+
+        public async Task<BillingStats> GetBillingStatsAsync(Guid? clinicId = null)
+        {
+            var query = _context.Factures.AsQueryable();
+
+            // Filtrer par clinique si nécessaire
+            if (clinicId.HasValue)
+                query = query.Where(f => f.ClinicId == clinicId.Value);
+
+            // Exclure les annulées
+            query = query.Where(f => f.Status != FactureStatus.ANNULEE);
+
+            var factures = await query.ToListAsync();
+
+            var revenue = factures.Sum(f => f.MontantPaye);
+
+            var pendingAmount = factures
+                .Where(f => f.Status == FactureStatus.IMPAYEE || f.Status == FactureStatus.PARTIELLEMENT_PAYEE)
+                .Sum(f => f.MontantTotal - f.MontantPaye);
+
+            var today = DateTime.UtcNow;
+            var overdueAmount = factures
+                .Where(f => (f.Status == FactureStatus.IMPAYEE || f.Status == FactureStatus.PARTIELLEMENT_PAYEE) &&
+                            f.DateEmission.AddDays(30) < today)
+                .Sum(f => f.MontantTotal - f.MontantPaye);
+
+            var montantTotal = factures.Sum(f => f.MontantTotal);
+            var paymentRate = montantTotal > 0 ? (double)(revenue / montantTotal) * 100 : 0;
+
+            return new BillingStats
+            {
+                Revenue = revenue,
+                PendingAmount = pendingAmount,
+                OverdueAmount = overdueAmount,
+                PaymentRate = Math.Round(paymentRate, 2)
+            };
         }
     }
 }

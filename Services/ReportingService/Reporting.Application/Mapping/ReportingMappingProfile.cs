@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Facturation.Application.DTOs;
 using Reporting.Application.DTOs;
 using Reporting.Domain.Entities;
 using Reporting.Domain.ValueObject;
@@ -19,6 +20,7 @@ namespace Reporting.Application.Mapping
             CreateMap<StatistiqueClinique, ComparaisonCliniqueDTO>();
             CreateMap<DashboardStats, DashboardStatsDTO>();
             CreateMap<AppointmentDayStat, AppointmentDayStatDto>();
+            CreateMap<RevenusMensuelTrend, RevenusMensuelTrendDto>();
         }
     }
 }

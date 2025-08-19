@@ -14,6 +14,7 @@ namespace Facturation.Application.DTOs
         public DateTime DateEmission { get; set; } = DateTime.Now;
 
         public decimal MontantTotal { get; set; }
+        public decimal MontantPaye { get; set; }
 
         public FactureStatus Status { get; set; }
     }

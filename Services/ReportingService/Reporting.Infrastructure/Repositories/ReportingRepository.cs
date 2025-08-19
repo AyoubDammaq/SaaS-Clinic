@@ -65,6 +65,24 @@ namespace Reporting.Infrastructure.Repositories
             return int.Parse(await response.Content.ReadAsStringAsync());
         }
 
+        public async Task<int> GetNombreDeNouvellesCliniquesAsync(DateTime dateDebut, DateTime dateFin)
+        {
+            var baseUrl = _configuration["ApiUrls:NombreDeNouvellesCliniquesParMois"];
+            var url = $"{baseUrl}?start={dateDebut:yyyy-MM-dd}&end={dateFin:yyyy-MM-dd}";
+            var response = await _httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            return int.Parse(await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<int> GetNombreNouveauxMedecinsAsync(DateTime dateDebut, DateTime dateFin)
+        {
+            var baseUrl = _configuration["ApiUrls:NouveauxMedecins"];
+            var url = $"{baseUrl}?start={dateDebut:yyyy-MM-dd}&end={dateFin:yyyy-MM-dd}";
+            var response = await _httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            return int.Parse(await response.Content.ReadAsStringAsync());
+        }
+
         public async Task<List<DoctorStats>> GetNombreMedecinParSpecialiteAsync()
         {
             var url = _configuration["ApiUrls:MedecinSpecialite"];
@@ -233,9 +251,284 @@ namespace Reporting.Infrastructure.Repositories
             return stats;
         }
 
+        public async Task<(int trendValue, bool isPositive)> CalculerTrendDeConsultationsMensuellesParDoctorAsync(Guid medecinId)
+        {
+            if (medecinId == Guid.Empty)
+                throw new ArgumentException("medecinId ne peut pas être vide", nameof(medecinId));
+
+            // Déterminer le mois courant et le mois précédent
+            var now = DateTime.UtcNow;
+            var currentMonthStart = new DateTime(now.Year, now.Month, 1);
+            var currentMonthEnd = currentMonthStart.AddMonths(1).AddTicks(-1);
+
+            var prevMonthStart = currentMonthStart.AddMonths(-1);
+            var prevMonthEnd = currentMonthStart.AddTicks(-1);
+
+            // Appeler l'endpoint pour le mois courant
+            var currentCountResponse = await _httpClient.GetAsync(
+                $"http://consultationservice:8091/api/Consultation/count-consultation-by-doctor/{medecinId}?startDate={currentMonthStart:yyyy-MM-dd}&endDate={currentMonthEnd:yyyy-MM-dd}"
+            );
+            currentCountResponse.EnsureSuccessStatusCode();
+            var currentCount = int.Parse(await currentCountResponse.Content.ReadAsStringAsync());
+
+            // Appeler l'endpoint pour le mois précédent
+            var prevCountResponse = await _httpClient.GetAsync(
+                $"http://consultationservice:8091/api/Consultation/count-consultation-by-doctor/{medecinId}?startDate={prevMonthStart:yyyy-MM-dd}&endDate={prevMonthEnd:yyyy-MM-dd}"
+            );
+            prevCountResponse.EnsureSuccessStatusCode();
+            var prevCount = int.Parse(await prevCountResponse.Content.ReadAsStringAsync());
+
+            // Calcul du trend
+            int trendValue;
+            if (prevCount > 0)
+                trendValue = (int)Math.Round(((double)(currentCount - prevCount) / prevCount) * 100);
+            else
+                trendValue = currentCount > 0 ? 100 : 0;
+
+            var isPositive = currentCount >= prevCount;
+
+            return (trendValue, isPositive);
+        }
+
+        public async Task<(int trendValue, bool isPositive)> CalculerTrendDeConsultationsMensuellesParClinicAsync(Guid cliniqueId)
+        {
+            if (cliniqueId == Guid.Empty)
+                throw new ArgumentException("cliniqueId ne peut pas être vide", nameof(cliniqueId));
+            // Déterminer le mois courant et le mois précédent
+            var now = DateTime.UtcNow;
+            var currentMonthStart = new DateTime(now.Year, now.Month, 1);
+            var currentMonthEnd = currentMonthStart.AddMonths(1).AddTicks(-1);
+            var prevMonthStart = currentMonthStart.AddMonths(-1);
+            var prevMonthEnd = currentMonthStart.AddTicks(-1);
+            // Appeler l'endpoint pour le mois courant
+            var currentCountResponse = await _httpClient.GetAsync(
+                $"http://consultationservice:8091/api/Consultation/count-consultation-by-clinic/{cliniqueId}?startDate={currentMonthStart:yyyy-MM-dd}&endDate={currentMonthEnd:yyyy-MM-dd}"
+            );
+            currentCountResponse.EnsureSuccessStatusCode();
+            var currentCount = int.Parse(await currentCountResponse.Content.ReadAsStringAsync());
+            // Appeler l'endpoint pour le mois précédent
+            var prevCountResponse = await _httpClient.GetAsync(
+                $"http://consultationservice:8091/api/Consultation/count-consultation-by-clinic/{cliniqueId}?startDate={prevMonthStart:yyyy-MM-dd}&endDate={prevMonthEnd:yyyy-MM-dd}"
+            );
+            prevCountResponse.EnsureSuccessStatusCode();
+            var prevCount = int.Parse(await prevCountResponse.Content.ReadAsStringAsync());
+            // Calcul du trend
+            int trendValue;
+            if (prevCount > 0)
+                trendValue = (int)Math.Round(((double)(currentCount - prevCount) / prevCount) * 100);
+            else
+                trendValue = currentCount > 0 ? 100 : 0;
+            var isPositive = currentCount >= prevCount;
+            return (trendValue, isPositive);
+        }
+
+        public async Task<Trend> CalculerTrendDeNouveauxPatientsMensuelsParMedecinAsync(Guid medecinId)
+        {
+            if (medecinId == Guid.Empty)
+                throw new ArgumentException("medecinId ne peut pas être vide", nameof(medecinId));
+
+            var now = DateTime.UtcNow;
+            var currentMonthStart = new DateTime(now.Year, now.Month, 1);
+            var currentMonthEnd = currentMonthStart.AddMonths(1).AddTicks(-1);
+            var prevMonthStart = currentMonthStart.AddMonths(-1);
+            var prevMonthEnd = currentMonthStart.AddTicks(-1);
+
+            // Appeler l'API pour le mois courant
+            var currentCountResponse = await _httpClient.GetAsync(
+                $"http://consultationservice:8091/api/Consultation/nouveaux-patients-count-by-doctor/{medecinId}?startDate={currentMonthStart:yyyy-MM-dd}&endDate={currentMonthEnd:yyyy-MM-dd}"
+            );
+            currentCountResponse.EnsureSuccessStatusCode();
+            var currentCount = int.Parse(await currentCountResponse.Content.ReadAsStringAsync());
+
+            // Appeler l'API pour le mois précédent
+            var prevCountResponse = await _httpClient.GetAsync(
+                $"http://consultationservice:8091/api/Consultation/nouveaux-patients-count-by-doctor/{medecinId}?startDate={prevMonthStart:yyyy-MM-dd}&endDate={prevMonthEnd:yyyy-MM-dd}"
+            );
+            prevCountResponse.EnsureSuccessStatusCode();
+            var prevCount = int.Parse(await prevCountResponse.Content.ReadAsStringAsync());
+
+            // Calcul du trend
+            if (prevCount == 0 && currentCount == 0)
+                return new Trend { Value = 0, IsPositive = true };
+
+            if (prevCount == 0)
+                return new Trend { Value = 100, IsPositive = true };
+
+            var delta = currentCount - prevCount;
+            var percentage = Math.Abs((int)Math.Round((double)delta / prevCount * 100));
+
+            return new Trend
+            {
+                Value = percentage,
+                IsPositive = delta >= 0
+            };
+        }
+
+        public async Task<Trend> CalculerTrendDeNouveauxPatientsMensuelsParCliniqueAsync(Guid cliniqueId)
+        {
+            if (cliniqueId == Guid.Empty)
+                throw new ArgumentException("cliniqueId ne peut pas être vide", nameof(cliniqueId));
+
+            var now = DateTime.UtcNow;
+            var currentMonthStart = new DateTime(now.Year, now.Month, 1);
+            var currentMonthEnd = currentMonthStart.AddMonths(1).AddTicks(-1);
+            var prevMonthStart = currentMonthStart.AddMonths(-1);
+            var prevMonthEnd = currentMonthStart.AddTicks(-1);
+
+            // Appeler l'API pour le mois courant
+            var currentCountResponse = await _httpClient.GetAsync(
+                $"http://consultationservice:8091/api/Consultation/nouveaux-patients-count-by-clinic/{cliniqueId}?startDate={currentMonthStart:yyyy-MM-dd}&endDate={currentMonthEnd:yyyy-MM-dd}"
+            );
+            currentCountResponse.EnsureSuccessStatusCode();
+            var currentCount = int.Parse(await currentCountResponse.Content.ReadAsStringAsync());
+
+            // Appeler l'API pour le mois précédent
+            var prevCountResponse = await _httpClient.GetAsync(
+                $"http://consultationservice:8091/api/Consultation/nouveaux-patients-count-by-clinic/{cliniqueId}?startDate={prevMonthStart:yyyy-MM-dd}&endDate={prevMonthEnd:yyyy-MM-dd}"
+            );
+            prevCountResponse.EnsureSuccessStatusCode();
+            var prevCount = int.Parse(await prevCountResponse.Content.ReadAsStringAsync());
+
+            // Calcul du trend
+            if (prevCount == 0 && currentCount == 0)
+                return new Trend { Value = 0, IsPositive = true };
+
+            if (prevCount == 0)
+                return new Trend { Value = 100, IsPositive = true };
+
+            var delta = currentCount - prevCount;
+            var percentage = Math.Abs((int)Math.Round((double)delta / prevCount * 100));
+
+            return new Trend
+            {
+                Value = percentage,
+                IsPositive = delta >= 0
+            };
+        }
+
+        public async Task<Trend> CalculerNewClinicsTrend(DateTime dateDebut, DateTime dateFin)
+        {
+            if (dateDebut > dateFin)
+                throw new ArgumentException("La date de début doit être antérieure à la date de fin");
+
+            // Déterminer les périodes : mois courant et mois précédent
+            var currentStart = new DateTime(dateDebut.Year, dateDebut.Month, 1);
+            var currentEnd = currentStart.AddMonths(1).AddTicks(-1);
+
+            var prevStart = currentStart.AddMonths(-1);
+            var prevEnd = currentStart.AddTicks(-1);
+
+            // Appeler l'API pour le mois courant
+            var currentCount = await GetNombreDeNouvellesCliniquesAsync(currentStart, currentEnd);
+
+            // Appeler l'API pour le mois précédent
+            var prevCount = await GetNombreDeNouvellesCliniquesAsync(prevStart, prevEnd);
+
+            // Calcul du trend
+            if (prevCount == 0 && currentCount == 0)
+                return new Trend { Value = 0, IsPositive = true };
+
+            if (prevCount == 0)
+                return new Trend { Value = 100, IsPositive = true };
+
+            var delta = currentCount - prevCount;
+            var percentage = Math.Abs((int)Math.Round((double)delta / prevCount * 100));
+
+            return new Trend
+            {
+                Value = percentage,
+                IsPositive = delta >= 0
+            };
+        }
+
+        public async Task<Trend> CalculerNewDoctorsTrend(DateTime dateDebut, DateTime dateFin)
+        {
+            if (dateDebut > dateFin)
+                throw new ArgumentException("La date de début doit être antérieure à la date de fin");
+
+            // Déterminer les périodes : mois courant et mois précédent
+            var currentStart = new DateTime(dateDebut.Year, dateDebut.Month, 1);
+            var currentEnd = currentStart.AddMonths(1).AddTicks(-1);
+
+            var prevStart = currentStart.AddMonths(-1);
+            var prevEnd = currentStart.AddTicks(-1);
+
+            // Appeler l'API pour le mois courant
+            var currentCount = await GetNombreNouveauxMedecinsAsync(currentStart, currentEnd);
+
+            // Appeler l'API pour le mois précédent
+            var prevCount = await GetNombreNouveauxMedecinsAsync(prevStart, prevEnd);
+
+            // Calcul du trend
+            if (prevCount == 0 && currentCount == 0)
+                return new Trend { Value = 0, IsPositive = true };
+
+            if (prevCount == 0)
+                return new Trend { Value = 100, IsPositive = true };
+
+            var delta = currentCount - prevCount;
+            var percentage = Math.Abs((int)Math.Round((double)delta / prevCount * 100));
+
+            return new Trend
+            {
+                Value = percentage,
+                IsPositive = delta >= 0
+            };
+        }
+
+        public async Task<Trend> CalculerNewPatientsTrend(DateTime dateDebut, DateTime dateFin)
+        {
+            if (dateDebut > dateFin)
+                throw new ArgumentException("La date de début doit être antérieure à la date de fin");
+            // Déterminer les périodes : mois courant et mois précédent
+            var currentStart = new DateTime(dateDebut.Year, dateDebut.Month, 1);
+            var currentEnd = currentStart.AddMonths(1).AddTicks(-1);
+            var prevStart = currentStart.AddMonths(-1);
+            var prevEnd = currentStart.AddTicks(-1);
+            // Appeler l'API pour le mois courant
+            var currentCount = await GetNombreNouveauxPatientsAsync(currentStart, currentEnd);
+            // Appeler l'API pour le mois précédent
+            var prevCount = await GetNombreNouveauxPatientsAsync(prevStart, prevEnd);
+            // Calcul du trend
+            if (prevCount == 0 && currentCount == 0)
+                return new Trend { Value = 0, IsPositive = true };
+            if (prevCount == 0)
+                return new Trend { Value = 100, IsPositive = true };
+            var delta = currentCount - prevCount;
+            var percentage = Math.Abs((int)Math.Round((double)delta / prevCount * 100));
+            return new Trend
+            {
+                Value = percentage,
+                IsPositive = delta >= 0
+            };
+        }
+
+
+
+        public async Task<int> CalculerNombreDeRDVParMedecinAujourdhuiAsync(Guid medecinId)
+        {
+            if (medecinId == Guid.Empty)
+                throw new ArgumentException("medecinId ne peut pas être vide", nameof(medecinId));
+            var today = DateTime.UtcNow.Date;
+            var url = $"{_configuration["ApiUrls:RendezVousCountByDoctor"]}/{medecinId}?date={today:yyyy-MM-dd}";
+            var response = await _httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            return int.Parse(await response.Content.ReadAsStringAsync());
+        }
+
+
         public async Task<DashboardStats> GetDashboardStatsAsync(DateTime dateDebut, DateTime dateFin, Guid? patientId = null, Guid? medecinId = null, Guid? cliniqueId = null)
         {
-            var stats = new DashboardStats();
+            var stats = new DashboardStats
+            {
+                TrendDeConsultationsMensuellesParDoctor = new Trend(), // Initialize Trend to avoid null reference
+                TrendDeConsultationsMensuellesParClinic = new Trend(),  // Initialize Trend to avoid null reference
+                TrendDeNouveauxPatientsMensuelsParMedecin = new Trend(), // Initialize Trend to avoid null reference
+                TrendDeNouveauxPatientsMensuelsParClinic = new Trend(), // Initialize Trend to avoid null reference
+                TrendDeNouveauxMedecins = new Trend(), // Initialize Trend to avoid null reference
+                TrendDeNouvellesCliniques = new Trend(), // Initialize Trend to avoid null reference
+                TrendDeNouveauxPatients = new Trend() // Initialize Trend to avoid null reference
+            };
 
             // Récupérer les statistiques de facturation
             var statsFacture = await GetStatistiquesFacturesAsync(dateDebut, dateFin);
@@ -325,18 +618,38 @@ namespace Reporting.Infrastructure.Repositories
                 stats.NouveauxMedecins = int.Parse(await newMedecinResponse.Content.ReadAsStringAsync());
             }
 
+            bool isSuperAdmin = !patientId.HasValue && !medecinId.HasValue && !cliniqueId.HasValue;
+
             // Récupérer les statistiques de rendez-vous
-            var rdvUrl = _configuration["ApiUrls:RendezVous"];
-            if (medecinId.HasValue)
-                rdvUrl += $"/doctor/{medecinId}";
-            else if (cliniqueId.HasValue)
-                rdvUrl += $"/clinic/{cliniqueId}";
-            rdvUrl += $"?start={dateDebut:yyyy-MM-ddTHH:mm:ss}&end={dateFin:yyyy-MM-ddTHH:mm:ss}";
-            var rdvResponse = await _httpClient.GetAsync(rdvUrl);
-            if (rdvResponse.IsSuccessStatusCode)
+            if (!patientId.HasValue)
             {
-                var rdvContent = await rdvResponse.Content.ReadAsStringAsync();
-                stats.RendezvousStats = JsonConvert.DeserializeObject<List<RendezVousStat>>(rdvContent);
+                string rdvUrl = null;
+
+                if (isSuperAdmin)
+                {
+                    // SuperAdmin → endpoint global
+                    rdvUrl = _configuration["ApiUrls:RendezVous"];
+                }
+                else if (medecinId.HasValue)
+                {
+                    rdvUrl = $"{_configuration["ApiUrls:RendezVousParMedecinParPeriod"]}/{medecinId}";
+                }
+                else if (cliniqueId.HasValue)
+                {
+                    rdvUrl = $"{_configuration["ApiUrls:RendezVousParCliniqueParPeriod"]}/{cliniqueId}";
+                }
+
+                if (!string.IsNullOrEmpty(rdvUrl))
+                {
+                    rdvUrl += $"?start={dateDebut:yyyy-MM-ddTHH:mm:ss}&end={dateFin:yyyy-MM-ddTHH:mm:ss}";
+
+                    var rdvResponse = await _httpClient.GetAsync(rdvUrl);
+                    if (rdvResponse.IsSuccessStatusCode)
+                    {
+                        var rdvContent = await rdvResponse.Content.ReadAsStringAsync();
+                        stats.RendezvousStats = JsonConvert.DeserializeObject<List<RendezVousStat>>(rdvContent);
+                    }
+                }
             }
 
             // Récupérer les médecins par spécialité (uniquement pour SuperAdmin)
@@ -395,8 +708,135 @@ namespace Reporting.Infrastructure.Repositories
                 }
             }
 
+            if (patientId.HasValue)
+            {
+                // Récupérer le nombre de consultations par patient
+                var consultationsByPatientUrl = $"{_configuration["ApiUrls:NombreDeConsultationsParPatient"]}/{patientId}?start={dateDebut:yyyy-MM-dd}&end={dateFin:yyyy-MM-dd}";
+                var consultationsByPatientResponse = await _httpClient.GetAsync(consultationsByPatientUrl);
+                consultationsByPatientResponse.EnsureSuccessStatusCode();
+                stats.NombreDeConsultationsParPatient = int.Parse(await consultationsByPatientResponse.Content.ReadAsStringAsync());
+
+                // Récupérer le paiement récent par patient
+                var recentPaymentUrl = $"{_configuration["ApiUrls:RecentPaiementByPatient"]}/{patientId}";
+                var recentPaymentResponse = await _httpClient.GetAsync(recentPaymentUrl);
+                if (recentPaymentResponse.IsSuccessStatusCode)
+                {
+                    var recentPaymentContent = await recentPaymentResponse.Content.ReadAsStringAsync();
+                    stats.RecentPaiementByPatient = JsonConvert.DeserializeObject<RecentPaiement>(recentPaymentContent);
+                }
+            }
+
+            if (medecinId.HasValue)
+            {
+                // Récupérer le nombre de nouveaux patients par médecin
+                var newPatientsByDoctorUrl = $"{_configuration["ApiUrls:NouveauxPatientsParMedecin"]}/{medecinId}?startDate={dateDebut:yyyy-MM-ddTHH:mm:ssZ}&endDate={dateFin:yyyy-MM-ddTHH:mm:ssZ}";
+                var newPatientsByDoctorResponse = await _httpClient.GetAsync(newPatientsByDoctorUrl);
+                newPatientsByDoctorResponse.EnsureSuccessStatusCode();
+                stats.NouveauxPatientsParMedecin = int.Parse(await newPatientsByDoctorResponse.Content.ReadAsStringAsync());
+
+                var Trend = await CalculerTrendDeNouveauxPatientsMensuelsParMedecinAsync(medecinId.Value);
+                stats.TrendDeNouveauxPatientsMensuelsParMedecin.Value = Trend.Value;
+                stats.TrendDeNouveauxPatientsMensuelsParMedecin.IsPositive = Trend.IsPositive;
+            }
+
+            if (cliniqueId.HasValue)
+            {
+                // Récupérer le nombre de nouveaux patients par clinique
+                var newPatientsByClinicUrl = $"{_configuration["ApiUrls:NouveauxPatientsParClinic"]}/{cliniqueId.ToString().ToLower()}?startDate={dateDebut:yyyy-MM-ddTHH:mm:ssZ}&endDate={dateFin:yyyy-MM-ddTHH:mm:ssZ}"; ;
+                var newPatientsByClinicResponse = await _httpClient.GetAsync(newPatientsByClinicUrl);
+                newPatientsByClinicResponse.EnsureSuccessStatusCode();
+                stats.NouveauxPatientsParClinic = int.Parse(await newPatientsByClinicResponse.Content.ReadAsStringAsync());
+
+                var Trend = await CalculerTrendDeNouveauxPatientsMensuelsParCliniqueAsync(cliniqueId.Value);
+                stats.TrendDeNouveauxPatientsMensuelsParClinic.Value = Trend.Value;
+                stats.TrendDeNouveauxPatientsMensuelsParClinic.IsPositive = Trend.IsPositive;
+            }
+
+            if (medecinId.HasValue)
+            {
+                // Récupérer le nombre de consultations mensuelles par médecin
+                var monthlyConsultationsByDoctorUrl = $"{_configuration["ApiUrls:NombreDeConsultationsMensuellesParDoctor"]}/{medecinId}?start={dateDebut:yyyy-MM-dd}&end={dateFin:yyyy-MM-dd}";
+                var monthlyConsultationsByDoctorResponse = await _httpClient.GetAsync(monthlyConsultationsByDoctorUrl);
+                monthlyConsultationsByDoctorResponse.EnsureSuccessStatusCode();
+                stats.NombreDeConsultationsMensuellesParDoctor = int.Parse(await monthlyConsultationsByDoctorResponse.Content.ReadAsStringAsync());
+
+                var (trendValue, isPositive) = await CalculerTrendDeConsultationsMensuellesParDoctorAsync(medecinId.Value);
+                stats.TrendDeConsultationsMensuellesParDoctor.Value = trendValue;
+                stats.TrendDeConsultationsMensuellesParDoctor.IsPositive = isPositive;
+            }
+
+            if (cliniqueId.HasValue)
+            {
+                // Récupérer le nombre de consultations mensuelles par clinique
+                var monthlyConsultationsByClinicUrl = $"{_configuration["ApiUrls:NombreDeConsultationsMensuellesParClinique"]}/{cliniqueId}?start={dateDebut:yyyy-MM-dd}&end={dateFin:yyyy-MM-dd}";
+                var monthlyConsultationsByClinicResponse = await _httpClient.GetAsync(monthlyConsultationsByClinicUrl);
+                monthlyConsultationsByClinicResponse.EnsureSuccessStatusCode();
+                stats.NombreDeConsultationsMensuellesParClinic = int.Parse(await monthlyConsultationsByClinicResponse.Content.ReadAsStringAsync());
+
+                var (trendValue, isPositive) = await CalculerTrendDeConsultationsMensuellesParClinicAsync(cliniqueId.Value);
+                stats.TrendDeConsultationsMensuellesParClinic.Value = trendValue;
+                stats.TrendDeConsultationsMensuellesParClinic.IsPositive = isPositive;
+            }
+
+            if (medecinId.HasValue)
+            {
+                var nombreDeRDVParMedecinAujourdHuiUrl = $"{_configuration["ApiUrls:NombreDeRDVParMedecin"]}/{medecinId}?date={DateTime.UtcNow:yyyy-MM-dd}";
+                var nombreDeRDVParMedecinAujourdHuiResponse = await _httpClient.GetAsync(nombreDeRDVParMedecinAujourdHuiUrl);
+                nombreDeRDVParMedecinAujourdHuiResponse.EnsureSuccessStatusCode();
+                stats.NombreDeRDVParMedecinAujourdHui = int.Parse(await nombreDeRDVParMedecinAujourdHuiResponse.Content.ReadAsStringAsync());
+
+                var nombreDePendingRDVParMedecinUrl = $"{_configuration["ApiUrls:NombreDePendingRDVParMedecin"]}/{medecinId}";
+                var nombreDePendingRDVParMedecinResponse = await _httpClient.GetAsync(nombreDePendingRDVParMedecinUrl);
+                nombreDePendingRDVParMedecinResponse.EnsureSuccessStatusCode();
+                stats.NombreDePendingAppointmentsByDoctor = int.Parse(await nombreDePendingRDVParMedecinResponse.Content.ReadAsStringAsync());
+            }
+
+            if (cliniqueId.HasValue)
+            {
+                var nombreDeRDVParCliniqueAujourdHuiUrl = $"{_configuration["ApiUrls:NombreDeRDVParClinique"]}/{cliniqueId}?date={DateTime.UtcNow:yyyy-MM-dd}";
+                var nombreDeRDVParCliniqueAujourdHuiResponse = await _httpClient.GetAsync(nombreDeRDVParCliniqueAujourdHuiUrl);
+                nombreDeRDVParCliniqueAujourdHuiResponse.EnsureSuccessStatusCode();
+                stats.NombreDeRDVParCliniqueAujourdHui = int.Parse(await nombreDeRDVParCliniqueAujourdHuiResponse.Content.ReadAsStringAsync());
+
+                var nombreDePendingRDVParCliniqueUrl = $"{_configuration["ApiUrls:NombreDePendingRDVParClinique"]}/{cliniqueId}";
+                var nombreDePendingRDVParCliniqueResponse = await _httpClient.GetAsync(nombreDePendingRDVParCliniqueUrl);
+                nombreDePendingRDVParCliniqueResponse.EnsureSuccessStatusCode();
+                stats.NombreDePendingAppointmentsByClinic = int.Parse(await nombreDePendingRDVParCliniqueResponse.Content.ReadAsStringAsync());
+            }
+
+            if (cliniqueId.HasValue)
+            {
+                var revenuesMensuelsByClinicUrl = $"{_configuration["ApiUrls:RevenusMensuelsParClinique"]}/{cliniqueId}";
+                var revenuesMensuelsByClinicResponse = await _httpClient.GetAsync(revenuesMensuelsByClinicUrl);
+                revenuesMensuelsByClinicResponse.EnsureSuccessStatusCode();
+                stats.RevenuesMensuelsByClinic = decimal.Parse(await revenuesMensuelsByClinicResponse.Content.ReadAsStringAsync());
+
+                var revenuesMensuelsTrendByClinicUrl = $"{_configuration["ApiUrls:TrendRevenusMensuelsParClinique"]}/{cliniqueId}";
+                var revenuesMensuelsTrendByClinicResponse = await _httpClient.GetAsync(revenuesMensuelsTrendByClinicUrl);
+                revenuesMensuelsTrendByClinicResponse.EnsureSuccessStatusCode();
+                var revenuesMensuelsTrendContent = await revenuesMensuelsTrendByClinicResponse.Content.ReadAsStringAsync();
+                stats.RevenuesMensuelsByClinicTrend = JsonConvert.DeserializeObject<RevenusMensuelTrend>(revenuesMensuelsTrendContent);
+            }
+
+            if (!patientId.HasValue && !medecinId.HasValue && !cliniqueId.HasValue)
+            {
+                // Récupérer le trend des nouvelles cliniques
+                var newClinicsTrend = await CalculerNewClinicsTrend(dateDebut, dateFin);
+                stats.TrendDeNouvellesCliniques.Value = newClinicsTrend.Value;
+                stats.TrendDeNouvellesCliniques.IsPositive = newClinicsTrend.IsPositive;
+                // Récupérer le trend des nouveaux médecins
+                var newDoctorsTrend = await CalculerNewDoctorsTrend(dateDebut, dateFin);
+                stats.TrendDeNouveauxMedecins.Value = newDoctorsTrend.Value;
+                stats.TrendDeNouveauxMedecins.IsPositive = newDoctorsTrend.IsPositive;
+                // Récupérer le trend des nouveaux patients
+                var newPatientsTrend = await CalculerNewPatientsTrend(dateDebut, dateFin);
+                stats.TrendDeNouveauxPatients.Value = newPatientsTrend.Value;
+                stats.TrendDeNouveauxPatients.IsPositive = newPatientsTrend.IsPositive;
+            }
+
             return stats;
         }
+
     }
 }
 

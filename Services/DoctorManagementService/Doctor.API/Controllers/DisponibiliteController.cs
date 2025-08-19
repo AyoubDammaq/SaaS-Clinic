@@ -10,7 +10,6 @@ using Doctor.Application.AvailibilityServices.Queries.GetMedecinsDisponibles;
 using Doctor.Application.AvailibilityServices.Queries.GetTotalAvailableTime;
 using Doctor.Application.AvailibilityServices.Queries.IsAvailable;
 using Doctor.Application.AvailibilityServices.Queries.ObtenirDisponibilitesDansIntervalle;
-using Doctor.Application.DTOs;
 using Doctor.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

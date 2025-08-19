@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Facturation.Application.DTOs
 {
@@ -10,6 +11,7 @@ namespace Facturation.Application.DTOs
 
         [Required]
         [StringLength(19)]
+        [JsonPropertyName("cardNumber")]
         public string CardNumber { get; set; } = string.Empty; // Sans espaces
 
         [Required]

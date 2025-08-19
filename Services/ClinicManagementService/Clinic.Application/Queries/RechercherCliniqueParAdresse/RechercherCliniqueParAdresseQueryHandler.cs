@@ -15,8 +15,9 @@ namespace Clinic.Application.Queries.RechercherCliniqueParAdresse
 
         public async Task<IEnumerable<Clinique>> Handle(RechercherCliniqueParAdresseQuery request, CancellationToken cancellationToken)
         {
+            // Si l'adresse est vide, on retourne toutes les cliniques
             if (string.IsNullOrWhiteSpace(request.Adresse))
-                throw new ArgumentException("L'adresse de la clinique est requise.", nameof(request.Adresse));
+                return await _repository.GetAllAsync();
 
             var cliniques = await _repository.GetByAddressAsync(request.Adresse);
             return cliniques?.Where(c => c != null) ?? Enumerable.Empty<Clinique>();

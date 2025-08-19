@@ -341,7 +341,7 @@ namespace ConsultationManagementService.Controllers
             return Ok(count);
         }
 
-        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
+        //[Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpGet("countByMedecinIds")]
         public async Task<IActionResult> GetCountByMedecinIds([FromQuery] List<Guid> medecinIds)
         {
@@ -433,6 +433,70 @@ namespace ConsultationManagementService.Controllers
                 return BadRequest("Invalid ClinicId");
             var count = await _mediator.Send(new CountConsultationByClinicQuery(clinicId, startDate, endDate));
             return Ok(count);
+        }
+
+        [HttpGet("count-consultation-by-clinic-per-month/{clinicId}")]
+        public async Task<IActionResult> CountConsultationByClinicPerMonth(Guid clinicId)
+        {
+            if (clinicId == Guid.Empty)
+                return BadRequest("Invalid ClinicId");
+
+            var currentYear = DateTime.UtcNow.Year;
+            var monthlyCounts = new Dictionary<int, int>();
+
+            for (int month = 1; month <= 12; month++)
+            {
+                var startDate = new DateTime(currentYear, month, 1);
+                var endDate = startDate.AddMonths(1).AddDays(-1);
+
+                int count = 0;
+                try
+                {
+                    count = await _mediator.Send(
+                        new CountConsultationByClinicQuery(clinicId, startDate, endDate)
+                    );
+                }
+                catch
+                {
+                    count = 0; // Toujours 0 si erreur
+                }
+
+                monthlyCounts[month] = count;
+            }
+
+            return Ok(monthlyCounts);
+        }
+
+        [HttpGet("nouveaux-patients-count-by-clinic-per-month/{clinicId}")]
+        public async Task<IActionResult> GetNouveauxPatientsCountByClinicPerMonth(Guid clinicId)
+        {
+            if (clinicId == Guid.Empty)
+                return BadRequest("Invalid clinicId");
+
+            var currentYear = DateTime.UtcNow.Year;
+            var monthlyCounts = new Dictionary<int, int>();
+
+            for (int month = 1; month <= 12; month++)
+            {
+                var startDate = new DateTime(currentYear, month, 1);
+                var endDate = startDate.AddMonths(1).AddDays(-1);
+
+                int count = 0;
+                try
+                {
+                    count = await _mediator.Send(
+                        new CountNouveauxPatientsByClinicQuery(clinicId, startDate, endDate)
+                    );
+                }
+                catch
+                {
+                    count = 0; // Toujours 0 si erreur
+                }
+
+                monthlyCounts[month] = count;
+            }
+
+            return Ok(monthlyCounts);
         }
     }
 }

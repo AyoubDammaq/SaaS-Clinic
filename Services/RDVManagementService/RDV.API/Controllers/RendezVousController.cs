@@ -12,11 +12,16 @@ using RDV.Application.Queries.CountDistinctPatientsByMedecinIds;
 using RDV.Application.Queries.CountPendingRDVByClinic;
 using RDV.Application.Queries.CountPendingRDVByDoctor;
 using RDV.Application.Queries.GetAllRendezVous;
+using RDV.Application.Queries.GetNombreRendezVousByClinicAndToday;
+using RDV.Application.Queries.GetNombreRendezVousByMedecinAndToday;
 using RDV.Application.Queries.GetNombreRendezVousParCliniqueEtDate;
 using RDV.Application.Queries.GetRendezVousByDate;
 using RDV.Application.Queries.GetRendezVousById;
 using RDV.Application.Queries.GetRendezVousByMedecinId;
 using RDV.Application.Queries.GetRendezVousByPatientId;
+using RDV.Application.Queries.GetRendezVousByPeriodByClinic;
+using RDV.Application.Queries.GetRendezVousByPeriodByDoctor;
+using RDV.Application.Queries.GetRendezVousByPeriodByPatient;
 using RDV.Application.Queries.GetRendezVousByStatut;
 using RDV.Application.Queries.GetRendezVousHebdomadaireStatistiquesByClinic;
 using RDV.Application.Queries.GetRendezVousHebdomadaireStatistiquesByDoctor;
@@ -259,6 +264,48 @@ namespace RDVManagementService.Controllers
             return Ok(rdvs);
         }
 
+        [HttpGet("countByDoctorToday/{medecinId}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetNombreRendezVousByMedecinAndToday(Guid medecinId, [FromQuery] DateTime date)
+        {
+            try
+            {
+                if (medecinId == Guid.Empty || date == default)
+                {
+                    return BadRequest("Medecin ID et date sont requis.");
+                }
+                var count = await _mediator.Send(new GetNombreRendezVousByMedecinAndTodayQuery(medecinId, date));
+                return Ok(count);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur interne du serveur: {ex.Message}");
+            }
+        }
+
+        [HttpGet("countByClinicToday/{clinicId}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetNombreRendezVousByClinicAndToday(Guid clinicId, [FromQuery] DateTime date)
+        {
+            try
+            {
+                if (clinicId == Guid.Empty || date == default)
+                {
+                    return BadRequest("Clinic ID et date sont requis.");
+                }
+                var count = await _mediator.Send(new GetNombreRendezVousByClinicAndTodayQuery(clinicId, date));
+                return Ok(count);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur interne du serveur: {ex.Message}");
+            }
+        }
+
         [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpPost("confirmer/{rendezVousId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -358,7 +405,63 @@ namespace RDVManagementService.Controllers
             }
         }
 
-        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
+        [HttpGet("period/patient/{patientId}")]
+        public async Task<ActionResult<IEnumerable<RendezVous>>> GetRendezVousByPeriodByPatient(Guid patientId, [FromQuery] DateTime start, [FromQuery] DateTime end)
+        {
+            try
+            {
+                if (patientId == Guid.Empty || start == default || end == default)
+                {
+                    return BadRequest("Patient ID, start date and end date are required.");
+                }
+                var rendezVous = await _mediator.Send(new GetRendezVousByPeriodByPatientQuery(patientId, start, end));
+                return Ok(rendezVous);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur interne du serveur: {ex.Message}");
+            }
+        }
+
+        [HttpGet("period/doctor/{medecinId}")]
+        public async Task<ActionResult<IEnumerable<RendezVous>>> GetRendezVousByPeriodByDoctor(Guid medecinId, [FromQuery] DateTime start, [FromQuery] DateTime end)
+        {
+            try
+            {
+                if (medecinId == Guid.Empty || start == default || end == default)
+                {
+                    return BadRequest("Medecin ID, start date and end date are required.");
+                }
+                var rendezVous = await _mediator.Send(new GetRendezVousByPeriodByDoctorQuery(medecinId, start, end));
+                return Ok(rendezVous);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur interne du serveur: {ex.Message}");
+            }
+        }
+
+        [HttpGet("period/clinic/{cliniqueId}")]
+        public async Task<ActionResult<IEnumerable<RendezVous>>> GetRendezVousByPeriodByClinic(Guid cliniqueId, [FromQuery] DateTime start, [FromQuery] DateTime end)
+        {
+            try
+            {
+                if (cliniqueId == Guid.Empty || start == default || end == default)
+                {
+                    return BadRequest("Clinic ID, start date and end date are required.");
+                }
+                var rendezVous = await _mediator.Send(new GetRendezVousByPeriodByClinicQuery(cliniqueId, start, end));
+                return Ok(rendezVous);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur interne du serveur: {ex.Message}");
+            }
+        }
+
+
+
+        //[Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpGet("count")]
         public async Task<ActionResult<int>> CountRendezVous([FromQuery] List<Guid> medecinIds)
         {
@@ -373,7 +476,7 @@ namespace RDVManagementService.Controllers
             }
         }
 
-        [Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
+        //[Authorize(Roles = "SuperAdmin, ClinicAdmin, Doctor")]
         [HttpGet("distinct/patients")]
         public async Task<ActionResult<int>> CountDistinctPatients([FromQuery] List<Guid> medecinIds)
         {

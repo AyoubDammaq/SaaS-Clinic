@@ -12,6 +12,8 @@ namespace Reporting.Domain.Interfaces
         Task<IEnumerable<RendezVousStat>> GetStatistiquesRendezVousAsync(DateTime dateDebut, DateTime dateFin);
 
         Task<int> GetNombreNouveauxPatientsAsync(DateTime dateDebut, DateTime dateFin);
+        Task<int> GetNombreDeNouvellesCliniquesAsync(DateTime dateDebut, DateTime dateFin);
+        Task<int> GetNombreNouveauxMedecinsAsync(DateTime dateDebut, DateTime dateFin);
 
         Task<List<DoctorStats>> GetNombreMedecinParSpecialiteAsync();
         Task<List<DoctorStats>> GetNombreMedecinByCliniqueAsync();
@@ -33,6 +35,14 @@ namespace Reporting.Domain.Interfaces
         Task<StatistiquesFacture> GetStatistiquesFacturesAsync(DateTime dateDebut, DateTime dateFin);
         Task<IEnumerable<AppointmentDayStat>> GetStatistiquesHebdomadairesRendezVousByDoctorAsync(Guid medecinId, DateTime dateDebut, DateTime dateFin);
         Task<IEnumerable<AppointmentDayStat>> GetStatistiquesHebdomadairesRendezVousByClinicAsync(Guid cliniqueId, DateTime dateDebut, DateTime dateFin);
+        Task<(int trendValue, bool isPositive)> CalculerTrendDeConsultationsMensuellesParDoctorAsync(Guid medecinId);
+        Task<(int trendValue, bool isPositive)> CalculerTrendDeConsultationsMensuellesParClinicAsync(Guid cliniqueId);
+        Task<Trend> CalculerTrendDeNouveauxPatientsMensuelsParMedecinAsync(Guid medecinId);
+        Task<Trend> CalculerTrendDeNouveauxPatientsMensuelsParCliniqueAsync(Guid cliniqueId);
+        Task<Trend> CalculerNewClinicsTrend(DateTime dateDebut, DateTime dateFin);
+        Task<Trend> CalculerNewDoctorsTrend(DateTime dateDebut, DateTime dateFin);
+        Task<Trend> CalculerNewPatientsTrend(DateTime dateDebut, DateTime dateFin);
+        Task<int> CalculerNombreDeRDVParMedecinAujourdhuiAsync(Guid medecinId);
         Task<DashboardStats> GetDashboardStatsAsync(DateTime dateDebut, DateTime dateFin, Guid? patientId = null, Guid? medecinId = null, Guid? cliniqueId = null);
     }
 }

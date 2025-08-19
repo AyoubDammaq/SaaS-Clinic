@@ -15,6 +15,15 @@ namespace Notif.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<List<Notification>> GetAllAsync(int skip = 0, int take = 50)
+        {
+            return await _context.Notifications
+                .OrderByDescending(n => n.CreatedAt)
+                .Skip(skip)
+                .Take(take)
+                .ToListAsync();
+        }
+
         public async Task<Notification?> GetByIdAsync(Guid id)
         {
             return await _context.Notifications.FindAsync(id);

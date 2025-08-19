@@ -5,6 +5,7 @@ using Clinic.Application.Commands.SupprimerClinique;
 using Clinic.Application.DTOs;
 using Clinic.Application.Queries.GetNombreCliniques;
 using Clinic.Application.Queries.GetNombreDeCliniquesParDate;
+using Clinic.Application.Queries.GetNombreNouveauxCliniques;
 using Clinic.Application.Queries.GetNombreNouvellesCliniquesDuMois;
 using Clinic.Application.Queries.GetNombreNouvellesCliniquesParMois;
 using Clinic.Application.Queries.GetStatistiquesDesCliniques;
@@ -258,6 +259,22 @@ namespace Clinic.API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Erreur lors de la récupération des nouvelles cliniques par mois: {ex.Message}");
+            }
+        }
+
+        [HttpGet("nombre-nouveaux-cliniques")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<int>> GetNombreNouveauxCliniques([FromQuery] DateTime dateDebut, [FromQuery] DateTime dateFin)
+        {
+            try
+            {
+                var nombreNouveauxCliniques = await _mediator.Send(new GetNombreNouveauxCliniquesQuery(dateDebut, dateFin));
+                return Ok(nombreNouveauxCliniques);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur lors de la récupération du nombre de nouvelles cliniques : {ex.Message}");
             }
         }
 

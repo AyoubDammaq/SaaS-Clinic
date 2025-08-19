@@ -68,6 +68,13 @@ namespace Doctor.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Medecin>> ObtenirMedecinsAvecDisponibilitesAsync()
+        {
+            return await _context.Medecins
+                .Include(m => m.Disponibilites)
+                .ToListAsync();
+        }
+
 
         public async Task<List<Medecin>> ObtenirMedecinsDisponiblesAsync(DateTime date, TimeSpan? heureDebut, TimeSpan? heureFin)
         {

@@ -23,6 +23,7 @@ namespace Clinic.Domain.Interfaces
         Task<int> GetNombreCliniquesAsync();
         Task<int> GetNombreDeCliniquesParDateAsync(DateTime startDate, DateTime endDate);  
         Task<int> GetNombreNouvellesCliniquesDuMoisAsync();
+        Task<int> GetNombreNouveauxCliniquesAsync(DateTime dateDebut, DateTime dateFin);
         Task<IEnumerable<Statistique>> GetNombreNouvellesCliniquesParMoisAsync();
         Task<StatistiqueClinique> GetStatistiquesDesCliniquesAsync(Guid cliniqueId);
         Task<bool> LinkUserToClinicEntityAsync(Guid clinicId, Guid userId);

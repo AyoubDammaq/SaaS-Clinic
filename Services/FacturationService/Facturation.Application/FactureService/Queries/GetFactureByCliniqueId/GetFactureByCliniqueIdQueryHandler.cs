@@ -26,6 +26,7 @@ namespace Facturation.Application.FactureService.Queries.GetFactureByCliniqueId
                 ClinicId = facture.ClinicId,
                 DateEmission = facture.DateEmission,
                 MontantTotal = facture.MontantTotal,
+                MontantPaye = facture.MontantPaye,
                 Status = facture.Status
             });
         }

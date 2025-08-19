@@ -127,8 +127,6 @@ namespace Facturation.API.Controllers
             try
             {
                 var result = await _mediator.Send(new GetByClinicIdQuery(cliniqueId));
-                if (result == null || !result.Any())
-                    return NotFound($"No tarifications found for clinic ID {cliniqueId}.");
                 return Ok(result);
             }
             catch (Exception ex)

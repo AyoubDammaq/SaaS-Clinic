@@ -46,12 +46,18 @@ namespace Notif.Application.Services
             var skip = (filter.Page - 1) * filter.PageSize;
             var take = filter.PageSize;
 
-            // Si RecipientId n'est pas spécifié, on ne peut pas appeler la méthode actuelle du repository
-            if (filter.RecipientId == null)
-                throw new ArgumentException("RecipientId is required for this filter.");
+            IEnumerable<Notification> notifications;
 
-            // Appel du repository
-            var notifications = await _notificationRepository.GetByRecipientAsync(filter.RecipientId.Value, skip, take);
+            if (filter.RecipientId.HasValue)
+            {
+                // Notifications spécifiques à un destinataire
+                notifications = await _notificationRepository.GetByRecipientAsync(filter.RecipientId.Value, skip, take);
+            }
+            else
+            {
+                // Cas SuperAdmin : récupérer toutes les notifications
+                notifications = await _notificationRepository.GetAllAsync(skip, take);
+            }
 
             // Projection vers le DTO
             return notifications.Select(n => new NotificationSummaryDto(

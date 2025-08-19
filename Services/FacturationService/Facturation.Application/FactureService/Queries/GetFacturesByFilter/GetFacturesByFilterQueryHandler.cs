@@ -1,4 +1,5 @@
 ﻿using Facturation.Application.DTOs;
+using Facturation.Domain.Entities;
 using Facturation.Domain.Interfaces;
 using MediatR;
 
@@ -25,6 +26,7 @@ namespace Facturation.Application.FactureService.Queries.GetFacturesByFilter
                 ClinicId = f.ClinicId,
                 DateEmission = f.DateEmission,
                 MontantTotal = f.MontantTotal,
+                MontantPaye = f.MontantPaye,
                 Status = f.Status
             });
         }

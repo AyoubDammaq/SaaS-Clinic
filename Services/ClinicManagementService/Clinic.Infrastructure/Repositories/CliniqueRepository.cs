@@ -110,9 +110,15 @@ namespace Clinic.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<int> GetNombreNouveauxCliniquesAsync(DateTime dateDebut, DateTime dateFin)
+        {
+            return await _context.Cliniques.CountAsync(c => c.DateCreation >= dateDebut && c.DateCreation <= dateFin);
+        }
+
         public async Task<StatistiqueClinique> GetStatistiquesDesCliniquesAsync(Guid cliniqueId)
         {
             var gatewayBaseUrl = _configuration["ServiceUrls:Gateway"];
+
             if (string.IsNullOrEmpty(gatewayBaseUrl))
                 throw new InvalidOperationException("La configuration de l'URL du gateway est manquante.");
 
@@ -122,7 +128,7 @@ namespace Clinic.Infrastructure.Repositories
                 throw new KeyNotFoundException($"Clinique avec l'ID {cliniqueId} introuvable.");
 
             // 2. Récupération des IDs des médecins de cette clinique
-            var medecinResponse = await _httpClient.GetAsync($"{gatewayBaseUrl}/doctors/medecinsIds/clinique/{cliniqueId}");
+            var medecinResponse = await _httpClient.GetAsync($"http://doctorservice:8085/api/Medecin/medecinsIds/clinique/{cliniqueId}");
 
             if (!medecinResponse.IsSuccessStatusCode)
             {
@@ -141,25 +147,42 @@ namespace Clinic.Infrastructure.Repositories
                     NombreMedecins = 0,
                     NombreConsultations = 0,
                     NombreRendezVous = 0,
-                    NombrePatients = 0
+                    NombrePatients = 0,
+                    NombreConsultationsParMois = new Dictionary<int, int>(),
+                    NombreNouveauxPatientsParMois = new Dictionary<int, int>(),
+                    RevenusParMois = new Dictionary<int, decimal>()
                 };
             }
 
             var queryString = string.Join("&", medecinIds.Select(id => $"medecinIds={id}"));
 
             // 3. Exécution parallèle des requêtes
-            var consultationTask = _httpClient.GetAsync($"{gatewayBaseUrl}/consultations/countByMedecinIds?{queryString}");
-            var rdvTask = _httpClient.GetAsync($"{gatewayBaseUrl}/appointments/count?{queryString}");
-            var patientTask = _httpClient.GetAsync($"{gatewayBaseUrl}/appointments/distinct/patients?{queryString}");
+            var consultationTask = _httpClient.GetAsync($"http://consultationservice:8091/api/Consultation/countByMedecinIds?{queryString}");
+            var rdvTask = _httpClient.GetAsync($"http://rdvservice:8089/api/rendezvous/count?{queryString}");
+            var patientTask = _httpClient.GetAsync($"http://rdvservice:8089/api/rendezvous/distinct/patients?{queryString}");
 
-            await Task.WhenAll(consultationTask, rdvTask, patientTask);
+            // 🔥 Nouveaux appels
+            var monthlyConsultationsTask = _httpClient.GetAsync(
+                $"http://consultationservice:8091/api/Consultation/count-consultation-by-clinic-per-month/{cliniqueId}"
+            );
+            var monthlyNewPatientsTask = _httpClient.GetAsync(
+                $"http://consultationservice:8091/api/Consultation/nouveaux-patients-count-by-clinic-per-month/{cliniqueId}"
+            );
+            var monthlyRevenusTask = _httpClient.GetAsync(
+                $"http://facturationservice:8093/api/Facture/revenus-par-mois/{cliniqueId}"
+            );
 
-            if (!consultationTask.Result.IsSuccessStatusCode || !rdvTask.Result.IsSuccessStatusCode || !patientTask.Result.IsSuccessStatusCode)
+            await Task.WhenAll(consultationTask, rdvTask, patientTask, monthlyConsultationsTask, monthlyNewPatientsTask, monthlyRevenusTask);
+
+            if (!consultationTask.Result.IsSuccessStatusCode || !rdvTask.Result.IsSuccessStatusCode || !patientTask.Result.IsSuccessStatusCode || !monthlyConsultationsTask.Result.IsSuccessStatusCode || !monthlyNewPatientsTask.Result.IsSuccessStatusCode ||!monthlyRevenusTask.Result.IsSuccessStatusCode)
             {
-                _logger.LogError("Une ou plusieurs requêtes ont échoué : consultations ({Status1}), rdv ({Status2}), patients ({Status3})",
+                _logger.LogError("Une ou plusieurs requêtes ont échoué : consultations ({Status1}), rdv ({Status2}), patients ({Status3}), monthlyConsultations ({Status4}), monthlyNewPatients ({Status5}), monthlyRevenus ({Status6})",
                     consultationTask.Result.StatusCode,
                     rdvTask.Result.StatusCode,
-                    patientTask.Result.StatusCode);
+                    patientTask.Result.StatusCode,
+                    monthlyConsultationsTask.Result.StatusCode,
+                    monthlyNewPatientsTask.Result.StatusCode,
+                    monthlyRevenusTask.Result.StatusCode);
 
                 throw new Exception("Erreur lors de la récupération des statistiques externes.");
             }
@@ -167,6 +190,9 @@ namespace Clinic.Infrastructure.Repositories
             int nbConsultations = await consultationTask.Result.Content.ReadFromJsonAsync<int>();
             int nbRDV = await rdvTask.Result.Content.ReadFromJsonAsync<int>();
             int nbPatients = await patientTask.Result.Content.ReadFromJsonAsync<int>();
+            var consultationsParMois = await monthlyConsultationsTask.Result.Content.ReadFromJsonAsync<Dictionary<int, int>>();
+            var nouveauxPatientsParMois = await monthlyNewPatientsTask.Result.Content.ReadFromJsonAsync<Dictionary<int, int>>();
+            var revenusParMois = await monthlyRevenusTask.Result.Content.ReadFromJsonAsync<Dictionary<int, decimal>>();
 
             return new StatistiqueClinique
             {
@@ -175,7 +201,10 @@ namespace Clinic.Infrastructure.Repositories
                 NombreMedecins = medecinIds.Count,
                 NombreConsultations = nbConsultations,
                 NombreRendezVous = nbRDV,
-                NombrePatients = nbPatients
+                NombrePatients = nbPatients,
+                NombreConsultationsParMois = consultationsParMois ?? new Dictionary<int, int>(),
+                NombreNouveauxPatientsParMois = nouveauxPatientsParMois ?? new Dictionary<int, int>(),
+                RevenusParMois = revenusParMois ?? new Dictionary<int, decimal>()
             };
         }
 

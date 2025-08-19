@@ -23,5 +23,7 @@ namespace Facturation.Domain.Interfaces
         Task<List<Facture>> GetFacturesParPeriode(DateTime dateDebut, DateTime dateFin);
         Task<decimal> GetRevenusMensuelsAsync(Guid clinicId);
         Task<(decimal currentMonth, decimal previousMonth)> GetRevenusMensuelTrendAsync(Guid clinicId);
+        Task<decimal> GetRevenusParMoisAsync(Guid clinicId, DateTime debutMois, DateTime finMois);
+        Task<BillingStats> GetBillingStatsAsync(Guid? clinicId = null);
     }
 }

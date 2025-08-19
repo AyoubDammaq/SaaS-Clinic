@@ -41,7 +41,7 @@ namespace Facturation.API.Controllers
                 if (!success)
                     return BadRequest(new { errorCode = "PaymentFailed", message = "Paiement échoué : facture introuvable ou déjà payée." });
 
-                return Ok(new { message = "Paiement effectué avec succès." });
+                return Ok(new { success = true, message = "Paiement effectué avec succès." });
             }
             catch (InvalidOperationException ex)
             {

@@ -5,7 +5,7 @@
         Especes,
         CarteBancaire,
         Virement,
-        Chèque,
+        Cheque,
         Mobile
     }  
 }

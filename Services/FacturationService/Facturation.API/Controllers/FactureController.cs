@@ -5,6 +5,7 @@ using Facturation.Application.FactureService.Commands.ExportToPdf;
 using Facturation.Application.FactureService.Commands.UpdateFacture;
 using Facturation.Application.FactureService.Queries.GetAllFactures;
 using Facturation.Application.FactureService.Queries.GetAllFacturesByRangeOfDate;
+using Facturation.Application.FactureService.Queries.GetBillingStats;
 using Facturation.Application.FactureService.Queries.GetFactureByCliniqueId;
 using Facturation.Application.FactureService.Queries.GetFactureByConsultationId;
 using Facturation.Application.FactureService.Queries.GetFactureById;
@@ -16,6 +17,7 @@ using Facturation.Application.FactureService.Queries.GetNombreDeFacturesByStatus
 using Facturation.Application.FactureService.Queries.GetNombreDeFacturesByStatusParClinique;
 using Facturation.Application.FactureService.Queries.GetRevenusMensuels;
 using Facturation.Application.FactureService.Queries.GetRevenusMensuelTrend;
+using Facturation.Application.FactureService.Queries.GetRevenusParMois;
 using Facturation.Application.FactureService.Queries.GetStatistiquesFacturesParPeriode;
 using Facturation.Domain.Entities;
 using Facturation.Domain.Enums;
@@ -338,6 +340,34 @@ namespace Facturation.API.Controllers
             {
                 var trend = await _mediator.Send(new GetRevenusMensuelTrendQuery(clinicId));
                 return Ok(trend);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("revenus-par-mois/{clinicId}")]
+        public async Task<IActionResult> GetRevenusParMois(Guid clinicId)
+        {
+            try
+            {
+                var revenusParMois = await _mediator.Send(new GetRevenusParMoisQuery(clinicId));
+                return Ok(revenusParMois);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("billing-stats/{clinicId}")]
+        public async Task<IActionResult> GetBillingStats(Guid clinicId)
+        {
+            try
+            {
+                var stats = await _mediator.Send(new GetBillingStatsQuery(clinicId));
+                return Ok(stats);
             }
             catch (Exception ex)
             {

@@ -5,6 +5,7 @@ namespace Notif.Domain.Interfaces
 {
     public interface INotificationRepository
     {
+        Task<List<Notification>> GetAllAsync(int skip = 0, int take = 50);
         Task<Notification?> GetByIdAsync(Guid id);
         Task<List<Notification>> GetPendingNotificationsAsync();
         Task<List<Notification>> GetFailedNotificationsForRetryAsync();
