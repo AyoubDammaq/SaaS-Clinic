@@ -126,7 +126,8 @@ export function MedicalRecordView({
 
   // Formater la date avec heure
   const formatDateWithTime = (dateStr: string) => {
-    return format(parseISO(dateStr), "PPP 'à' HH:mm", { locale });
+    const separator = t("at"); // "à" en français, "at" en anglais
+    return format(parseISO(dateStr), `PPP '${separator}' HH:mm`, { locale });
   };
 
   // Formater la date seule (optionnel pour d'autres cas)
@@ -253,8 +254,9 @@ export function MedicalRecordView({
                 {formatDateWithTime(medicalRecord.creationDate)}
               </CardDescription>
             </div>
-            {userRole !== "SuperAdmin" && userRole !== "Patient" && (
-              !isEditing ? (
+            {userRole !== "SuperAdmin" &&
+              userRole !== "Patient" &&
+              (!isEditing ? (
                 <Button onClick={handleEdit} variant="outline">
                   {t("edit_medical_record")}
                 </Button>
@@ -267,8 +269,7 @@ export function MedicalRecordView({
                     {isSubmitting ? t("saving") : t("save_changes")}
                   </Button>
                 </div>
-              )
-            )}
+              ))}
           </div>
         </CardHeader>
         <CardContent>
@@ -300,7 +301,9 @@ export function MedicalRecordView({
                   )}
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium mb-2">{t("blood_type")}</h3>
+                  <h3 className="text-sm font-medium mb-2">
+                    {t("blood_type")}
+                  </h3>
                   {isEditing ? (
                     <Select
                       value={formData.bloodType || ""}
@@ -320,7 +323,9 @@ export function MedicalRecordView({
                         <SelectItem value="AB-">AB-</SelectItem>
                         <SelectItem value="O+">O+</SelectItem>
                         <SelectItem value="O-">O-</SelectItem>
-                        <SelectItem value="Unknown">{t("unknown_blood_type")}</SelectItem>
+                        <SelectItem value="Unknown">
+                          {t("unknown_blood_type")}
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   ) : (
@@ -330,7 +335,9 @@ export function MedicalRecordView({
                   )}
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium mb-2">{t("chronic_diseases")}</h3>
+                  <h3 className="text-sm font-medium mb-2">
+                    {t("chronic_diseases")}
+                  </h3>
                   {isEditing ? (
                     <Textarea
                       value={formData.chronicDiseases || ""}
@@ -352,7 +359,9 @@ export function MedicalRecordView({
             <TabsContent value="history">
               <div className="grid grid-cols-1 gap-6">
                 <div>
-                  <h3 className="text-sm font-medium mb-2">{t("personal_medical_history")}</h3>
+                  <h3 className="text-sm font-medium mb-2">
+                    {t("personal_medical_history")}
+                  </h3>
                   {isEditing ? (
                     <Textarea
                       value={formData.personalHistory || ""}
@@ -364,13 +373,16 @@ export function MedicalRecordView({
                     />
                   ) : (
                     <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                      {medicalRecord.personalHistory || t("no_history_recorded")}
+                      {medicalRecord.personalHistory ||
+                        t("no_history_recorded")}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-medium mb-2">{t("family_medical_history")}</h3>
+                  <h3 className="text-sm font-medium mb-2">
+                    {t("family_medical_history")}
+                  </h3>
                   {isEditing ? (
                     <Textarea
                       value={formData.familyHistory || ""}
@@ -382,7 +394,8 @@ export function MedicalRecordView({
                     />
                   ) : (
                     <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                      {medicalRecord.familyHistory || t("no_family_history_recorded")}
+                      {medicalRecord.familyHistory ||
+                        t("no_family_history_recorded")}
                     </p>
                   )}
                 </div>
@@ -391,7 +404,9 @@ export function MedicalRecordView({
 
             <TabsContent value="medications">
               <div>
-                <h3 className="text-sm font-medium mb-2">{t("current_medications")}</h3>
+                <h3 className="text-sm font-medium mb-2">
+                  {t("current_medications")}
+                </h3>
                 {isEditing ? (
                   <Textarea
                     value={formData.currentMedications || ""}
@@ -403,7 +418,8 @@ export function MedicalRecordView({
                   />
                 ) : (
                   <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                    {medicalRecord.currentMedications || t("no_medications_recorded")}
+                    {medicalRecord.currentMedications ||
+                      t("no_medications_recorded")}
                   </p>
                 )}
               </div>
@@ -412,7 +428,9 @@ export function MedicalRecordView({
             <TabsContent value="documents">
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-sm font-medium">{t("medical_documents")}</h3>
+                  <h3 className="text-sm font-medium">
+                    {t("medical_documents")}
+                  </h3>
                   {userRole !== "SuperAdmin" && userRole !== "Patient" && (
                     <Button
                       variant="outline"
@@ -441,14 +459,22 @@ export function MedicalRecordView({
                         }
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder={t("select_document_type")} />
+                          <SelectValue
+                            placeholder={t("select_document_type")}
+                          />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="PDF">{t("pdf")}</SelectItem>
                           <SelectItem value="Image">{t("image")}</SelectItem>
-                          <SelectItem value="Lab Report">{t("lab_report")}</SelectItem>
-                          <SelectItem value="Prescription">{t("prescription")}</SelectItem>
-                          <SelectItem value="Other">{t("other_document")}</SelectItem>
+                          <SelectItem value="Lab Report">
+                            {t("lab_report")}
+                          </SelectItem>
+                          <SelectItem value="Prescription">
+                            {t("prescription")}
+                          </SelectItem>
+                          <SelectItem value="Other">
+                            {t("other_document")}
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                       <Input
@@ -487,10 +513,18 @@ export function MedicalRecordView({
                     <table className="w-full">
                       <thead>
                         <tr className="bg-muted/50">
-                          <th className="text-left p-2 text-sm font-medium">{t("name")}</th>
-                          <th className="text-left p-2 text-sm font-medium">{t("type")}</th>
-                          <th className="text-left p-2 text-sm font-medium">{t("upload_date")}</th>
-                          <th className="text-right p-2 text-sm font-medium">{t("actions")}</th>
+                          <th className="text-left p-2 text-sm font-medium">
+                            {t("name")}
+                          </th>
+                          <th className="text-left p-2 text-sm font-medium">
+                            {t("type")}
+                          </th>
+                          <th className="text-left p-2 text-sm font-medium">
+                            {t("upload_date")}
+                          </th>
+                          <th className="text-right p-2 text-sm font-medium">
+                            {t("actions")}
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -505,12 +539,20 @@ export function MedicalRecordView({
                                 {doc.nom}
                               </div>
                             </td>
-                            <td className="p-2 text-sm">{t(doc.type.toLowerCase())}</td>
-                            <td className="p-2 text-sm">{formatDateWithTime(doc.dateCreation)}</td>
+                            <td className="p-2 text-sm">
+                              {t(doc.type.toLowerCase())}
+                            </td>
+                            <td className="p-2 text-sm">
+                              {formatDateWithTime(doc.dateCreation)}
+                            </td>
                             <td className="p-2 text-right">
                               <div className="flex justify-end gap-1">
                                 {doc.url && (
-                                  <Button variant="ghost" size="sm" aria-label={t("view_document")}>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    aria-label={t("view_document")}
+                                  >
                                     <Eye size={16} />
                                   </Button>
                                 )}

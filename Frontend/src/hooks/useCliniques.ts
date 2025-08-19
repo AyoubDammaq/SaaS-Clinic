@@ -79,7 +79,6 @@ export function useCliniques(): UseCliniquesState {
     setIsLoading(true);
     try {
       const data = await cliniqueService.getAllCliniques();
-      console.log("Cliniques fetched:", data);
       setCliniques(data);
       setFilteredCliniques(data);
     } catch (error) {

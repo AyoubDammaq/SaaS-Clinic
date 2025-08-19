@@ -66,7 +66,6 @@ export const notificationService = {
       return await api.get<NotificationSummaryDto[]>(url);
     } catch (error) {
       console.error("Échec lors de la récupération des notifications:", error);
-      toast.error("Échec lors de la récupération des notifications");
       throw error;
     }
   },

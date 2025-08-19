@@ -18,7 +18,7 @@ export interface ComparaisonCliniqueDTO {
 
 export interface ConsultationStatsDto {
   totalConsultations: number;
-  consultationsParJour: Record<string, number>; // or { [key: string]: number }
+  consultationsParJour: Record<string, number>; 
 }
 
 export interface DashboardStatsDTO {
@@ -40,6 +40,30 @@ export interface DashboardStatsDTO {
   nouveauxMedecins: number;
   weeklyAppointmentStatsByDoctor?: AppointmentDayStat[];
   weeklyAppointmentStatsByClinic?: AppointmentDayStat[];
+
+  nombreDeConsultationsParPatient: number;
+  recentPaiementByPatient?: RecentPaiement;
+  nouveauxPatientsParMedecin: number;
+  nouveauxPatientsParClinic: number;
+  nombreDeConsultationsMensuellesParDoctor: number;
+  nombreDeConsultationsMensuellesParClinic: number;
+
+  trendDeNouveauxPatientsMensuelsParMedecin?: Trend;
+  trendDeNouveauxPatientsMensuelsParClinic?: Trend;
+  trendDeConsultationsMensuellesParDoctor?: Trend;
+  trendDeConsultationsMensuellesParClinic?: Trend;
+
+  nombreDeRDVParMedecinAujourdHui: number;
+  nombreDeRDVParCliniqueAujourdHui: number;
+  nombreDePendingAppointmentsByDoctor: number;
+  nombreDePendingAppointmentsByClinic: number;
+
+  revenuesMensuelsByClinic: number;
+  revenuesMensuelsByClinicTrend?: RevenusMensuelTrendDto;
+
+  trendDeNouvellesCliniques?: Trend;
+  trendDeNouveauxMedecins?: Trend;
+  trendDeNouveauxPatients?: Trend;
 }
 
 export interface DoctorStatsDTO {
@@ -58,15 +82,6 @@ export interface RendezVousStatDTO {
   confirmes: number;
   annules: number;
   enAttente: number;
-}
-
-export interface StatistiqueCliniqueDTO {
-  cliniqueId: string;
-  nom: string;
-  nombreMedecins: number;
-  nombreRendezVous: number;
-  nombreConsultations: number;
-  nombrePatients: number;
 }
 
 export interface StatistiqueDTO {
@@ -89,6 +104,24 @@ export interface AppointmentDayStat {
   scheduled: number;
   pending: number;
   cancelled: number;
+}
+
+// Types complémentaires
+export interface RecentPaiement {
+  montant: number;
+  datePaiement: string; // ISO string
+}
+
+export interface Trend {
+  value: number;
+  isPositive: boolean;
+}
+
+export interface RevenusMensuelTrendDto {
+  current: number;
+  previous: number;
+  percentageChange: number;
+  isPositive: boolean;
 }
 
 export interface RecentActivity {

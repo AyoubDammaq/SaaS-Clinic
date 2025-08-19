@@ -2,14 +2,17 @@ import { api } from "@/utils/apiClient";
 import { API_ENDPOINTS } from "@/config/api";
 import {
   AddTarificationRequest,
+  BillingStatsDto,
   CreateFactureRequest,
   Facture,
   FactureStatsDTO,
   PayInvoiceRequest,
+  PayInvoiceResponse,
   TarifConsultation,
   UpdateFactureRequest,
   UpdateTarificationRequest,
 } from "@/types/billing";
+import { AxiosResponse } from "axios";
 
 export const billingService = {
   // Facture endpoints (FactureController)
@@ -112,13 +115,17 @@ export const billingService = {
     return api.get(API_ENDPOINTS.BILLING.FACTURE.STATS_BY_PERIOD(start, end));
   },
 
+  async getBillingStats(clinicId: string): Promise<BillingStatsDto> {
+    return api.get(API_ENDPOINTS.BILLING.FACTURE.BILLING_STATS(clinicId));
+  },
+
   // Paiement endpoints (PaiementController)
   async payerFacture(
     factureId: string,
     data: PayInvoiceRequest & { montant: number }
   ): Promise<boolean> {
     try {
-      const response = await api.post(
+      const response: PayInvoiceResponse = await api.post(
         API_ENDPOINTS.BILLING.PAIEMENT.PAYER(factureId),
         {
           MoyenPaiement: data.MoyenPaiement,
@@ -129,9 +136,16 @@ export const billingService = {
               : undefined,
         }
       );
-      return response === "Paiement effectué avec succès.";
+
+      return response.success === true;
     } catch (error) {
-      throw new Error(error.response?.data || "Erreur lors du paiement");
+      if (error && typeof error === "object" && "response" in error) {
+        const err = error as { response?: { data?: { message?: string } } };
+        throw new Error(
+          err.response?.data?.message || "Erreur lors du paiement"
+        );
+      }
+      throw new Error("Erreur inconnue lors du paiement");
     }
   },
 

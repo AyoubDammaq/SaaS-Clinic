@@ -1,12 +1,13 @@
-
-import { useState, useEffect, useCallback } from 'react';
-import { toast } from 'sonner';
+import { useState, useMemo } from "react";
+import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
-import { patientService } from '@/services/patientService';
-import { Patient } from '@/types/patient';
+import { patientService } from "@/services/patientService";
+import { Patient } from "@/types/patient";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface UsePatientState {
   patients: Patient[];
+  patient: Patient;
   filteredPatients: Patient[];
   isLoading: boolean;
   isSubmitting: boolean;
@@ -18,165 +19,181 @@ interface UsePatientState {
   };
   searchTerm: string;
   setSearchTerm: (term: string) => void;
-  handleAddPatient: (data: Omit<Patient, 'id' | 'dateCreation'>) => Promise<Patient>;
-  handleUpdatePatient: (id: string, data: Partial<Omit<Patient, 'id' | 'dateCreation'>>) => Promise<void>;
+  handleAddPatient: (
+    data: Omit<Patient, "id" | "dateCreation">
+  ) => Promise<Patient>;
+  handleUpdatePatient: (
+    id: string,
+    data: Partial<Omit<Patient, "id" | "dateCreation">>
+  ) => Promise<void>;
   handleDeletePatient: (id: string) => Promise<void>;
-  refetchPatients: () => Promise<void>;
-  fetchPatients: () => Promise<void>;
+  refetchPatients: () => void;
+  fetchPatients: () => void;
+  fetchPatientById: (id: string) => Promise<Patient | null>;
   linkUserToPatient: (userId: string, patientId: string) => Promise<void>;
 }
 
 export function usePatients(): UsePatientState {
   const { user } = useAuth();
-  const [patients, setPatients] = useState<Patient[]>([]);
-  const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [permissions, setPermissions] = useState({
-    canCreate: false,
-    canEdit: false,
-    canDelete: false,
-    canView: false,
+  const queryClient = useQueryClient();
+
+  const [patient, setPatient] = useState<Patient>();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Définir les permissions en fonction du rôle
+  const permissions = useMemo(() => {
+    if (!user) {
+      return {
+        canCreate: false,
+        canEdit: false,
+        canDelete: false,
+        canView: false,
+      };
+    }
+    return {
+      canCreate: user.role === "ClinicAdmin" || user.role === "Doctor",
+      canEdit: user.role === "ClinicAdmin" || user.role === "Doctor",
+      canDelete: user.role === "ClinicAdmin",
+      canView:
+        user.role === "SuperAdmin" ||
+        user.role === "ClinicAdmin" ||
+        user.role === "Doctor" ||
+        user.role === "Patient",
+    };
+  }, [user]);
+
+  // Fetch des patients avec React Query
+  const {
+    data: patients = [],
+    isLoading,
+    refetch: refetchPatients,
+  } = useQuery<Patient[]>({
+    queryKey: ["patients", user?.id],
+    queryFn: async () => {
+      const data = await patientService.getPatients();
+      if (!user) return data;
+
+      // Appliquer les restrictions
+      if (user.role === "Patient" && user.patientId) {
+        return data.filter((p) => p.id === user.patientId);
+      } else if (user.role === "Doctor" || user.role === "ClinicAdmin") {
+        // Si tu veux filtrer par clinique
+        // return data.filter((p) => p.clinicId === user.cliniqueId);
+        return data;
+      }
+      return data; // SuperAdmin voit tout
+    },
+    enabled: !!user, // seulement si l'utilisateur est défini
   });
 
-  // Vérifier les permissions en fonction du rôle de l'utilisateur
-  useEffect(() => {
-    if (user) {
-      const canCreate = user.role === 'ClinicAdmin' || user.role === 'Doctor';
-      const canEdit = user.role === 'ClinicAdmin' || user.role === 'Doctor';
-      const canDelete = user.role === 'ClinicAdmin';
-      const canView = user.role === 'SuperAdmin' || user.role === 'ClinicAdmin' || user.role === 'Doctor' || user.role === 'Patient';
-      
-      setPermissions({ canCreate, canEdit, canDelete, canView });
-    }
-  }, [user]);
-
-  // Récupérer la liste des patients
-  const fetchPatients = useCallback(async () => {
-    if (!user) return;
-    
-    setIsLoading(true);
-    try {
-      // Obtenir tous les patients
-      const data = await patientService.getPatients();
-      
-      // Filtrer les patients en fonction du rôle de l'utilisateur
-      let filteredData = [...data];
-      
-      if (user.role === 'Patient') {
-        // Un patient ne peut voir que son propre dossier
-        filteredData = data.filter(p => p.email === user.email);
-      } else if (user.role === 'Doctor' || user.role === 'ClinicAdmin') {
-        // Un médecin ou admin de clinique ne peut voir que les patients de sa clinique
-        // if (user.cliniqueId) {
-        //   filteredData = data.filter(p => p.clinicId === user.cliniqueId);
-        // }
-      }
-      // Un SuperAdmin peut voir tous les patients
-      
-      setPatients(filteredData);
-      setFilteredPatients(filteredData);
-    } catch (error) {
-      console.error("Erreur lors de la récupération des patients:", error);
-      toast.error("Échec du chargement des patients");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [user]);
-  
-  // Filtrer les patients en fonction du terme de recherche
-  useEffect(() => {
-    if (patients.length === 0) return;
-    
-    const results = patients.filter(patient => 
-      `${patient.prenom} ${patient.nom}`.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      patient.email.toLowerCase().includes(searchTerm.toLowerCase())
+  // Filtrage par recherche
+  const filteredPatients = useMemo(() => {
+    if (!patients) return [];
+    if (!searchTerm) return patients;
+    return patients.filter(
+      (patient) =>
+        `${patient.prenom} ${patient.nom}`
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        patient.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setFilteredPatients(results);
-  }, [searchTerm, patients]);
+  }, [patients, searchTerm]);
 
-  // Chargement initial des données
-  useEffect(() => {
-    fetchPatients();
-  }, [fetchPatients]);
-
-  // Ajouter un nouveau patient
-  const handleAddPatient = async (data: Omit<Patient, "id" | "dateCreation">): Promise<Patient>  => {
-    setIsSubmitting(true);
+  const fetchPatientById = async (id: string): Promise<Patient | null> => {
     try {
-      const newPatient = await patientService.createPatient(data);
-      setPatients(prev => [...prev, newPatient]);
-      toast.success("Patient ajouté avec succès");
-      return newPatient;
+      const fetchedPatient = await patientService.getPatientById(id);
+      setPatient(fetchedPatient); // Assuming setDoctor updates some state
+      return fetchedPatient;
     } catch (error) {
-      console.error("Erreur lors de l'ajout du patient:", error);
-      toast.error("Échec de l'ajout du patient");
-      throw error;
-    } finally {
-      setIsSubmitting(false);
+      console.error("Error fetching patient:", error);
+      return null; // Return null instead of throwing to handle errors gracefully
     }
   };
 
-  // Mettre à jour un patient existant
-  const handleUpdatePatient = async (id: string, data: Partial<Omit<Patient, "id" | "dateCreation">>) => {
-    setIsSubmitting(true);
-    try {
-      await patientService.updatePatient(id, data);
-      setPatients(prev => 
-        prev.map(patient => patient.id === id ? { ...patient, ...data } : patient)
+  // --- Mutations ---
+  const addMutation = useMutation({
+    mutationFn: (data: Omit<Patient, "id" | "dateCreation">) =>
+      patientService.createPatient(data),
+    onSuccess: (newPatient) => {
+      queryClient.setQueryData<Patient[]>(
+        ["patients", user?.id],
+        (old = []) => [...old, newPatient]
+      );
+      toast.success("Patient ajouté avec succès");
+    },
+    onError: () => {
+      toast.error("Échec de l'ajout du patient");
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({
+      id,
+      data,
+    }: {
+      id: string;
+      data: Partial<Omit<Patient, "id" | "dateCreation">>;
+    }) => patientService.updatePatient(id, data),
+    onSuccess: (_, { id, data }) => {
+      queryClient.setQueryData<Patient[]>(["patients", user?.id], (old = []) =>
+        old.map((p) => (p.id === id ? { ...p, ...data } : p))
       );
       toast.success("Patient mis à jour avec succès");
-    } catch (error) {
-      console.error("Erreur lors de la mise à jour du patient:", error);
+    },
+    onError: () => {
       toast.error("Échec de la mise à jour du patient");
-      throw error;
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    },
+  });
 
-  // Supprimer un patient
-  const handleDeletePatient = async (id: string) => {
-    setIsLoading(true);
-    try {
-      await patientService.deletePatient(id);
-      setPatients(prev => prev.filter(patient => patient.id !== id));
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => patientService.deletePatient(id),
+    onSuccess: (_, id) => {
+      queryClient.setQueryData<Patient[]>(["patients", user?.id], (old = []) =>
+        old.filter((p) => p.id !== id)
+      );
       toast.success("Patient supprimé avec succès");
-    } catch (error) {
-      console.error("Erreur lors de la suppression du patient:", error);
+    },
+    onError: () => {
       toast.error("Échec de la suppression du patient");
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+  });
 
-  // Lier un utilisateur à un patient
-  const linkUserToPatient = async (userId: string, patientId: string) => {
-    try {
-      await patientService.linkUserToPatient({ userId, patientId });
+  const linkMutation = useMutation({
+    mutationFn: ({
+      userId,
+      patientId,
+    }: {
+      userId: string;
+      patientId: string;
+    }) => patientService.linkUserToPatient({ userId, patientId }),
+    onSuccess: () => {
       toast.success("Utilisateur lié au patient avec succès");
-    } catch (error) {
-      console.error("Erreur lors de la liaison de l'utilisateur au patient:", error);
+    },
+    onError: () => {
       toast.error("Échec de la liaison de l'utilisateur au patient");
-      throw error;
-    }
-  };
+    },
+  });
 
   return {
     patients,
+    patient,
     filteredPatients,
     isLoading,
-    isSubmitting,
+    isSubmitting:
+      addMutation.isPending ||
+      updateMutation.isPending ||
+      deleteMutation.isPending ||
+      linkMutation.isPending,
     permissions,
     searchTerm,
     setSearchTerm,
-    handleAddPatient,
-    handleUpdatePatient,
-    handleDeletePatient,
-    refetchPatients: fetchPatients,
-    fetchPatients,
-    linkUserToPatient,
+    handleAddPatient: addMutation.mutateAsync,
+    handleUpdatePatient: (id, data) => updateMutation.mutateAsync({ id, data }),
+    handleDeletePatient: deleteMutation.mutateAsync,
+    refetchPatients,
+    fetchPatients: refetchPatients, // alias
+    fetchPatientById,
+    linkUserToPatient: (userId, patientId) =>
+      linkMutation.mutateAsync({ userId, patientId }),
   };
 }

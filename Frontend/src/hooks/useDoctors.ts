@@ -6,6 +6,7 @@ import { Doctor, DoctorDto } from "@/types/doctor";
 
 interface UseDoctorsState {
   doctors: Doctor[];
+  doctor: Doctor;
   filteredDoctors: Doctor[];
   isLoading: boolean;
   isSubmitting: boolean;
@@ -27,6 +28,7 @@ interface UseDoctorsState {
   unassignDoctorFromClinic: (medecinId: string) => Promise<void>;
   refetchDoctors: () => Promise<void>;
   fetchDoctors: () => Promise<void>;
+  fetchDoctorById: (id: string) => Promise<Doctor | null>;
   setDoctors: React.Dispatch<React.SetStateAction<Doctor[]>>;
   linkUserToDoctor: (userId: string, doctorId: string) => Promise<void>;
 }
@@ -35,6 +37,7 @@ export function useDoctors(): UseDoctorsState {
   const { user } = useAuth();
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [filteredDoctors, setFilteredDoctors] = useState<Doctor[]>([]);
+  const [doctor, setDoctor] = useState<Doctor>();
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -154,6 +157,17 @@ export function useDoctors(): UseDoctorsState {
     }
   };
 
+  const fetchDoctorById = async (id: string): Promise<Doctor | null> => {
+    try {
+      const fetchedDoctor = await doctorService.getDoctorById(id);
+      setDoctor(fetchedDoctor); // Assuming setDoctor updates some state
+      return fetchedDoctor;
+    } catch (error) {
+      console.error("Error fetching doctor:", error);
+      return null; // Return null instead of throwing to handle errors gracefully
+    }
+  };
+
   const refetchDoctors = async () => {
     try {
       const data = await doctorService.getDoctors();
@@ -244,6 +258,7 @@ export function useDoctors(): UseDoctorsState {
 
   return {
     doctors,
+    doctor,
     filteredDoctors,
     isLoading,
     isSubmitting,
@@ -257,6 +272,7 @@ export function useDoctors(): UseDoctorsState {
     unassignDoctorFromClinic,
     refetchDoctors: fetchDoctors,
     fetchDoctors,
+    fetchDoctorById,
     setDoctors,
     linkUserToDoctor,
   };

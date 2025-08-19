@@ -245,7 +245,6 @@ export function InvoiceFilters({
                   <SelectContent>
                     <SelectItem value="all">{t('allStatuses')}</SelectItem>
                     <SelectItem value={FactureStatus.PAYEE}>{t('paid')}</SelectItem>
-                    <SelectItem value={FactureStatus.PARTIELLEMENT_PAYEE}>{t('partiallyPaid')}</SelectItem>
                     <SelectItem value={FactureStatus.IMPAYEE}>{t('unpaid')}</SelectItem>
                     <SelectItem value={FactureStatus.ANNULEE}>{t('cancelled')}</SelectItem>
                   </SelectContent>

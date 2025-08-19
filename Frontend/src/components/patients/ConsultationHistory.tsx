@@ -12,6 +12,7 @@ import { debounce } from "lodash";
 
 interface ConsultationHistoryProps {
   patientId: string;
+  patientName: string;
   fallbackDoctorName: string;
   onViewConsultationDetails?: (consultation: Consultation) => void;
 }

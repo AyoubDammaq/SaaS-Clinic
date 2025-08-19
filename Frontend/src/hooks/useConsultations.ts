@@ -47,8 +47,6 @@ export function useConsultations(): UseConsultationsState {
     canView: false,
   });
 
-  console.log("user changed", user)
-
   // 🔐 Définir les permissions utilisateur
   useEffect(() => {
     if (user) {

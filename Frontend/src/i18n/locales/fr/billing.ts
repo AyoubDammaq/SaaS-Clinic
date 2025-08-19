@@ -69,6 +69,7 @@ export default {
   paymentError: "Erreur lors du traitement du paiement. Veuillez réessayer.",
   pay: "Payer",
   processing: "Traitement...",
+  paymentSuccess: "Paiement effectué avec succès",
 
   //Invoice Details
   invoice: "Facture",
@@ -114,4 +115,9 @@ export default {
   totalInvoices: "factures total",
   good: "Bon",
   attention: "Attention",
+  totalReceived: "Total encaissé",
+  awaitingPayment: "En attente de paiement",
+  pastDue: "En retard de paiement",
+  paymentCompletion: "Achèvement des paiements",
+  failedToLoadStats: "Échec du chargement des statistiques de facturation",
 };

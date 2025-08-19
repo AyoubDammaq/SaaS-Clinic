@@ -212,6 +212,8 @@ export const API_ENDPOINTS = {
         `${GATEWAY_BASE}/billing/revenus-mensuels/${cliniqueId}`,
       REVENU_MENSUEL_TREND: (cliniqueId: string) =>
         `${GATEWAY_BASE}/billing/revenu-mensuel-trend/${cliniqueId}`,
+      BILLING_STATS: (clinicId: string) =>
+        `${GATEWAY_BASE}/billing/billing-stats/${clinicId}`,
     },
 
     // Paiement endpoints

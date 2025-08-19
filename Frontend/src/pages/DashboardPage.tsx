@@ -36,7 +36,7 @@ import {
 import { AppointmentStatusEnum, RendezVous } from "@/types/rendezvous";
 import { Patient } from "@/types/patient";
 import { Doctor } from "@/types/doctor";
-import { format, isValid } from "date-fns";
+import { format, isValid, subMonths } from "date-fns";
 import { toast } from "sonner";
 import {
   AppointmentDayStat,
@@ -172,36 +172,6 @@ function fillPatientData(
   });
 }
 
-// Générer les données pour le graphique des rendez-vous (inchangée)
-const generateAppointmentData = (stats: StatistiqueDTO[]) => {
-  const days = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
-  const currentWeekStart = new Date();
-  currentWeekStart.setDate(
-    currentWeekStart.getDate() - currentWeekStart.getDay()
-  );
-
-  return days.map((day, index) => {
-    const dayDate = new Date(currentWeekStart);
-    dayDate.setDate(dayDate.getDate() + index);
-    const dateStr = format(dayDate, "yyyy-MM-dd");
-
-    const statsForDay = stats.filter((s) => s.cle === dateStr);
-
-    return {
-      name: day,
-      scheduled: statsForDay
-        .filter((s) => s.cle === "SCHEDULED")
-        .reduce((acc, cur) => acc + cur.nombre, 0),
-      pending: statsForDay
-        .filter((s) => s.cle === "PENDING")
-        .reduce((acc, cur) => acc + cur.nombre, 0),
-      cancelled: statsForDay
-        .filter((s) => s.cle === "CANCELLED")
-        .reduce((acc, cur) => acc + cur.nombre, 0),
-    };
-  });
-};
-
 // Générer les activités récentes (inchangée)
 const generateRecentActivities = (
   appointments: RendezVous[],
@@ -247,37 +217,6 @@ const generateRecentActivities = (
   });
 };
 
-const normalizeWeeklyStats = (stats: AppointmentDayStat[]) => {
-  const daysOfWeek = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-
-  if (!Array.isArray(stats)) {
-    return daysOfWeek.map((day) => ({
-      jour: day,
-      scheduled: 0,
-      pending: 0,
-      cancelled: 0,
-    }));
-  }
-
-  return daysOfWeek.map((day) => {
-    const stat = stats.find((s) => s.jour === day);
-    return {
-      jour: day,
-      scheduled: stat?.scheduled || 0,
-      pending: stat?.pending || 0,
-      cancelled: stat?.cancelled || 0,
-    };
-  });
-};
-
 function DashboardPage() {
   const { user } = useAuth();
   const { t } = useTranslation("dashboard");
@@ -286,179 +225,38 @@ function DashboardPage() {
   const { patients } = usePatients();
   const {
     dashboardStats,
-    newPatientsByDoctor,
-    newPatientsByClinic,
-    newPatientsTrendByClinic,
-    newPatientsTrendByDoctor,
-    consultationsCurrentMonthByDoctor,
-    consultationsCurrentMonthByClinic,
-    consultationTrendByDoctor,
-    consultationTrendByClinic,
-    rendezvousCountByDoctorToday,
-    rendezvousCountByClinicToday,
-    pendingAppointmentsByDoctor,
-    pendingAppointmentsByClinic,
-    revenusMensuel,
-    revenusMensuelTrend,
     loading: statsLoading,
     error: statsError,
     fetchDashboardStats,
-    fetchNewPatientsCountByDoctor,
-    fetchNewPatientsCountByClinic,
-    fetchNewPatientsTrendByClinic,
-    fetchNewPatientsTrendByDoctor,
-    fetchConsultationsCountCurrentMonthByDoctor,
-    fetchConsultationsCountCurrentMonthByClinic,
-    fetchConsultationsTrendCurrentMonthByDoctor,
-    fetchConsultationsTrendCurrentMonthByClinic,
-    fetchRendezvousCountByDoctorCurrentDay,
-    fetchRendezvousCountByClinicCurrentDay,
-    calculterNombreConsultationsByPatient,
-    fetchRecentPaymentsByPatient,
-    countPendingAppointmentsByDoctor,
-    countPendingAppointmentsByClinic,
-    getRevenuMensuel,
-    getRevenuMensuelTrend,
-    getNewClinicsTrend,
-    getNewPatientsTrend,
-    getNewDoctorsTrend,
-    getRevenueTrend,
   } = useReportings();
 
-  const [clinicTrend, setClinicTrend] = useState<{
-    value: number;
-    isPositive: boolean;
-  } | null>(null);
-  const [patientTrend, setPatientTrend] = useState<{
-    value: number;
-    isPositive: boolean;
-  } | null>(null);
-  const [doctorTrend, setDoctorTrend] = useState<{
-    value: number;
-    isPositive: boolean;
-  } | null>(null);
-  const [revenueTrend, setRevenueTrend] = useState<{
-    value: number;
-    isPositive: boolean;
-  } | null>(null);
-
-  const [recentPayments, setRecentPayments] =
-    useState<RecentPaiementDto | null>(null);
-  const [nombreConsultations, setNombreConsultations] = useState<number | null>(
-    null
+  // Dates primitives pour useEffect
+  const startDate = useMemo(
+    () => format(subMonths(new Date(), 1), "yyyy-MM-dd"),
+    []
   );
-
-  const [dateRange, setDateRange] = useState({
-    startDate: format(
-      new Date(new Date().setMonth(new Date().getMonth() - 1)),
-      "yyyy-MM-dd"
-    ),
-    endDate: format(new Date(), "yyyy-MM-dd"),
-  });
-
-  useEffect(() => {
-    if (user?.role === "Patient" && user.patientId) {
-      const { startDate, endDate } = dateRange;
-      calculterNombreConsultationsByPatient(user.patientId, startDate, endDate)
-        .then((count) => setNombreConsultations(count))
-        .catch((error) => {
-          toast.error(
-            t("error_consultations") ||
-              "Erreur lors du chargement du nombre de consultations"
-          );
-          setNombreConsultations(0);
-        });
-      fetchRecentPaymentsByPatient(user.patientId)
-        .then((payment) => {
-          console.log("Recent Payment:", payment);
-          setRecentPayments(payment || null);
-        })
-        .catch((error) => {
-          console.error("Error fetching recent payments:", error);
-          setRecentPayments(null);
-        });
-    }
-  }, [
-    user,
-    dateRange,
-    calculterNombreConsultationsByPatient,
-    fetchRecentPaymentsByPatient,
-    t,
-  ]);
+  const endDate = useMemo(() => format(new Date(), "yyyy-MM-dd"), []);
 
   useEffect(() => {
     if (user) {
-      const { startDate, endDate } = dateRange;
       const patientId = user.role === "Patient" ? user.patientId : undefined;
       const medecinId = user.role === "Doctor" ? user.medecinId : undefined;
       const cliniqueId =
         user.role === "ClinicAdmin" ? user.cliniqueId : undefined;
 
       fetchDashboardStats(startDate, endDate, patientId, medecinId, cliniqueId)
-        .then((data) => {
-          if (user.role === "Doctor" && medecinId) {
-            fetchNewPatientsCountByDoctor(medecinId, startDate, endDate);
-            fetchNewPatientsTrendByDoctor(medecinId, startDate, endDate);
-            fetchConsultationsCountCurrentMonthByDoctor(medecinId);
-            fetchConsultationsTrendCurrentMonthByDoctor(medecinId);
-            fetchRendezvousCountByDoctorCurrentDay(medecinId);
-            countPendingAppointmentsByDoctor(medecinId);
-          }
-
-          if (user.role === "ClinicAdmin" && user.cliniqueId) {
-            fetchNewPatientsCountByClinic(user.cliniqueId, startDate, endDate);
-            fetchConsultationsCountCurrentMonthByClinic(user.cliniqueId);
-            fetchConsultationsTrendCurrentMonthByClinic(user.cliniqueId);
-            fetchRendezvousCountByClinicCurrentDay(user.cliniqueId);
-            fetchNewPatientsTrendByClinic(user.cliniqueId, startDate, endDate);
-            countPendingAppointmentsByClinic(user.cliniqueId);
-            getRevenuMensuel(user.cliniqueId);
-            getRevenuMensuelTrend(user.cliniqueId);
-          }
-
-          if (user.role === "SuperAdmin") {
-            getNewClinicsTrend(startDate, endDate).then(setClinicTrend);
-            getNewPatientsTrend(startDate, endDate).then(setPatientTrend);
-            getNewDoctorsTrend(startDate, endDate).then(setDoctorTrend);
-            getRevenueTrend(startDate, endDate).then(setRevenueTrend);
-          }
-        })
+        .then((data) => {})
         .catch((error) => {
           toast.error(
             t("error_stats") || "Erreur lors du chargement des statistiques"
           );
         });
     }
-  }, [
-    user,
-    dateRange,
-    fetchDashboardStats,
-    fetchNewPatientsCountByDoctor,
-    fetchNewPatientsCountByClinic,
-    fetchNewPatientsTrendByClinic,
-    fetchNewPatientsTrendByDoctor,
-    fetchConsultationsCountCurrentMonthByDoctor,
-    fetchConsultationsCountCurrentMonthByClinic,
-    fetchConsultationsTrendCurrentMonthByDoctor,
-    fetchConsultationsTrendCurrentMonthByClinic,
-    fetchRendezvousCountByDoctorCurrentDay,
-    fetchRendezvousCountByClinicCurrentDay,
-    calculterNombreConsultationsByPatient,
-    fetchRecentPaymentsByPatient,
-    countPendingAppointmentsByDoctor,
-    countPendingAppointmentsByClinic,
-    getRevenuMensuel,
-    getRevenuMensuelTrend,
-    getNewClinicsTrend,
-    getNewPatientsTrend,
-    getNewDoctorsTrend,
-    getRevenueTrend,
-    t,
-  ]);
+  }, [user, startDate, endDate, fetchDashboardStats, t]);
 
-  useEffect(() => {
-    setSearchTerm("");
-  }, [setSearchTerm]);
+  // useEffect(() => {
+  //   setSearchTerm("");
+  // }, [setSearchTerm]);
 
   const roleFilteredAppointments = useMemo(() => {
     if (!user) return [];
@@ -496,22 +294,6 @@ function DashboardPage() {
     [dashboardStats]
   );
 
-  const appointmentDataForDoctor = useMemo(
-    () =>
-      normalizeWeeklyStats(
-        dashboardStats?.weeklyAppointmentStatsByDoctor || []
-      ),
-    [dashboardStats]
-  );
-
-  const appointmentDataForClinic = useMemo(
-    () =>
-      normalizeWeeklyStats(
-        dashboardStats?.weeklyAppointmentStatsByClinic || []
-      ),
-    [dashboardStats]
-  );
-
   const recentActivities = useMemo(
     () =>
       generateRecentActivities(roleFilteredAppointments, patients, doctors, t),
@@ -529,6 +311,15 @@ function DashboardPage() {
     };
   }, [dashboardStats]);
 
+  const safeRevenusTrend = useMemo(() => ({
+    current: dashboardStats?.revenuesMensuelsByClinic ?? 0,
+    previous: dashboardStats?.revenuesMensuelsByClinicTrend?.previous ?? 0,
+    percentageChange:
+      dashboardStats?.revenuesMensuelsByClinicTrend?.percentageChange ?? 0,
+    isPositive:
+      dashboardStats?.revenuesMensuelsByClinicTrend?.isPositive ?? true,
+  }), [dashboardStats]);
+
   const dashboardContent = useMemo(() => {
     if (!user) return null;
     switch (user.role) {
@@ -539,54 +330,78 @@ function DashboardPage() {
             dashboardStats={dashboardStats}
             doctorsBySpecialtyChart={doctorsBySpecialtyChart}
             newPatientsCount={dashboardStats?.totalPatients || 0}
-            clinicTrend={clinicTrend}
-            patientTrend={patientTrend}
-            doctorTrend={doctorTrend}
-            revenueTrend={revenueTrend}
+            clinicTrend={dashboardStats?.trendDeNouvellesCliniques}
+            patientTrend={dashboardStats?.trendDeNouveauxPatients}
+            doctorTrend={dashboardStats?.trendDeNouveauxMedecins}
+            revenueTrend={
+              dashboardStats?.revenuesMensuelsByClinicTrend
+                ? {
+                    value:
+                      dashboardStats.revenuesMensuelsByClinicTrend
+                        .percentageChange,
+                    isPositive:
+                      dashboardStats.revenuesMensuelsByClinicTrend.isPositive,
+                  }
+                : null
+            }
           />
         );
       case "ClinicAdmin":
         return (
           <ClinicAdminDashboard
             appointments={sortedAppointments}
-            appointmentData={appointmentDataForClinic}
+            appointmentData={dashboardStats?.weeklyAppointmentStatsByClinic || []}
             recentActivities={recentActivities}
-            dashboardStats={rendezvousCountByClinicToday}
-            consultationCount={consultationsCurrentMonthByClinic}
-            newPatientsByClinic={newPatientsByClinic}
-            newPatientsTrend={newPatientsTrendByClinic}
-            consultationsTrend={
-              consultationTrendByClinic || { value: 0, isPositive: true }
+            appointmentsToday={
+              dashboardStats?.nombreDeRDVParCliniqueAujourdHui || 0
             }
-            pendingAppointmentsByClinic={pendingAppointmentsByClinic}
-            revenusMensuel={revenusMensuel}
-            revenusMensuelTrend={revenusMensuelTrend}
+            consultationCount={
+              dashboardStats?.nombreDeConsultationsMensuellesParClinic || 0
+            }
+            newPatientsByClinic={dashboardStats?.nouveauxPatientsParClinic || 0}
+            newPatientsTrend={
+              dashboardStats?.trendDeNouveauxPatientsMensuelsParClinic || null
+            }
+            consultationsTrend={
+              dashboardStats?.trendDeConsultationsMensuellesParClinic || null
+            }
+            pendingAppointmentsByClinic={
+              dashboardStats?.nombreDePendingAppointmentsByClinic || 0
+            }
+            revenusMensuel={dashboardStats?.revenuesMensuelsByClinic || 0.0}
+            revenusMensuelTrend={safeRevenusTrend}
           />
         );
       case "Doctor":
         return (
           <DoctorDashboard
             appointments={sortedAppointments}
-            appointmentData={appointmentDataForDoctor}
-            dashboardStats={rendezvousCountByDoctorToday}
-            consultationCount={consultationsCurrentMonthByDoctor}
-            newPatientsByDoctor={newPatientsByDoctor}
+            appointmentData={dashboardStats?.weeklyAppointmentStatsByDoctor || []}
+            dashboardStats={
+              dashboardStats?.nombreDeRDVParMedecinAujourdHui || 0
+            }
+            consultationCount={
+              dashboardStats?.nombreDeConsultationsMensuellesParDoctor || 0
+            }
+            newPatientsByDoctor={dashboardStats?.nouveauxPatientsParMedecin}
             newPatientsTrend={
-              newPatientsTrendByDoctor || { value: 0, isPositive: true }
+              dashboardStats?.trendDeNouveauxPatientsMensuelsParMedecin
             }
             consultationsTrend={
-              consultationTrendByDoctor || { value: 0, isPositive: true }
+              dashboardStats?.trendDeConsultationsMensuellesParDoctor
             }
-            pendingAppointmentsByDoctor={pendingAppointmentsByDoctor}
+            pendingAppointmentsByDoctor={
+              dashboardStats?.nombreDePendingAppointmentsByDoctor
+            }
           />
         );
       case "Patient":
         return (
           <PatientDashboard
             appointments={sortedAppointments}
-            nombreConsultations={nombreConsultations || 0}
+            nombreConsultations={dashboardStats?.nombreDeConsultationsParPatient}
             recentActivities={recentActivities}
-            recentPayments={recentPayments}
+            recentPayments={dashboardStats?.recentPaiementByPatient}
           />
         );
       default:
@@ -596,39 +411,12 @@ function DashboardPage() {
     user,
     sortedAppointments,
     patientData,
-    appointmentDataForDoctor,
-    appointmentDataForClinic,
-    rendezvousCountByDoctorToday,
-    rendezvousCountByClinicToday,
     recentActivities,
     dashboardStats,
     doctorsBySpecialtyChart,
-    consultationsCurrentMonthByDoctor,
-    consultationsCurrentMonthByClinic,
-    newPatientsByDoctor,
-    newPatientsByClinic,
-    newPatientsTrendByClinic,
-    newPatientsTrendByDoctor,
-    consultationTrendByDoctor,
-    consultationTrendByClinic,
-    nombreConsultations,
-    recentPayments,
-    pendingAppointmentsByDoctor,
-    pendingAppointmentsByClinic,
-    revenusMensuel,
-    revenusMensuelTrend,
-    clinicTrend,
-    patientTrend,
-    doctorTrend,
-    revenueTrend,
+    safeRevenusTrend,
     t,
   ]);
-
-  useEffect(() => {
-    if (statsError) {
-      toast.error(statsError);
-    }
-  }, [statsError]);
 
   return (
     <div className="dashboard-container space-y-6 pb-8">
@@ -790,14 +578,14 @@ function ClinicAdminDashboard({
   appointments,
   appointmentData,
   recentActivities,
-  dashboardStats,
+  appointmentsToday,
   consultationCount,
   newPatientsByClinic,
   newPatientsTrend = { value: 0, isPositive: true },
   consultationsTrend,
   pendingAppointmentsByClinic = 0,
   revenusMensuel = 0.0,
-  revenusMensuelTrend = { value: 0, isPositive: true },
+  revenusMensuelTrend,
 }) {
   const { t } = useTranslation("dashboard");
   return (
@@ -817,7 +605,7 @@ function ClinicAdminDashboard({
         />
         <StatCard
           title={t("clinic_admin_appointments_today") || "Appointments Today"}
-          value={dashboardStats || "0"}
+          value={appointmentsToday || "0"}
           icon={<Calendar className="h-4 w-4" />}
           description={
             t("clinic_admin_pending_appointments", {
@@ -832,7 +620,10 @@ function ClinicAdminDashboard({
           title={t("clinic_admin_monthly_revenue") || "Monthly Revenue"}
           value={`$${revenusMensuel || 0}`}
           icon={<CreditCard className="h-4 w-4" />}
-          trend={revenusMensuelTrend}
+          trend={{
+            value: Math.abs(revenusMensuelTrend.percentageChange),
+            isPositive: revenusMensuelTrend.isPositive,
+          }}
         />
       </div>
 

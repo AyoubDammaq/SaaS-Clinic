@@ -1,6 +1,7 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
 import {
   AddTarificationRequest,
+  BillingStatsDto,
   Facture,
   FactureStatus,
   PayInvoiceRequest,
@@ -32,6 +33,11 @@ export function useBilling({
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
   const [selectedInvoice, setSelectedInvoice] = useState<Facture | null>(null);
   const [isPaymentFormOpen, setIsPaymentFormOpen] = useState(false);
+  const [billingStats, setBillingStats] = useState<BillingStatsDto | null>(
+    null
+  );
+  const [isStatsLoading, setIsStatsLoading] = useState(false);
+  const [statsError, setStatsError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -162,6 +168,22 @@ export function useBilling({
     },
     [sortField]
   );
+
+  const fetchBillingStats = useCallback(async (clinicId: string) => {
+    setIsStatsLoading(true);
+    setStatsError(null);
+
+    try {
+      const stats = await billingService.getBillingStats(clinicId);
+      setBillingStats(stats);
+    } catch (error) {
+      console.error("Erreur chargement statistiques :", error);
+      setStatsError("Impossible de charger les statistiques de facturation.");
+      toast.error("Impossible de charger les statistiques.");
+    } finally {
+      setIsStatsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -311,6 +333,10 @@ export function useBilling({
     handleDownload,
     refreshInvoices,
     getFacturesByClinicId,
+    billingStats,
+    isStatsLoading,
+    statsError,
+    fetchBillingStats,
     // Tarifications
     tarifications,
     isTarifsLoading,

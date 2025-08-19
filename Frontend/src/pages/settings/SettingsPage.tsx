@@ -86,7 +86,7 @@ function SettingsPage() {
               <Label htmlFor="fullName">Full Name</Label>
               <Input
                 id="fullName"
-                value={user?.name}
+                defaultValue={user?.name}
                 placeholder="Enter your full name"
               />
             </div>
@@ -95,7 +95,7 @@ function SettingsPage() {
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
-                value={user?.email}
+                defaultValue={user?.email}
                 type="email"
                 placeholder="Enter your email address"
               />
@@ -335,7 +335,7 @@ function SettingsPage() {
               <Label htmlFor="clinic-name">Clinic Name</Label>
               <Input
                 id="clinic-name"
-                value={clinicName}
+                defaultValue={clinicName}
                 onChange={(e) => setClinicName(e.target.value)}
               />
             </div>
@@ -344,7 +344,7 @@ function SettingsPage() {
               <Label htmlFor="clinic-email">Email</Label>
               <Input
                 id="clinic-email"
-                value={clinicEmail}
+                defaultValue={clinicEmail}
                 onChange={(e) => setClinicEmail(e.target.value)}
               />
             </div>
@@ -353,7 +353,7 @@ function SettingsPage() {
               <Label htmlFor="clinic-address">Address</Label>
               <Input
                 id="clinic-address"
-                value={clinicAddress}
+                defaultValue={clinicAddress}
                 onChange={(e) => setClinicAddress(e.target.value)}
               />
             </div>
@@ -362,7 +362,7 @@ function SettingsPage() {
               <Label htmlFor="clinic-phone">Phone</Label>
               <Input
                 id="clinic-phone"
-                value={clinicPhone}
+                defaultValue={clinicPhone}
                 onChange={(e) => setClinicPhone(e.target.value)}
               />
             </div>
@@ -379,7 +379,7 @@ function SettingsPage() {
                 <Input
                   id="opening-time"
                   type="time"
-                  value={openingTime}
+                  defaultValue={openingTime}
                   onChange={(e) => setOpeningTime(e.target.value)}
                 />
               </div>
@@ -389,7 +389,7 @@ function SettingsPage() {
                 <Input
                   id="closing-time"
                   type="time"
-                  value={closingTime}
+                  defaultValue={closingTime}
                   onChange={(e) => setClosingTime(e.target.value)}
                 />
               </div>

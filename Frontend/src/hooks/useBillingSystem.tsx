@@ -7,13 +7,18 @@ import {
   PayInvoiceRequest,
   TarifConsultation,
   Facture,
+  BillingStatsDto,
 } from "@/types/billing";
 import { ConsultationType } from "@/types/consultation";
+import { useTranslation } from "./useTranslation";
 
 interface UseBillingSystemState {
   invoices: Facture[];
   consultationTypes: ConsultationType[];
   consultationPricing: TarifConsultation[];
+  billingStats: BillingStatsDto | null;
+  isStatsLoading: boolean;
+  statsError: string | null; 
   isLoading: boolean;
   isSubmitting: boolean;
   searchTerm: string;
@@ -42,10 +47,12 @@ interface UseBillingSystemState {
   downloadInvoicePDF: (invoiceId: string) => Promise<void>;
   getConsultationPrice: (consultationType: ConsultationType) => number;
   viewInvoiceDetails: (invoiceId: string) => Promise<Facture | null>;
+  fetchBillingStats: (clinicId: string) => Promise<BillingStatsDto | null>;
 }
 
 export function useBillingSystem(clinicId?: string): UseBillingSystemState {
   const { user } = useAuth();
+  const { t } = useTranslation('billing');
   const [invoices, setInvoices] = useState<Facture[]>([]);
   const [consultationTypes, setConsultationTypes] = useState<
     ConsultationType[]
@@ -59,6 +66,11 @@ export function useBillingSystem(clinicId?: string): UseBillingSystemState {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const [totalCount, setTotalCount] = useState(0);
+  const [billingStats, setBillingStats] = useState<BillingStatsDto | null>(
+    null
+  );
+  const [isStatsLoading, setIsStatsLoading] = useState(false);
+  const [statsError, setStatsError] = useState<string | null>(null);
   const [hasFetched, setHasFetched] = useState(false);
 
   // Check permissions based on user role
@@ -268,6 +280,27 @@ export function useBillingSystem(clinicId?: string): UseBillingSystemState {
     }
   };
 
+  const fetchBillingStats = useCallback(
+    async (clinicId: string): Promise<BillingStatsDto | null> => {
+      setIsStatsLoading(true);
+      setStatsError(null);
+
+      try {
+        const stats = await billingService.getBillingStats(clinicId);
+        setBillingStats(stats);
+        return stats;
+      } catch (error) {
+        console.error("Erreur chargement statistiques :", error);
+        setStatsError("Impossible de charger les statistiques de facturation.");
+        toast.error("Impossible de charger les statistiques.");
+        return null;
+      } finally {
+        setIsStatsLoading(false);
+      }
+    },
+    []
+  );
+
   // Filtrage local pour la recherche
   const filteredInvoices = useMemo(() => {
     console.log("[filteredInvoices] searchTerm:", searchTerm);
@@ -338,5 +371,9 @@ export function useBillingSystem(clinicId?: string): UseBillingSystemState {
     downloadInvoicePDF,
     getConsultationPrice,
     viewInvoiceDetails,
+    billingStats,
+    isStatsLoading,
+    statsError,
+    fetchBillingStats,
   };
 }

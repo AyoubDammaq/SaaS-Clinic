@@ -8,7 +8,7 @@ import { usePatients } from "@/hooks/usePatients";
 import { useCliniques } from "@/hooks/useCliniques";
 import { useState } from "react";
 import { toast } from "sonner";
-import { DoctorForm } from "@/components/doctors/DoctorForm"; 
+import { DoctorForm } from "@/components/doctors/DoctorForm";
 import { Patient } from "@/types/patient";
 import { PatientForm } from "@/components/patients/PatientForm";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -27,7 +27,10 @@ export default function ProfilePage() {
   if (!user) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <p>{t("must_be_logged_in") || "Vous devez être connecté pour voir votre profil."}</p>
+        <p>
+          {t("must_be_logged_in") ||
+            "Vous devez être connecté pour voir votre profil."}
+        </p>
       </div>
     );
   }
@@ -49,15 +52,18 @@ export default function ProfilePage() {
     setSelectedPatient(null);
   };
 
-
   const handleFormSubmit = async (updatedDoctor) => {
     try {
       if (selectedDoctor) {
         await fetchDoctors(); // Recharge la liste des docteurs après update
-        toast.success(t("profile_updated_success") || "Profil mis à jour avec succès !");
+        toast.success(
+          t("profile_updated_success") || "Profil mis à jour avec succès !"
+        );
       } else if (selectedPatient) {
         await fetchPatients(); // Recharge la liste des patients après update
-        toast.success(t("profile_updated_success") || "Profil mis à jour avec succès !");
+        toast.success(
+          t("profile_updated_success") || "Profil mis à jour avec succès !"
+        );
       }
       handleCloseForm();
     } catch (error) {
@@ -80,11 +86,13 @@ export default function ProfilePage() {
         return <ClinicAdminProfile />;
 
       case "Doctor": {
-        const currentDoctor = doctors.find((doc) => doc.email === user.email);
+        const currentDoctor = doctors.find((doc) => doc.id === user.medecinId);
         if (!currentDoctor) {
           return (
             <div className="text-center py-8">
-              <p className="text-muted-foreground">{t("doctor_profile_not_found") || "Profil médecin non trouvé."}</p>
+              <p className="text-muted-foreground">
+                {t("doctor_profile_not_found") || "Profil médecin non trouvé."}
+              </p>
             </div>
           );
         }
@@ -105,11 +113,28 @@ export default function ProfilePage() {
       }
 
       case "Patient": {
-        const currentPatient = patients.find((pat) => pat.email === user.email);
+        console.log("Patients", patients);
+        if (!patients || patients.length === 0) {
+          return (
+            <div className="text-center py-8">
+              <p className="text-muted-foreground">
+                Chargement du profil patient...
+              </p>
+            </div>
+          );
+        }
+
+        const currentPatient = patients.find(
+          (pat) =>
+            pat.id.trim().toLowerCase() === user.patientId.trim().toLowerCase()
+        );
+
         if (!currentPatient) {
           return (
             <div className="text-center py-8">
-              <p className="text-muted-foreground">{t("patient_profile_not_found") || "Profil patient non trouvé."}</p>
+              <p className="text-muted-foreground">
+                {t("patient_profile_not_found") || "Profil patient non trouvé."}
+              </p>
             </div>
           );
         }
@@ -136,7 +161,9 @@ export default function ProfilePage() {
       default:
         return (
           <div className="text-center py-8">
-            <p className="text-muted-foreground">{t("unknown_profile_type") || "Type de profil non reconnu."}</p>
+            <p className="text-muted-foreground">
+              {t("unknown_profile_type") || "Type de profil non reconnu."}
+            </p>
           </div>
         );
     }
@@ -145,9 +172,12 @@ export default function ProfilePage() {
   return (
     <div className="container mx-auto p-6">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold tracking-tight">{t("my_profile") || "Mon Profil"}</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          {t("my_profile") || "Mon Profil"}
+        </h1>
         <p className="text-muted-foreground">
-          {t("manage_personal_info") || "Gérez vos informations personnelles et vos préférences"}
+          {t("manage_personal_info") ||
+            "Gérez vos informations personnelles et vos préférences"}
         </p>
       </div>
 

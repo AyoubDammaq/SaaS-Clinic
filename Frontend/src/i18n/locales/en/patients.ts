@@ -110,12 +110,12 @@ export default {
   address_placeholder: "123 Main St, New York",
   create: "Create",
   update: "Update",
+  success_patient_created: "Patient created successfully",
+  success_patient_updated: "Patient updated successfully",
   success: {
     medical_record_created: "Medical record created successfully",
     medical_record_updated: "Medical record updated successfully",
     document_added: "Document added successfully",
-    patient_created: "Patient created successfully",
-    patient_updated: "Patient updated successfully",
   },
   errors: {
     no_patient_id: "No patient ID provided",
@@ -130,6 +130,7 @@ export default {
     submit_patient_failed: "Failed to submit patient data",
   },
   created: "Created",
+  at: "at",
   none_recorded: "None recorded",
 
   // Message de validation

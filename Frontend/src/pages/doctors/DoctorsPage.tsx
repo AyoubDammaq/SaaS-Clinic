@@ -156,19 +156,24 @@ function DoctorsPage() {
 
     const fetchAvailableDoctors = async () => {
       try {
-        const availableDoctorIds = await getAvailableDoctors(
+        const availableDoctors = await getAvailableDoctors(
           date,
           heureDebut,
           heureFin
         );
-        console.log("Available Doctor IDs:", availableDoctorIds);
-        setAvailableDoctorIds(availableDoctorIds);
+
+        // Extraire uniquement les IDs
+        const ids = availableDoctors.map((doctor: any) => doctor.id);
+        console.log("Available Doctor IDs (UUIDs):", ids);
+
+        setAvailableDoctorIds(ids);
       } catch (error) {
         console.error(t("errorFetchingDoctors"), error);
         toast.error(t("errorFetchingDoctors"));
         setAvailableDoctorIds([]);
       }
     };
+
     fetchAvailableDoctors();
   }, [availabilityFilters, getAvailableDoctors, t]);
 

@@ -33,12 +33,12 @@ export interface StatistiqueDTO {
 }
 
 export interface StatistiqueCliniqueDTO {
-  nombreDocteurs: number;
+  nombreMedecins: number;
   nombrePatients: number;
   nombreConsultations: number;
-  nombreConsultationsParMois: StatistiqueDTO[];
-  nombreNouveauxPatientsParMois: StatistiqueDTO[];
-  revenusParMois: StatistiqueDTO[];
+  nombreConsultationsParMois: Record<number, number>;
+  nombreNouveauxPatientsParMois: Record<number, number>;
+  revenusParMois: Record<number, number>;
 }
 
 export interface LinkUserToClinicDto {

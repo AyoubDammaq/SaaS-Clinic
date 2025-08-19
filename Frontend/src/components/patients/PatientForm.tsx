@@ -84,7 +84,7 @@ export function PatientForm({ isOpen, onClose, onSubmit, initialData, isLoading 
     setIsSubmitting(true);
     try {
       await onSubmit(data);
-      toast.success(initialData ? t("success.patient_updated") : t("success.patient_created"));
+      toast.success(initialData ? t("success_patient_updated") : t("success_patient_created"));
       form.reset();
       onClose();
     } catch (error) {

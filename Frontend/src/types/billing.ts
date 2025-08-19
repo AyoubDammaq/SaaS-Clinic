@@ -90,6 +90,12 @@ export interface PayInvoiceRequest {
   };
 }
 
+export interface PayInvoiceResponse {
+  success: boolean;
+  message: string;
+}
+
+
 export interface PaiementDto {
   moyenPaiement: ModePaiement;
   montant: number;
@@ -97,7 +103,7 @@ export interface PaiementDto {
 
 export interface RecentPaiementDto {
   montant: number;
-  datePaiement: string; 
+  datePaiement: string;
 }
 
 export interface FactureStatsDTO {
@@ -113,6 +119,13 @@ export interface StatistiquesFacturesDto {
   montantTotal: number;
   montantTotalPaye: number;
   nombreParClinique: Record<string, number>; // clé = Guid clinique
+}
+
+export interface BillingStatsDto {
+  revenue: number;
+  pendingAmount: number;
+  overdueAmount: number;
+  paymentRate: number;
 }
 
 export function mapFactureStatus(value: number | string): FactureStatus {

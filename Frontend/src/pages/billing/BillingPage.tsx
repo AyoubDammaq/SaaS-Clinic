@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import {
   Card,
@@ -56,6 +56,10 @@ function BillingPage() {
     payInvoice,
     downloadInvoicePDF,
     viewInvoiceDetails,
+    billingStats,
+    isStatsLoading,
+    statsError,
+    fetchBillingStats,
   } = useBillingSystem(clinicId);
 
   const { t } = useTranslation("billing");
@@ -72,6 +76,12 @@ function BillingPage() {
     searchTerm: "",
   });
   const [isExpanded, setIsExpanded] = useState(false);
+
+  useEffect(() => {
+    if (clinicId) {
+      fetchBillingStats(clinicId);
+    }
+  }, [clinicId, fetchBillingStats]);
 
   // Filtrer les factures en fonction du rôle de l'utilisateur
   const roleFilteredInvoices = invoices.filter((invoice) => {
@@ -224,7 +234,13 @@ function BillingPage() {
       </div>
 
       {/* Billing Statistics */}
-      <BillingStats invoices={roleFilteredInvoices} isLoading={isLoading} />
+      {user.role == "ClinicAdmin" && (
+        <BillingStats
+          stats={billingStats}
+          isLoading={isStatsLoading}
+          error={statsError}
+        />
+      )}
 
       <InvoiceFilters
         filters={filters}
@@ -245,12 +261,6 @@ function BillingPage() {
               </CardDescription>
             </div>
             <div className="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
-              <SearchBar
-                value={searchTerm}
-                onChange={setSearchTerm}
-                placeholder={t("searchInvoices")}
-                className="w-full sm:w-auto"
-              />
               <Button
                 variant="outline"
                 size="icon"
@@ -295,12 +305,6 @@ function BillingPage() {
                 />
               )}
 
-              {totalCount === 0 && !isLoading && (
-                <EmptyState
-                  title={t("noInvoices")}
-                  description={t("noInvoicesYet")}
-                />
-              )}
             </>
           )}
         </CardContent>

@@ -19,7 +19,7 @@ export const dayNames = [
 
 
 // Import or define UUID type
-type UUID = string;
+export type UUID = string;
 
 // Disponibilité (Availability) types
 export interface Disponibilite {
@@ -33,4 +33,8 @@ export interface Disponibilite {
 export interface CreneauDisponibleDto {
   dateHeureDebut: string;
   dateHeureFin: string;
+}
+
+export interface AvailableDoctor {
+  id: UUID;
 }

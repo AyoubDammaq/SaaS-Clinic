@@ -79,7 +79,7 @@ export function DoctorFilters({
       debouncedFilterChange.cancel();
       debouncedAvailabilityChange.cancel();
     };
-  }, []);
+  }, [debouncedAvailabilityChange, debouncedFilterChange]);
 
   const handleSpecialtyChange = (value: string) => {
     const newValue = value === "all_specialties" ? null : value;
@@ -115,9 +115,9 @@ export function DoctorFilters({
     setSpecialty(null);
     setClinicId(null);
     setAssignedStatus("all");
-    setAvailabilityDate(null);
-    setHeureDebut(null);
-    setHeureFin(null);
+    setAvailabilityDate("");
+    setHeureDebut("");
+    setHeureFin("");
     debouncedFilterChange({ specialty: null, clinicId: null, assignedStatus: "all" });
     debouncedAvailabilityChange({ date: null, heureDebut: null, heureFin: null });
   };

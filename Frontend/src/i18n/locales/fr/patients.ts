@@ -114,12 +114,12 @@ export default {
   address_placeholder: "123 Rue de la Paix, Paris",
   create: "Créer",
   update: "Mettre à jour",
+  success_patient_created: "Patient créé avec succès",
+  success_patient_updated: "Patient mis à jour avec succès",
   success: {
     medical_record_created: "Dossier médical créé avec succès",
     medical_record_updated: "Dossier médical mis à jour avec succès",
     document_added: "Document ajouté avec succès",
-    patient_created: "Patient créé avec succès",
-    patient_updated: "Patient mis à jour avec succès",
   },
   errors: {
     no_patient_id: "Aucun ID de patient fourni",
@@ -136,6 +136,7 @@ export default {
     submit_patient_failed: "Échec de la soumission des données du patient",
   },
   created: "Créé",
+  at: "à",
   none_recorded: "Aucun enregistré",
 
   // Message de validation

@@ -91,7 +91,11 @@ export function useNotifications(): UseNotificationsState {
         data = await notificationService.getNotificationsByRecipientId(
           user.medecinId
         );
-      } else if (user?.role === "ClinicAdmin" || user?.role === "SuperAdmin") {
+      } else if (user?.role === "ClinicAdmin" && user.cliniqueId) {
+        data = await notificationService.getNotificationsByRecipientId(
+          user.cliniqueId
+        );
+      } else if (user?.role === "SuperAdmin") {
         data = (await notificationService.getNotifications({
           page: 1,
           pageSize: 20,
@@ -104,11 +108,10 @@ export function useNotifications(): UseNotificationsState {
       setFilteredNotifications(data);
     } catch (error) {
       console.error("Error fetching notifications:", error);
-      toast.error(t("no_notifications_found"));
     } finally {
       setIsLoading(false);
     }
-  }, [user, t]);
+  }, [user]);
 
   // Filter notifications based on search term
   useEffect(() => {

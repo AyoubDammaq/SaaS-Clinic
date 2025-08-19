@@ -62,11 +62,13 @@ export default {
   expiryDatePlaceholder: "MM/YY",
   cvv: "CVV",
   cvvPlaceholder: "123",
-  cashPaymentInfo: "Cash payment will be validated during your visit to the clinic.",
+  cashPaymentInfo:
+    "Cash payment will be validated during your visit to the clinic.",
   transferPaymentInfo: "Bank transfer details will be sent to you by email.",
   paymentError: "Error processing payment. Please try again.",
   pay: "Pay",
   processing: "Processing...",
+  paymentSuccess: "Payment Success",
 
   //Invoice Details
   invoice: "Invoice",
@@ -91,7 +93,7 @@ export default {
   check: "Check",
   mobilePayment: "Mobile Payment",
 
-  // Invoice Table 
+  // Invoice Table
   dueDate: "Due Date",
   totalAmount: "Total Amount",
   actions: "Actions",
@@ -112,4 +114,9 @@ export default {
   totalInvoices: "total invoices",
   good: "Good",
   attention: "Attention",
+  totalReceived: "Total received",
+  awaitingPayment: "Awaiting payment",
+  pastDue: "Past due",
+  paymentCompletion: "Payment completion",
+  failedToLoadStats: "Failed to load billing statistics",
 };
