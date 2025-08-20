@@ -38,6 +38,9 @@ docker_build_backend:
   image: docker:24.0.5
   services:
     - docker:dind
+  variables:
+    DOCKER_REGISTRY: "registry.gitlab.com/AyoubDammak/clinic-saas"
+    DOCKER_IMAGE_TAG: "latest"
   script:
     - apk add --no-cache bash
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
