@@ -108,22 +108,42 @@ namespace PatientManagementService.Tests
         }
 
         [Fact]
-        public async Task AddPatient_Returns201_WhenSuccess()
+        public async Task AddPatient_ReturnsCreatedAtAction_WhenSuccess()
         {
-            // Arrange
-            var dto = new CreatePatientDTO { Nom = "Test", Prenom = "User", DateNaissance = DateTime.Now, Sexe = "M", Adresse = "1 rue", Telephone = "0102030404", Email = "test@email.com" };
+            var dto = new CreatePatientDTO
+            {
+                Nom = "Test",
+                Prenom = "User",
+                DateNaissance = DateTime.Now,
+                Sexe = "M",
+                Adresse = "1 rue",
+                Telephone = "0102030404",
+                Email = "test@email.com"
+            };
+
+            var createdPatient = new PatientDTO
+            {
+                Id = Guid.NewGuid(),
+                Nom = dto.Nom,
+                Prenom = dto.Prenom,
+                DateNaissance = dto.DateNaissance,
+                Sexe = dto.Sexe,
+                Adresse = dto.Adresse,
+                Telephone = dto.Telephone,
+                Email = dto.Email
+            };
+
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<AddPatientCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync((object?)true); // Cast en object? pour éviter CS1929
+                .ReturnsAsync(createdPatient);
 
-            // Act
             var result = await _controller.AddPatient(dto);
 
-            // Assert
-            var status = result as StatusCodeResult;
-            status.Should().NotBeNull();
-            status!.StatusCode.Should().Be(201);
+            var created = result as CreatedAtActionResult;
+            created.Should().NotBeNull();
+            created!.Value.Should().BeEquivalentTo(createdPatient);
         }
+
 
         [Fact]
         public async Task AddPatient_Returns500_OnException()

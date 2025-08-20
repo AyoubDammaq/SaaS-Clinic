@@ -13,43 +13,45 @@ namespace PatientManagementService.Tests.PatientTests.Commands
     {
         private readonly Mock<IPatientRepository> _patientRepositoryMock;
         private readonly Mock<ILogger<AddPatientCommandHandler>> _loggerMock;
-        private readonly Mock<IMapper> _mapperMock; // Ajoutez ce mock
+        private readonly Mock<IMapper> _mapperMock;
         private readonly AddPatientCommandHandler _handler;
 
         public AddPatientCommandHandlerTests()
         {
             _patientRepositoryMock = new Mock<IPatientRepository>();
             _loggerMock = new Mock<ILogger<AddPatientCommandHandler>>();
-            _mapperMock = new Mock<IMapper>(); // Instanciez le mock
-            _handler = new AddPatientCommandHandler(_patientRepositoryMock.Object, _loggerMock.Object, _mapperMock.Object); // Passez-le au handler
+            _mapperMock = new Mock<IMapper>();
+            _handler = new AddPatientCommandHandler(_patientRepositoryMock.Object, _loggerMock.Object, _mapperMock.Object);
         }
 
         [Fact]
-        public async Task Handle_ShouldReturnFalse_AndLogWarning_WhenPatientIsNull()
+        public async Task Handle_ShouldThrowArgumentNullException_AndLogWarning_WhenPatientIsNull()
         {
             // Arrange
-            CreatePatientDTO? patientDto = null; // Utilisez un type nullable
+            CreatePatientDTO? patientDto = null;
             var command = new AddPatientCommand(patientDto);
 
             // Act
-            var result = await _handler.Handle(command, CancellationToken.None);
+            Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            result.Should().BeFalse();
+            await act.Should().ThrowAsync<ArgumentNullException>()
+                .WithMessage("*PatientDTO ne peut pas être null*");
             _loggerMock.Verify(
                 x => x.Log(
                     LogLevel.Warning,
                     It.IsAny<EventId>(),
                     It.Is<It.IsAnyType>((v, t) =>
-                        v != null && v.ToString() != null && v.ToString().Contains("Tentative d'ajouter un patient null.")), // Remplacer l'opérateur de propagation null
+                        v != null && v.ToString() != null && v.ToString().Contains("Tentative d'ajouter un patient null.")),
                     null,
-                    It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
+                    It.IsAny<Func<It.IsAnyType, Exception?, string>>()
+                ),
                 Times.Once);
             _patientRepositoryMock.Verify(r => r.AddPatientAsync(It.IsAny<Patient>()), Times.Never);
         }
 
         [Fact]
-        public async Task Handle_ShouldReturnTrue_AndCallRepository_WhenPatientIsValid()
+        public async Task Handle_ShouldReturnPatientDTO_AndCallRepository_WhenPatientIsValid()
         {
             // Arrange
             var patientDto = new CreatePatientDTO
@@ -64,8 +66,7 @@ namespace PatientManagementService.Tests.PatientTests.Commands
             };
             var command = new AddPatientCommand(patientDto);
 
-            // Setup du mapping si nécessaire
-            _mapperMock.Setup(m => m.Map<Patient>(patientDto)).Returns(new Patient
+            var mappedPatient = new Patient
             {
                 Nom = patientDto.Nom,
                 Prenom = patientDto.Prenom,
@@ -74,8 +75,22 @@ namespace PatientManagementService.Tests.PatientTests.Commands
                 Adresse = patientDto.Adresse,
                 Telephone = patientDto.Telephone,
                 Email = patientDto.Email
-            });
+            };
 
+            var mappedPatientDto = new PatientDTO
+            {
+                Id = Guid.NewGuid(),
+                Nom = patientDto.Nom,
+                Prenom = patientDto.Prenom,
+                DateNaissance = patientDto.DateNaissance,
+                Sexe = patientDto.Sexe,
+                Adresse = patientDto.Adresse,
+                Telephone = patientDto.Telephone,
+                Email = patientDto.Email
+            };
+
+            _mapperMock.Setup(m => m.Map<Patient>(patientDto)).Returns(mappedPatient);
+            _mapperMock.Setup(m => m.Map<PatientDTO>(It.IsAny<Patient>())).Returns(mappedPatientDto);
             _patientRepositoryMock.Setup(r => r.AddPatientAsync(It.IsAny<Patient>()))
                 .Returns(Task.CompletedTask)
                 .Verifiable();
@@ -84,7 +99,8 @@ namespace PatientManagementService.Tests.PatientTests.Commands
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            result.Should().BeTrue();
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(mappedPatientDto);
             _patientRepositoryMock.Verify(r => r.AddPatientAsync(It.Is<Patient>(
                 p => p.Nom == patientDto.Nom &&
                      p.Prenom == patientDto.Prenom &&
@@ -97,3 +113,4 @@ namespace PatientManagementService.Tests.PatientTests.Commands
         }
     }
 }
+

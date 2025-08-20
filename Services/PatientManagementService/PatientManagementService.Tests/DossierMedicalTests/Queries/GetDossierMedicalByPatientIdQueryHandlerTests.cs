@@ -42,7 +42,7 @@ namespace PatientManagementService.Tests.DossierMedicalTests.Queries
         }
 
         [Fact]
-        public async Task Handle_ShouldThrowException_WhenDossierMedicalNotFoundForPatient()
+        public async Task Handle_ShouldReturnNull_WhenDossierMedicalNotFoundForPatient()
         {
             // Arrange
             var patientId = Guid.NewGuid();
@@ -50,11 +50,10 @@ namespace PatientManagementService.Tests.DossierMedicalTests.Queries
             var query = new GetDossierMedicalByPatientIdQuery(patientId);
 
             // Act
-            Func<Task> act = async () => await _handler.Handle(query, CancellationToken.None);
+            var result = await _handler.Handle(query, CancellationToken.None);
 
             // Assert
-            var ex = await act.Should().ThrowAsync<Exception>();
-            ex.Which.Message.Should().Be("Dossier médical not found for the specified patient");
+            result.Should().BeNull();
         }
     }
 }
