@@ -1,0 +1,40 @@
+stages:
+  - build
+  - test
+  - docker
+  - deploy
+
+variables:
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  DOCKER_IMAGE: "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME"
+
+build:
+  stage: build
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+  script:
+    - dotnet restore
+    - dotnet build --configuration Release
+
+test:
+  stage: test
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+  script:
+    - dotnet test --no-build --verbosity normal
+
+docker_build:
+  stage: docker
+  image: docker:24.0.5
+  services:
+    - docker:dind
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker build -t $DOCKER_IMAGE ./Services/ClinicManagementService
+    - docker push $DOCKER_IMAGE
+
+deploy:
+  stage: deploy
+  image: docker/compose:2.21.2
+  services:
+    - docker:dind
+  script:
+    - docker-compose -f docker-compose.yml up -d
