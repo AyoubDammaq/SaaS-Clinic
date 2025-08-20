@@ -6,8 +6,10 @@ stages:
 
 variables:
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
-  DOCKER_IMAGE: "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME"
+  DOCKER_REGISTRY: "$CI_REGISTRY/saas-clinic"
+  DOCKER_IMAGE_TAG: "latest"
 
+# ---------------- Build .NET projects ----------------
 build:
   stage: build
   image: mcr.microsoft.com/dotnet/sdk:9.0
@@ -15,26 +17,46 @@ build:
     - dotnet restore
     - dotnet build --configuration Release
 
+# ---------------- Run tests ----------------
 test:
   stage: test
   image: mcr.microsoft.com/dotnet/sdk:9.0
   script:
     - dotnet test --no-build --verbosity normal
 
-docker_build:
+# ---------------- Build & Push Docker images ----------------
+docker_build_backend:
   stage: docker
   image: docker:24.0.5
   services:
     - docker:dind
   script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
-    - docker build -t $DOCKER_IMAGE ./Services/ClinicManagementService
-    - docker push $DOCKER_IMAGE
+    - |
+      for service in AuthService ClinicManagementService DoctorManagementService PatientManagementService RDVManagementService ConsultationManagementService FacturationService ReportingService NotificationService; do
+        echo "Building and pushing $service..."
+        docker build -t $DOCKER_REGISTRY/$service:$DOCKER_IMAGE_TAG ./Services/$service
+        docker push $DOCKER_REGISTRY/$service:$DOCKER_IMAGE_TAG
+      done
 
+docker_build_frontend:
+  stage: docker
+  image: docker:24.0.5
+  services:
+    - docker:dind
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker build -t $DOCKER_REGISTRY/Frontend:$DOCKER_IMAGE_TAG ./Frontend
+    - docker push $DOCKER_REGISTRY/Frontend:$DOCKER_IMAGE_TAG
+
+# ---------------- Deploy with Docker Compose ----------------
 deploy:
   stage: deploy
   image: docker/compose:2.21.2
   services:
     - docker:dind
   script:
-    - docker-compose -f docker-compose.yml up -d
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker-compose -f docker-compose.yml pull
+    - docker-compose -f docker-compose.yml up -d --remove-orphans
+
