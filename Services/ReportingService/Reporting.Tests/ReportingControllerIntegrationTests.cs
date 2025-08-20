@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
+using Xunit;
 
 namespace Reporting.Tests
 {
@@ -183,22 +184,6 @@ namespace Reporting.Tests
         }
 
         [Fact]
-        public async Task GetNombreFactures_ReturnsSuccess()
-        {
-            var url = $"/api/Reporting/factures/count/periode?start={FormatDate(DateTime.Today.AddDays(-1))}&end={FormatDate(DateTime.Today)}";
-            var response = await _client.GetAsync(url);
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        }
-
-        [Fact]
-        public async Task GetMontantFactures_ReturnsSuccess()
-        {
-            var url = $"/api/Reporting/factures/montant?statut=payé&start={FormatDate(DateTime.Today.AddDays(-1))}&end={FormatDate(DateTime.Today)}";
-            var response = await _client.GetAsync(url);
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        }
-
-        [Fact]
         public async Task ComparerCliniques_ReturnsBadRequest_WhenListIsEmpty()
         {
             var content = new StringContent("[]", Encoding.UTF8, "application/json");
@@ -207,3 +192,4 @@ namespace Reporting.Tests
         }
     }
 }
+

@@ -4,6 +4,7 @@ using Moq;
 using Reporting.API.Controllers;
 using Reporting.Application.DTOs;
 using Reporting.Application.Interfaces;
+using Xunit;
 
 namespace Reporting.Tests
 {
@@ -12,7 +13,6 @@ namespace Reporting.Tests
         private readonly Mock<IReportingService> _serviceMock;
         private readonly Mock<ILogger<ReportingController>> _loggerMock;
         private readonly ReportingController _controller;
-
 
         public ReportingControllerTests()
         {
@@ -40,7 +40,7 @@ namespace Reporting.Tests
             var result = await _controller.GetNombreConsultations(DateTime.Today, DateTime.Today);
 
             var notFound = Assert.IsType<NotFoundObjectResult>(result);
-            Assert.Contains("Aucune statistique", notFound.Value.ToString());
+            Assert.Contains("Aucune statistique", notFound.Value?.ToString());
         }
 
         [Fact]
@@ -74,7 +74,7 @@ namespace Reporting.Tests
             var result = await _controller.GetStatistiquesRendezVous(DateTime.Today, DateTime.Today);
 
             var notFound = Assert.IsType<NotFoundObjectResult>(result);
-            Assert.Contains("Aucune statistique", notFound.Value.ToString());
+            Assert.Contains("Aucune statistique", notFound.Value?.ToString());
         }
 
         [Fact]
@@ -100,6 +100,17 @@ namespace Reporting.Tests
         }
 
         [Fact]
+        public async Task GetNombreNouveauxPatients_Returns500_OnException()
+        {
+            _serviceMock.Setup(s => s.GetNombreNouveauxPatientsAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>())).ThrowsAsync(new Exception());
+
+            var result = await _controller.GetNombreNouveauxPatients(DateTime.Today, DateTime.Today);
+
+            var status = Assert.IsType<ObjectResult>(result);
+            Assert.Equal(500, status.StatusCode);
+        }
+
+        [Fact]
         public async Task GetNombreMedecinParSpecialite_ReturnsOk()
         {
             var list = new List<DoctorStatsDTO> { new DoctorStatsDTO() };
@@ -109,6 +120,28 @@ namespace Reporting.Tests
 
             var ok = Assert.IsType<OkObjectResult>(result);
             Assert.Equal(list, ok.Value);
+        }
+
+        [Fact]
+        public async Task GetNombreMedecinParSpecialite_ReturnsNotFound_WhenEmpty()
+        {
+            _serviceMock.Setup(s => s.GetNombreMedecinParSpecialite()).ReturnsAsync(new List<DoctorStatsDTO>());
+
+            var result = await _controller.GetNombreMedecinParSpecialite();
+
+            var notFound = Assert.IsType<NotFoundObjectResult>(result);
+            Assert.Contains("Aucune statistique", notFound.Value?.ToString());
+        }
+
+        [Fact]
+        public async Task GetNombreMedecinParSpecialite_Returns500_OnException()
+        {
+            _serviceMock.Setup(s => s.GetNombreMedecinParSpecialite()).ThrowsAsync(new Exception());
+
+            var result = await _controller.GetNombreMedecinParSpecialite();
+
+            var status = Assert.IsType<ObjectResult>(result);
+            Assert.Equal(500, status.StatusCode);
         }
 
         [Fact]
@@ -252,6 +285,17 @@ namespace Reporting.Tests
             Assert.Equal(10.5m, ok.Value);
         }
 
+        [Fact]
+        public async Task GetStatistiquesFactures_ReturnsOk()
+        {
+            var dto = new StatistiquesFactureDto();
+            _serviceMock.Setup(s => s.GetStatistiquesFacturesAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(dto);
+
+            var result = await _controller.GetStatistiquesFactures(DateTime.Today, DateTime.Today);
+
+            var ok = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(dto, ok.Value);
+        }
 
         [Fact]
         public async Task ComparerCliniques_ReturnsBadRequest_IfListNullOrEmpty()
@@ -279,12 +323,70 @@ namespace Reporting.Tests
         public async Task GetDashboardStats_ReturnsOk()
         {
             var dto = new DashboardStatsDTO();
-            _serviceMock.Setup(s => s.GetDashboardStatsAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(dto);
+            _serviceMock.Setup(s => s.GetDashboardStatsAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null, null, null)).ReturnsAsync(dto);
 
             var result = await _controller.GetDashboardStats(DateTime.Today, DateTime.Today);
 
             var ok = Assert.IsType<OkObjectResult>(result);
             Assert.Equal(dto, ok.Value);
         }
+
+        [Fact]
+        public async Task GetDashboardStats_Returns500_OnException()
+        {
+            _serviceMock.Setup(s => s.GetDashboardStatsAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null, null, null)).ThrowsAsync(new Exception());
+
+            var result = await _controller.GetDashboardStats(DateTime.Today, DateTime.Today);
+
+            var status = Assert.IsType<ObjectResult>(result);
+            Assert.Equal(500, status.StatusCode);
+        }
+
+        [Fact]
+        public async Task GetStatistiquesHebdomadairesRendezVousByDoctor_ReturnsOk()
+        {
+            var list = new List<AppointmentDayStatDto> { new AppointmentDayStatDto() };
+            _serviceMock.Setup(s => s.GetStatistiquesHebdomadairesRendezVousByDoctorAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(list);
+
+            var result = await _controller.GetStatistiquesHebdomadairesRendezVousByDoctor(Guid.NewGuid(), DateTime.Today, DateTime.Today);
+
+            var ok = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(list, ok.Value);
+        }
+
+        [Fact]
+        public async Task GetStatistiquesHebdomadairesRendezVousByDoctor_Returns500_OnException()
+        {
+            _serviceMock.Setup(s => s.GetStatistiquesHebdomadairesRendezVousByDoctorAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ThrowsAsync(new Exception());
+
+            var result = await _controller.GetStatistiquesHebdomadairesRendezVousByDoctor(Guid.NewGuid(), DateTime.Today, DateTime.Today);
+
+            var status = Assert.IsType<ObjectResult>(result);
+            Assert.Equal(500, status.StatusCode);
+        }
+
+        [Fact]
+        public async Task GetStatistiquesHebdomadairesRendezVousByClinic_ReturnsOk()
+        {
+            var list = new List<AppointmentDayStatDto> { new AppointmentDayStatDto() };
+            _serviceMock.Setup(s => s.GetStatistiquesHebdomadairesRendezVousByClinicAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(list);
+
+            var result = await _controller.GetStatistiquesHebdomadairesRendezVousByClinic(Guid.NewGuid(), DateTime.Today, DateTime.Today);
+
+            var ok = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(list, ok.Value);
+        }
+
+        [Fact]
+        public async Task GetStatistiquesHebdomadairesRendezVousByClinic_Returns500_OnException()
+        {
+            _serviceMock.Setup(s => s.GetStatistiquesHebdomadairesRendezVousByClinicAsync(It.IsAny<Guid>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ThrowsAsync(new Exception());
+
+            var result = await _controller.GetStatistiquesHebdomadairesRendezVousByClinic(Guid.NewGuid(), DateTime.Today, DateTime.Today);
+
+            var status = Assert.IsType<ObjectResult>(result);
+            Assert.Equal(500, status.StatusCode);
+        }
     }
 }
+
