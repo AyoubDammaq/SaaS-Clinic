@@ -14,15 +14,23 @@ build:
   stage: build
   image: mcr.microsoft.com/dotnet/sdk:9.0
   script:
-    - dotnet restore
-    - dotnet build --configuration Release
+    - |
+      for sln in Services/*/*.sln; do
+        echo "Restoring and building $sln..."
+        dotnet restore "$sln"
+        dotnet build "$sln" --configuration Release
+      done
 
 # ---------------- Run tests ----------------
 test:
   stage: test
   image: mcr.microsoft.com/dotnet/sdk:9.0
   script:
-    - dotnet test --no-build --verbosity normal
+    - |
+      for sln in Services/*/*.sln; do
+        echo "Running tests for $sln..."
+        dotnet test "$sln" --no-build --verbosity normal || exit 1
+      done
 
 # ---------------- Build & Push Docker images ----------------
 docker_build_backend:
