@@ -94,11 +94,11 @@ docker_build_frontend:
 # ---------------- Deploy with Docker Compose ----------------
 deploy:
   stage: deploy
-  image: docker/compose:2.21.2
+  image: docker/compose:latest
   services:
     - docker:dind
   script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
     - docker-compose -f docker-compose.yml pull
     - docker-compose -f docker-compose.yml up -d --remove-orphans
 
