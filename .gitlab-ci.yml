@@ -77,10 +77,19 @@ docker_build_frontend:
   image: docker:24.0.5
   services:
     - docker:dind
+  variables:
+    DOCKER_REGISTRY: "registry.gitlab.com/ayoubdammak/clinic-saas"
+    DOCKER_IMAGE_TAG: "latest"
   script:
+    - apk add --no-cache bash
     - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-    - docker build -t $DOCKER_REGISTRY/Frontend:$DOCKER_IMAGE_TAG ./Frontend
-    - docker push $DOCKER_REGISTRY/Frontend:$DOCKER_IMAGE_TAG
+    - |
+      bash -c '
+        lowercase_frontend=$(echo "Frontend" | tr "[:upper:]" "[:lower:]")
+        echo "Building frontend image..."
+        docker build -t "$DOCKER_REGISTRY/$lowercase_frontend:$DOCKER_IMAGE_TAG" ./Frontend
+        docker push "$DOCKER_REGISTRY/$lowercase_frontend:$DOCKER_IMAGE_TAG"
+      '
 
 # ---------------- Deploy with Docker Compose ----------------
 deploy:
