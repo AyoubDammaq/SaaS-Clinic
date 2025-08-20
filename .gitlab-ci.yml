@@ -40,26 +40,27 @@ docker_build_backend:
     - docker:dind
   script:
     - apk add --no-cache bash
-    - bash <<'EOF'
-      services=("AuthService" "ClinicManagementService" "DoctorManagementService" "PatientManagementService" "RDVManagementService" "ConsultationManagementService" "FacturationService" "ReportingService" "NotificationService")
+    - |
+      bash -c '
+        services=("AuthService" "ClinicManagementService" "DoctorManagementService" "PatientManagementService" "RDVManagementService" "ConsultationManagementService" "FacturationService" "ReportingService" "NotificationService")
 
-      for service in "${services[@]}"; do
-        if [ "$service" = "AuthService" ]; then dockerfile="Auth.API/Dockerfile"; fi
-        if [ "$service" = "ClinicManagementService" ]; then dockerfile="Clinic.API/Dockerfile"; fi
-        if [ "$service" = "DoctorManagementService" ]; then dockerfile="Doctor.API/Dockerfile"; fi
-        if [ "$service" = "PatientManagementService" ]; then dockerfile="PatientManagementService.API/Dockerfile"; fi
-        if [ "$service" = "RDVManagementService" ]; then dockerfile="RDV.API/Dockerfile"; fi
-        if [ "$service" = "ConsultationManagementService" ]; then dockerfile="ConsultationManagementService.API/Dockerfile"; fi
-        if [ "$service" = "FacturationService" ]; then dockerfile="Facturation.API/Dockerfile"; fi
-        if [ "$service" = "ReportingService" ]; then dockerfile="Reporting.API/Dockerfile"; fi
-        if [ "$service" = "NotificationService" ]; then dockerfile="Notif.API/Dockerfile"; fi
+        for service in "${services[@]}"; do
+          if [ "$service" = "AuthService" ]; then dockerfile="Auth.API/Dockerfile"; fi
+          if [ "$service" = "ClinicManagementService" ]; then dockerfile="Clinic.API/Dockerfile"; fi
+          if [ "$service" = "DoctorManagementService" ]; then dockerfile="Doctor.API/Dockerfile"; fi
+          if [ "$service" = "PatientManagementService" ]; then dockerfile="PatientManagementService.API/Dockerfile"; fi
+          if [ "$service" = "RDVManagementService" ]; then dockerfile="RDV.API/Dockerfile"; fi
+          if [ "$service" = "ConsultationManagementService" ]; then dockerfile="ConsultationManagementService.API/Dockerfile"; fi
+          if [ "$service" = "FacturationService" ]; then dockerfile="Facturation.API/Dockerfile"; fi
+          if [ "$service" = "ReportingService" ]; then dockerfile="Reporting.API/Dockerfile"; fi
+          if [ "$service" = "NotificationService" ]; then dockerfile="Notif.API/Dockerfile"; fi
 
-        lowercase_service=$(echo "$service" | tr "[:upper:]" "[:lower:]")
-        echo "Building $service..."
-        docker build -t $DOCKER_REGISTRY/$lowercase_service:$DOCKER_IMAGE_TAG -f ./Services/$service/$dockerfile ./Services/$service
-        docker push $DOCKER_REGISTRY/$lowercase_service:$DOCKER_IMAGE_TAG
-      done
-      EOF
+          lowercase_service=$(echo "$service" | tr "[:upper:]" "[:lower:]")
+          echo "Building $service..."
+          docker build -t $DOCKER_REGISTRY/$lowercase_service:$DOCKER_IMAGE_TAG -f ./Services/$service/$dockerfile ./Services/$service
+          docker push $DOCKER_REGISTRY/$lowercase_service:$DOCKER_IMAGE_TAG
+        done
+      '
 
 docker_build_frontend:
   stage: docker
