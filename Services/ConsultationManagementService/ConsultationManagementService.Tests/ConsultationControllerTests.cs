@@ -17,6 +17,11 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Threading;
+using Xunit;
 
 namespace ConsultationManagementService.Tests
 {
@@ -35,7 +40,8 @@ namespace ConsultationManagementService.Tests
         public async Task GetConsultationByIdAsync_Should_ReturnBadRequest_When_IdIsEmpty()
         {
             var result = await _controller.GetConsultationByIdAsync(Guid.Empty);
-            result.Result.Should().BeOfType<BadRequestObjectResult>();
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
+            Assert.Equal("Invalid consultation ID", badRequest.Value);
         }
 
         [Fact]
@@ -48,8 +54,8 @@ namespace ConsultationManagementService.Tests
 
             var result = await _controller.GetConsultationByIdAsync(id);
 
-            result.Result.Should().BeOfType<OkObjectResult>();
-            ((OkObjectResult)result.Result).Value.Should().Be(consultation);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            Assert.Equal(consultation, okResult.Value);
         }
 
         [Fact]
@@ -61,8 +67,8 @@ namespace ConsultationManagementService.Tests
 
             var result = await _controller.GetAllConsultationsAsync(1, 10);
 
-            result.Result.Should().BeOfType<OkObjectResult>();
-            ((OkObjectResult)result.Result).Value.Should().BeEquivalentTo(consultations);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            Assert.Equal(consultations, okResult.Value);
         }
 
         [Fact]
@@ -99,7 +105,8 @@ namespace ConsultationManagementService.Tests
         public async Task UpdateConsultationAsync_Should_ReturnBadRequest_When_DtoIsNull()
         {
             var result = await _controller.UpdateConsultationAsync(null);
-            result.Should().BeOfType<BadRequestObjectResult>();
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal("Invalid consultation data", badRequest.Value);
         }
 
         [Fact]
@@ -119,14 +126,15 @@ namespace ConsultationManagementService.Tests
 
             var result = await _controller.UpdateConsultationAsync(dto);
 
-            result.Should().BeOfType<NoContentResult>();
+            Assert.IsType<NoContentResult>(result);
         }
 
         [Fact]
         public async Task DeleteConsultationAsync_Should_ReturnBadRequest_When_IdIsEmpty()
         {
             var result = await _controller.DeleteConsultationAsync(Guid.Empty);
-            result.Should().BeOfType<BadRequestObjectResult>();
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal("Invalid consultation ID", badRequest.Value);
         }
 
         [Fact]
@@ -138,14 +146,28 @@ namespace ConsultationManagementService.Tests
 
             var result = await _controller.DeleteConsultationAsync(id);
 
-            result.Should().BeOfType<NoContentResult>();
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        [Fact]
+        public async Task DeleteConsultationAsync_Should_ReturnNotFound_When_NotDeleted()
+        {
+            var id = Guid.NewGuid();
+            _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteConsultationCommand>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(false);
+
+            var result = await _controller.DeleteConsultationAsync(id);
+
+            var notFound = Assert.IsType<NotFoundObjectResult>(result);
+            Assert.Equal("Consultation not found", notFound.Value);
         }
 
         [Fact]
         public async Task GetConsultationsByPatientIdAsync_Should_ReturnBadRequest_When_IdIsEmpty()
         {
             var result = await _controller.GetConsultationsByPatientIdAsync(Guid.Empty);
-            result.Result.Should().BeOfType<BadRequestObjectResult>();
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
+            Assert.Equal("Invalid patient ID", badRequest.Value);
         }
 
         [Fact]
@@ -158,15 +180,16 @@ namespace ConsultationManagementService.Tests
 
             var result = await _controller.GetConsultationsByPatientIdAsync(patientId);
 
-            result.Result.Should().BeOfType<OkObjectResult>();
-            ((OkObjectResult)result.Result).Value.Should().BeEquivalentTo(consultations);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            Assert.Equal(consultations, okResult.Value);
         }
 
         [Fact]
         public async Task GetConsultationsByDoctorIdAsync_Should_ReturnBadRequest_When_IdIsEmpty()
         {
             var result = await _controller.GetConsultationsByDoctorIdAsync(Guid.Empty);
-            result.Result.Should().BeOfType<BadRequestObjectResult>();
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
+            Assert.Equal("Invalid doctor ID", badRequest.Value);
         }
 
         [Fact]
@@ -179,15 +202,16 @@ namespace ConsultationManagementService.Tests
 
             var result = await _controller.GetConsultationsByDoctorIdAsync(doctorId);
 
-            result.Result.Should().BeOfType<OkObjectResult>();
-            ((OkObjectResult)result.Result).Value.Should().BeEquivalentTo(consultations);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            Assert.Equal(consultations, okResult.Value);
         }
 
         [Fact]
         public async Task GetDocumentMedicalByIdAsync_Should_ReturnBadRequest_When_IdIsEmpty()
         {
             var result = await _controller.GetDocumentMedicalByIdAsync(Guid.Empty);
-            result.Result.Should().BeOfType<BadRequestObjectResult>();
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
+            Assert.Equal("Invalid document ID", badRequest.Value);
         }
 
         [Fact]
@@ -200,41 +224,24 @@ namespace ConsultationManagementService.Tests
 
             var result = await _controller.GetDocumentMedicalByIdAsync(id);
 
-            result.Result.Should().BeOfType<OkObjectResult>();
-            ((OkObjectResult)result.Result).Value.Should().Be(document);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            Assert.Equal(document, okResult.Value);
         }
 
         [Fact]
-        public async Task UploadDocumentMedicalAsync_Should_ReturnBadRequest_When_DtoIsNull()
+        public async Task UploadDocumentMedicalAsync_Should_ReturnBadRequest_When_FileIsNull()
         {
-            var result = await _controller.UploadDocumentMedicalAsync(null);
-            result.Should().BeOfType<BadRequestObjectResult>();
-        }
-
-        [Fact]
-        public async Task UploadDocumentMedicalAsync_Should_ReturnOk_When_Valid()
-        {
-            var dto = new DocumentMedicalDTO
-            {
-                Id = Guid.NewGuid(),
-                ConsultationId = Guid.NewGuid(),
-                Type = "Ordonnance",
-                FichierURL = "http://test.fr/file.pdf"
-            };
-            _mediatorMock
-                .Setup(m => m.Send(It.IsAny<UploadDocumentMedicalCommand>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Unit.Value));
-
-            var result = await _controller.UploadDocumentMedicalAsync(dto);
-
-            result.Should().BeOfType<OkObjectResult>();
+            var result = await _controller.UploadDocumentMedicalAsync(Guid.NewGuid(), "Ordonnance", null);
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal("Aucun fichier reçu.", badRequest.Value);
         }
 
         [Fact]
         public async Task DeleteDocumentMedicalAsync_Should_ReturnBadRequest_When_IdIsEmpty()
         {
             var result = await _controller.DeleteDocumentMedicalAsync(Guid.Empty);
-            result.Should().BeOfType<BadRequestObjectResult>();
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal("Invalid document ID", badRequest.Value);
         }
 
         [Fact]
@@ -246,7 +253,20 @@ namespace ConsultationManagementService.Tests
 
             var result = await _controller.DeleteDocumentMedicalAsync(id);
 
-            result.Should().BeOfType<NoContentResult>();
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        [Fact]
+        public async Task DeleteDocumentMedicalAsync_Should_ReturnNotFound_When_NotDeleted()
+        {
+            var id = Guid.NewGuid();
+            _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteDocumentMedicalCommand>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(false);
+
+            var result = await _controller.DeleteDocumentMedicalAsync(id);
+
+            var notFound = Assert.IsType<NotFoundObjectResult>(result);
+            Assert.Equal("Document médical not found", notFound.Value);
         }
 
         [Fact]
@@ -259,18 +279,20 @@ namespace ConsultationManagementService.Tests
 
             var result = await _controller.GetNombreConsultations(start, end);
 
-            result.Should().BeOfType<OkObjectResult>();
-            ((OkObjectResult)result).Value.Should().Be(10);
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(10, okResult.Value);
         }
 
         [Fact]
         public async Task GetCountByMedecinIds_Should_ReturnBadRequest_When_ListIsNullOrEmpty()
         {
             var result1 = await _controller.GetCountByMedecinIds(null);
-            var result2 = await _controller.GetCountByMedecinIds(new List<Guid>());
+            var badRequest1 = Assert.IsType<BadRequestObjectResult>(result1);
+            Assert.Equal("La liste des identifiants de médecins ne peut pas être vide.", badRequest1.Value);
 
-            result1.Should().BeOfType<BadRequestObjectResult>();
-            result2.Should().BeOfType<BadRequestObjectResult>();
+            var result2 = await _controller.GetCountByMedecinIds(new List<Guid>());
+            var badRequest2 = Assert.IsType<BadRequestObjectResult>(result2);
+            Assert.Equal("La liste des identifiants de médecins ne peut pas être vide.", badRequest2.Value);
         }
 
         [Fact]
@@ -282,8 +304,9 @@ namespace ConsultationManagementService.Tests
 
             var result = await _controller.GetCountByMedecinIds(ids);
 
-            result.Should().BeOfType<OkObjectResult>();
-            ((OkObjectResult)result).Value.Should().Be(5);
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(5, okResult.Value);
         }
     }
 }
+
