@@ -39,27 +39,26 @@ docker_build_backend:
   services:
     - docker:dind
   script:
-  - |
-    declare -A dockerfiles
-    dockerfiles=( 
-      [AuthService]="Auth.API/Dockerfile"
-      [ClinicManagementService]="Clinic.API/Dockerfile"
-      [DoctorManagementService]="Doctor.API/Dockerfile"
-      [PatientManagementService]="PatientManagementService.API/Dockerfile"
-      [RDVManagementService]="RDV.API/Dockerfile"
-      [ConsultationManagementService]="ConsultationManagementService.API/Dockerfile"
-      [FacturationService]="Facturation.API/Dockerfile"
-      [ReportingService]="Reporting.API/Dockerfile"
-      [NotificationService]="Notif.API/Dockerfile"
-    )
+    - apk add --no-cache bash   # installer bash si non présent
+    - bash -c '
+      services=("AuthService" "ClinicManagementService" "DoctorManagementService" "PatientManagementService" "RDVManagementService" "ConsultationManagementService" "FacturationService" "ReportingService" "NotificationService")
+      for service in "${services[@]}"; do
+        if [ "$service" = "AuthService" ]; then dockerfile="Auth.API/Dockerfile"; fi
+        if [ "$service" = "ClinicManagementService" ]; then dockerfile="Clinic.API/Dockerfile"; fi
+        if [ "$service" = "DoctorManagementService" ]; then dockerfile="Doctor.API/Dockerfile"; fi
+        if [ "$service" = "PatientManagementService" ]; then dockerfile="PatientManagementService.API/Dockerfile"; fi
+        if [ "$service" = "RDVManagementService" ]; then dockerfile="RDV.API/Dockerfile"; fi
+        if [ "$service" = "ConsultationManagementService" ]; then dockerfile="ConsultationManagementService.API/Dockerfile"; fi
+        if [ "$service" = "FacturationService" ]; then dockerfile="Facturation.API/Dockerfile"; fi
+        if [ "$service" = "ReportingService" ]; then dockerfile="Reporting.API/Dockerfile"; fi
+        if [ "$service" = "NotificationService" ]; then dockerfile="Notif.API/Dockerfile"; fi
 
-    for service in "${!dockerfiles[@]}"; do
-      lowercase_service=$(echo "$service" | tr '[:upper:]' '[:lower:]')
-      docker build -t $DOCKER_REGISTRY/$lowercase_service:$DOCKER_IMAGE_TAG \
-        -f ./Services/$service/${dockerfiles[$service]} \
-        ./Services/$service
-      docker push $DOCKER_REGISTRY/$lowercase_service:$DOCKER_IMAGE_TAG
-    done
+        lowercase_service=$(echo "$service" | tr "[:upper:]" "[:lower:]")
+        echo "Building $service..."
+        docker build -t $DOCKER_REGISTRY/$lowercase_service:$DOCKER_IMAGE_TAG -f ./Services/$service/$dockerfile ./Services/$service
+        docker push $DOCKER_REGISTRY/$lowercase_service:$DOCKER_IMAGE_TAG
+      done
+      '
 
 docker_build_frontend:
   stage: docker
