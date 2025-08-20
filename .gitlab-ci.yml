@@ -41,7 +41,7 @@ docker_build_backend:
   script:
     - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
     - |
-      for service in AuthService ClinicManagementService DoctorManagementService PatientManagementService RDVManagementService ConsultationManagementService FacturationService ReportingService NotificationService; do
+      for service in authservice clinicmanagementservice doctormanagementservice patientmanagementservice rdvmanagementservice consultationmanagementservice facturationservice reportingservice notificationservice; do
         echo "Building and pushing $service..."
         docker build -t $DOCKER_REGISTRY/$service:$DOCKER_IMAGE_TAG ./Services/$service
         docker push $DOCKER_REGISTRY/$service:$DOCKER_IMAGE_TAG
