@@ -39,7 +39,7 @@ docker_build_backend:
   services:
     - docker:dind
   script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
     - |
       for service in AuthService ClinicManagementService DoctorManagementService PatientManagementService RDVManagementService ConsultationManagementService FacturationService ReportingService NotificationService; do
         echo "Building and pushing $service..."
@@ -53,7 +53,7 @@ docker_build_frontend:
   services:
     - docker:dind
   script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
     - docker build -t $DOCKER_REGISTRY/Frontend:$DOCKER_IMAGE_TAG ./Frontend
     - docker push $DOCKER_REGISTRY/Frontend:$DOCKER_IMAGE_TAG
 
