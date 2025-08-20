@@ -39,14 +39,27 @@ docker_build_backend:
   services:
     - docker:dind
   script:
-    - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-    - |
-      for service in AuthService ClinicManagementService DoctorManagementService PatientManagementService RDVManagementService ConsultationManagementService FacturationService ReportingService NotificationService; do
-        lowercase_service=$(echo "$service" | tr '[:upper:]' '[:lower:]')
-        echo "Building and pushing $service..."
-        docker build -t $DOCKER_REGISTRY/$lowercase_service:$DOCKER_IMAGE_TAG ./Services/$service
-        docker push $DOCKER_REGISTRY/$lowercase_service:$DOCKER_IMAGE_TAG
-      done
+  - |
+    declare -A dockerfiles
+    dockerfiles=( 
+      [AuthService]="Auth.API/Dockerfile"
+      [ClinicManagementService]="Clinic.API/Dockerfile"
+      [DoctorManagementService]="Doctor.API/Dockerfile"
+      [PatientManagementService]="PatientManagementService.API/Dockerfile"
+      [RDVManagementService]="RDV.API/Dockerfile"
+      [ConsultationManagementService]="ConsultationManagementService.API/Dockerfile"
+      [FacturationService]="Facturation.API/Dockerfile"
+      [ReportingService]="Reporting.API/Dockerfile"
+      [NotificationService]="Notif.API/Dockerfile"
+    )
+
+    for service in "${!dockerfiles[@]}"; do
+      lowercase_service=$(echo "$service" | tr '[:upper:]' '[:lower:]')
+      docker build -t $DOCKER_REGISTRY/$lowercase_service:$DOCKER_IMAGE_TAG \
+        -f ./Services/$service/${dockerfiles[$service]} \
+        ./Services/$service
+      docker push $DOCKER_REGISTRY/$lowercase_service:$DOCKER_IMAGE_TAG
+    done
 
 docker_build_frontend:
   stage: docker
