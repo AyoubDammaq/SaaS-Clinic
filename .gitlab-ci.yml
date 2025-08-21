@@ -94,11 +94,13 @@ docker_build_frontend:
 # ---------------- Deploy with Docker Compose ----------------
 deploy:
   stage: deploy
-  image: docker/compose:latest
+  image: docker:24.0.5
   services:
     - docker:dind
   script:
+    - apk add --no-cache docker-cli-compose
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
-    - docker-compose -f docker-compose.yml pull
-    - docker-compose -f docker-compose.yml up -d --remove-orphans
+    - docker compose -f docker-compose.yml pull
+    - docker compose -f docker-compose.yml up -d --remove-orphans
+
 
