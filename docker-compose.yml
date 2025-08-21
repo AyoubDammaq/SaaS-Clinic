@@ -204,7 +204,7 @@ services:
           memory: 384M
           cpus: '0.3'
     volumes:
-      - ./ConsultationManagementService.API/wwwroot/uploads:/app/wwwroot/uploads
+      - ./Services/ConsultationManagementService/ConsultationManagementService.API/wwwroot/uploads:/app/wwwroot/uploads
 
   facturationservice:
     container_name: facturationservice
