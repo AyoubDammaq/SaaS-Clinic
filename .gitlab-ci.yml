@@ -101,6 +101,7 @@ deploy:
     - apk add --no-cache docker-cli-compose
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
     - docker compose -f docker-compose.yml pull
-    - docker compose -f docker-compose.yml up -d --remove-orphans
+    - docker compose -f docker-compose.yml up -d --build --remove-orphans
+
 
 
