@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   zookeeper:
     container_name: zookeeper
@@ -47,6 +49,7 @@ services:
     build:
       context: ./API_Gateway
       dockerfile: Dockerfile
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/api-gateway:latest"
     ports:
       - "8000:8080"
     environment:
@@ -68,19 +71,18 @@ services:
         limits:
           memory: 256M
           cpus: '0.3'
+
   authapi:
     container_name: authapi
-    image: ${DOCKER_REGISTRY-}authapi
     build:
       context: ./Services/AuthService
       dockerfile: Auth.API/Dockerfile
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/authapi:latest"
     ports:
       - "5001:8081"
       - "5002:8082"
     environment:
       ConnectionStrings__DefaultConnection: Server=host.docker.internal,1435;Database=UserDb;User Id=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;
-    # depends_on:
-    #   - auth.database
     volumes:
       - dataprotection_keys:/app/keys
     networks:
@@ -92,45 +94,19 @@ services:
           memory: 384M
           cpus: '0.3'
 
-  # auth.database:
-  #   image: mcr.microsoft.com/mssql/server:2022-latest
-  #   container_name: auth.database
-  #   user: "0"
-  #   environment:
-  #     - ACCEPT_EULA=Y
-  #     - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
-  #     - MSSQL_PID=Express
-  #     - MSSQL_MEMORY_LIMIT_MB=800
-  #     - TZ=Europe/Paris
-  #   command: >
-  #     bash -c "mkdir -p /var/opt/mssql/data /var/opt/mssql/log /var/opt/mssql/backup &&
-  #     chown -R mssql:mssql /var/opt/mssql &&
-  #     /opt/mssql/bin/sqlservr"
-  #   volumes:
-  #     - sqlvolume_auth_data:/var/opt/mssql/data
-  #     - sqlvolume_auth_log:/var/opt/mssql/log
-  #     - sqlvolume_auth_backup:/var/opt/mssql/backup
-  #   ports:
-  #     - "1434:1433"
-  #   networks:
-  #     - mynetwork
-  #   restart: unless-stopped
-
-
   clinicservice:
     container_name: clinicservice
-    image: ${DOCKER_REGISTRY-}clinicapi
     build:
       context: ./Services/ClinicManagementService
       dockerfile: Clinic.API/Dockerfile
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/clinicservice:latest"
     ports:
       - "5003:8083"
-      - "5004:8084" 
+      - "5004:8084"
     environment:
       ConnectionStrings__DefaultConnection: Server=host.docker.internal,1435;Database=ClinicDb;User Id=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;
     depends_on:
       - kafka
-    # - clinic.database
     networks:
       - mynetwork
     restart: unless-stopped
@@ -140,28 +116,12 @@ services:
           memory: 384M
           cpus: '0.3'
 
-  # clinic.database:
-  #   image: mcr.microsoft.com/mssql/server:2022-latest
-  #   container_name: clinic.database
-  #   environment:
-  #     - ACCEPT_EULA=Y
-  #     - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
-  #     - MSSQL_PID=Express
-  #   command: /opt/mssql/bin/sqlservr
-  #   ports:
-  #     - "1435:1433"
-  #   networks:
-  #     - mynetwork
-  #   volumes:
-  #     - sqlvolume_clinic:/var/opt/mssql
-  #   restart: unless-stopped
-
   doctorservice:
     container_name: doctorservice
-    image: ${DOCKER_REGISTRY-}doctorapi
     build:
       context: ./Services/DoctorManagementService
       dockerfile: Doctor.API/Dockerfile
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/doctorservice:latest"
     ports:
       - "5005:8085"
       - "5006:8086"
@@ -169,7 +129,6 @@ services:
       ConnectionStrings__DefaultConnection: Server=host.docker.internal,1435;Database=MedecinDb;User Id=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;
     depends_on:
       - kafka
-    # - doctor.database
     networks:
       - mynetwork
     restart: unless-stopped
@@ -179,28 +138,12 @@ services:
           memory: 384M
           cpus: '0.3'
 
-  # doctor.database:
-  #   image: mcr.microsoft.com/mssql/server:2022-latest
-  #   container_name: doctor.database
-  #   environment:
-  #     - ACCEPT_EULA=Y
-  #     - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
-  #     - MSSQL_PID=Express
-  #   command: /opt/mssql/bin/sqlservr
-  #   ports:
-  #     - "1436:1433"
-  #   networks:
-  #     - mynetwork
-  #   volumes:
-  #     - sqlvolume_doctor:/var/opt/mssql
-  #   restart: unless-stopped
-
   patientservice:
     container_name: patientservice
-    image: ${DOCKER_REGISTRY-}patientapi
     build:
       context: ./Services/PatientManagementService
       dockerfile: PatientManagementService.API/Dockerfile
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/patientservice:latest"
     ports:
       - "5007:8087"
       - "5008:8088"
@@ -208,7 +151,6 @@ services:
       ConnectionStrings__DefaultConnection: Server=host.docker.internal,1435;Database=PatientDb;User Id=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;
     depends_on:
       - kafka
-    # - patient.database
     networks:
       - mynetwork
     restart: unless-stopped
@@ -218,28 +160,12 @@ services:
           memory: 384M
           cpus: '0.3'
 
-  # patient.database:
-  #   image: mcr.microsoft.com/mssql/server:2022-latest
-  #   container_name: patient.database
-  #   environment:
-  #     - ACCEPT_EULA=Y
-  #     - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
-  #     - MSSQL_PID=Express
-  #   command: /opt/mssql/bin/sqlservr
-  #   ports:
-  #     - "1437:1433"
-  #   networks:
-  #     - mynetwork
-  #   volumes:
-  #     - sqlvolume_patient:/var/opt/mssql
-  #   restart: unless-stopped
-
   rdvservice:
     container_name: rdvservice
-    image: ${DOCKER_REGISTRY-}rdvapi
     build:
       context: ./Services/RDVManagementService
       dockerfile: RDV.API/Dockerfile
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/rdvservice:latest"
     ports:
       - "5009:8089"
       - "5010:8090"
@@ -247,7 +173,6 @@ services:
       ConnectionStrings__DefaultConnection: Server=host.docker.internal,1435;Database=RDVDb;User Id=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;
     depends_on:
       - kafka
-    # - rdv.database
     networks:
       - mynetwork
     restart: unless-stopped
@@ -257,28 +182,12 @@ services:
           memory: 384M
           cpus: '0.3'
 
-  # rdv.database:
-  #   image: mcr.microsoft.com/mssql/server:2022-latest
-  #   container_name: rdv.database
-  #   environment:
-  #     - ACCEPT_EULA=Y
-  #     - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
-  #     - MSSQL_PID=Express
-  #   command: /opt/mssql/bin/sqlservr
-  #   ports:
-  #     - "1438:1433"
-  #   networks:
-  #     - mynetwork
-  #   volumes:
-  #     - sqlvolume_rdv:/var/opt/mssql
-  #   restart: unless-stopped
-
   consultationservice:
     container_name: consultationservice
-    image: ${DOCKER_REGISTRY-}consultationapi
     build:
       context: ./Services/ConsultationManagementService
       dockerfile: ConsultationManagementService.API/Dockerfile
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/consultationservice:latest"
     ports:
       - "5011:8091"
       - "5012:8092"
@@ -286,7 +195,6 @@ services:
       ConnectionStrings__DefaultConnection: Server=host.docker.internal,1435;Database=ConsultationDb;User Id=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;
     depends_on:
       - kafka
-    # - consultation.database
     networks:
       - mynetwork
     restart: unless-stopped
@@ -298,28 +206,12 @@ services:
     volumes:
       - ./ConsultationManagementService.API/wwwroot/uploads:/app/wwwroot/uploads
 
-  # consultation.database:
-  #   image: mcr.microsoft.com/mssql/server:2022-latest
-  #   container_name: consultation.database
-  #   environment:
-  #     - ACCEPT_EULA=Y
-  #     - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
-  #     - MSSQL_PID=Express
-  #   command: /opt/mssql/bin/sqlservr
-  #   ports:
-  #     - "1439:1433"
-  #   networks:
-  #     - mynetwork
-  #   volumes:
-  #     - sqlvolume_consultation:/var/opt/mssql
-  #   restart: unless-stopped
-
   facturationservice:
     container_name: facturationservice
-    image: ${DOCKER_REGISTRY-}facturationapi
     build:
       context: ./Services/FacturationService
       dockerfile: Facturation.API/Dockerfile
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/facturationservice:latest"
     ports:
       - "5013:8093"
       - "5014:8094"
@@ -327,7 +219,6 @@ services:
       ConnectionStrings__DefaultConnection: Server=host.docker.internal,1435;Database=FactureDb;User Id=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;
     depends_on:
       - kafka
-    #- facturation.database
     networks:
       - mynetwork
     restart: unless-stopped
@@ -337,33 +228,12 @@ services:
           memory: 384M
           cpus: '0.3'
 
-  # facturation.database:
-  #   image: mcr.microsoft.com/mssql/server:2022-latest
-  #   container_name: facturation.database
-  #   environment:
-  #     - ACCEPT_EULA=Y
-  #     - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
-  #     - MSSQL_PID=Express
-  #   command: /opt/mssql/bin/sqlservr
-  #   ports:
-  #     - "1440:1433"
-  #   networks:
-  #     - mynetwork
-  #   volumes:
-  #     - sqlvolume_facture:/var/opt/mssql
-  #   restart: unless-stopped
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 2G
-  #         cpus: '0.8'
-
   reportingservice:
     container_name: reportingservice
-    image: ${DOCKER_REGISTRY-}reportingapi
     build:
       context: ./Services/ReportingService
       dockerfile: Reporting.API/Dockerfile
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/reportingservice:latest"
     ports:
       - "5015:8095"
       - "5016:8096"
@@ -378,17 +248,16 @@ services:
 
   notificationservice:
     container_name: notificationservice
-    image: ${DOCKER_REGISTRY-}notificationapi
     build:
       context: ./Services/NotificationService
       dockerfile: Notif.API/Dockerfile
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/notificationservice:latest"
     ports:
       - "5017:8097"
       - "5018:8098"
     environment:
       ConnectionStrings__DefaultConnection: Server=host.docker.internal,1435;Database=NotificationDb;User Id=sa;Password=azerty@123456;Encrypt=False;TrustServerCertificate=True;
     depends_on:
-      #- notification.database
       - kafka
       - doctorservice
       - patientservice
@@ -401,34 +270,14 @@ services:
           memory: 384M
           cpus: '0.3'
 
-# notification.database:
-#   image: mcr.microsoft.com/mssql/server:2022-latest
-#   container_name: notification.database
-#   environment:
-#     - ACCEPT_EULA=Y
-#     - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
-#     - MSSQL_PID=Express
-#   command: /opt/mssql/bin/sqlservr
-#   ports:
-#     - "1441:1433"      
-#   networks:
-#     - mynetwork
-#   volumes:
-#     - sqlvolume_notification:/var/opt/mssql
-#   restart: unless-stopped
-#   deploy:
-#     resources:
-#       limits:
-#         memory: 1G
-#         cpus: '0.7'
-
   frontend:
     container_name: frontend
     build:
-      context: ./Frontend      
+      context: ./Frontend
       dockerfile: Dockerfile
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/frontend:latest"
     ports:
-      - "8080:80"            
+      - "8080:80"
     environment:
       REACT_APP_API_GATEWAY_URL: http://host.docker.internal:8000
     networks:
@@ -439,7 +288,6 @@ services:
         limits:
           memory: 256M
           cpus: '0.3'
-
 
 volumes:
   kafka-data:
