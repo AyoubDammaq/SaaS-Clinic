@@ -77,7 +77,7 @@ services:
     build:
       context: ./Services/AuthService
       dockerfile: Auth.API/Dockerfile
-    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/authapi:latest"
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/authservice:latest"
     ports:
       - "5001:8081"
       - "5002:8082"
