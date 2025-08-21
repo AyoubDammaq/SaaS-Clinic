@@ -99,7 +99,7 @@ services:
     build:
       context: ./Services/ClinicManagementService
       dockerfile: Clinic.API/Dockerfile
-    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/clinicservice:latest"
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/clinicmanagementservice:latest"
     ports:
       - "5003:8083"
       - "5004:8084"
@@ -121,7 +121,7 @@ services:
     build:
       context: ./Services/DoctorManagementService
       dockerfile: Doctor.API/Dockerfile
-    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/doctorservice:latest"
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/doctormanagementservice:latest"
     ports:
       - "5005:8085"
       - "5006:8086"
@@ -143,7 +143,7 @@ services:
     build:
       context: ./Services/PatientManagementService
       dockerfile: PatientManagementService.API/Dockerfile
-    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/patientservice:latest"
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/patientmanagementservice:latest"
     ports:
       - "5007:8087"
       - "5008:8088"
@@ -165,7 +165,7 @@ services:
     build:
       context: ./Services/RDVManagementService
       dockerfile: RDV.API/Dockerfile
-    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/rdvservice:latest"
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/rdvmanagementservice:latest"
     ports:
       - "5009:8089"
       - "5010:8090"
@@ -187,7 +187,7 @@ services:
     build:
       context: ./Services/ConsultationManagementService
       dockerfile: ConsultationManagementService.API/Dockerfile
-    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/consultationservice:latest"
+    image: "${DOCKER_REGISTRY:-registry.gitlab.com/ayoubdammak/clinic-saas}/consultationmanagementservice:latest"
     ports:
       - "5011:8091"
       - "5012:8092"
