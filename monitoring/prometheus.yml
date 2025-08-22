@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 10s
+
+scrape_configs:
+  - job_name: 'saas-clinic-services'
+    static_configs:
+      - targets:
+          - 'authapi:8081'
+          - 'clinicservice:8083'
+          - 'doctorservice:8085'
+          - 'patientservice:8087'
+          - 'rdvservice:8089'
+          - 'consultationservice:8091'
+          - 'facturationservice:8093'
+          - 'reportingservice:8095'
+          - 'notificationservice:8097'

@@ -14,6 +14,7 @@ using System.Text;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using RDV.Application.Mappings;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -91,6 +92,9 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 app.UseCors("AllowAllOrigins");
 
 app.UseAuthorization();
+
+app.UseMetricServer();
+app.UseHttpMetrics();
 
 app.MapControllers();
 

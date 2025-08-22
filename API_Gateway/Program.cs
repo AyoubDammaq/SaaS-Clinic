@@ -1,6 +1,7 @@
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using Ocelot.Cache.CacheManager; // Ajout pour le cache
+using Ocelot.Cache.CacheManager;
+using Prometheus; // Ajout pour le cache
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,6 +61,8 @@ if (app.Environment.IsDevelopment())
 app.UseRouting();
 app.UseCors("AllowReactApp");
 
+app.UseMetricServer();
+app.UseHttpMetrics();
 
 // Middleware Ocelot
 await app.UseOcelot();

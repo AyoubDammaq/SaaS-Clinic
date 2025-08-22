@@ -12,6 +12,7 @@ using Notif.Infrastructure.Messaging.Consumers;
 using Confluent.Kafka;
 using Notif.Infrastructure.Channels;
 using Notif.Infrastructure.Factories;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -233,6 +234,9 @@ app.UseCors("AllowAllOrigins");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMetricServer();
+app.UseHttpMetrics();
 
 app.MapControllers();
 

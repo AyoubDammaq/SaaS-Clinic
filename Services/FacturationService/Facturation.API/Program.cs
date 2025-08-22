@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Facturation.Application.Mapping;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -94,6 +95,9 @@ app.UseCors("AllowAllOrigins");
 
 
 app.UseAuthorization();
+
+app.UseMetricServer();
+app.UseHttpMetrics();
 
 app.MapControllers();
 

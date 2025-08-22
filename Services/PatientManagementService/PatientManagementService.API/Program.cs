@@ -9,6 +9,7 @@ using PatientManagementService.Domain.Interfaces.Messaging;
 using PatientManagementService.Infrastructure.Data;
 using PatientManagementService.Infrastructure.Messaging;
 using PatientManagementService.Infrastructure.Repositories;
+using Prometheus;
 using Scalar.AspNetCore;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -100,6 +101,9 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseMetricServer();
+app.UseHttpMetrics();
 
 app.MapControllers();
 

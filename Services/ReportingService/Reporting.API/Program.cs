@@ -17,6 +17,7 @@ using Notif.Infrastructure.Repositories;
 using Notif.Application.Services;
 using Microsoft.EntityFrameworkCore;
 using Notif.Infrastructure.Data;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -120,6 +121,9 @@ app.UseCors("AllowAllOrigins");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMetricServer();
+app.UseHttpMetrics();
 
 app.MapControllers();
 
