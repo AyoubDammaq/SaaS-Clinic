@@ -463,7 +463,7 @@ function SuperAdminDashboard({
   }
   return (
     <div className="space-y-6">
-      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         <StatCard
           title={t("super_admin_total_clinics") || "Total Clinics"}
           value={`${dashboardStats?.totalClinics?.toString() || 0}`}
@@ -486,12 +486,12 @@ function SuperAdminDashboard({
           icon={<User className="h-4 w-4" />}
           trend={doctorTrend ?? { value: 0, isPositive: true }}
         />
-        <StatCard
+        {/* <StatCard
           title={t("super_admin_total_revenue") || "Total Revenue"}
           value={`$${dashboardStats.totalFacturesPayees ?? 0}`}
           icon={<CreditCard className="h-4 w-4" />}
           trend={revenueTrend ?? { value: 0, isPositive: true }}
-        />
+        /> */}
       </div>
 
       <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">

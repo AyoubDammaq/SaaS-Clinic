@@ -89,3 +89,11 @@ export interface DecodedToken {
   medecinId?: string;
   patientId?: string;
 }
+
+// mapping.ts
+export const roleMap: Record<number, UserRole> = {
+  1: "ClinicAdmin",
+  2: "SuperAdmin",
+  3: "Doctor",
+  4: "Patient",
+};

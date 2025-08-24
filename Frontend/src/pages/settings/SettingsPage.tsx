@@ -563,7 +563,7 @@ function SettingsPage() {
                 <Lock className="h-4 w-4 mr-2" /> Security
               </TabsTrigger>
               {(user?.role === "ClinicAdmin" ||
-                user?.role === "SuperAdmin") && (
+                user?.role !== "SuperAdmin") && (
                 <TabsTrigger value="clinic">
                   <Building className="h-4 w-4 mr-2" /> Clinic
                 </TabsTrigger>

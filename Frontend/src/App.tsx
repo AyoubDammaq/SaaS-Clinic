@@ -23,6 +23,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import ProfilePage from "./pages/ProfilePage";
 import MedicalRecordForPatient from "./pages/patients/MedicalRecordForPatient";
+import UsersPage from "./pages/users/UsersPage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -74,7 +75,12 @@ function App() {
                 <Route
                   element={
                     <PrivateRoute
-                      allowedRoles={["SuperAdmin", "ClinicAdmin", "Patient", "Doctor"]}
+                      allowedRoles={[
+                        "SuperAdmin",
+                        "ClinicAdmin",
+                        "Patient",
+                        "Doctor",
+                      ]}
                     />
                   }
                 >
@@ -132,6 +138,8 @@ function App() {
                     path="/notifications"
                     element={<NotificationsPage />}
                   />
+
+                  <Route path="/users" element={<UsersPage />} />
                 </Route>
 
                 {/* Other placeholders (accessible à tous les rôles sauf Doctor/Patient si besoin) */}
@@ -152,9 +160,7 @@ function App() {
                   />
                 </Route>
 
-                <Route
-                  element={<PrivateRoute allowedRoles={["Patient"]} />}
-                >
+                <Route element={<PrivateRoute allowedRoles={["Patient"]} />}>
                   <Route
                     path="/medicalrecord"
                     element={<MedicalRecordForPatient />}

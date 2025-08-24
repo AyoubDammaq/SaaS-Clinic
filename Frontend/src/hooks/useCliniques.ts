@@ -25,7 +25,10 @@ interface UseCliniquesState {
   handleAddClinique: (
     data: Omit<Clinique, "id" | "dateCreation">
   ) => Promise<Clinique>;
-  handleUpdateClinique: (id: string, data: Partial<Clinique>) => Promise<Clinique>;
+  handleUpdateClinique: (
+    id: string,
+    data: Partial<Clinique>
+  ) => Promise<Clinique>;
   handleDeleteClinique: (id: string) => Promise<void>;
   fetchCliniqueStatistics: (id: string) => Promise<void>;
   filterCliniquesByType: (type: TypeClinique) => Promise<void>;
@@ -107,13 +110,23 @@ export function useCliniques(): UseCliniquesState {
   }, [fetchCliniques]);
 
   useEffect(() => {
-    if (user?.role === "Doctor") {
-      const currentDoctor = doctors.find((doc) => doc.id === user.medecinId);
+    if (
+      user?.role === "Doctor" &&
+      user.medecinId &&
+      doctors.length > 0 &&
+      cliniques.length > 0
+    ) {
+      const currentDoctor = doctors.find(
+        (doc) => doc.id.trim() === user.medecinId.trim()
+      );
 
       if (currentDoctor) {
         const foundClinic = cliniques.find(
-          (c) => c.id === currentDoctor.cliniqueId
+          (c) =>
+            c.id.replace(/\s/g, "") ===
+            currentDoctor.cliniqueId?.replace(/\s/g, "")
         );
+
         if (foundClinic) {
           setFilteredCliniques([foundClinic]);
         } else {
@@ -129,7 +142,7 @@ export function useCliniques(): UseCliniquesState {
   }, [user, cliniques, doctors]);
 
   // Récupérer les statistiques d'une clinique
-  const fetchCliniqueStatistics = async (id: string) => {
+  const fetchCliniqueStatistics = useCallback(async (id: string) => {
     setIsLoadingStats(true);
     try {
       const data = await cliniqueService.getCliniqueStatistics(id);
@@ -140,7 +153,7 @@ export function useCliniques(): UseCliniquesState {
     } finally {
       setIsLoadingStats(false);
     }
-  };
+  }, []);
 
   // Ajouter une nouvelle clinique
   const handleAddClinique = async (

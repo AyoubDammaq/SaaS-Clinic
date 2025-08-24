@@ -1,5 +1,5 @@
 // ClinicsPage.tsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import {
   Card,
@@ -22,7 +22,6 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useCliniques } from "@/hooks/useCliniques";
 import { Clinique, TypeClinique, StatutClinique } from "@/types/clinic";
-import { toast } from "sonner";
 import { ClinicForm } from "@/components/clinics/ClinicForm";
 import { CliniqueDetail } from "@/components/clinics/CliniqueDetail";
 import { ClinicFilters } from "@/components/clinics/ClinicFilters";
@@ -77,6 +76,13 @@ function ClinicsPage() {
   // Filtrer les cliniques pour les Doctor
   const doctorClinic =
     user?.role === "Doctor" ? filteredCliniques[0] || null : null;
+
+  // Récupérer automatiquement les statistiques si c'est un doctor
+  useEffect(() => {
+    if (user?.role === "Doctor" && doctorClinic) {
+      fetchCliniqueStatistics(doctorClinic.id);
+    }
+  }, [user, doctorClinic, fetchCliniqueStatistics]);
 
   // Open modal for add
   const handleOpenAdd = () => {

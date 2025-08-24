@@ -45,6 +45,13 @@ export function AppSidebar() {
         roles: ["SuperAdmin", "ClinicAdmin", "Doctor", "Patient"],
       },
       {
+        name: t("user_management"),
+        key: "user_management",
+        path: "/users",
+        icon: FileText,
+        roles: ["SuperAdmin"],
+      },
+      {
         name: t("medical_record"),
         key: "medical_record",
         path: "/medicalrecord",
@@ -107,13 +114,6 @@ export function AppSidebar() {
         icon: Settings,
         roles: ["SuperAdmin", "ClinicAdmin"],
       },
-      // {
-      //   name: t("user_management"),
-      //   key: "user_management",
-      //   path: "/users",
-      //   icon: FileText,
-      //   roles: ["SuperAdmin"],
-      // },
     ];
 
     if (!user) return [];

@@ -18,4 +18,5 @@ export type TranslationValues = typeof resources.en.common &
   typeof resources.en.clinics &
   typeof resources.en.dashboard &
   typeof resources.en.notifications &
+  typeof resources.en.users &
   typeof resources.en.pagination;
