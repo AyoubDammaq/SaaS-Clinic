@@ -710,7 +710,6 @@ function DoctorsPage() {
           onSubmit={async (data) => {
             try {
               await handleAddAppointment(data);
-              toast.success(t("availabilityAddSuccess"));
             } catch (error) {
               toast.error(t("errorAddingAvailability"));
               console.error(t("errorAddingAvailability"), error);

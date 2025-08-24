@@ -30,6 +30,7 @@ import { API_ENDPOINTS } from "@/config/api";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useDoctors } from "@/hooks/useDoctors";
 
 // Définir les valeurs brutes des spécialités pour la soumission au serveur
 const specialties = [
@@ -87,6 +88,9 @@ export function DoctorForm({
   const { token } = useAuth();
   const { t } = useTranslation("doctors");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { registerWithDefaultPassword, linkToProfileHelper, deleteUser } =
+    useAuth();
+  const { linkUserToDoctor, deleteDoctor } = useDoctors();
 
   const form = useForm<DoctorFormValues>({
     resolver: zodResolver(doctorFormSchema(t)),
@@ -104,7 +108,6 @@ export function DoctorForm({
   }, [initialData, form]);
 
   const handleSubmit = async (data: DoctorFormValues) => {
-    console.log("[DoctorForm] Submitting form with values:", data);
     setIsSubmitting(true);
 
     try {
@@ -120,8 +123,6 @@ export function DoctorForm({
 
       const method = isUpdating ? "PUT" : "POST";
 
-      console.log("Sending", method, "request to", url);
-
       const response = await fetch(url, {
         method,
         headers: {
@@ -129,19 +130,34 @@ export function DoctorForm({
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          prenom: data.prenom,
-          nom: data.nom,
-          email: data.email,
-          telephone: data.telephone,
-          specialite: data.specialite,
-          cliniqueId: data.cliniqueId || null,
-          photoUrl: data.photoUrl || null,
-          id: initialData?.id || undefined,
+          Prenom: data.prenom,
+          Nom: data.nom,
+          Specialite: data.specialite,
+          Email: data.email,
+          Telephone: data.telephone,
+          PhotoUrl: data.photoUrl || null,
         }),
       });
 
       if (!response.ok) {
+        const errorText = await response.text();
         throw new Error("Request failed");
+      }
+
+      const doctorResult = await response.json();
+
+      // --- Création de l'utilisateur associé ---
+      if (!isUpdating && doctorResult?.id) {
+        const userCreated = await registerWithDefaultPassword(
+          `${data.prenom} ${data.nom}`,
+          data.email,
+          "Doctor"
+        );
+        const createdUserId = userCreated.id;
+
+        await linkUserToDoctor(createdUserId, doctorResult.id);
+
+        await linkToProfileHelper(createdUserId, doctorResult.id, 3);
       }
 
       toast.success(
@@ -149,9 +165,8 @@ export function DoctorForm({
       );
       form.reset();
       onClose();
-      onSubmit({ ...data, id: initialData?.id || undefined });
+      onSubmit({ ...data, id: doctorResult?.id || initialData?.id });
     } catch (error) {
-      console.error("Error submitting doctor form:", error);
       toast.error(t("errorAddingDoctor"));
     } finally {
       setIsSubmitting(false);

@@ -28,16 +28,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TypeClinique, StatutClinique } from "@/types/clinic";
+import { TypeClinique, StatutClinique, Clinique } from "@/types/clinic";
 import { toast } from "sonner";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useAuth } from "@/hooks/useAuth";
+import { useCliniques } from "@/hooks/useCliniques";
 
 const clinicFormSchema = z.object({
   nom: z.string().min(2, { message: "name_min_length" }),
   adresse: z.string().min(5, { message: "address_min_length" }),
   numeroTelephone: z.string().min(5, { message: "phone_min_length" }),
   email: z.string().email({ message: "invalid_email" }),
-  siteWeb: z.string().url({ message: "invalid_url" }).optional().or(z.literal("")),
+  siteWeb: z
+    .string()
+    .url({ message: "invalid_url" })
+    .optional()
+    .or(z.literal("")),
   description: z.string().optional(),
   typeClinique: z.string().refine(
     (value) => {
@@ -65,7 +71,7 @@ interface ClinicFormProps {
       typeClinique: number;
       statut: number;
     }
-  ) => void;
+  ) => Promise<Clinique>;
   initialData?: {
     nom?: string;
     adresse?: string;
@@ -88,6 +94,9 @@ export function ClinicForm({
 }: ClinicFormProps) {
   const { t } = useTranslation("clinics");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { registerWithDefaultPassword, linkToProfileHelper, deleteUser } =
+    useAuth();
+  const { linkUserToClinique, handleDeleteClinique } = useCliniques();
 
   const form = useForm<ClinicFormValues>({
     resolver: zodResolver(clinicFormSchema),
@@ -131,35 +140,74 @@ export function ClinicForm({
 
   const handleSubmit = async (data: ClinicFormValues) => {
     setIsSubmitting(true);
+
+    let createdClinicId: string | null = null;
+    let createdUserId: string | null = null;
+
     try {
-      await onSubmit({
+      // 1️⃣ Créer ou mettre à jour la clinique
+      const clinicPayload = {
         ...data,
         siteWeb: data.siteWeb?.trim() === "" ? undefined : data.siteWeb,
         description:
           data.description?.trim() === "" ? undefined : data.description,
         typeClinique: Number(data.typeClinique),
         statut: Number(data.statut),
-      });
+      };
+
+      const newClinic = await onSubmit(clinicPayload);
+      createdClinicId = newClinic.id;
+
       toast.success(
         initialData ? t("clinic_updated_success") : t("clinic_added_success")
       );
+
+      if (!initialData) {
+        // 🚀 Flux création : créer l'utilisateur et lier
+        const userCreated = await registerWithDefaultPassword(
+          data.nom,
+          data.email,
+          "ClinicAdmin"
+        );
+        createdUserId = userCreated.id;
+
+        await linkUserToClinique(createdUserId, createdClinicId);
+        await linkToProfileHelper(createdUserId, createdClinicId, 1);
+      }
+
       form.reset();
       onClose();
-    } catch (error) {
-      console.error("Error submitting clinic form:", error);
-      toast.error(t("clinic_save_failed"));
+    } catch (error: unknown) {
+      toast.error(
+        error instanceof Error ? error.message : t("clinic_save_failed")
+      );
+
+      // 🔄 Rollback uniquement si création
+      if (!initialData && createdClinicId) {
+        try {
+          await handleDeleteClinique(createdClinicId);
+          if (createdUserId) {
+            await deleteUser(createdUserId, { isRollback: true });
+          }
+        } catch (rollbackError) {
+          console.error("❌ Rollback failed:", rollbackError);
+        }
+      }
     } finally {
       setIsSubmitting(false);
+      console.log("🏁 Submission process finished");
     }
   };
 
   const getTypeCliniqueLabel = (value: number): string => {
-    const label = TypeClinique[value as unknown as keyof typeof TypeClinique as string];
+    const label =
+      TypeClinique[value as unknown as keyof typeof TypeClinique as string];
     return typeof label === "string" ? label.toLowerCase() : "unknown";
   };
 
   const getStatutCliniqueLabel = (value: number): string => {
-    const label = StatutClinique[value as unknown as keyof typeof StatutClinique as string];
+    const label =
+      StatutClinique[value as unknown as keyof typeof StatutClinique as string];
     return typeof label === "string" ? label.toLowerCase() : "unknown";
   };
 
@@ -177,7 +225,10 @@ export function ClinicForm({
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-3">
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-3"
+          >
             <FormField
               control={form.control}
               name="nom"
@@ -222,7 +273,9 @@ export function ClinicForm({
                     <Input placeholder={t("phone_placeholder")} {...field} />
                   </FormControl>
                   <FormMessage>
-                    {getErrorMessage(form.formState.errors.numeroTelephone?.message)}
+                    {getErrorMessage(
+                      form.formState.errors.numeroTelephone?.message
+                    )}
                   </FormMessage>
                 </FormItem>
               )}
@@ -278,7 +331,9 @@ export function ClinicForm({
                     </SelectContent>
                   </Select>
                   <FormMessage>
-                    {getErrorMessage(form.formState.errors.typeClinique?.message)}
+                    {getErrorMessage(
+                      form.formState.errors.typeClinique?.message
+                    )}
                   </FormMessage>
                 </FormItem>
               )}
@@ -323,7 +378,9 @@ export function ClinicForm({
                     />
                   </FormControl>
                   <FormMessage>
-                    {getErrorMessage(form.formState.errors.description?.message)}
+                    {getErrorMessage(
+                      form.formState.errors.description?.message
+                    )}
                   </FormMessage>
                 </FormItem>
               )}
@@ -336,7 +393,7 @@ export function ClinicForm({
                 {isSubmitting || isLoading
                   ? t("saving")
                   : initialData
-                  ? t("update")
+                  ? t("edit")
                   : t("create")}
               </Button>
             </DialogFooter>

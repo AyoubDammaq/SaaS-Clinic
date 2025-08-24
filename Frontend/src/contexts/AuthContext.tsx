@@ -1,8 +1,5 @@
 import { createContext } from "react";
-import {
-  User,
-  UserRole,
-} from "@/types/auth";
+import { User, UserRole } from "@/types/auth";
 
 export interface AuthContextType {
   user: User | null;
@@ -38,6 +35,14 @@ export interface AuthContextType {
   ) => Promise<boolean>;
   checkUserRole: (roles: UserRole[]) => boolean;
   linkToProfile: (userId: string, profileId: string) => Promise<boolean>;
+  registerWithDefaultPassword: (
+    fullName: string,
+    email: string,
+    role?: UserRole
+  ) => Promise<User | null>;
+  linkToProfileHelper: (userId: string, profileId: string, role: number) => Promise<boolean>;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);

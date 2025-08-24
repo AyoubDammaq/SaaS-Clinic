@@ -138,10 +138,8 @@ export function useAppointments(): UseAppointmentsState {
     try {
       const newRdv = await rendezVousService.create(data);
       setAppointments((prev) => [...prev, newRdv]);
-      toast.success("Rendez-vous ajouté avec succès");
     } catch (error) {
       console.error("Erreur lors de la création du rendez-vous:", error);
-      toast.error("Échec de la création du rendez-vous");
     } finally {
       setIsSubmitting(false);
     }

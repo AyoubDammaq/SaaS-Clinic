@@ -24,6 +24,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { useAuth } from "@/hooks/useAuth";
 
 interface DoctorScheduleProps {
   doctorId: string;
@@ -31,6 +32,7 @@ interface DoctorScheduleProps {
 
 export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
   const { t } = useTranslation("doctors");
+  const { user } = useAuth();
   const {
     disponibilites,
     isLoading,
@@ -196,7 +198,7 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
     <div>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold">{t("doctorScheduleTitle")}</h2>
-        {permissions.canCreate && (
+        {permissions.canCreate && user.role !== "SuperAdmin" &&(
           <Button onClick={openAddModal} disabled={isSubmitting}>
             {t("addAvailability")}
           </Button>

@@ -92,21 +92,23 @@ function ClinicsPage() {
   };
 
   // Handle form submit (add or edit)
-  const handleFormSubmit = async (data: ClinicFormValues) => {
-    try {
-      if (editingClinic) {
-        await handleUpdateClinique(editingClinic.id, data);
-        toast.success(t("clinic_updated_success"));
-      } else {
-        await handleAddClinique(data);
-        toast.success(t("clinic_added_success"));
-      }
+  const handleFormSubmit = async (
+    data: Omit<ClinicFormValues, "typeClinique" | "statut"> & {
+      typeClinique: number;
+      statut: number;
+    }
+  ): Promise<Clinique> => {
+    if (editingClinic) {
+      const updated = await handleUpdateClinique(editingClinic.id, data);
       setIsFormOpen(false);
       setEditingClinic(null);
       refetchCliniques();
-    } catch (error) {
-      console.error("Error submitting clinic form:", error);
-      toast.error(t("clinic_save_failed"));
+      return updated;
+    } else {
+      const created = await handleAddClinique(data);
+      setIsFormOpen(false);
+      refetchCliniques();
+      return created;
     }
   };
 

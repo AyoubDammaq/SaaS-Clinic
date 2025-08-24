@@ -327,14 +327,14 @@ function BillingPage() {
             />
           )}
 
-          <div className="flex items-center gap-2 ml-auto">
+          {/* <div className="flex items-center gap-2 ml-auto">
             {permissions.canViewAllInvoices && (
               <Button variant="outline" size="sm" className="btn-press">
                 <Calendar className="mr-1 h-4 w-4" aria-hidden="true" />
                 {t("paymentHistory")}
               </Button>
             )}
-          </div>
+          </div> */}
         </CardFooter>
       </Card>
 

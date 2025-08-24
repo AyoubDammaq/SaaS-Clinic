@@ -25,7 +25,7 @@ interface UsePatientState {
   handleUpdatePatient: (
     id: string,
     data: Partial<Omit<Patient, "id" | "dateCreation">>
-  ) => Promise<void>;
+  ) => Promise<Patient>;
   handleDeletePatient: (id: string) => Promise<void>;
   refetchPatients: () => void;
   fetchPatients: () => void;

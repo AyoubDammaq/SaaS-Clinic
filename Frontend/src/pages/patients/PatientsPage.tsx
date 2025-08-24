@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { DossierMedical, Patient } from '@/types/patient';
-import { PatientsList } from '@/components/patients/PatientsList';
-import { PatientProfile } from '@/components/patients/PatientProfile';
-import { PatientForm } from '@/components/patients/PatientForm';
-import { PatientSettings } from '@/components/patients/PatientSettings';
-import { usePatients } from '@/hooks/usePatients';
-import { Button } from '@/components/ui/button';
-import { FileText, Settings, User } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { useTranslation } from '@/hooks/useTranslation';
+import { DossierMedical, Patient } from "@/types/patient";
+import { PatientsList } from "@/components/patients/PatientsList";
+import { PatientProfile } from "@/components/patients/PatientProfile";
+import { PatientForm } from "@/components/patients/PatientForm";
+import { PatientSettings } from "@/components/patients/PatientSettings";
+import { usePatients } from "@/hooks/usePatients";
+import { Button } from "@/components/ui/button";
+import { FileText, Settings, User } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { useTranslation } from "@/hooks/useTranslation";
 import {
   Dialog,
   DialogContent,
@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
 
-type PatientFormValues = Omit<Patient, 'id' | 'dateCreation'>;
+type PatientFormValues = Omit<Patient, "id" | "dateCreation">;
 
 function PatientsPage() {
   const { t } = useTranslation("patients");
@@ -44,9 +44,9 @@ function PatientsPage() {
     setSearchTerm,
     handleAddPatient,
     handleUpdatePatient,
-    handleDeletePatient
+    handleDeletePatient,
   } = usePatients();
-  
+
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [patientData, setPatientData] = useState<Patient | null>(null);
@@ -75,8 +75,9 @@ function PatientsPage() {
 
   // Load patient data if user is a patient
   useEffect(() => {
-    if (user?.role === 'Patient' && patients.length > 0) {
-      const foundPatient = patients.find(p => p.email === user.email) || patients[0];
+    if (user?.role === "Patient" && patients.length > 0) {
+      const foundPatient =
+        patients.find((p) => p.email === user.email) || patients[0];
       setPatientData(foundPatient);
     }
   }, [user, patients]);
@@ -87,18 +88,27 @@ function PatientsPage() {
   };
 
   // Handle form submission
-  const handleFormSubmit = async (data: PatientFormValues) => {
+  const handleFormSubmit = async (
+    data: PatientFormValues
+  ): Promise<Patient> => {
     try {
       if (selectedPatient) {
         const payload = { ...data, id: selectedPatient.id };
-        await handleUpdatePatient(selectedPatient.id, payload);
+        const updatedPatient = await handleUpdatePatient(
+          selectedPatient.id,
+          payload
+        );
+        setSelectedPatient(null);
+        setIsFormOpen(false);
+        return updatedPatient; // <-- retourne le patient mis à jour
       } else {
-        await handleAddPatient(data);
+        const newPatient = await handleAddPatient(data); // <-- doit retourner le patient créé
+        setIsFormOpen(false);
+        return newPatient; // <-- retourne le patient créé
       }
-      setSelectedPatient(null);
-      setIsFormOpen(false);
     } catch (error) {
       console.error("Error submitting patient data:", error);
+      throw error; // pour que le Promise soit rejected si erreur
     }
   };
 
@@ -129,16 +139,18 @@ function PatientsPage() {
   // Role-specific patient view
   const renderPatientView = () => {
     if (!user) return null;
-    
-    if (user.role === 'Patient') {
+
+    if (user.role === "Patient") {
       if (!patientData) {
         return (
           <div className="flex justify-center items-center h-40">
-            <p className="text-muted-foreground">{t("loading_patient_profile")}</p>
+            <p className="text-muted-foreground">
+              {t("loading_patient_profile")}
+            </p>
           </div>
         );
       }
-      
+
       const patientProfileData = {
         id: patientData.id,
         name: `${patientData.prenom} ${patientData.nom}`,
@@ -146,43 +158,52 @@ function PatientsPage() {
         phone: patientData.telephone,
         dateOfBirth: patientData.dateNaissance,
         gender: patientData.sexe,
-        address: patientData.adresse
+        address: patientData.adresse,
       };
-      
+
       return (
-        <Tabs 
-          value={activeTab} 
-          onValueChange={setActiveTab}
-          className="w-full"
-        >
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="mb-6 grid grid-cols-3 w-full md:w-auto">
-            <TabsTrigger value="profile" className="flex items-center gap-2" aria-label={t("profile")}>
+            <TabsTrigger
+              value="profile"
+              className="flex items-center gap-2"
+              aria-label={t("profile")}
+            >
               <User className="h-4 w-4" />
               <span className="hidden md:inline">{t("profile")}</span>
             </TabsTrigger>
-            <TabsTrigger value="medical" className="flex items-center gap-2" aria-label={t("medical_record")}>
+            <TabsTrigger
+              value="medical"
+              className="flex items-center gap-2"
+              aria-label={t("medical_record")}
+            >
               <FileText className="h-4 w-4" />
               <span className="hidden md:inline">{t("medical_record")}</span>
             </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center gap-2" aria-label={t("settings")}>
+            <TabsTrigger
+              value="settings"
+              className="flex items-center gap-2"
+              aria-label={t("settings")}
+            >
               <Settings className="h-4 w-4" />
               <span className="hidden md:inline">{t("settings")}</span>
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="profile" className="mt-0">
-            <PatientProfile 
-              patient={patientProfileData} 
+            <PatientProfile
+              patient={patientProfileData}
               onEditPatient={(patient) => {
                 const updatedPatient: Partial<Patient> = {
                   id: patient.id,
-                  nom: patient.nom.split(' ')[1] || patientData?.nom || '',
-                  prenom: patient.nom.split(' ')[0] || patientData?.prenom || '',
+                  nom: patient.nom.split(" ")[1] || patientData?.nom || "",
+                  prenom:
+                    patient.nom.split(" ")[0] || patientData?.prenom || "",
                   email: patient.email,
                   telephone: patient.telephone,
                   dateNaissance: patient.dateNaissance,
                   sexe: patient.sexe as "M" | "F",
-                  adresse: patient.adresse
+                  adresse: patient.adresse,
                 };
                 handleUpdatePatient(patient.id, updatedPatient);
               }}
@@ -197,7 +218,7 @@ function PatientsPage() {
               <CardContent>
                 <div className="flex flex-col items-start gap-4">
                   <p>{t("view_medical_history_description")}</p>
-                  <Button 
+                  <Button
                     onClick={() => handleViewMedicalRecord(patientData.id)}
                     className="gap-2"
                     aria-label={t("view_medical_record")}
@@ -217,9 +238,13 @@ function PatientsPage() {
       );
     }
 
-    async function fetchMedicalRecord(patientId: string): Promise<DossierMedical | null> {
+    async function fetchMedicalRecord(
+      patientId: string
+    ): Promise<DossierMedical | null> {
       try {
-        const medicalRecord: DossierMedical = await fetch(`medical-records/${patientId}`).then(res => res.json());
+        const medicalRecord: DossierMedical = await fetch(
+          `medical-records/${patientId}`
+        ).then((res) => res.json());
         return medicalRecord;
       } catch (error) {
         console.error("Failed to fetch medical record:", error);
@@ -229,7 +254,7 @@ function PatientsPage() {
 
     return (
       <>
-        <PatientsList 
+        <PatientsList
           userRole={user.role}
           patients={patients}
           filteredPatients={paginatedPatients} // Use paginatedPatients instead of filteredPatients
@@ -237,7 +262,10 @@ function PatientsPage() {
           setSearchTerm={setSearchTerm}
           isLoading={isLoading}
           permissions={permissions}
-          onAddPatient={() => { setSelectedPatient(null); setIsFormOpen(true); }}
+          onAddPatient={() => {
+            setSelectedPatient(null);
+            setIsFormOpen(true);
+          }}
           onEditPatient={handleEditPatient}
           onDeletePatient={handleDeletePatientRequest}
           fetchMedicalRecord={fetchMedicalRecord}
@@ -247,8 +275,12 @@ function PatientsPage() {
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious
-                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                  className={cn(currentPage <= 1 && "pointer-events-none opacity-50")}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
+                  className={cn(
+                    currentPage <= 1 && "pointer-events-none opacity-50"
+                  )}
                 />
               </PaginationItem>
               <PaginationItem className="flex items-center">
@@ -258,8 +290,13 @@ function PatientsPage() {
               </PaginationItem>
               <PaginationItem>
                 <PaginationNext
-                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                  className={cn(currentPage >= totalPages && "pointer-events-none opacity-50")}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  className={cn(
+                    currentPage >= totalPages &&
+                      "pointer-events-none opacity-50"
+                  )}
                 />
               </PaginationItem>
             </PaginationContent>
@@ -273,18 +310,18 @@ function PatientsPage() {
     <div className="space-y-6 pb-8">
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold tracking-tight">
-          {user?.role === 'Patient' ? t("patient_portal") : t("patients")}
+          {user?.role === "Patient" ? t("patient_portal") : t("patients")}
         </h1>
         <p className="text-muted-foreground">
-          {user?.role === 'Patient' 
-            ? t("manage_patient_profile_description") 
+          {user?.role === "Patient"
+            ? t("manage_patient_profile_description")
             : t("manage_patients_description")}
         </p>
       </div>
       {renderPatientView()}
-      
+
       {/* Patient Form Modal */}
-      <PatientForm 
+      <PatientForm
         isOpen={isFormOpen}
         onClose={() => {
           setIsFormOpen(false);
@@ -300,10 +337,15 @@ function PatientsPage() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{t("confirmDelete")}</DialogTitle>
-            <DialogDescription>{t("confirmDeleteDescription")}</DialogDescription>
+            <DialogDescription>
+              {t("confirmDeleteDescription")}
+            </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setIsDeleteDialogOpen(false)}
+            >
               {t("cancel")}
             </Button>
             <Button variant="destructive" onClick={handleDeletePatientConfirm}>

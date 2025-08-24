@@ -107,13 +107,13 @@ export function AppSidebar() {
         icon: Settings,
         roles: ["SuperAdmin", "ClinicAdmin"],
       },
-      {
-        name: t("user_management"),
-        key: "user_management",
-        path: "/users",
-        icon: FileText,
-        roles: ["SuperAdmin"],
-      },
+      // {
+      //   name: t("user_management"),
+      //   key: "user_management",
+      //   path: "/users",
+      //   icon: FileText,
+      //   roles: ["SuperAdmin"],
+      // },
     ];
 
     if (!user) return [];

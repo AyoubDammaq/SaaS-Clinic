@@ -225,17 +225,21 @@ export function MedicalRecordView({
             <p className="text-muted-foreground mb-4">
               {t("No_medical_record_found_for_this_patient")}
             </p>
-            <Button variant="default" onClick={() => setIsFormOpen(true)}>
-              {t("create_medical_record")}
-            </Button>
-            {isFormOpen && (
-              <CreateMedicalRecordModal
-                isOpen={isFormOpen}
-                onClose={() => setIsFormOpen(false)}
-                onSubmit={onCreateMedicalRecord}
-                isSubmitting={isCreating}
-              />
-            )}
+            {userRole !== "SuperAdmin" && (
+            <>
+              <Button variant="default" onClick={() => setIsFormOpen(true)}>
+                {t("create_medical_record")}
+              </Button>
+              {isFormOpen && (
+                <CreateMedicalRecordModal
+                  isOpen={isFormOpen}
+                  onClose={() => setIsFormOpen(false)}
+                  onSubmit={onCreateMedicalRecord}
+                  isSubmitting={isCreating}
+                />
+              )}
+            </>
+          )}
           </div>
         </CardContent>
       </Card>

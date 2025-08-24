@@ -147,10 +147,8 @@ export function useDoctors(): UseDoctorsState {
       setDoctors((prev) =>
         prev.map((doctor) => (doctor.id === id ? updatedDoctor : doctor))
       );
-      toast.success("Doctor updated successfully");
     } catch (error) {
       console.error("Error updating doctor:", error);
-      toast.error("Failed to update doctor");
       throw error;
     } finally {
       setIsSubmitting(false);

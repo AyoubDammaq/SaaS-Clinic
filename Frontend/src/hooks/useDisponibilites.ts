@@ -65,7 +65,7 @@ export function useDisponibilite(): UseDisponibiliteState {
 
   useEffect(() => {
     if (user) {
-      const canCreate = ["SuperAdmin", "ClinicAdmin", "Doctor"].includes(
+      const canCreate = ["ClinicAdmin", "Doctor"].includes(
         user.role
       );
       const canEdit = canCreate;

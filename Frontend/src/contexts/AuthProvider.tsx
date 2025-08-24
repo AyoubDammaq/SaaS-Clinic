@@ -1,6 +1,6 @@
 // src/contexts/AuthProvider.tsx
-import React, { useState, useEffect, ReactNode } from "react";
-import { AuthContext, AuthContextType } from "@/contexts/AuthContext";
+import { useState, useEffect, ReactNode } from "react";
+import { AuthContext } from "@/contexts/AuthContext";
 import {
   User,
   UserRole,
@@ -18,6 +18,11 @@ import { useTranslation } from "@/hooks/useTranslation";
 import jwt_decode from "jwt-decode";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
+
+interface ErrorResponse {
+  message?: string;
+  [key: string]: unknown;
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -655,7 +660,127 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       console.log("✅ [linkToProfile] Success:", response);
 
+      return true;
+    } catch (err: unknown) {
+      let errorMessage = t("profileLinkError") || "Failed to link profile";
+
+      if (err instanceof AxiosError && err.response?.data) {
+        console.error(
+          "❌ [linkToProfile] API error response:",
+          err.response.data
+        );
+        const data = err.response.data;
+        if (typeof data === "string") {
+          errorMessage = data;
+        } else if (
+          typeof data === "object" &&
+          data !== null &&
+          "message" in data &&
+          typeof data.message === "string"
+        ) {
+          errorMessage = data.message;
+        }
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      console.error("❌ [linkToProfile] Caught error:", errorMessage);
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const registerWithDefaultPassword = async (
+    fullName: string,
+    email: string,
+    role?: UserRole
+  ): Promise<User | null> => {
+    setIsLoading(true);
+    setError(null);
+
+    const generateDefaultPassword = (email: string) => {
+      if (!email.includes("@")) return "Default123"; // fallback
+      const username = email.split("@")[0];
+      return username.charAt(0).toUpperCase() + username.slice(1) + " 123";
+    };
+
+    const password = generateDefaultPassword(email);
+
+    try {
+      const userData: RegisterDto = {
+        FullName: fullName,
+        Email: email,
+        Password: password,
+        ConfirmPassword: password,
+        Role: role ? roleMap[role] : 4, // 4 = rôle par défaut si aucun fourni
+      };
+
+      const response = await api.post<User>(
+        API_ENDPOINTS.AUTH.REGISTER,
+        userData,
+        { withAuth: false }
+      );
+
+      if (!response) {
+        throw new Error("Registration failed");
+      }
+
+      toast.success(
+        t("registerSuccess") + ` (mot de passe par défaut: "${password}")`
+      );
+      return response;
+    } catch (err: unknown) {
+      console.error("Registration error:", err);
+
+      let errorMessage = t("registerError") || "Registration failed";
+
+      if (err instanceof AxiosError && err.response?.data) {
+        const data = err.response.data;
+        if (typeof data === "string") {
+          errorMessage = data;
+        } else if (data && typeof data === "object" && "message" in data) {
+          errorMessage = (data as ErrorResponse).message;
+        }
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const linkToProfileHelper = async (
+    userId: string,
+    profileId: string,
+    role: number // correspond à UserRole côté backend
+  ): Promise<boolean> => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const linkProfileData = {
+        userId,
+        entityId: profileId,
+        role, // envoyer le numéro correspondant à l'enum UserRole
+      };
+
+      console.log("🔗 [linkToProfile] Sending data to API:", linkProfileData);
+
+      const response = await api.post(
+        API_ENDPOINTS.AUTH.LINK_PROFILE,
+        linkProfileData
+      );
+
+      console.log("✅ [linkToProfile] Success:", response);
       toast.success(t("profileLinkedSuccess") || "Profile linked successfully");
+
       return true;
     } catch (err: unknown) {
       let errorMessage = t("profileLinkError") || "Failed to link profile";
@@ -709,6 +834,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         deleteUser,
         checkUserRole,
         linkToProfile,
+        registerWithDefaultPassword,
+        linkToProfileHelper,
       }}
     >
       {children}

@@ -25,7 +25,7 @@ interface UseCliniquesState {
   handleAddClinique: (
     data: Omit<Clinique, "id" | "dateCreation">
   ) => Promise<Clinique>;
-  handleUpdateClinique: (id: string, data: Partial<Clinique>) => Promise<void>;
+  handleUpdateClinique: (id: string, data: Partial<Clinique>) => Promise<Clinique>;
   handleDeleteClinique: (id: string) => Promise<void>;
   fetchCliniqueStatistics: (id: string) => Promise<void>;
   filterCliniquesByType: (type: TypeClinique) => Promise<void>;
@@ -162,16 +162,30 @@ export function useCliniques(): UseCliniquesState {
   };
 
   // Mettre à jour une clinique existante
-  const handleUpdateClinique = async (id: string, data: Partial<Clinique>) => {
+  const handleUpdateClinique = async (
+    id: string,
+    data: Partial<Clinique>
+  ): Promise<Clinique> => {
     setIsSubmitting(true);
     try {
       await cliniqueService.updateClinique(id, data);
+      let updatedClinique: Clinique | null = null;
+
       setCliniques((prev) =>
-        prev.map((clinique) =>
-          clinique.id === id ? { ...clinique, ...data } : clinique
-        )
+        prev.map((clinique) => {
+          if (clinique.id === id) {
+            updatedClinique = { ...clinique, ...data };
+            return updatedClinique;
+          }
+          return clinique;
+        })
       );
+
       toast.success("Clinique mise à jour avec succès");
+
+      if (!updatedClinique)
+        throw new Error("Clinique non trouvée après update");
+      return updatedClinique;
     } catch (error) {
       console.error("Erreur lors de la mise à jour de la clinique:", error);
       toast.error("Échec de la mise à jour de la clinique");

@@ -1,8 +1,15 @@
-import { toast } from 'sonner';
-import { API_ENDPOINTS } from '@/config/api';
-import { api } from '@/utils/apiClient';
-import { Patient, DossierMedical, DossierMedicalDTO, Document, PatientStatistique, LinkUserToPatientDto } from '@/types/patient';
-import { MedicalRecordDocument } from '@/components/patients/MedicalRecordView';
+import { toast } from "sonner";
+import { API_ENDPOINTS } from "@/config/api";
+import { api } from "@/utils/apiClient";
+import {
+  Patient,
+  DossierMedical,
+  DossierMedicalDTO,
+  Document,
+  PatientStatistique,
+  LinkUserToPatientDto,
+} from "@/types/patient";
+import { MedicalRecordDocument } from "@/components/patients/MedicalRecordView";
 
 export const patientService = {
   // Get all patients
@@ -11,8 +18,8 @@ export const patientService = {
       const response = await api.get<Patient[]>(API_ENDPOINTS.PATIENTS.GET_ALL);
       return response;
     } catch (error) {
-      console.error('Failed to fetch patients:', error);
-      toast.error('Failed to fetch patients');
+      console.error("Failed to fetch patients:", error);
+      toast.error("Failed to fetch patients");
       throw error;
     }
   },
@@ -20,52 +27,71 @@ export const patientService = {
   // Get a patient by ID
   getPatientById: async (id: string): Promise<Patient | null> => {
     try {
-      const response = await api.get<Patient>(API_ENDPOINTS.PATIENTS.GET_BY_ID(id));
+      const response = await api.get<Patient>(
+        API_ENDPOINTS.PATIENTS.GET_BY_ID(id)
+      );
       return response;
     } catch (error) {
       console.error(`Failed to fetch patient with ID ${id}:`, error);
-      toast.error('Failed to fetch patient');
+      toast.error("Failed to fetch patient");
       throw error;
     }
   },
 
   // Search patients by name or first name
-  searchPatientsByName: async (nom?: string, prenom?: string): Promise<Patient[]> => {
+  searchPatientsByName: async (
+    nom?: string,
+    prenom?: string
+  ): Promise<Patient[]> => {
     try {
       const query = new URLSearchParams();
-      if (nom) query.append('name', nom);
-      if (prenom) query.append('lastname', prenom);
+      if (nom) query.append("name", nom);
+      if (prenom) query.append("lastname", prenom);
 
-      const response = await api.get<Patient[]>(`${API_ENDPOINTS.PATIENTS.BASE}/search?${query.toString()}`);
+      const response = await api.get<Patient[]>(
+        `${API_ENDPOINTS.PATIENTS.BASE}/search?${query.toString()}`
+      );
       return response;
     } catch (error) {
-      console.error('Failed to search patients:', error);
-      toast.error('Failed to search patients');
+      console.error("Failed to search patients:", error);
+      toast.error("Failed to search patients");
       throw error;
     }
   },
 
   // Create a new patient
-  createPatient: async (patient: Omit<Patient, 'id' | 'dateCreation'>): Promise<Patient> => {
+  createPatient: async (
+    patient: Omit<Patient, "id" | "dateCreation">
+  ): Promise<Patient> => {
     try {
-      const response = await api.post<Patient>(API_ENDPOINTS.PATIENTS.CREATE, patient);
-      toast.success('Patient created successfully');
+      const response = await api.post<Patient>(
+        API_ENDPOINTS.PATIENTS.CREATE,
+        patient
+      );
+      toast.success("Patient created successfully");
       return response;
     } catch (error) {
-      console.error('Failed to create patient:', error);
-      toast.error('Failed to create patient');
+      console.error("Failed to create patient:", error);
+      toast.error("Failed to create patient");
       throw error;
     }
   },
 
   // Update an existing patient
-  updatePatient: async (id: string, patient: Partial<Patient>): Promise<void> => {
+  updatePatient: async (
+    id: string,
+    patient: Partial<Patient>
+  ): Promise<Patient> => {
     try {
-      await api.put(API_ENDPOINTS.PATIENTS.UPDATE(id), patient);
-      toast.success('Patient updated successfully');
+      const response = await api.put<Patient>(
+        API_ENDPOINTS.PATIENTS.UPDATE(id),
+        patient
+      );
+      toast.success("Patient updated successfully");
+      return response; // <-- renvoyer le patient mis à jour
     } catch (error) {
       console.error(`Failed to update patient with ID ${id}:`, error);
-      toast.error('Failed to update patient');
+      toast.error("Failed to update patient");
       throw error;
     }
   },
@@ -74,16 +100,19 @@ export const patientService = {
   deletePatient: async (id: string): Promise<void> => {
     try {
       await api.delete(API_ENDPOINTS.PATIENTS.DELETE(id));
-      toast.success('Patient deleted successfully');
+      toast.success("Patient deleted successfully");
     } catch (error) {
       console.error(`Failed to delete patient with ID ${id}:`, error);
-      toast.error('Failed to delete patient');
+      toast.error("Failed to delete patient");
       throw error;
     }
   },
 
   // Link user to patient
-    linkUserToPatient: async ({ userId, patientId }: LinkUserToPatientDto): Promise<void> => {
+  linkUserToPatient: async ({
+    userId,
+    patientId,
+  }: LinkUserToPatientDto): Promise<void> => {
     try {
       const payload = {
         userId,
@@ -92,10 +121,10 @@ export const patientService = {
 
       console.log("[linkUserToPatient] Linking user to patient:", payload);
       await api.post(API_ENDPOINTS.PATIENTS.LINK_USER, payload);
-      toast.success('User linked to patient successfully');
+      toast.success("User linked to patient successfully");
     } catch (error) {
-      console.error('Failed to link user to patient:', error);
-      toast.error('Failed to link user to patient');
+      console.error("Failed to link user to patient:", error);
+      toast.error("Failed to link user to patient");
       throw error;
     }
   },
@@ -103,26 +132,38 @@ export const patientService = {
 
 export const dossierMedicalService = {
   // Get medical record by patient ID
-  getDossierMedicalByPatientId: async (patientId: string): Promise<DossierMedical | null> => {
+  getDossierMedicalByPatientId: async (
+    patientId: string
+  ): Promise<DossierMedical | null> => {
     try {
-      const response = await api.get<DossierMedical>(API_ENDPOINTS.MEDICAL_RECORDS.GET_BY_PATIENT(patientId));
-      return response; 
+      const response = await api.get<DossierMedical>(
+        API_ENDPOINTS.MEDICAL_RECORDS.GET_BY_PATIENT(patientId)
+      );
+      return response;
     } catch (error) {
-      console.error(`Failed to fetch medical record for patient ID ${patientId}:`, error);
-      toast.error('Failed to fetch medical record');
+      console.error(
+        `Failed to fetch medical record for patient ID ${patientId}:`,
+        error
+      );
+      toast.error("Failed to fetch medical record");
       return null;
     }
   },
 
   // Create a new medical record
-  createDossierMedical: async (dossier: DossierMedicalDTO): Promise<DossierMedicalDTO> => {
+  createDossierMedical: async (
+    dossier: DossierMedicalDTO
+  ): Promise<DossierMedicalDTO> => {
     try {
-      const response = await api.post<DossierMedicalDTO>(API_ENDPOINTS.MEDICAL_RECORDS.BASE, dossier);
-      toast.success('Medical record created successfully');
+      const response = await api.post<DossierMedicalDTO>(
+        API_ENDPOINTS.MEDICAL_RECORDS.BASE,
+        dossier
+      );
+      toast.success("Medical record created successfully");
       return response;
     } catch (error) {
-      console.error('Failed to create medical record:', error);
-      toast.error('Failed to create medical record');
+      console.error("Failed to create medical record:", error);
+      toast.error("Failed to create medical record");
       throw error;
     }
   },
@@ -131,41 +172,53 @@ export const dossierMedicalService = {
   updateDossierMedical: async (dossier: DossierMedicalDTO): Promise<void> => {
     try {
       await api.put(API_ENDPOINTS.MEDICAL_RECORDS.UPDATE(), dossier);
-      toast.success('Medical record updated successfully');
+      toast.success("Medical record updated successfully");
     } catch (error) {
-      console.error('Failed to update medical record:', error);
-      toast.error('Failed to update medical record');
+      console.error("Failed to update medical record:", error);
+      toast.error("Failed to update medical record");
       throw error;
     }
   },
 
   // Add a document to a medical record
-  addDocumentToDossier: async (dossierId: string, document: Omit<MedicalRecordDocument, 'id' | "dateCreation">): Promise<MedicalRecordDocument> => {
+  addDocumentToDossier: async (
+    dossierId: string,
+    document: Omit<MedicalRecordDocument, "id" | "dateCreation">
+  ): Promise<MedicalRecordDocument> => {
     try {
       const payloadBackend = {
-        Nom: document. nom,
+        Nom: document.nom,
         Type: document.type,
         Url: document.url,
       };
 
       console.log("[addDocumentToDossier] dossierId:", dossierId);
-      console.log("[addDocumentToDossier] Payload sent to API:", payloadBackend);
+      console.log(
+        "[addDocumentToDossier] Payload sent to API:",
+        payloadBackend
+      );
 
-      const response = await api.post<Document>(API_ENDPOINTS.MEDICAL_RECORDS.ADD_DOCUMENT(dossierId), payloadBackend);
+      const response = await api.post<Document>(
+        API_ENDPOINTS.MEDICAL_RECORDS.ADD_DOCUMENT(dossierId),
+        payloadBackend
+      );
       console.log("[addDocumentToDossier] API response:", response);
       const transformed: MedicalRecordDocument = {
         id: response.id,
-        nom: response.nom || '', // fallback si besoin
+        nom: response.nom || "", // fallback si besoin
         type: response.type,
         url: response.url,
         dateCreation: response.dateCreation || new Date().toISOString(), // fallback
       };
 
-      toast.success('Document added successfully');
+      toast.success("Document added successfully");
       return transformed;
     } catch (error) {
-      console.error(`[addDocumentToDossier] Failed for dossier ${dossierId}:`, error);
-      toast.error('Failed to add document');
+      console.error(
+        `[addDocumentToDossier] Failed for dossier ${dossierId}:`,
+        error
+      );
+      toast.error("Failed to add document");
       throw error;
     }
   },
@@ -173,11 +226,13 @@ export const dossierMedicalService = {
   // Delete a document from a medical record
   deleteDocument: async (documentId: string): Promise<void> => {
     try {
-      await api.delete(API_ENDPOINTS.MEDICAL_RECORDS.DELETE_DOCUMENT(documentId));
-      toast.success('Document deleted successfully');
+      await api.delete(
+        API_ENDPOINTS.MEDICAL_RECORDS.DELETE_DOCUMENT(documentId)
+      );
+      toast.success("Document deleted successfully");
     } catch (error) {
       console.error(`Failed to delete document with ID ${documentId}:`, error);
-      toast.error('Failed to delete document');
+      toast.error("Failed to delete document");
       throw error;
     }
   },
@@ -185,15 +240,18 @@ export const dossierMedicalService = {
 
 export const patientStatistiqueService = {
   // Get patient statistics for a given period
-  getPatientStatistiques: async (dateDebut: string, dateFin: string): Promise<PatientStatistique> => {
+  getPatientStatistiques: async (
+    dateDebut: string,
+    dateFin: string
+  ): Promise<PatientStatistique> => {
     try {
       const response = await api.get<PatientStatistique>(
         `${API_ENDPOINTS.PATIENTS.BASE}/statistiques?dateDebut=${dateDebut}&dateFin=${dateFin}`
       );
       return response;
     } catch (error) {
-      console.error('Failed to fetch patient statistics:', error);
-      toast.error('Failed to fetch patient statistics');
+      console.error("Failed to fetch patient statistics:", error);
+      toast.error("Failed to fetch patient statistics");
       throw error;
     }
   },
