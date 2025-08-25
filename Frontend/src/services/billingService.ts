@@ -12,7 +12,6 @@ import {
   UpdateFactureRequest,
   UpdateTarificationRequest,
 } from "@/types/billing";
-import { AxiosResponse } from "axios";
 
 export const billingService = {
   // Facture endpoints (FactureController)

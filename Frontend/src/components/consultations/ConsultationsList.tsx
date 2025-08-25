@@ -1,13 +1,18 @@
-
-import { useNavigate } from 'react-router-dom';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Search, Plus, FileEdit, Trash2 } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Consultation } from '@/types/consultation';
-import { format } from 'date-fns';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Search, Plus, FileEdit, Trash2 } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Consultation } from "@/types/consultation";
+import { format } from "date-fns";
 
 interface ConsultationsListProps {
   filteredConsultations: Consultation[];
@@ -42,12 +47,33 @@ export function ConsultationsList({
 }: ConsultationsListProps) {
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'Programmée':
-        return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Scheduled</Badge>;
-      case 'Terminée':
-        return <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">Completed</Badge>;
-      case 'Annulée':
-        return <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">Canceled</Badge>;
+      case "Programmée":
+        return (
+          <Badge
+            variant="outline"
+            className="bg-blue-50 text-blue-700 border-blue-200"
+          >
+            Scheduled
+          </Badge>
+        );
+      case "Terminée":
+        return (
+          <Badge
+            variant="outline"
+            className="bg-green-50 text-green-700 border-green-200"
+          >
+            Completed
+          </Badge>
+        );
+      case "Annulée":
+        return (
+          <Badge
+            variant="outline"
+            className="bg-red-50 text-red-700 border-red-200"
+          >
+            Canceled
+          </Badge>
+        );
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
@@ -55,7 +81,7 @@ export function ConsultationsList({
 
   const formatDate = (dateString: string) => {
     try {
-      return format(new Date(dateString), 'PPpp'); // Ex: Jul 16, 2025 at 14:30
+      return format(new Date(dateString), "PPpp"); // Ex: Jul 16, 2025 at 14:30
     } catch {
       return dateString;
     }
@@ -101,7 +127,9 @@ export function ConsultationsList({
               <TableHead>Doctor</TableHead>
               <TableHead>Diagnostic</TableHead>
               <TableHead>Status</TableHead>
-              {(permissions.canEdit || permissions.canDelete) && <TableHead>Actions</TableHead>}
+              {(permissions.canEdit || permissions.canDelete) && (
+                <TableHead>Actions</TableHead>
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -113,8 +141,12 @@ export function ConsultationsList({
               </TableRow>
             ) : (
               filteredConsultations.map((consultation) => {
-                const patient = patients.find((p) => p.id === consultation.patientId);
-                const doctor = doctors.find((d) => d.id === consultation.medecinId);
+                const patient = patients.find(
+                  (p) => p.id === consultation.patientId
+                );
+                const doctor = doctors.find(
+                  (d) => d.id === consultation.medecinId
+                );
 
                 return (
                   <TableRow
@@ -122,9 +154,15 @@ export function ConsultationsList({
                     className="cursor-pointer hover:bg-muted/50"
                     onClick={() => onViewConsultationDetails(consultation)}
                   >
-                    <TableCell>{formatDate(consultation.dateConsultation)}</TableCell>
-                    <TableCell>{patient ? `${patient.prenom} ${patient.nom}` : "N/A"}</TableCell>
-                    <TableCell>{doctor ? `${doctor.prenom} ${doctor.nom}` : "N/A"}</TableCell>
+                    <TableCell>
+                      {formatDate(consultation.dateConsultation)}
+                    </TableCell>
+                    <TableCell>
+                      {patient ? `${patient.prenom} ${patient.nom}` : "N/A"}
+                    </TableCell>
+                    <TableCell>
+                      {doctor ? `${doctor.prenom} ${doctor.nom}` : "N/A"}
+                    </TableCell>
                     <TableCell>{consultation.diagnostic || "—"}</TableCell>
                     {(permissions.canEdit || permissions.canDelete) && (
                       <TableCell onClick={(e) => e.stopPropagation()}>

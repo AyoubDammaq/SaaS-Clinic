@@ -17,7 +17,7 @@ export default function ProfilePage() {
   const { user } = useAuth();
   const { t } = useTranslation("profil");
   const { doctors, fetchDoctors } = useDoctors();
-  const { patients, fetchPatients } = usePatients();
+  const { patients, fetchPatients, handleUpdatePatient } = usePatients();
   const { cliniques } = useCliniques();
 
   const [selectedDoctor, setSelectedDoctor] = useState(null);
@@ -41,9 +41,14 @@ export default function ProfilePage() {
     setIsFormOpen(true);
   };
 
-  const handleEditPatient = (patient: Patient) => {
-    setSelectedPatient(patient);
-    setIsFormOpen(true);
+  const handleEditPatient = async (updatedPatient: Partial<Patient>) => {
+    if (!user?.patientId) return Promise.reject("No patientId found");
+
+    // Appelle la mutation du hook
+    const result = await handleUpdatePatient(user.patientId, updatedPatient);
+    // Recharge la liste des patients
+    await fetchPatients();
+    return result;
   };
 
   const handleCloseForm = () => {
@@ -199,7 +204,7 @@ export default function ProfilePage() {
         <PatientForm
           isOpen={isFormOpen}
           onClose={handleCloseForm}
-          onSubmit={handleFormSubmit}
+          onSubmit={handleEditPatient}
           initialData={selectedPatient}
         />
       )}

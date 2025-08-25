@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { disponibiliteService } from "@/services/disponibiliteService";
 import { CreneauDisponibleDto, Disponibilite } from "@/types/disponibilite";
+import { Doctor } from "@/types/doctor";
 
 type UUID = string;
 
@@ -32,7 +33,7 @@ interface UseDisponibiliteState {
     date: string,
     startTime?: string,
     endTime?: string
-  ) => Promise<UUID[]>;
+  ) => Promise<Doctor[]>;
   getAvailableSlots: (
     doctorId: UUID,
     date: string
@@ -65,9 +66,7 @@ export function useDisponibilite(): UseDisponibiliteState {
 
   useEffect(() => {
     if (user) {
-      const canCreate = ["ClinicAdmin"].includes(
-        user.role
-      );
+      const canCreate = ["ClinicAdmin"].includes(user.role);
       const canEdit = canCreate;
       const canDelete = canCreate;
       const canView = true;
@@ -178,7 +177,7 @@ export function useDisponibilite(): UseDisponibiliteState {
     date: string,
     heureDebut?: string,
     heureFin?: string
-  ): Promise<UUID[]> => {
+  ): Promise<Doctor[]> => {
     try {
       return await disponibiliteService.getAvailableDoctors(
         date,

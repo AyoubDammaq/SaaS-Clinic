@@ -36,7 +36,7 @@ export interface AnnulerMedecinRequest {
 
 export interface RendezVousStats {
   totalRdv: number;
-  rdvParMedecin: { medecinId: string; medecinNom: string; count: number; }[];
+  rdvParMedecin: { medecinId: string; medecinNom: string; count: number }[];
   patientsUniques: number;
 }
 
@@ -47,7 +47,6 @@ export type AppointmentFormData = {
   time?: string;
   reason?: string;
 };
-
 
 export type DoctorType = {
   id: string;

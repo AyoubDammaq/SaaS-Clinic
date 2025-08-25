@@ -11,7 +11,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, Plus, FileEdit, Trash2 } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Doctor } from "@/types/doctor";
 import { useAuth } from "@/hooks/useAuth";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -96,9 +95,7 @@ export function DoctorsList({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>
-                {t("fullName")}
-              </TableHead>
+              <TableHead>{t("fullName")}</TableHead>
               <TableHead>{t("specialty")}</TableHead>
               <TableHead>{t("email")}</TableHead>
               <TableHead>{t("phone")}</TableHead>

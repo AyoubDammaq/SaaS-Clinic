@@ -1,5 +1,4 @@
-
-export type UserRole = 'SuperAdmin' | 'ClinicAdmin' | 'Doctor' | 'Patient';
+export type UserRole = "SuperAdmin" | "ClinicAdmin" | "Doctor" | "Patient";
 
 export interface User {
   id: string;
@@ -54,7 +53,7 @@ export interface RefreshTokenRequestDto {
 }
 
 export interface ChangePasswordDto {
-  userId: string; 
+  userId: string;
   currentPassword: string;
   newPassword: string;
 }
@@ -76,7 +75,7 @@ export interface ChangeUserRoleRequestDto {
 
 export interface LinkProfileDto {
   userId: string;
-  entityId: string; 
+  entityId: string;
   role: UserRole;
 }
 

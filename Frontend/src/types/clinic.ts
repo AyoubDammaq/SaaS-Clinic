@@ -22,8 +22,8 @@ export interface Clinique {
   email: string;
   siteWeb?: string;
   description?: string;
-  statut: number 
-  typeClinique: number; 
+  statut: number;
+  typeClinique: number;
   dateCreation: string;
 }
 

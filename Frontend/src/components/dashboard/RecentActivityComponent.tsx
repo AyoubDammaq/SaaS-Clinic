@@ -39,7 +39,8 @@ export function RecentActivityComponent({ activities }: RecentActivityProps) {
       <CardHeader>
         <CardTitle>{t("recent_activity_title") || "Recent Activity"}</CardTitle>
         <CardDescription>
-          {t("recent_activity_description") || "Overview of your recent activities"}
+          {t("recent_activity_description") ||
+            "Overview of your recent activities"}
         </CardDescription>
       </CardHeader>
       <CardContent className="p-4 space-y-3">

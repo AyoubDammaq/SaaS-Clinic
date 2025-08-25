@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -10,7 +16,11 @@ interface CancelByDoctorDialogProps {
   onSubmit: (justification: string) => void;
 }
 
-export const CancelByDoctorDialog = ({ isOpen, onClose, onSubmit }: CancelByDoctorDialogProps) => {
+export const CancelByDoctorDialog = ({
+  isOpen,
+  onClose,
+  onSubmit,
+}: CancelByDoctorDialogProps) => {
   const [justification, setJustification] = useState("");
   const t = useTranslation("appointments").t;
   const tCommon = useTranslation("common").t;

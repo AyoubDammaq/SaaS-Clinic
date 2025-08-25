@@ -18,7 +18,7 @@ export interface ComparaisonCliniqueDTO {
 
 export interface ConsultationStatsDto {
   totalConsultations: number;
-  consultationsParJour: Record<string, number>; 
+  consultationsParJour: Record<string, number>;
 }
 
 export interface DashboardStatsDTO {

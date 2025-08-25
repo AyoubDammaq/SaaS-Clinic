@@ -1,26 +1,43 @@
-
 import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { toast } from 'sonner';
+import { toast } from "sonner";
 import { CreditCard } from "lucide-react";
 
 const paymentFormSchema = z.object({
-  cardName: z.string().min(2, { message: "Cardholder name must be at least 2 characters." }),
-  cardNumber: z.string()
+  cardName: z
+    .string()
+    .min(2, { message: "Cardholder name must be at least 2 characters." }),
+  cardNumber: z
+    .string()
     .min(16, { message: "Card number must be at least 16 digits." })
     .max(19, { message: "Card number must be at most 19 digits." })
-    .refine((val) => /^\d{16,19}$/.test(val.replace(/\s/g, '')), {
+    .refine((val) => /^\d{16,19}$/.test(val.replace(/\s/g, "")), {
       message: "Card number must contain only digits.",
     }),
-  expiryDate: z.string()
-    .regex(/^(0[1-9]|1[0-2])\/([0-9]{2})$/, { message: "Expiry date must be in MM/YY format." }),
-  cvv: z.string()
+  expiryDate: z.string().regex(/^(0[1-9]|1[0-2])\/([0-9]{2})$/, {
+    message: "Expiry date must be in MM/YY format.",
+  }),
+  cvv: z
+    .string()
     .min(3, { message: "CVV must be at least 3 digits." })
     .max(4, { message: "CVV must be at most 4 digits." })
     .refine((val) => /^\d{3,4}$/.test(val), {
@@ -38,9 +55,15 @@ interface PaymentFormProps {
   invoiceId: string;
 }
 
-export function PaymentForm({ isOpen, onClose, onSubmit, invoiceAmount, invoiceId }: PaymentFormProps) {
+export function PaymentForm({
+  isOpen,
+  onClose,
+  onSubmit,
+  invoiceAmount,
+  invoiceId,
+}: PaymentFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const form = useForm<PaymentFormValues>({
     resolver: zodResolver(paymentFormSchema),
     defaultValues: {
@@ -53,9 +76,9 @@ export function PaymentForm({ isOpen, onClose, onSubmit, invoiceAmount, invoiceI
 
   // Format card number with spaces after every 4 digits
   const formatCardNumber = (value: string) => {
-    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
     const matches = v.match(/\d{4,16}/g);
-    const match = matches && matches[0] || '';
+    const match = (matches && matches[0]) || "";
     const parts = [];
 
     for (let i = 0; i < match.length; i += 4) {
@@ -63,7 +86,7 @@ export function PaymentForm({ isOpen, onClose, onSubmit, invoiceAmount, invoiceI
     }
 
     if (parts.length) {
-      return parts.join(' ');
+      return parts.join(" ");
     } else {
       return value;
     }
@@ -71,8 +94,8 @@ export function PaymentForm({ isOpen, onClose, onSubmit, invoiceAmount, invoiceI
 
   // Format expiry date as MM/YY
   const formatExpiryDate = (value: string) => {
-    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-    
+    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+
     if (v.length >= 3) {
       return `${v.substring(0, 2)}/${v.substring(2, 4)}`;
     }
@@ -85,7 +108,7 @@ export function PaymentForm({ isOpen, onClose, onSubmit, invoiceAmount, invoiceI
       // In a real application, you would process the payment
       // through a secure payment gateway like Stripe
       await onSubmit(data);
-      
+
       // Simulate a successful payment
       setTimeout(() => {
         toast.success("Payment processed successfully!");
@@ -109,16 +132,23 @@ export function PaymentForm({ isOpen, onClose, onSubmit, invoiceAmount, invoiceI
             <span>Payment for Invoice #{invoiceId}</span>
           </DialogTitle>
         </DialogHeader>
-        
+
         <div className="py-2 px-4 bg-muted/30 rounded-md mb-4">
           <div className="flex justify-between items-center">
-            <span className="text-sm font-medium text-muted-foreground">Amount Due:</span>
-            <span className="text-lg font-bold text-clinic-500">${invoiceAmount.toFixed(2)}</span>
+            <span className="text-sm font-medium text-muted-foreground">
+              Amount Due:
+            </span>
+            <span className="text-lg font-bold text-clinic-500">
+              ${invoiceAmount.toFixed(2)}
+            </span>
           </div>
         </div>
-        
+
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-4"
+          >
             <FormField
               control={form.control}
               name="cardName"
@@ -139,10 +169,10 @@ export function PaymentForm({ isOpen, onClose, onSubmit, invoiceAmount, invoiceI
                 <FormItem>
                   <FormLabel>Card Number</FormLabel>
                   <FormControl>
-                    <Input 
-                      placeholder="4242 4242 4242 4242" 
+                    <Input
+                      placeholder="4242 4242 4242 4242"
                       value={formatCardNumber(field.value)}
-                      onChange={e => field.onChange(e.target.value)}
+                      onChange={(e) => field.onChange(e.target.value)}
                     />
                   </FormControl>
                   <FormMessage />
@@ -157,11 +187,11 @@ export function PaymentForm({ isOpen, onClose, onSubmit, invoiceAmount, invoiceI
                   <FormItem>
                     <FormLabel>Expiry Date</FormLabel>
                     <FormControl>
-                      <Input 
-                        placeholder="MM/YY" 
+                      <Input
+                        placeholder="MM/YY"
                         maxLength={5}
                         value={formatExpiryDate(field.value)}
-                        onChange={e => field.onChange(e.target.value)}
+                        onChange={(e) => field.onChange(e.target.value)}
                       />
                     </FormControl>
                     <FormMessage />
@@ -175,8 +205,8 @@ export function PaymentForm({ isOpen, onClose, onSubmit, invoiceAmount, invoiceI
                   <FormItem>
                     <FormLabel>CVV</FormLabel>
                     <FormControl>
-                      <Input 
-                        placeholder="123" 
+                      <Input
+                        placeholder="123"
                         maxLength={4}
                         type="password"
                         {...field}
@@ -192,7 +222,9 @@ export function PaymentForm({ isOpen, onClose, onSubmit, invoiceAmount, invoiceI
                 Cancel
               </Button>
               <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Processing..." : `Pay $${invoiceAmount.toFixed(2)}`}
+                {isSubmitting
+                  ? "Processing..."
+                  : `Pay $${invoiceAmount.toFixed(2)}`}
               </Button>
             </DialogFooter>
           </form>

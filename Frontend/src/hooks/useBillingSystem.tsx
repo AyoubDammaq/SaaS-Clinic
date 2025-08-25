@@ -18,7 +18,7 @@ interface UseBillingSystemState {
   consultationPricing: TarifConsultation[];
   billingStats: BillingStatsDto | null;
   isStatsLoading: boolean;
-  statsError: string | null; 
+  statsError: string | null;
   isLoading: boolean;
   isSubmitting: boolean;
   searchTerm: string;
@@ -52,7 +52,7 @@ interface UseBillingSystemState {
 
 export function useBillingSystem(clinicId?: string): UseBillingSystemState {
   const { user } = useAuth();
-  const { t } = useTranslation('billing');
+  const { t } = useTranslation("billing");
   const [invoices, setInvoices] = useState<Facture[]>([]);
   const [consultationTypes, setConsultationTypes] = useState<
     ConsultationType[]

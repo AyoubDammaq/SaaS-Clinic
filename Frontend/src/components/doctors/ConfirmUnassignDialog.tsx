@@ -46,7 +46,9 @@ export const ConfirmUnassignDialog = ({
       </AlertDialogTrigger>
       <AlertDialogContent onClick={(e) => e.stopPropagation()}>
         <AlertDialogHeader>
-          <AlertDialogTitle>{title || t("confirmUnassignTitle")}</AlertDialogTitle>
+          <AlertDialogTitle>
+            {title || t("confirmUnassignTitle")}
+          </AlertDialogTitle>
           <AlertDialogDescription>
             {description || t("confirmUnassignDescription")}
           </AlertDialogDescription>

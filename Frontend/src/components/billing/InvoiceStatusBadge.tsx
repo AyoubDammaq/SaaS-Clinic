@@ -13,7 +13,7 @@ export function InvoiceStatusBadge({
   status,
   size = "md",
 }: InvoiceStatusBadgeProps) {
-  const { t } = useTranslation('billing');
+  const { t } = useTranslation("billing");
 
   const getStatusConfig = () => {
     switch (status) {
@@ -26,8 +26,8 @@ export function InvoiceStatusBadge({
               aria-hidden="true"
             />
           ),
-          label: t('paid'),
-          ariaLabel: `${t('paymentStatus')}: ${t('paid')}`,
+          label: t("paid"),
+          ariaLabel: `${t("paymentStatus")}: ${t("paid")}`,
         };
       case FactureStatus.IMPAYEE:
         return {
@@ -38,8 +38,8 @@ export function InvoiceStatusBadge({
               aria-hidden="true"
             />
           ),
-          label: t('unpaid'),
-          ariaLabel: `${t('paymentStatus')}: ${t('unpaid')}`,
+          label: t("unpaid"),
+          ariaLabel: `${t("paymentStatus")}: ${t("unpaid")}`,
         };
       case FactureStatus.PARTIELLEMENT_PAYEE:
         return {
@@ -50,22 +50,22 @@ export function InvoiceStatusBadge({
               aria-hidden="true"
             />
           ),
-          label: t('partiallyPaid'),
-          ariaLabel: `${t('paymentStatus')}: ${t('partiallyPaid')}`,
+          label: t("partiallyPaid"),
+          ariaLabel: `${t("paymentStatus")}: ${t("partiallyPaid")}`,
         };
       case FactureStatus.ANNULEE:
         return {
           variant: "bg-gray-100 text-gray-600 border-gray-300",
           icon: null,
-          label: t('cancelled'),
-          ariaLabel: `${t('paymentStatus')}: ${t('cancelled')}`,
+          label: t("cancelled"),
+          ariaLabel: `${t("paymentStatus")}: ${t("cancelled")}`,
         };
       default:
         return {
           variant: "",
           icon: null,
           label: status,
-          ariaLabel: `${t('paymentStatus')}: ${status}`,
+          ariaLabel: `${t("paymentStatus")}: ${status}`,
         };
     }
   };

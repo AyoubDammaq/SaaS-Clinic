@@ -39,32 +39,38 @@ export function NextAppointmentCard({ appointment }: NextAppointmentCardProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t("next_appointment_title") || "Next Appointment"}</CardTitle>
+        <CardTitle>
+          {t("next_appointment_title") || "Next Appointment"}
+        </CardTitle>
         <CardDescription>
-          {t("appointment_date_time", { values: { date: appointment.date, time: appointment.time } }) ||
-            `${appointment.date} at ${appointment.time}`}
+          {t("appointment_date_time", {
+            values: { date: appointment.date, time: appointment.time },
+          }) || `${appointment.date} at ${appointment.time}`}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <User className="w-4 h-4" />
           <span>
-            {t("appointment_patient_label", { values: { patientName: appointment.patientName } }) ||
-              `Patient: ${appointment.patientName}`}
+            {t("appointment_patient_label", {
+              values: { patientName: appointment.patientName },
+            }) || `Patient: ${appointment.patientName}`}
           </span>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <CalendarClock className="w-4 h-4" />
           <span>
-            {t("appointment_time_label", { values: { time: appointment.time } }) ||
-              `Time: ${appointment.time}`}
+            {t("appointment_time_label", {
+              values: { time: appointment.time },
+            }) || `Time: ${appointment.time}`}
           </span>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <MapPin className="w-4 h-4" />
           <span>
-            {t("appointment_comment_label", { values: { commentaire: appointment.commentaire } }) ||
-              `Comment: ${appointment.commentaire}`}
+            {t("appointment_comment_label", {
+              values: { commentaire: appointment.commentaire },
+            }) || `Comment: ${appointment.commentaire}`}
           </span>
         </div>
       </CardContent>

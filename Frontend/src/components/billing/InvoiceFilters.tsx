@@ -55,9 +55,11 @@ export function InvoiceFilters({
   isExpanded,
   onToggleExpanded,
 }: InvoiceFiltersProps) {
-  const { t } = useTranslation('billing');
-  const tCommon = useTranslation('common').t;
-  const [dateFrom, setDateFrom] = useState<Date | undefined>(filters.dateRange.from);
+  const { t } = useTranslation("billing");
+  const tCommon = useTranslation("common").t;
+  const [dateFrom, setDateFrom] = useState<Date | undefined>(
+    filters.dateRange.from
+  );
   const [dateTo, setDateTo] = useState<Date | undefined>(filters.dateRange.to);
 
   const handleStatusChange = (value: string) => {
@@ -67,7 +69,10 @@ export function InvoiceFilters({
     });
   };
 
-  const handleDateRangeChange = (from: Date | undefined, to: Date | undefined) => {
+  const handleDateRangeChange = (
+    from: Date | undefined,
+    to: Date | undefined
+  ) => {
     setDateFrom(from);
     setDateTo(to);
     onFiltersChange({
@@ -119,15 +124,15 @@ export function InvoiceFilters({
   const getStatusDisplay = (status: string) => {
     switch (status) {
       case FactureStatus.PAYEE:
-        return t('paid');
+        return t("paid");
       case FactureStatus.PARTIELLEMENT_PAYEE:
-        return t('pending');
+        return t("pending");
       case FactureStatus.IMPAYEE:
-        return t('overdue');
+        return t("overdue");
       case FactureStatus.ANNULEE:
-        return t('cancelled');
+        return t("cancelled");
       default:
-        return t('allStatuses');
+        return t("allStatuses");
     }
   };
 
@@ -141,7 +146,7 @@ export function InvoiceFilters({
           className="flex items-center gap-2"
         >
           <Filter className="h-4 w-4" />
-          {tCommon('filters')}
+          {tCommon("filters")}
           {activeFiltersCount > 0 && (
             <Badge variant="secondary" className="ml-2">
               {activeFiltersCount}
@@ -157,7 +162,7 @@ export function InvoiceFilters({
             className="text-muted-foreground hover:text-foreground"
           >
             <X className="h-4 w-4 mr-1" />
-            {tCommon('clear')}
+            {tCommon("clear")}
           </Button>
         )}
       </div>
@@ -168,7 +173,7 @@ export function InvoiceFilters({
           {filters.status && (
             <Badge variant="secondary" className="flex items-center gap-1">
               <FileText className="h-3 w-3" />
-              {t('status')}: {getStatusDisplay(filters.status)}
+              {t("status")}: {getStatusDisplay(filters.status)}
               <button
                 onClick={() => handleStatusChange("all")}
                 className="ml-1 hover:bg-muted rounded-full p-0.5"
@@ -181,7 +186,7 @@ export function InvoiceFilters({
           {(filters.dateRange.from || filters.dateRange.to) && (
             <Badge variant="secondary" className="flex items-center gap-1">
               <CalendarIcon className="h-3 w-3" />
-              {t('date')}:{" "}
+              {t("date")}:{" "}
               {filters.dateRange.from
                 ? format(filters.dateRange.from, "dd/MM/yy")
                 : "∞"}{" "}
@@ -201,7 +206,7 @@ export function InvoiceFilters({
           {(filters.amountRange.min || filters.amountRange.max) && (
             <Badge variant="secondary" className="flex items-center gap-1">
               <Euro className="h-3 w-3" />
-              {t('amount')}: {filters.amountRange.min || "0"}€ -{" "}
+              {t("amount")}: {filters.amountRange.min || "0"}€ -{" "}
               {filters.amountRange.max || "∞"}€
               <button
                 onClick={() => {
@@ -224,9 +229,9 @@ export function InvoiceFilters({
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Recherche */}
               <div className="space-y-2">
-                <Label>{t('search')}</Label>
+                <Label>{t("search")}</Label>
                 <Input
-                  placeholder={t('searchInvoices')}
+                  placeholder={t("searchInvoices")}
                   value={filters.searchTerm}
                   onChange={(e) => handleSearchChange(e.target.value)}
                 />
@@ -234,26 +239,32 @@ export function InvoiceFilters({
 
               {/* Statut */}
               <div className="space-y-2">
-                <Label>{t('status')}</Label>
+                <Label>{t("status")}</Label>
                 <Select
                   value={filters.status || "all"}
                   onValueChange={handleStatusChange}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder={t('allStatuses')} />
+                    <SelectValue placeholder={t("allStatuses")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">{t('allStatuses')}</SelectItem>
-                    <SelectItem value={FactureStatus.PAYEE}>{t('paid')}</SelectItem>
-                    <SelectItem value={FactureStatus.IMPAYEE}>{t('unpaid')}</SelectItem>
-                    <SelectItem value={FactureStatus.ANNULEE}>{t('cancelled')}</SelectItem>
+                    <SelectItem value="all">{t("allStatuses")}</SelectItem>
+                    <SelectItem value={FactureStatus.PAYEE}>
+                      {t("paid")}
+                    </SelectItem>
+                    <SelectItem value={FactureStatus.IMPAYEE}>
+                      {t("unpaid")}
+                    </SelectItem>
+                    <SelectItem value={FactureStatus.ANNULEE}>
+                      {t("cancelled")}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               {/* Date de début */}
               <div className="space-y-2">
-                <Label>{t('startDate')}</Label>
+                <Label>{t("startDate")}</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -264,7 +275,7 @@ export function InvoiceFilters({
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {dateFrom ? format(dateFrom, "dd/MM/yyyy") : t('select')}
+                      {dateFrom ? format(dateFrom, "dd/MM/yyyy") : t("select")}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
@@ -280,7 +291,7 @@ export function InvoiceFilters({
 
               {/* Date de fin */}
               <div className="space-y-2">
-                <Label>{t('endDate')}</Label>
+                <Label>{t("endDate")}</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -291,7 +302,7 @@ export function InvoiceFilters({
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {dateTo ? format(dateTo, "dd/MM/yyyy") : t('select')}
+                      {dateTo ? format(dateTo, "dd/MM/yyyy") : t("select")}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
@@ -308,17 +319,17 @@ export function InvoiceFilters({
 
             {/* Plage de montants */}
             <div className="mt-4">
-              <Label className="mb-2 block">{t('amountRange')}</Label>
+              <Label className="mb-2 block">{t("amountRange")}</Label>
               <div className="grid grid-cols-2 gap-2">
                 <Input
                   type="number"
-                  placeholder={t('minAmount')}
+                  placeholder={t("minAmount")}
                   value={filters.amountRange.min}
                   onChange={(e) => handleAmountChange("min", e.target.value)}
                 />
                 <Input
                   type="number"
-                  placeholder={t('maxAmount')}
+                  placeholder={t("maxAmount")}
                   value={filters.amountRange.max}
                   onChange={(e) => handleAmountChange("max", e.target.value)}
                 />

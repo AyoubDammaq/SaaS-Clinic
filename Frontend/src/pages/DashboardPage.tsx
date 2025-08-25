@@ -311,14 +311,17 @@ function DashboardPage() {
     };
   }, [dashboardStats]);
 
-  const safeRevenusTrend = useMemo(() => ({
-    current: dashboardStats?.revenuesMensuelsByClinic ?? 0,
-    previous: dashboardStats?.revenuesMensuelsByClinicTrend?.previous ?? 0,
-    percentageChange:
-      dashboardStats?.revenuesMensuelsByClinicTrend?.percentageChange ?? 0,
-    isPositive:
-      dashboardStats?.revenuesMensuelsByClinicTrend?.isPositive ?? true,
-  }), [dashboardStats]);
+  const safeRevenusTrend = useMemo(
+    () => ({
+      current: dashboardStats?.revenuesMensuelsByClinic ?? 0,
+      previous: dashboardStats?.revenuesMensuelsByClinicTrend?.previous ?? 0,
+      percentageChange:
+        dashboardStats?.revenuesMensuelsByClinicTrend?.percentageChange ?? 0,
+      isPositive:
+        dashboardStats?.revenuesMensuelsByClinicTrend?.isPositive ?? true,
+    }),
+    [dashboardStats]
+  );
 
   const dashboardContent = useMemo(() => {
     if (!user) return null;
@@ -350,7 +353,9 @@ function DashboardPage() {
         return (
           <ClinicAdminDashboard
             appointments={sortedAppointments}
-            appointmentData={dashboardStats?.weeklyAppointmentStatsByClinic || []}
+            appointmentData={
+              dashboardStats?.weeklyAppointmentStatsByClinic || []
+            }
             recentActivities={recentActivities}
             appointmentsToday={
               dashboardStats?.nombreDeRDVParCliniqueAujourdHui || 0
@@ -376,7 +381,9 @@ function DashboardPage() {
         return (
           <DoctorDashboard
             appointments={sortedAppointments}
-            appointmentData={dashboardStats?.weeklyAppointmentStatsByDoctor || []}
+            appointmentData={
+              dashboardStats?.weeklyAppointmentStatsByDoctor || []
+            }
             dashboardStats={
               dashboardStats?.nombreDeRDVParMedecinAujourdHui || 0
             }
@@ -399,7 +406,9 @@ function DashboardPage() {
         return (
           <PatientDashboard
             appointments={sortedAppointments}
-            nombreConsultations={dashboardStats?.nombreDeConsultationsParPatient}
+            nombreConsultations={
+              dashboardStats?.nombreDeConsultationsParPatient
+            }
             recentActivities={recentActivities}
             recentPayments={dashboardStats?.recentPaiementByPatient}
           />

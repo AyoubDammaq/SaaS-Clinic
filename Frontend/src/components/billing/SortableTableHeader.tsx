@@ -1,4 +1,3 @@
-
 import { TableHead } from "@/components/ui/table";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -7,7 +6,7 @@ interface SortableTableHeaderProps {
   field: string;
   label: string;
   sortField: string;
-  sortDirection: 'asc' | 'desc';
+  sortDirection: "asc" | "desc";
   onSort: (field: string) => void;
   className?: string;
 }
@@ -18,18 +17,20 @@ export function SortableTableHeader({
   sortField,
   sortDirection,
   onSort,
-  className
+  className,
 }: SortableTableHeaderProps) {
   const isActive = sortField === field;
-  
+
   return (
-    <TableHead 
+    <TableHead
       className={cn("cursor-pointer select-none", className)}
       onClick={() => onSort(field)}
       role="columnheader"
       aria-sort={
-        isActive 
-          ? sortDirection === 'asc' ? 'ascending' : 'descending'
+        isActive
+          ? sortDirection === "asc"
+            ? "ascending"
+            : "descending"
           : undefined
       }
     >
@@ -37,7 +38,7 @@ export function SortableTableHeader({
         <span>{label}</span>
         {isActive && (
           <span className="inline-flex">
-            {sortDirection === 'asc' ? (
+            {sortDirection === "asc" ? (
               <ArrowUp className="h-3 w-3" aria-hidden="true" />
             ) : (
               <ArrowDown className="h-3 w-3" aria-hidden="true" />

@@ -2,13 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useBilling } from "@/hooks/useBilling";
 import { ConsultationType, consultationTypes } from "@/types/consultation";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -28,7 +22,9 @@ interface ConsultationPricingSettingsProps {
   clinicId?: string;
 }
 
-export function ConsultationPricingSettings({ clinicId }: ConsultationPricingSettingsProps) {
+export function ConsultationPricingSettings({
+  clinicId,
+}: ConsultationPricingSettingsProps) {
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -87,7 +83,9 @@ export function ConsultationPricingSettings({ clinicId }: ConsultationPricingSet
       // Pour chaque type, soit update soit add
       const promises = consultationTypeOptions.map(async (type) => {
         const price = pricing[type.id];
-        const existing = tarifications.find(t => t.consultationType === type.id);
+        const existing = tarifications.find(
+          (t) => t.consultationType === type.id
+        );
 
         if (existing) {
           return updateTarification({
@@ -138,9 +136,7 @@ export function ConsultationPricingSettings({ clinicId }: ConsultationPricingSet
 
   if (tarifsError) {
     return (
-      <div className="text-red-600 py-4 text-center">
-        Erreur: {tarifsError}
-      </div>
+      <div className="text-red-600 py-4 text-center">Erreur: {tarifsError}</div>
     );
   }
 
@@ -188,7 +184,11 @@ export function ConsultationPricingSettings({ clinicId }: ConsultationPricingSet
           disabled={saving}
           className="flex items-center gap-2"
         >
-          {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+          {saving ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Save className="h-4 w-4" />
+          )}
           {saving ? "Sauvegarde..." : "Sauvegarder les Tarifs"}
         </Button>
       </div>

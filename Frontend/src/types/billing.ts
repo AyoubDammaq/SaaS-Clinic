@@ -95,7 +95,6 @@ export interface PayInvoiceResponse {
   message: string;
 }
 
-
 export interface PaiementDto {
   moyenPaiement: ModePaiement;
   montant: number;

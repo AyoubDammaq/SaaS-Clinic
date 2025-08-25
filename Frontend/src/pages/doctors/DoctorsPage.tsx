@@ -163,7 +163,7 @@ function DoctorsPage() {
         );
 
         // Extraire uniquement les IDs
-        const ids = availableDoctors.map((doctor: any) => doctor.id);
+        const ids = availableDoctors.map((doctor) => doctor.id);
         console.log("Available Doctor IDs (UUIDs):", ids);
 
         setAvailableDoctorIds(ids);

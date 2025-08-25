@@ -19,7 +19,8 @@ import { usePatients } from "@/hooks/usePatients";
 
 function PatientFormPage() {
   const { user, linkToProfile, deleteUser } = useAuth();
-  const { handleAddPatient, linkUserToPatient, handleDeletePatient } = usePatients();
+  const { handleAddPatient, linkUserToPatient, handleDeletePatient } =
+    usePatients();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -50,8 +51,10 @@ function PatientFormPage() {
     let createdPatientId: string | null = null;
 
     try {
-      if (!user) throw new Error(t("notAuthenticated") || "User not authenticated");
-      if (!formData.sexe) throw new Error(t("sexRequired") || "Sex is required");
+      if (!user)
+        throw new Error(t("notAuthenticated") || "User not authenticated");
+      if (!formData.sexe)
+        throw new Error(t("sexRequired") || "Sex is required");
 
       const newPatient = await handleAddPatient({
         prenom: formData.firstName,
@@ -67,13 +70,20 @@ function PatientFormPage() {
 
       await linkUserToPatient(user.id, newPatient.id);
       const linked = await linkToProfile(user.id, newPatient.id);
-      if (!linked) throw new Error(t("profileLinkFailed") || "Failed to link patient profile");
+      if (!linked)
+        throw new Error(
+          t("profileLinkFailed") || "Failed to link patient profile"
+        );
 
-      toast.success(t("patientCreated") || "Patient profile created successfully");
+      toast.success(
+        t("patientCreated") || "Patient profile created successfully"
+      );
       navigate("/dashboard");
     } catch (err) {
       const message =
-        err instanceof Error ? err.message : t("unknownError") || "An unknown error occurred";
+        err instanceof Error
+          ? err.message
+          : t("unknownError") || "An unknown error occurred";
       setError(message);
       toast.error(message);
 
@@ -96,7 +106,9 @@ function PatientFormPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">SaaS-Clinic</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            SaaS-Clinic
+          </h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">
             {t("patientFormSubtitle") || "Complete Your Patient Profile"}
           </p>
@@ -106,7 +118,8 @@ function PatientFormPage() {
           <CardHeader>
             <CardTitle>{t("patientInfo") || "Patient Information"}</CardTitle>
             <CardDescription>
-              {t("patientInfoDesc") || "Please provide your personal information"}
+              {t("patientInfoDesc") ||
+                "Please provide your personal information"}
             </CardDescription>
           </CardHeader>
 
@@ -121,7 +134,9 @@ function PatientFormPage() {
               <div className="grid gap-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="firstName">{t("firstName") || "First Name"}</Label>
+                    <Label htmlFor="firstName">
+                      {t("firstName") || "First Name"}
+                    </Label>
                     <Input
                       id="firstName"
                       value={formData.firstName}
@@ -131,7 +146,9 @@ function PatientFormPage() {
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="lastName">{t("lastName") || "Last Name"}</Label>
+                    <Label htmlFor="lastName">
+                      {t("lastName") || "Last Name"}
+                    </Label>
                     <Input
                       id="lastName"
                       value={formData.lastName}
@@ -143,7 +160,9 @@ function PatientFormPage() {
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="dateOfBirth">{t("dateOfBirth") || "Date of Birth"}</Label>
+                  <Label htmlFor="dateOfBirth">
+                    {t("dateOfBirth") || "Date of Birth"}
+                  </Label>
                   <Input
                     id="dateOfBirth"
                     type="date"
@@ -154,7 +173,9 @@ function PatientFormPage() {
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="phoneNumber">{t("phone") || "Phone Number"}</Label>
+                  <Label htmlFor="phoneNumber">
+                    {t("phone") || "Phone Number"}
+                  </Label>
                   <Input
                     id="phoneNumber"
                     value={formData.phoneNumber}
@@ -181,7 +202,10 @@ function PatientFormPage() {
                     id="sexe"
                     value={formData.sexe || ""}
                     onChange={(e) =>
-                      setFormData({ ...formData, sexe: e.target.value as "M" | "F" })
+                      setFormData({
+                        ...formData,
+                        sexe: e.target.value as "M" | "F",
+                      })
                     }
                     required
                     className="border rounded px-3 py-2"
@@ -192,7 +216,11 @@ function PatientFormPage() {
                   </select>
                 </div>
 
-                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={isSubmitting}
+                >
                   {isSubmitting
                     ? t("creatingProfile") || "Creating Profile..."
                     : t("completeRegistration") || "Complete Registration"}
@@ -203,7 +231,8 @@ function PatientFormPage() {
 
           <CardFooter className="flex justify-center">
             <div className="text-sm text-muted-foreground">
-              {t("profileUpdatable") || "Your profile information can be updated later"}
+              {t("profileUpdatable") ||
+                "Your profile information can be updated later"}
             </div>
           </CardFooter>
         </Card>

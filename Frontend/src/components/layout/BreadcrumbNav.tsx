@@ -27,7 +27,7 @@ export function BreadcrumbNav() {
       
       // For medical records pages
       if (previousSegment === 'medical-record') {
-        return t('patientRecord', 'patients');
+        t('patientRecord', { ns: 'patients' })
       }
       
       return "Details";

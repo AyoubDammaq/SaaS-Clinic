@@ -32,7 +32,7 @@ interface PatientProfileProps {
     address?: string;
     lastVisit?: string;
   };
-  onEditPatient: (patient: Partial<Patient>) => void;
+  onEditPatient: (patient: Partial<Patient>) => Promise<Patient>;
 }
 
 export function PatientProfile({
@@ -155,13 +155,17 @@ export function PatientProfile({
                       <div className="text-sm text-muted-foreground">
                         {t("gender")}
                       </div>
-                      <div className="font-medium">{getGenderLabel(patient.gender)}</div>
+                      <div className="font-medium">
+                        {getGenderLabel(patient.gender)}
+                      </div>
                     </div>
                     <div>
                       <div className="text-sm text-muted-foreground">
                         {t("dob")}
                       </div>
-                      <div className="font-medium">{formatDateOfBirth(patient.dateOfBirth)}</div>
+                      <div className="font-medium">
+                        {formatDateOfBirth(patient.dateOfBirth)}
+                      </div>
                     </div>
                     {patient.address && (
                       <div>
@@ -241,7 +245,7 @@ export function PatientProfile({
       <PatientForm
         isOpen={isFormOpen}
         onClose={() => setIsFormOpen(false)}
-        onSubmit={(data) => {
+        onSubmit={async (data) => {
           const updatedPatient: Partial<Patient> = {
             id: patient.id,
             nom: data.nom,
@@ -252,9 +256,11 @@ export function PatientProfile({
             sexe: data.sexe as "M" | "F",
             adresse: data.adresse,
           };
-          onEditPatient(updatedPatient);
+
+          const result = await onEditPatient(updatedPatient); // <-- retourne Promise<Patient>
           setIsFormOpen(false);
           toast.success(t("profile_updated"));
+          return result; // <-- très important pour matcher le type
         }}
         initialData={initialData}
       />

@@ -1,10 +1,17 @@
-import { useNavigate } from 'react-router-dom';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Search, Plus, FileEdit, Trash2 } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Clinique } from '@/types/clinic';
+import { useNavigate } from "react-router-dom";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Search, Plus, FileEdit, Trash2 } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Clinique } from "@/types/clinic";
 
 interface CliniquesListProps {
   cliniques: Clinique[];
@@ -33,7 +40,7 @@ export function CliniquesList({
   onAddClinique,
   onEditClinique,
   onDeleteClinique,
-  onSelectClinique
+  onSelectClinique,
 }: CliniquesListProps) {
   const navigate = useNavigate();
 
@@ -67,7 +74,7 @@ export function CliniquesList({
           </Button>
         )}
       </div>
-      
+
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -77,7 +84,9 @@ export function CliniquesList({
               <TableHead>Téléphone</TableHead>
               <TableHead>Adresse</TableHead>
               <TableHead>Date de création</TableHead>
-              {(permissions.canEdit || permissions.canDelete) && <TableHead>Actions</TableHead>}
+              {(permissions.canEdit || permissions.canDelete) && (
+                <TableHead>Actions</TableHead>
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -89,8 +98,8 @@ export function CliniquesList({
               </TableRow>
             ) : (
               filteredCliniques.map((clinique) => (
-                <TableRow 
-                  key={clinique.id} 
+                <TableRow
+                  key={clinique.id}
                   className="cursor-pointer hover:bg-muted/60"
                   onClick={() => onSelectClinique(clinique)}
                 >
@@ -103,18 +112,22 @@ export function CliniquesList({
                     <TableCell onClick={(e) => e.stopPropagation()}>
                       <div className="flex items-center gap-2">
                         {permissions.canEdit && (
-                          <Button size="sm" variant="ghost" onClick={(e) => {
-                            e.stopPropagation();
-                            onEditClinique(clinique);
-                          }}>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onEditClinique(clinique);
+                            }}
+                          >
                             <FileEdit className="h-4 w-4" />
                           </Button>
                         )}
                         {permissions.canDelete && (
-                          <Button 
-                            size="sm" 
-                            variant="ghost" 
-                            className="text-red-500" 
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="text-red-500"
                             onClick={(e) => {
                               e.stopPropagation();
                               onDeleteClinique(clinique.id);

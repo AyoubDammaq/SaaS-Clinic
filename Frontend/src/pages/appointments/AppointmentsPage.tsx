@@ -24,7 +24,6 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { ConsultationForm } from "@/components/consultations/ConsultationForm";
 import { useAppointments } from "@/hooks/useAppointments";
 import { useDoctors } from "@/hooks/useDoctors";
 import { usePatients } from "@/hooks/usePatients";
@@ -37,7 +36,6 @@ import {
 import { ConsultationDTO } from "@/types/consultation";
 import { Patient } from "@/types/patient";
 import { Doctor } from "@/types/doctor";
-import { Clinique } from "@/types/clinic";
 import { CancelByDoctorDialog } from "@/components/appointments/CancelByDoctorDialog";
 import { CreateFromAppointment } from "@/components/consultations/CreateFromAppointment";
 import { useConsultations } from "@/hooks/useConsultations";
@@ -194,15 +192,21 @@ function AppointmentsPage() {
     }
 
     if (clinicFilter !== "all") {
-      filtered = filtered.filter((appointment) => appointment.clinicId === clinicFilter);
+      filtered = filtered.filter(
+        (appointment) => appointment.clinicId === clinicFilter
+      );
     }
 
     if (doctorFilter !== "all") {
-      filtered = filtered.filter((appointment) => appointment.medecinId === doctorFilter);
+      filtered = filtered.filter(
+        (appointment) => appointment.medecinId === doctorFilter
+      );
     }
 
     if (patientFilter !== "all") {
-      filtered = filtered.filter((appointment) => appointment.patientId === patientFilter);
+      filtered = filtered.filter(
+        (appointment) => appointment.patientId === patientFilter
+      );
     }
 
     filtered = filtered.filter(

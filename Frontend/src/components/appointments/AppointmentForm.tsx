@@ -113,7 +113,9 @@ export const AppointmentForm = ({
         form.reset({
           patientId: initialData.patientId || patientId || "",
           medecinId: initialData.medecinId || "",
-          date: initialData.dateHeure ? new Date(initialData.dateHeure) : undefined,
+          date: initialData.dateHeure
+            ? new Date(initialData.dateHeure)
+            : undefined,
           time: initialData.time || "",
           reason: initialData.reason || "",
         });

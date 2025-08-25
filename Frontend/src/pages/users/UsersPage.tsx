@@ -5,7 +5,14 @@ import { User } from "@/types/auth";
 import { UsersList } from "@/components/users/UsersList";
 import { useUsers } from "@/hooks/useUsers";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { useTranslation } from "@/hooks/useTranslation";
 
 function UsersPage() {
@@ -34,16 +41,22 @@ function UsersPage() {
   const ITEMS_PER_PAGE = 10;
   const totalPages = Math.ceil(filteredUsers.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedUsers = filteredUsers.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  const paginatedUsers = filteredUsers.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
 
   // Reset currentPage when filteredUsers changes
   useEffect(() => {
     if (filteredUsers.length === 0) setCurrentPage(1);
-    else if (currentPage > totalPages && totalPages > 0) setCurrentPage(totalPages);
+    else if (currentPage > totalPages && totalPages > 0)
+      setCurrentPage(totalPages);
   }, [filteredUsers, totalPages, currentPage]);
 
   // Handle form submission
-  const handleFormSubmit = async (data: Omit<User, "id" | "dateCreation">): Promise<User> => {
+  const handleFormSubmit = async (
+    data: Omit<User, "id" | "dateCreation">
+  ): Promise<User> => {
     try {
       if (selectedUser) {
         const payload = { ...data, id: selectedUser.id };
@@ -124,7 +137,9 @@ function UsersPage() {
           <Button
             size="sm"
             variant="outline"
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
             disabled={currentPage === totalPages}
           >
             {t("next")}
@@ -137,10 +152,15 @@ function UsersPage() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{t("confirmDelete")}</DialogTitle>
-            <DialogDescription>{t("confirmDeleteDescription")}</DialogDescription>
+            <DialogDescription>
+              {t("confirmDeleteDescription")}
+            </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setIsDeleteDialogOpen(false)}
+            >
               {t("cancel")}
             </Button>
             <Button variant="destructive" onClick={handleDeleteUserConfirm}>

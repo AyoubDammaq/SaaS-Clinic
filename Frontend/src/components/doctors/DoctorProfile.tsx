@@ -28,6 +28,32 @@ interface DoctorProfileProps {
   userRole: string;
 }
 
+// Specialty translation
+const specialtyValues = [
+  "General Practitioner",
+  "Pediatrician",
+  "Cardiologist",
+  "Dermatologist",
+  "Neurologist",
+  "Psychiatrist",
+  "Ophthalmologist",
+  "Gynecologist",
+  "Orthopedist",
+  "Dentist",
+];
+const specialtyKeys = [
+  "generalPractitioner",
+  "pediatrician",
+  "cardiologist",
+  "dermatologist",
+  "neurologist",
+  "psychiatrist",
+  "ophthalmologist",
+  "gynecologist",
+  "orthopedist",
+  "dentist",
+];
+
 export function DoctorProfile({
   doctor,
   onEdit,
@@ -46,32 +72,6 @@ export function DoctorProfile({
   // Translation wrapper with fallback
   const translate = useCallback((key: string) => t(key) || key, [t]);
 
-  // Specialty translation
-  const specialtyValues = [
-    "General Practitioner",
-    "Pediatrician",
-    "Cardiologist",
-    "Dermatologist",
-    "Neurologist",
-    "Psychiatrist",
-    "Ophthalmologist",
-    "Gynecologist",
-    "Orthopedist",
-    "Dentist",
-  ];
-  const specialtyKeys = [
-    "generalPractitioner",
-    "pediatrician",
-    "cardiologist",
-    "dermatologist",
-    "neurologist",
-    "psychiatrist",
-    "ophthalmologist",
-    "gynecologist",
-    "orthopedist",
-    "dentist",
-  ];
-
   const translateSpecialty = useCallback(
     (specialty: string) => {
       const specialtyIndex = specialtyValues.findIndex(
@@ -81,7 +81,7 @@ export function DoctorProfile({
         ? translate(specialtyKeys[specialtyIndex])
         : translate("unknownSpecialty");
     },
-    [translate, specialtyKeys]
+    [translate]
   );
 
   // Fetch full doctor data
@@ -142,9 +142,13 @@ export function DoctorProfile({
           >
             <TabsTrigger value="profile">{translate("profileTab")}</TabsTrigger>
             {userRole !== "Patient" && (
-              <TabsTrigger value="settings">{translate("settingsTab")}</TabsTrigger>
+              <TabsTrigger value="settings">
+                {translate("settingsTab")}
+              </TabsTrigger>
             )}
-            <TabsTrigger value="schedule">{translate("scheduleTab")}</TabsTrigger>
+            <TabsTrigger value="schedule">
+              {translate("scheduleTab")}
+            </TabsTrigger>
           </TabsList>
 
           {/* Profile Tab */}
@@ -153,12 +157,17 @@ export function DoctorProfile({
               <div className="flex flex-col items-center">
                 <Avatar className="h-24 w-24">
                   <AvatarFallback className="text-xl bg-blue-500 text-white">
-                    {getInitials(fullDoctor?.prenom || doctor.prenom, fullDoctor?.nom || doctor.nom)}
+                    {getInitials(
+                      fullDoctor?.prenom || doctor.prenom,
+                      fullDoctor?.nom || doctor.nom
+                    )}
                   </AvatarFallback>
                 </Avatar>
                 <Badge variant="secondary" className="mt-2">
                   <Stethoscope className="h-3 w-3 mr-1" />
-                  {translateSpecialty(fullDoctor?.specialite || doctor.specialite)}
+                  {translateSpecialty(
+                    fullDoctor?.specialite || doctor.specialite
+                  )}
                 </Badge>
                 {userRole !== "Patient" && userRole !== "SuperAdmin" && (
                   <Button
@@ -178,20 +187,26 @@ export function DoctorProfile({
                     <div className="text-sm text-muted-foreground">
                       {translate("firstName")}
                     </div>
-                    <div className="font-medium">{fullDoctor?.prenom || doctor.prenom}</div>
+                    <div className="font-medium">
+                      {fullDoctor?.prenom || doctor.prenom}
+                    </div>
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">
                       {translate("lastName")}
                     </div>
-                    <div className="font-medium">{fullDoctor?.nom || doctor.nom}</div>
+                    <div className="font-medium">
+                      {fullDoctor?.nom || doctor.nom}
+                    </div>
                   </div>
                   {userRole !== "Patient" && (
                     <div>
                       <div className="text-sm text-muted-foreground">
                         {translate("email")}
                       </div>
-                      <div className="font-medium">{fullDoctor?.email || doctor.email}</div>
+                      <div className="font-medium">
+                        {fullDoctor?.email || doctor.email}
+                      </div>
                     </div>
                   )}
                   <div>
@@ -199,7 +214,9 @@ export function DoctorProfile({
                       {translate("specialty")}
                     </div>
                     <div className="font-medium">
-                      {translateSpecialty(fullDoctor?.specialite || doctor.specialite)}
+                      {translateSpecialty(
+                        fullDoctor?.specialite || doctor.specialite
+                      )}
                     </div>
                   </div>
                   {userRole !== "Patient" && (
@@ -207,7 +224,9 @@ export function DoctorProfile({
                       <div className="text-sm text-muted-foreground">
                         {translate("phone")}
                       </div>
-                      <div className="font-medium">{fullDoctor?.telephone || doctor.telephone}</div>
+                      <div className="font-medium">
+                        {fullDoctor?.telephone || doctor.telephone}
+                      </div>
                     </div>
                   )}
                   <div>
@@ -216,27 +235,35 @@ export function DoctorProfile({
                     </div>
                     <div className="font-medium flex items-center gap-2">
                       {clinicName}
-                      {doctor.cliniqueId && userRole !== "ClinicAdmin" && userRole !== "Patient" && (
-                        <Button
-                          variant="link"
-                          className="text-sm text-blue-600 p-0 h-auto"
-                          onClick={() => navigate(`/clinics/${doctor.cliniqueId}`)}
-                          aria-label={translate("viewClinic")}
-                        >
-                          {translate("viewClinic")}
-                        </Button>
-                      )}
+                      {doctor.cliniqueId &&
+                        userRole !== "ClinicAdmin" &&
+                        userRole !== "Patient" && (
+                          <Button
+                            variant="link"
+                            className="text-sm text-blue-600 p-0 h-auto"
+                            onClick={() =>
+                              navigate(`/clinics/${doctor.cliniqueId}`)
+                            }
+                            aria-label={translate("viewClinic")}
+                          >
+                            {translate("viewClinic")}
+                          </Button>
+                        )}
                     </div>
                   </div>
                 </div>
 
                 {userRole !== "Patient" && (
                   <div className="pt-4">
-                    <h3 className="text-lg font-medium mb-2">{translate("specialty")}</h3>
+                    <h3 className="text-lg font-medium mb-2">
+                      {translate("specialty")}
+                    </h3>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                       <Badge variant="outline">
                         <Stethoscope className="h-3 w-3 mr-1" />
-                        {translateSpecialty(fullDoctor?.specialite || doctor.specialite)}
+                        {translateSpecialty(
+                          fullDoctor?.specialite || doctor.specialite
+                        )}
                       </Badge>
                     </div>
                   </div>
@@ -298,7 +325,9 @@ export function DoctorProfile({
                     {translate("accountSettings")}
                   </h3>
                   <div className="space-y-4">
-                    <Button variant="outline">{translate("changePassword")}</Button>
+                    <Button variant="outline">
+                      {translate("changePassword")}
+                    </Button>
                     <Button variant="outline" className="text-red-500">
                       {translate("disableAccount")}
                     </Button>
@@ -311,7 +340,9 @@ export function DoctorProfile({
           {/* Schedule Tab */}
           <TabsContent value="schedule">
             <div className="space-y-6">
-              <h3 className="text-lg font-medium">{translate("scheduleTab")}</h3>
+              <h3 className="text-lg font-medium">
+                {translate("scheduleTab")}
+              </h3>
               <DoctorSchedule doctorId={doctor.id} />
             </div>
           </TabsContent>

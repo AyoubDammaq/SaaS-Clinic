@@ -204,7 +204,10 @@ export function useAppointments(): UseAppointmentsState {
       );
       toast.success("Rendez-vous annulé par le médecin");
     } catch (error) {
-      console.error("Erreur lors de l'annulation du rendez-vous par le médecin:", error);
+      console.error(
+        "Erreur lors de l'annulation du rendez-vous par le médecin:",
+        error
+      );
       toast.error("Échec de l’annulation du rendez-vous par le médecin");
     } finally {
       setIsSubmitting(false);
@@ -226,7 +229,7 @@ export function useAppointments(): UseAppointmentsState {
       toast.error("Échec de la confirmation du rendez-vous");
     }
   };
-  
+
   return {
     appointments,
     filteredAppointments,

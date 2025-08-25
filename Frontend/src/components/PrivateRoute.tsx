@@ -1,8 +1,7 @@
-
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { UserRole } from '@/types/auth';
-import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { UserRole } from "@/types/auth";
+import { DashboardLayout } from "@/components/layout/DashboardLayout";
 
 interface PrivateRouteProps {
   children?: React.ReactNode;
@@ -14,7 +13,11 @@ export const PrivateRoute = ({ allowedRoles, children }: PrivateRouteProps) => {
   const location = useLocation();
 
   if (isLoading) {
-    return <div className="flex h-screen items-center justify-center">Loading...</div>;
+    return (
+      <div className="flex h-screen items-center justify-center">
+        Loading...
+      </div>
+    );
   }
 
   // Check if user is authenticated
@@ -30,9 +33,5 @@ export const PrivateRoute = ({ allowedRoles, children }: PrivateRouteProps) => {
   }
 
   // User is authenticated and has correct role, render the protected content
-  return (
-    <DashboardLayout>
-      {children || <Outlet />}
-    </DashboardLayout>
-  );
+  return <DashboardLayout>{children || <Outlet />}</DashboardLayout>;
 };

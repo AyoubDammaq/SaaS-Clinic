@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from "react";
@@ -36,13 +35,14 @@ export function ThemeProvider({
 
   useEffect(() => {
     const root = window.document.documentElement;
-    
+
     // Remove existing class
     root.classList.remove("light", "dark");
 
     // Apply appropriate theme
     if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
         ? "dark"
         : "light";
       root.classList.add(systemTheme);
@@ -55,7 +55,7 @@ export function ThemeProvider({
   // Listen for changes to the prefers-color-scheme media query
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    
+
     const handleChange = () => {
       if (theme === "system") {
         const root = window.document.documentElement;
@@ -63,7 +63,7 @@ export function ThemeProvider({
         root.classList.add(mediaQuery.matches ? "dark" : "light");
       }
     };
-    
+
     mediaQuery.addEventListener("change", handleChange);
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, [theme]);
@@ -83,6 +83,7 @@ export function ThemeProvider({
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useTheme = () => {
   const context = useContext(ThemeProviderContext);
 

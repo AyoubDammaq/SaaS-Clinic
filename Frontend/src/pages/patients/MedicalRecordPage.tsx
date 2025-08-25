@@ -42,30 +42,48 @@ function SimplifiedPatientProfile({ patient }: { patient: Patient }) {
           <User className="h-8 w-8 text-primary" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div aria-label={t("patient_name") || "Nom du patient"}>
-              <span className="text-sm text-muted-foreground">{t("name") || "Nom"}: </span>
+              <span className="text-sm text-muted-foreground">
+                {t("name") || "Nom"}:{" "}
+              </span>
               <span className="font-medium">{`${patient.prenom} ${patient.nom}`}</span>
             </div>
             <div aria-label={t("patient_age") || "Âge du patient"}>
-              <span className="text-sm text-muted-foreground">{t("age") || "Âge"}: </span>
-              <span className="font-medium">{calculateAge(patient.dateNaissance)}</span>
+              <span className="text-sm text-muted-foreground">
+                {t("age") || "Âge"}:{" "}
+              </span>
+              <span className="font-medium">
+                {calculateAge(patient.dateNaissance)}
+              </span>
             </div>
             <div aria-label={t("patient_gender") || "Sexe du patient"}>
-              <span className="text-sm text-muted-foreground">{t("gender") || "Sexe"}: </span>
+              <span className="text-sm text-muted-foreground">
+                {t("gender") || "Sexe"}:{" "}
+              </span>
               <span className="font-medium">
-                {patient.sexe === "M" ? t("male") || "Homme" : patient.sexe === "F" ? t("female") || "Femme" : t("other") || "Autre"}
+                {patient.sexe === "M"
+                  ? t("male") || "Homme"
+                  : patient.sexe === "F"
+                  ? t("female") || "Femme"
+                  : t("other") || "Autre"}
               </span>
             </div>
             <div aria-label={t("patient_email") || "Email du patient"}>
-              <span className="text-sm text-muted-foreground">{t("email") || "Email"}: </span>
+              <span className="text-sm text-muted-foreground">
+                {t("email") || "Email"}:{" "}
+              </span>
               <span className="font-medium">{patient.email}</span>
             </div>
             <div aria-label={t("patient_phone") || "Téléphone du patient"}>
-              <span className="text-sm text-muted-foreground">{t("phone") || "Téléphone"}: </span>
+              <span className="text-sm text-muted-foreground">
+                {t("phone") || "Téléphone"}:{" "}
+              </span>
               <span className="font-medium">{patient.telephone}</span>
             </div>
             {patient.adresse && (
               <div aria-label={t("patient_address") || "Adresse du patient"}>
-                <span className="text-sm text-muted-foreground">{t("address") || "Adresse"}: </span>
+                <span className="text-sm text-muted-foreground">
+                  {t("address") || "Adresse"}:{" "}
+                </span>
                 <span className="font-medium">{patient.adresse}</span>
               </div>
             )}
@@ -83,15 +101,22 @@ function MedicalRecordPage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [patient, setPatient] = useState<Patient | null>(null);
   const [isLoadingPatient, setIsLoadingPatient] = useState(true);
-  const [patientCache, setPatientCache] = useState<{ [key: string]: Patient }>({});
+  const [patientCache, setPatientCache] = useState<{ [key: string]: Patient }>(
+    {}
+  );
   const { t } = useTranslation("patients");
   const stableT = useMemo(() => t, [t]); // Stabiliser la fonction t
-  const [selectedConsultation, setSelectedConsultation] = useState<Consultation | null>(null);
+  const [selectedConsultation, setSelectedConsultation] =
+    useState<Consultation | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const { doctors, isLoading: isLoadingDoctors } = useDoctors();
 
-  const selectedDoctor = doctors.find((doc) => doc.id === selectedConsultation?.medecinId);
-  const doctorName = selectedDoctor ? `${selectedDoctor.prenom} ${selectedDoctor.nom}` : "";
+  const selectedDoctor = doctors.find(
+    (doc) => doc.id === selectedConsultation?.medecinId
+  );
+  const doctorName = selectedDoctor
+    ? `${selectedDoctor.prenom} ${selectedDoctor.nom}`
+    : "";
 
   const {
     medicalRecord,
@@ -108,7 +133,9 @@ function MedicalRecordPage() {
   useEffect(() => {
     const fetchPatient = async () => {
       if (!id) {
-        toast.error(stableT("errors.no_patient_id") || "Aucun ID de patient fourni");
+        toast.error(
+          stableT("errors.no_patient_id") || "Aucun ID de patient fourni"
+        );
         navigate("/patients");
         return;
       }
@@ -129,15 +156,35 @@ function MedicalRecordPage() {
           // Appeler fetchMedicalRecord après patient
           await fetchMedicalRecord(id);
         } else {
-          toast.error(stableT("errors.patient_not_found") || "Patient non trouvé");
+          toast.error(
+            stableT("errors.patient_not_found") || "Patient non trouvé"
+          );
           navigate("/patients");
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error("Erreur lors de la récupération du patient:", error);
-        if (error.response?.status === 429) {
-          toast.error(stableT("errors.rate_limit_exceeded") || "Trop de requêtes, veuillez réessayer plus tard");
+        if (
+          typeof error === "object" &&
+          error !== null &&
+          "response" in error
+        ) {
+          const axiosError = error as { response?: { status?: number } };
+          if (axiosError.response?.status === 429) {
+            toast.error(
+              stableT("error_rate_limit_exceeded") ||
+                "Trop de requêtes, veuillez réessayer plus tard"
+            );
+          } else {
+            toast.error(
+              stableT("error_load_patient_failed") ||
+                "Échec du chargement des données du patient"
+            );
+          }
         } else {
-          toast.error(stableT("errors.load_patient_failed") || "Échec du chargement des données du patient");
+          toast.error(
+            stableT("error_load_patient_failed") ||
+              "Échec du chargement des données du patient"
+          );
         }
         navigate("/patients");
       } finally {
@@ -153,7 +200,9 @@ function MedicalRecordPage() {
       <Card>
         <CardContent className="pt-6">
           <div className="flex justify-center items-center h-40">
-            <p className="text-muted-foreground">{stableT("loading", "common") || "Chargement..."}</p>
+            <p className="text-muted-foreground">
+              {stableT("loading") || "Chargement..."}
+            </p>
           </div>
         </CardContent>
       </Card>
@@ -165,7 +214,9 @@ function MedicalRecordPage() {
       <Card>
         <CardContent className="pt-6">
           <div className="flex justify-center items-center h-40">
-            <p className="text-muted-foreground">{stableT("patient_not_found") || "Patient introuvable"}</p>
+            <p className="text-muted-foreground">
+              {stableT("patient_not_found") || "Patient introuvable"}
+            </p>
           </div>
         </CardContent>
       </Card>
@@ -240,10 +291,16 @@ function MedicalRecordPage() {
       };
 
       await createMedicalRecord(payload);
-      toast.success(stableT("success.medical_record_created") || "Dossier médical créé avec succès");
+      toast.success(
+        stableT("success.medical_record_created") ||
+          "Dossier médical créé avec succès"
+      );
     } catch (error) {
       console.error("Failed to create medical record:", error);
-      toast.error(stableT("errors.create_medical_record_failed") || "Échec de la création du dossier médical");
+      toast.error(
+        stableT("errors.create_medical_record_failed") ||
+          "Échec de la création du dossier médical"
+      );
     }
   };
 
@@ -255,9 +312,8 @@ function MedicalRecordPage() {
   return (
     <div className="space-y-6 pb-8">
       {/* Section du profil simplifié */}
-      {["SuperAdmin", "ClinicAdmin", "Doctor"].includes(user.role) && patient && (
-        <SimplifiedPatientProfile patient={patient} />
-      )}
+      {["SuperAdmin", "ClinicAdmin", "Doctor"].includes(user.role) &&
+        patient && <SimplifiedPatientProfile patient={patient} />}
 
       <div className="flex items-center justify-between">
         <div>
@@ -265,7 +321,8 @@ function MedicalRecordPage() {
             {stableT("patientRecord") || "Dossier médical"}
           </h1>
           <p className="text-muted-foreground">
-            {stableT("manage_medical_info") || "Consulter et gérer les informations médicales du patient"}
+            {stableT("manage_medical_info") ||
+              "Consulter et gérer les informations médicales du patient"}
           </p>
         </div>
         <Button variant="outline" onClick={() => navigate("/patients")}>

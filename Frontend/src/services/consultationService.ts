@@ -1,18 +1,26 @@
-
-import { API_ENDPOINTS } from '@/config/api';
-import { api } from '@/utils/apiClient';
-import { Consultation, ConsultationDTO, DocumentMedical, DocumentMedicalDTO } from '@/types/consultation';
+import { API_ENDPOINTS } from "@/config/api";
+import { api } from "@/utils/apiClient";
+import {
+  Consultation,
+  ConsultationDTO,
+  DocumentMedical,
+  DocumentMedicalDTO,
+} from "@/types/consultation";
 
 export const consultationService = {
   // 🔍 Get consultation by ID
   async getConsultationById(id: string): Promise<Consultation> {
-    const response = await api.get<Consultation>(API_ENDPOINTS.CONSULTATIONS.GET_BY_ID(id));
+    const response = await api.get<Consultation>(
+      API_ENDPOINTS.CONSULTATIONS.GET_BY_ID(id)
+    );
     return response;
   },
 
   // 📄 Get all consultations
   async getAllConsultations(): Promise<Consultation[]> {
-    const response = await api.get<Consultation[]>(API_ENDPOINTS.CONSULTATIONS.GET_ALL);
+    const response = await api.get<Consultation[]>(
+      API_ENDPOINTS.CONSULTATIONS.GET_ALL
+    );
     return response;
   },
 
@@ -23,7 +31,10 @@ export const consultationService = {
 
   // ✏️ Update a consultation
   async updateConsultation(consultationData: ConsultationDTO): Promise<void> {
-    await api.put<void>(API_ENDPOINTS.CONSULTATIONS.UPDATE(consultationData.id!), consultationData);
+    await api.put<void>(
+      API_ENDPOINTS.CONSULTATIONS.UPDATE(consultationData.id!),
+      consultationData
+    );
   },
 
   // ❌ Delete a consultation
@@ -40,7 +51,9 @@ export const consultationService = {
   },
 
   // 🧑‍ Get consultations by patient ID
-  async getConsultationsByPatientId(patientId: string): Promise<Consultation[]> {
+  async getConsultationsByPatientId(
+    patientId: string
+  ): Promise<Consultation[]> {
     const response = await api.get<Consultation[]>(
       API_ENDPOINTS.CONSULTATIONS.GET_BY_PATIENT_ID(patientId)
     );

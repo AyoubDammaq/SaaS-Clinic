@@ -7,7 +7,7 @@ import en_billing from "./en/billing";
 import en_doctors from "./en/doctors";
 import en_pagination from "./en/pagination";
 import en_clinics from "./en/clinics";
-import en_profil from "./en/profile"
+import en_profil from "./en/profile";
 import en_dashboard from "./en/dashboard";
 import en_notifications from "./en/notifications";
 import en_users from "./en/users";
@@ -21,7 +21,7 @@ import fr_billing from "./fr/billing";
 import fr_doctors from "./fr/doctors";
 import fr_pagination from "./fr/pagination";
 import fr_clinics from "./fr/clinics";
-import fr_profil from "./fr/profile"
+import fr_profil from "./fr/profile";
 import fr_dashboard from "./fr/dashboard";
 import fr_notifications from "./fr/notifications";
 import fr_users from "./fr/users";

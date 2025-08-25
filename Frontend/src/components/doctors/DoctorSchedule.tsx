@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDisponibilite } from "@/hooks/useDisponibilites";
-import { Disponibilite, DayOfWeek, CreneauDisponibleDto } from "@/types/disponibilite";
+import {
+  Disponibilite,
+  DayOfWeek,
+  CreneauDisponibleDto,
+} from "@/types/disponibilite";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { TimePicker } from "@/components/ui/time-picker";
@@ -60,7 +64,9 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
   const [endTime, setEndTime] = useState<string>("");
   const [formError, setFormError] = useState<string>("");
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [availabilityIdToDelete, setAvailabilityIdToDelete] = useState<string | null>(null);
+  const [availabilityIdToDelete, setAvailabilityIdToDelete] = useState<
+    string | null
+  >(null);
 
   // Traduire les noms des jours pour l'affichage
   const dayNames: Record<number, string> = {
@@ -198,7 +204,7 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
     <div>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold">{t("doctorScheduleTitle")}</h2>
-        {permissions.canCreate && user.role !== "SuperAdmin" &&(
+        {permissions.canCreate && user.role !== "SuperAdmin" && (
           <Button onClick={openAddModal} disabled={isSubmitting}>
             {t("addAvailability")}
           </Button>
@@ -208,7 +214,9 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
         <CardContent className="pt-6">
           {isLoading ? (
             <div className="flex justify-center items-center h-40">
-              <p className="text-muted-foreground">{t("loadingAvailabilities")}</p>
+              <p className="text-muted-foreground">
+                {t("loadingAvailabilities")}
+              </p>
             </div>
           ) : disponibilites.length === 0 ? (
             <div className="flex justify-center items-center h-40 text-muted-foreground">
@@ -353,7 +361,9 @@ export const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ doctorId }) => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>{t("deleteAvailability")}</DialogTitle>
-              <DialogDescription>{t("confirmDeleteAvailability")}</DialogDescription>
+              <DialogDescription>
+                {t("confirmDeleteAvailability")}
+              </DialogDescription>
             </DialogHeader>
             <DialogFooter>
               <Button variant="outline" onClick={closeDeleteDialog}>

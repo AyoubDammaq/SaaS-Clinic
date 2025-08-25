@@ -10,11 +10,14 @@ interface AppointmentStatusBadgeProps {
   showIcon?: boolean;
 }
 
-const statusConfig: Record<AppointmentStatus, {
-  labelKey: string;
-  icon: JSX.Element;
-  className: string;
-}> = {
+const statusConfig: Record<
+  AppointmentStatus,
+  {
+    labelKey: string;
+    icon: JSX.Element;
+    className: string;
+  }
+> = {
   CONFIRME: {
     labelKey: "scheduled",
     icon: <CheckCircle className="h-3.5 w-3.5 mr-1" />,

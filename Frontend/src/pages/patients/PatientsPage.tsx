@@ -205,7 +205,7 @@ function PatientsPage() {
                   sexe: patient.sexe as "M" | "F",
                   adresse: patient.adresse,
                 };
-                handleUpdatePatient(patient.id, updatedPatient);
+                return handleUpdatePatient(patient.id, updatedPatient);
               }}
             />
           </TabsContent>

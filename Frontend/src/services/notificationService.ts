@@ -134,9 +134,7 @@ export const notificationService = {
   },
 
   // Delete all notifications for a recipient
-  deleteAllNotifications: async (
-    recipientId: string
-  ): Promise<void> => {
+  deleteAllNotifications: async (recipientId: string): Promise<void> => {
     try {
       await api.delete<void>(
         API_ENDPOINTS.NOTIFICATIONS.DELETE_ALL(recipientId)

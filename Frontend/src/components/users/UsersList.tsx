@@ -1,4 +1,11 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, Plus, FileEdit, Trash2 } from "lucide-react";
@@ -74,7 +81,9 @@ export function UsersList({
               <TableHead>{t("full_name")}</TableHead>
               <TableHead>{t("email")}</TableHead>
               <TableHead>{t("role")}</TableHead>
-              {(permissions.canEdit || permissions.canDelete) && <TableHead>{t("actions")}</TableHead>}
+              {(permissions.canEdit || permissions.canDelete) && (
+                <TableHead>{t("actions")}</TableHead>
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -87,7 +96,9 @@ export function UsersList({
             ) : (
               filteredUsers.map((user) => (
                 <TableRow key={user.id} className="hover:bg-muted/60">
-                  <TableCell className="font-medium">{user.fullName || user.name}</TableCell>
+                  <TableCell className="font-medium">
+                    {user.fullName || user.name}
+                  </TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{roleMap[Number(user.role)]}</TableCell>
                   {(permissions.canEdit || permissions.canDelete) && (
@@ -99,7 +110,12 @@ export function UsersList({
                           </Button>
                         )} */}
                         {permissions.canDelete && (
-                          <Button size="sm" variant="ghost" className="text-red-500" onClick={() => onDeleteUser(user.id)}>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="text-red-500"
+                            onClick={() => onDeleteUser(user.id)}
+                          >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         )}

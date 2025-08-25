@@ -1,4 +1,3 @@
-
 // Doctor types matching the backend models
 
 // Import or define UUID type
@@ -40,7 +39,6 @@ export interface CliniqueStatistique {
   cliniqueName: string; // May need to be populated from clinic service
   nombreMedecins: number;
 }
-
 
 export interface LinkUserToDoctorDto {
   userId: string; // ID of the user to link

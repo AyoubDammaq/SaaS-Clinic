@@ -50,13 +50,16 @@ export function DoctorFilters({
 
   // Debounced filter change handler (for specialty, clinic, assigned status)
   const debouncedFilterChange = useRef(
-    debounce((filters: {
-      specialty: string | null;
-      clinicId: string | null;
-      assignedStatus: "all" | "assigned" | "unassigned";
-    }) => {
-      onFilterChange(filters);
-    }, 300) // 300ms delay
+    debounce(
+      (filters: {
+        specialty: string | null;
+        clinicId: string | null;
+        assignedStatus: "all" | "assigned" | "unassigned";
+      }) => {
+        onFilterChange(filters);
+      },
+      300
+    ) // 300ms delay
   ).current;
 
   // Debounced availability change handler
@@ -118,8 +121,16 @@ export function DoctorFilters({
     setAvailabilityDate("");
     setHeureDebut("");
     setHeureFin("");
-    debouncedFilterChange({ specialty: null, clinicId: null, assignedStatus: "all" });
-    debouncedAvailabilityChange({ date: null, heureDebut: null, heureFin: null });
+    debouncedFilterChange({
+      specialty: null,
+      clinicId: null,
+      assignedStatus: "all",
+    });
+    debouncedAvailabilityChange({
+      date: null,
+      heureDebut: null,
+      heureFin: null,
+    });
   };
 
   return (
@@ -135,7 +146,12 @@ export function DoctorFilters({
           {t("filters")}
         </Button>
 
-        {(specialty || clinicId || assignedStatus !== "all" || availabilityDate || heureDebut || heureFin) && (
+        {(specialty ||
+          clinicId ||
+          assignedStatus !== "all" ||
+          availabilityDate ||
+          heureDebut ||
+          heureFin) && (
           <Button
             variant="ghost"
             size="sm"
@@ -184,7 +200,9 @@ export function DoctorFilters({
                     <SelectValue placeholder={t("allClinics")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all_clinics">{t("allClinics")}</SelectItem>
+                    <SelectItem value="all_clinics">
+                      {t("allClinics")}
+                    </SelectItem>
                     {clinics.map((clinic) => (
                       <SelectItem key={clinic.id} value={clinic.id}>
                         {clinic.name}
@@ -197,7 +215,9 @@ export function DoctorFilters({
               {userRole !== "Patient" && (
                 <div className="space-y-2">
                   <Label htmlFor="assigned-status-filter">
-                    {userRole === "SuperAdmin" ? t("assignment") : t("availability")}
+                    {userRole === "SuperAdmin"
+                      ? t("assignment")
+                      : t("availability")}
                   </Label>
                   <Select
                     value={assignedStatus}
@@ -209,10 +229,14 @@ export function DoctorFilters({
                     <SelectContent>
                       <SelectItem value="all">{t("all")}</SelectItem>
                       <SelectItem value="assigned">
-                        {userRole === "SuperAdmin" ? t("assigned") : t("clinicDoctors")}
+                        {userRole === "SuperAdmin"
+                          ? t("assigned")
+                          : t("clinicDoctors")}
                       </SelectItem>
                       <SelectItem value="unassigned">
-                        {userRole === "SuperAdmin" ? t("unassigned") : t("availableDoctors")}
+                        {userRole === "SuperAdmin"
+                          ? t("unassigned")
+                          : t("availableDoctors")}
                       </SelectItem>
                     </SelectContent>
                   </Select>

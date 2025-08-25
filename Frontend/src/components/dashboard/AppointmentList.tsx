@@ -36,13 +36,13 @@ interface AppointmentListProps {
 export function AppointmentList({ appointments }: AppointmentListProps) {
   const { t } = useTranslation("dashboard");
 
-
-  
   if (appointments.length === 0) {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>{t("upcoming_appointments_title") || "Upcoming Appointments"}</CardTitle>
+          <CardTitle>
+            {t("upcoming_appointments_title") || "Upcoming Appointments"}
+          </CardTitle>
           <CardDescription>
             {t("no_upcoming_appointments") || "No upcoming appointments"}
           </CardDescription>
@@ -54,9 +54,12 @@ export function AppointmentList({ appointments }: AppointmentListProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t("upcoming_appointments_title") || "Upcoming Appointments"}</CardTitle>
+        <CardTitle>
+          {t("upcoming_appointments_title") || "Upcoming Appointments"}
+        </CardTitle>
         <CardDescription>
-          {t("upcoming_appointments_description") || "List of your upcoming appointments"}
+          {t("upcoming_appointments_description") ||
+            "List of your upcoming appointments"}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -92,8 +95,12 @@ export function AppointmentList({ appointments }: AppointmentListProps) {
           <TableBody>
             {appointments.map((appointment) => (
               <TableRow key={appointment.id}>
-                <TableCell className="font-medium">{appointment.patientName}</TableCell>
-                <TableCell className="hidden md:table-cell">{appointment.doctorName}</TableCell>
+                <TableCell className="font-medium">
+                  {appointment.patientName}
+                </TableCell>
+                <TableCell className="hidden md:table-cell">
+                  {appointment.doctorName}
+                </TableCell>
                 <TableCell>
                   <div className="flex flex-col space-y-1">
                     <div className="flex items-center text-sm">

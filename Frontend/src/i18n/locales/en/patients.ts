@@ -117,6 +117,8 @@ export default {
     medical_record_updated: "Medical record updated successfully",
     document_added: "Document added successfully",
   },
+  error_rate_limit_exceeded: "Too many requests, please try again later",
+  error_load_patient_failed: "Failed to load patient data",
   errors: {
     no_patient_id: "No patient ID provided",
     patient_not_found: "Patient not found",

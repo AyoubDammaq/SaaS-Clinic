@@ -4,13 +4,13 @@ import { toast } from "sonner";
 
 import {
   StatistiqueDTO,
-  StatistiqueCliniqueDTO,
   ActiviteMedecinDTO,
   ComparaisonCliniqueDTO,
   DashboardStatsDTO,
   AppointmentDayStat,
   RevenuTrend,
 } from "@/types/statistics"; // à ajuster selon vos types réels
+import { StatistiqueCliniqueDTO } from "@/types/clinic";
 import { endOfMonth, isWithinInterval, parseISO, startOfMonth } from "date-fns";
 import { Consultation } from "@/types/consultation";
 import { Paiement, RecentPaiementDto } from "@/types/billing";
@@ -505,7 +505,11 @@ export const reportingService = {
   ): Promise<number> {
     try {
       return await api.get<number>(
-        API_ENDPOINTS.CONSULTATIONS.COUNT_BY_PATIENT_ID(patientId, startDate, endDate)
+        API_ENDPOINTS.CONSULTATIONS.COUNT_BY_PATIENT_ID(
+          patientId,
+          startDate,
+          endDate
+        )
       );
     } catch (error) {
       toast.error("Échec lors de la récupération des consultations du patient");
@@ -520,7 +524,11 @@ export const reportingService = {
   ): Promise<number> {
     try {
       return await api.get<number>(
-        API_ENDPOINTS.CONSULTATIONS.COUNT_BY_DOCTOR_ID(doctorId, startDate, endDate)
+        API_ENDPOINTS.CONSULTATIONS.COUNT_BY_DOCTOR_ID(
+          doctorId,
+          startDate,
+          endDate
+        )
       );
     } catch (error) {
       toast.error("Échec lors de la récupération des consultations du médecin");
@@ -535,23 +543,31 @@ export const reportingService = {
   ): Promise<number> {
     try {
       return await api.get<number>(
-        API_ENDPOINTS.CONSULTATIONS.COUNT_BY_CLINIC_ID(cliniqueId, startDate, endDate)
+        API_ENDPOINTS.CONSULTATIONS.COUNT_BY_CLINIC_ID(
+          cliniqueId,
+          startDate,
+          endDate
+        )
       );
     } catch (error) {
-      toast.error("Échec lors de la récupération des consultations de la clinique");
+      toast.error(
+        "Échec lors de la récupération des consultations de la clinique"
+      );
       throw error;
     }
   },
 
   async getRecentPaymentsByPatient(
-    patientId: string,
+    patientId: string
   ): Promise<RecentPaiementDto> {
     try {
       return await api.get<RecentPaiementDto>(
         API_ENDPOINTS.BILLING.PAIEMENT.DERNIER_PAIEMENT_PATIENT(patientId)
       );
     } catch (error) {
-      toast.error("Échec lors de la récupération des paiements récents du patient");
+      toast.error(
+        "Échec lors de la récupération des paiements récents du patient"
+      );
       throw error;
     }
   },
@@ -562,9 +578,10 @@ export const reportingService = {
       return await api.get<number>(
         API_ENDPOINTS.APPOINTMENTS.COUNT_PENDING_BY_DOCTOR(medecinId)
       );
-    }
-    catch (error) {
-      toast.error("Échec lors de la récupération des RDV en attente du médecin");
+    } catch (error) {
+      toast.error(
+        "Échec lors de la récupération des RDV en attente du médecin"
+      );
       throw error;
     }
   },
@@ -577,20 +594,22 @@ export const reportingService = {
         API_ENDPOINTS.APPOINTMENTS.COUNT_PENDING_BY_CLINIC(cliniqueId)
       );
     } catch (error) {
-      toast.error("Échec lors de la récupération des RDV en attente de la clinique");
+      toast.error(
+        "Échec lors de la récupération des RDV en attente de la clinique"
+      );
       throw error;
     }
   },
 
-  async getRevenusMensuelByClinic(
-    cliniqueId: string
-  ): Promise<number> {
+  async getRevenusMensuelByClinic(cliniqueId: string): Promise<number> {
     try {
       return await api.get<number>(
         API_ENDPOINTS.BILLING.FACTURE.REVENU_MENSUEL(cliniqueId)
       );
     } catch (error) {
-      toast.error("Échec lors de la récupération des revenus mensuels de la clinique");
+      toast.error(
+        "Échec lors de la récupération des revenus mensuels de la clinique"
+      );
       throw error;
     }
   },
@@ -603,7 +622,9 @@ export const reportingService = {
         API_ENDPOINTS.BILLING.FACTURE.REVENU_MENSUEL_TREND(cliniqueId)
       );
     } catch (error) {
-      toast.error("Échec lors de la récupération de la tendance des revenus mensuels");
+      toast.error(
+        "Échec lors de la récupération de la tendance des revenus mensuels"
+      );
       throw error;
     }
   },

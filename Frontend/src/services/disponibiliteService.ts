@@ -1,6 +1,7 @@
 import { API_ENDPOINTS } from "@/config/api";
 import { api } from "@/utils/apiClient";
 import { CreneauDisponibleDto, Disponibilite } from "@/types/disponibilite";
+import { Doctor } from "@/types/doctor";
 
 type UUID = string;
 
@@ -84,13 +85,13 @@ export const disponibiliteService = {
     date: string,
     heureDebut?: string,
     heureFin?: string
-  ): Promise<UUID[]> {
+  ): Promise<Doctor[]> {
     const url = API_ENDPOINTS.Disponibilite.GET_AVAILABLE_DOCTORS(
       date,
       heureDebut,
       heureFin
     );
-    const response = await api.get<UUID[]>(url);
+    const response = await api.get<Doctor[]>(url);
     return response;
   },
 

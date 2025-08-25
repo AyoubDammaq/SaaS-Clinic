@@ -121,6 +121,8 @@ export default {
     medical_record_updated: "Dossier médical mis à jour avec succès",
     document_added: "Document ajouté avec succès",
   },
+  error_rate_limit_exceeded: "Trop de requêtes, veuillez réessayer plus tard",
+  error_load_patient_failed: "Échec du chargement des données du patient",
   errors: {
     no_patient_id: "Aucun ID de patient fourni",
     patient_not_found: "Patient introuvable",

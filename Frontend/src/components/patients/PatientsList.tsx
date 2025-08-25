@@ -228,7 +228,9 @@ export function PatientsList({
                     <TableCell>{calculateAge(patient.dateNaissance)}</TableCell>
                     <TableCell>{getGenderLabel(patient.sexe)}</TableCell>
                     {userRole !== "Doctor" && (
-                      <TableCell>{formatDateWithTime(patient.dateCreation)}</TableCell>
+                      <TableCell>
+                        {formatDateWithTime(patient.dateCreation)}
+                      </TableCell>
                     )}
                     {userRole !== "Doctor" &&
                       (permissions.canEdit || permissions.canDelete) && (

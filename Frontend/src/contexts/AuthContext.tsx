@@ -40,7 +40,11 @@ export interface AuthContextType {
     email: string,
     role?: UserRole
   ) => Promise<User | null>;
-  linkToProfileHelper: (userId: string, profileId: string, role: number) => Promise<boolean>;
+  linkToProfileHelper: (
+    userId: string,
+    profileId: string,
+    role: number
+  ) => Promise<boolean>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(

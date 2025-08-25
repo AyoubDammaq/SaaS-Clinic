@@ -34,7 +34,11 @@ import { usePatients } from "@/hooks/usePatients";
 import { useCliniques } from "@/hooks/useCliniques";
 import { useConsultations } from "@/hooks/useConsultations";
 import { useMemo, useEffect } from "react";
-import { Consultation, ConsultationType, consultationTypes } from "@/types/consultation";
+import {
+  Consultation,
+  ConsultationType,
+  consultationTypes,
+} from "@/types/consultation";
 import { Doctor } from "@/types/doctor";
 import { useTranslation } from "@/hooks/useTranslation";
 
@@ -55,14 +59,15 @@ export function InvoiceDetailsModal({
   onDownloadPDF,
   showPayButton = true,
 }: InvoiceDetailsModalProps) {
-  const { t } = useTranslation('billing');
-  const tCommon = useTranslation('common').t;
+  const { t } = useTranslation("billing");
+  const tCommon = useTranslation("common").t;
   const { doctors, isLoading: doctorsLoading } = useDoctors();
   const { patients, isLoading: patientsLoading } = usePatients();
   const { cliniques, isLoading: clinicsLoading } = useCliniques();
   const { consultations, isLoading: consultationsLoading } = useConsultations();
 
-  const isLoading = doctorsLoading || patientsLoading || clinicsLoading || consultationsLoading;
+  const isLoading =
+    doctorsLoading || patientsLoading || clinicsLoading || consultationsLoading;
 
   const patientMap = useMemo(() => {
     const map = new Map<string, string>();
@@ -91,7 +96,12 @@ export function InvoiceDetailsModal({
   useEffect(() => {
     if (isOpen && !isLoading) {
       console.log("Consultation Map:", consultationMap);
-      console.log("Invoice:", invoice, "Consultation:", consultationMap.get(invoice?.consultationId));
+      console.log(
+        "Invoice:",
+        invoice,
+        "Consultation:",
+        consultationMap.get(invoice?.consultationId)
+      );
     }
   }, [isOpen, isLoading, consultationMap, invoice]);
 
@@ -112,13 +122,13 @@ export function InvoiceDetailsModal({
   const getStatusLabel = (status: FactureStatus) => {
     switch (status) {
       case FactureStatus.PAYEE:
-        return t('paid');
+        return t("paid");
       case FactureStatus.PARTIELLEMENT_PAYEE:
-        return t('partiallyPaid');
+        return t("partiallyPaid");
       case FactureStatus.IMPAYEE:
-        return t('unpaid');
+        return t("unpaid");
       case FactureStatus.ANNULEE:
-        return t('cancelled');
+        return t("cancelled");
       default:
         return status;
     }
@@ -157,26 +167,26 @@ export function InvoiceDetailsModal({
   const mappedStatus = mapFactureStatus(invoice.status);
   const consultation = consultationMap.get(invoice.consultationId);
   const medecinName = consultation
-    ? medecinMap.get(consultation.medecinId) || t('unknownDoctor')
-    : t('unknownDoctor');
+    ? medecinMap.get(consultation.medecinId) || t("unknownDoctor")
+    : t("unknownDoctor");
 
   const getConsultationTypeLabel = (
     type: ConsultationType | undefined
   ): string => {
-    if (!type) return t('unknownType');
+    if (!type) return t("unknownType");
     switch (type) {
       case ConsultationType.ConsultationGenerale:
-        return t('consultationType.general');
+        return t("consultationType.general");
       case ConsultationType.ConsultationSpecialiste:
-        return t('consultationType.specialist');
+        return t("consultationType.specialist");
       case ConsultationType.ConsultationUrgence:
-        return t('consultationType.emergency');
+        return t("consultationType.emergency");
       case ConsultationType.ConsultationSuivi:
-        return t('consultationType.followUp');
+        return t("consultationType.followUp");
       case ConsultationType.ConsultationLaboratoire:
-        return t('consultationType.laboratory');
+        return t("consultationType.laboratory");
       default:
-        return `${t('unknownType')} (${type})`;
+        return `${t("unknownType")} (${type})`;
     }
   };
 
@@ -186,10 +196,10 @@ export function InvoiceDetailsModal({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <FileText className="h-5 w-5" />
-            {t('invoice')} #{invoice.id.substring(0, 8).toUpperCase()}
+            {t("invoice")} #{invoice.id.substring(0, 8).toUpperCase()}
           </DialogTitle>
           <DialogDescription>
-            {t('invoiceDetailsDescription')}
+            {t("invoiceDetailsDescription")}
           </DialogDescription>
         </DialogHeader>
 
@@ -213,7 +223,7 @@ export function InvoiceDetailsModal({
                     {formatCurrency(invoice.montantTotal)}
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    {t('totalAmount')}
+                    {t("totalAmount")}
                   </div>
                 </div>
               </div>
@@ -226,33 +236,33 @@ export function InvoiceDetailsModal({
                 <div className="space-y-3">
                   <div className="flex items-center gap-2 text-sm font-medium">
                     <User className="h-4 w-4" />
-                    {t('patientInfo')}
+                    {t("patientInfo")}
                   </div>
                   <div className="space-y-1">
                     <div className="text-sm text-muted-foreground">
-                      {t('patient')}
+                      {t("patient")}
                     </div>
                     <div className="font-medium">
-                      {patientMap.get(invoice.patientId) || t('unknownPatient')}
+                      {patientMap.get(invoice.patientId) || t("unknownPatient")}
                     </div>
                   </div>
                   <div className="space-y-1">
                     <div className="text-sm text-muted-foreground">
-                      {t('consultationDate')}
+                      {t("consultationDate")}
                     </div>
                     <div className="font-medium">
                       {consultation
                         ? formatDate(consultation.dateConsultation)
-                        : t('unknownDate')}
+                        : t("unknownDate")}
                     </div>
                   </div>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 text-sm font-medium">
                       <Hospital className="h-4 w-4" />
-                      {t('clinic')}
+                      {t("clinic")}
                     </div>
                     <div className="font-medium">
-                      {clinicMap.get(invoice.clinicId) || t('unknownClinic')}
+                      {clinicMap.get(invoice.clinicId) || t("unknownClinic")}
                     </div>
                   </div>
                 </div>
@@ -264,11 +274,11 @@ export function InvoiceDetailsModal({
                 <div className="space-y-3">
                   <div className="flex items-center gap-2 text-sm font-medium">
                     <Calendar className="h-4 w-4" />
-                    {t('importantDates')}
+                    {t("importantDates")}
                   </div>
                   <div className="space-y-1">
                     <div className="text-sm text-muted-foreground">
-                      {t('issueDate')}
+                      {t("issueDate")}
                     </div>
                     <div className="font-medium">
                       {formatDate(invoice.dateEmission)}
@@ -277,7 +287,7 @@ export function InvoiceDetailsModal({
                   {invoice.paiement?.datePaiement && (
                     <div className="space-y-1">
                       <div className="text-sm text-muted-foreground">
-                        {t('paymentDate')}
+                        {t("paymentDate")}
                       </div>
                       <div className="font-medium text-green-600">
                         {formatDateTime(invoice.paiement.datePaiement)}
@@ -295,11 +305,13 @@ export function InvoiceDetailsModal({
                 <div className="space-y-3">
                   <div className="flex items-center gap-2 text-sm font-medium">
                     <FileText className="h-4 w-4" />
-                    {t('consultationDetails')}
+                    {t("consultationDetails")}
                   </div>
                   <div className="space-y-1">
                     <div className="font-medium">
-                      {`${getConsultationTypeLabel(consultation.type)} - ${medecinName}`}
+                      {`${getConsultationTypeLabel(
+                        consultation.type
+                      )} - ${medecinName}`}
                     </div>
                   </div>
                 </div>
@@ -313,11 +325,11 @@ export function InvoiceDetailsModal({
                 <div className="space-y-3">
                   <div className="flex items-center gap-2 text-sm font-medium">
                     <CreditCard className="h-4 w-4" />
-                    {t('paymentInfo')}
+                    {t("paymentInfo")}
                   </div>
                   <div className="space-y-1">
                     <div className="text-sm text-muted-foreground">
-                      {t('amountPaid')}
+                      {t("amountPaid")}
                     </div>
                     <div className="font-medium">
                       {formatCurrency(invoice.paiement.montant)}
@@ -325,19 +337,19 @@ export function InvoiceDetailsModal({
                   </div>
                   <div className="space-y-1">
                     <div className="text-sm text-muted-foreground">
-                      {t('paymentMethod')}
+                      {t("paymentMethod")}
                     </div>
                     <div className="font-medium">
                       {invoice.paiement.mode === ModePaiement.CarteBancaire &&
-                        t('creditCard')}
+                        t("creditCard")}
                       {invoice.paiement.mode === ModePaiement.Virement &&
-                        t('bankTransfer')}
+                        t("bankTransfer")}
                       {invoice.paiement.mode === ModePaiement.Especes &&
-                        t('cashOnSite')}
+                        t("cashOnSite")}
                       {invoice.paiement.mode === ModePaiement.Chèque &&
-                        t('check')}
+                        t("check")}
                       {invoice.paiement.mode === ModePaiement.Mobile &&
-                        t('mobilePayment')}
+                        t("mobilePayment")}
                     </div>
                   </div>
                 </div>
@@ -354,7 +366,7 @@ export function InvoiceDetailsModal({
               className="flex items-center gap-2"
             >
               <Download className="h-4 w-4" />
-              {t('downloadPDF')}
+              {t("downloadPDF")}
             </Button>
 
             {showPayButton &&
@@ -365,12 +377,12 @@ export function InvoiceDetailsModal({
                   className="flex items-center gap-2"
                 >
                   <CreditCard className="h-4 w-4" />
-                  {t('payInvoice')}
+                  {t("payInvoice")}
                 </Button>
               )}
 
             <Button variant="secondary" onClick={onClose}>
-              {tCommon('close')}
+              {tCommon("close")}
             </Button>
           </div>
         </div>

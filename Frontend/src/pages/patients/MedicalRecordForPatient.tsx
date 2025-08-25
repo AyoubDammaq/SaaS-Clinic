@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { MedicalRecordView, MedicalRecord as MedicalRecordViewType } from "@/components/patients/MedicalRecordView";
+import {
+  MedicalRecordView,
+  MedicalRecord as MedicalRecordViewType,
+} from "@/components/patients/MedicalRecordView";
 import { useMedicalRecord } from "@/hooks/useMedicalRecord";
 import { patientService } from "@/services/patientService";
 import { toast } from "sonner";
@@ -54,7 +57,8 @@ export default function MedicalRecordForPatient() {
 
   const { doctors } = useDoctors();
 
-  const [selectedConsultation, setSelectedConsultation] = useState<Consultation | null>(null);
+  const [selectedConsultation, setSelectedConsultation] =
+    useState<Consultation | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
   // Gestion des erreurs d'authentification ou de patient non trouvé
@@ -135,8 +139,12 @@ export default function MedicalRecordForPatient() {
     }
   };
 
-  const selectedDoctor = doctors.find((doc) => doc.id === selectedConsultation?.medecinId);
-  const doctorName = selectedDoctor ? `${selectedDoctor.prenom} ${selectedDoctor.nom}` : "";
+  const selectedDoctor = doctors.find(
+    (doc) => doc.id === selectedConsultation?.medecinId
+  );
+  const doctorName = selectedDoctor
+    ? `${selectedDoctor.prenom} ${selectedDoctor.nom}`
+    : "";
 
   const handleViewConsultationDetails = (consultation) => {
     setSelectedConsultation(consultation);
@@ -146,7 +154,9 @@ export default function MedicalRecordForPatient() {
   return (
     <div className="space-y-6 pb-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">{t("my_medical_record")}</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          {t("my_medical_record")}
+        </h1>
         <Button variant="outline" onClick={() => navigate(-1)}>
           <ArrowLeft className="mr-2 h-4 w-4" /> {t("back")}
         </Button>

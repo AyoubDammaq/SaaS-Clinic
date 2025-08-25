@@ -18,14 +18,10 @@ import {
   Lock,
   User,
   Building,
-  Clock,
-  Mail,
   CreditCard,
-  Users,
   Save,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { ConsultationPricingSettings } from "@/components/settings/ConsultationPricingSettings";
 

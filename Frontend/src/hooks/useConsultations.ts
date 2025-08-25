@@ -68,11 +68,16 @@ export function useConsultations(): UseConsultationsState {
       let consultationData: Consultation[] = [];
 
       if (role === "Patient" && patientId) {
-        consultationData = await consultationService.getConsultationsByPatientId(patientId);
+        consultationData =
+          await consultationService.getConsultationsByPatientId(patientId);
       } else if (role === "Doctor" && medecinId) {
-        consultationData = await consultationService.getConsultationsByDoctorId(medecinId);
+        consultationData = await consultationService.getConsultationsByDoctorId(
+          medecinId
+        );
       } else if (role === "ClinicAdmin" && cliniqueId) {
-        consultationData = await consultationService.getConsultationsByClinicId(cliniqueId);
+        consultationData = await consultationService.getConsultationsByClinicId(
+          cliniqueId
+        );
       } else {
         consultationData = await consultationService.getAllConsultations();
       }

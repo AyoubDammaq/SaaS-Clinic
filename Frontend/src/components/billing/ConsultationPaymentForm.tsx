@@ -28,10 +28,8 @@ import {
 } from "@/components/ui/select";
 import { CreditCard, Banknote } from "lucide-react";
 import { Facture, ModePaiement } from "@/types/billing";
-import {
-  PaymentStatusNotification,
-  usePaymentNotifications,
-} from "./PaymentStatusNotification";
+import { PaymentStatusNotification } from "./PaymentStatusNotification";
+import { usePaymentNotifications } from "@/hooks/usePaymentNotifications";
 import { useTranslation } from "@/hooks/useTranslation";
 
 // Luhn Algorithm for card number validation
@@ -60,51 +58,63 @@ const isFutureExpiryDate = (expiry: string): boolean => {
   return expiryDate > new Date();
 };
 
-const paymentFormSchema = z.object({
-  paymentMethod: z
-    .string()
-    .min(1, { message: "Veuillez sélectionner un mode de paiement." })
-    .refine((val) => Object.values(ModePaiement).includes(val as ModePaiement), {
-      message: "Mode de paiement invalide.",
-    }),
-  cardholderName: z
-    .string()
-    .min(2, { message: "Le nom du titulaire doit contenir au moins 2 caractères." })
-    .optional(),
-  cardNumber: z
-    .string()
-    .min(16, { message: "Le numéro de carte doit contenir au moins 16 chiffres." })
-    .max(19, { message: "Le numéro de carte doit contenir au maximum 19 chiffres." })
-    .refine((val) => !val || isValidCardNumber(val), {
-      message: "Numéro de carte invalide (échec de la validation Luhn).",
-    })
-    .optional(),
-  expiryDate: z
-    .string()
-    .regex(/^(0[1-9]|1[0-2])\/([0-9]{2})$/, {
-      message: "La date d'expiration doit être au format MM/AA.",
-    })
-    .refine((val) => !val || isFutureExpiryDate(val), {
-      message: "La date d'expiration doit être dans le futur.",
-    })
-    .optional(),
-  cvv: z
-    .string()
-    .min(3, { message: "Le CVV doit contenir au moins 3 chiffres." })
-    .max(4, { message: "Le CVV doit contenir au maximum 4 chiffres." })
-    .refine((val) => !val || /^\d{3,4}$/.test(val), {
-      message: "Le CVV doit contenir uniquement des chiffres.",
-    })
-    .optional(),
-}).refine(
-  (data) =>
-    data.paymentMethod !== ModePaiement.CarteBancaire ||
-    (data.cardholderName && data.cardNumber && data.expiryDate && data.cvv),
-  {
-    message: "Tous les champs de carte sont requis pour un paiement par carte.",
-    path: ["paymentMethod"],
-  }
-);
+const paymentFormSchema = z
+  .object({
+    paymentMethod: z
+      .string()
+      .min(1, { message: "Veuillez sélectionner un mode de paiement." })
+      .refine(
+        (val) => Object.values(ModePaiement).includes(val as ModePaiement),
+        {
+          message: "Mode de paiement invalide.",
+        }
+      ),
+    cardholderName: z
+      .string()
+      .min(2, {
+        message: "Le nom du titulaire doit contenir au moins 2 caractères.",
+      })
+      .optional(),
+    cardNumber: z
+      .string()
+      .min(16, {
+        message: "Le numéro de carte doit contenir au moins 16 chiffres.",
+      })
+      .max(19, {
+        message: "Le numéro de carte doit contenir au maximum 19 chiffres.",
+      })
+      .refine((val) => !val || isValidCardNumber(val), {
+        message: "Numéro de carte invalide (échec de la validation Luhn).",
+      })
+      .optional(),
+    expiryDate: z
+      .string()
+      .regex(/^(0[1-9]|1[0-2])\/([0-9]{2})$/, {
+        message: "La date d'expiration doit être au format MM/AA.",
+      })
+      .refine((val) => !val || isFutureExpiryDate(val), {
+        message: "La date d'expiration doit être dans le futur.",
+      })
+      .optional(),
+    cvv: z
+      .string()
+      .min(3, { message: "Le CVV doit contenir au moins 3 chiffres." })
+      .max(4, { message: "Le CVV doit contenir au maximum 4 chiffres." })
+      .refine((val) => !val || /^\d{3,4}$/.test(val), {
+        message: "Le CVV doit contenir uniquement des chiffres.",
+      })
+      .optional(),
+  })
+  .refine(
+    (data) =>
+      data.paymentMethod !== ModePaiement.CarteBancaire ||
+      (data.cardholderName && data.cardNumber && data.expiryDate && data.cvv),
+    {
+      message:
+        "Tous les champs de carte sont requis pour un paiement par carte.",
+      path: ["paymentMethod"],
+    }
+  );
 
 export type PaymentFormValues = z.infer<typeof paymentFormSchema>;
 
@@ -194,7 +204,9 @@ export function ConsultationPaymentForm({
       const success = await onSubmit({
         paymentMethod: data.paymentMethod,
         cardholderName: data.cardholderName,
-        cardNumber: data.cardNumber ? data.cardNumber.replace(/\s/g, "") : undefined,
+        cardNumber: data.cardNumber
+          ? data.cardNumber.replace(/\s/g, "")
+          : undefined,
         expiryDate: data.expiryDate,
         cvv: data.cvv,
       });
@@ -206,7 +218,8 @@ export function ConsultationPaymentForm({
       }
     } catch (error) {
       console.error("Error processing payment:", error);
-      const errorMessage = error instanceof Error ? error.message : t("paymentError");
+      const errorMessage =
+        error instanceof Error ? error.message : t("paymentError");
       showErrorPayment(errorMessage);
     } finally {
       setIsSubmitting(false);
@@ -332,7 +345,10 @@ export function ConsultationPaymentForm({
                     <FormItem>
                       <FormLabel>{t("cardholderName")}</FormLabel>
                       <FormControl>
-                        <Input placeholder={t("cardholderPlaceholder")} {...field} />
+                        <Input
+                          placeholder={t("cardholderPlaceholder")}
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -348,7 +364,9 @@ export function ConsultationPaymentForm({
                         <Input
                           placeholder={t("cardNumberPlaceholder")}
                           value={field.value || ""}
-                          onChange={(e) => field.onChange(formatCardNumber(e.target.value))}
+                          onChange={(e) =>
+                            field.onChange(formatCardNumber(e.target.value))
+                          }
                           maxLength={19}
                         />
                       </FormControl>
@@ -368,7 +386,9 @@ export function ConsultationPaymentForm({
                             placeholder={t("expiryDatePlaceholder")}
                             maxLength={5}
                             value={field.value || ""}
-                            onChange={(e) => field.onChange(formatExpiryDate(e.target.value))}
+                            onChange={(e) =>
+                              field.onChange(formatExpiryDate(e.target.value))
+                            }
                           />
                         </FormControl>
                         <FormMessage />
@@ -400,9 +420,7 @@ export function ConsultationPaymentForm({
 
             {selectedPaymentMethod === ModePaiement.Especes && (
               <div className="p-4 bg-blue-50 rounded-md">
-                <p className="text-sm text-blue-800">
-                  {t("cashPaymentInfo")}
-                </p>
+                <p className="text-sm text-blue-800">{t("cashPaymentInfo")}</p>
               </div>
             )}
 
@@ -437,7 +455,9 @@ export function ConsultationPaymentForm({
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting
                   ? t("processing")
-                  : `${t("pay")} ${formatCurrency(invoice.montantTotal - invoice.montantPaye)}`}
+                  : `${t("pay")} ${formatCurrency(
+                      invoice.montantTotal - invoice.montantPaye
+                    )}`}
               </Button>
             </DialogFooter>
           </form>

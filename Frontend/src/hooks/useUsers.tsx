@@ -3,7 +3,13 @@ import { User } from "@/types/auth";
 import { useAuth } from "@/hooks/useAuth";
 
 export function useUsers() {
-  const { user, getAllUsers, deleteUser, changeUserRole, registerWithDefaultPassword } = useAuth();
+  const {
+    user,
+    getAllUsers,
+    deleteUser,
+    changeUserRole,
+    registerWithDefaultPassword,
+  } = useAuth();
 
   const [users, setUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
@@ -75,14 +81,22 @@ export function useUsers() {
   };
 
   // Mettre à jour un utilisateur
-  const handleUpdateUser = async (userId: string, data: Partial<User>): Promise<User> => {
+  const handleUpdateUser = async (
+    userId: string,
+    data: Partial<User>
+  ): Promise<User> => {
     try {
       if (data.role) {
         await changeUserRole(userId, data.role);
       }
-      const updatedUser: User = { ...users.find((u) => u.id === userId)!, ...data };
+      const updatedUser: User = {
+        ...users.find((u) => u.id === userId)!,
+        ...data,
+      };
       setUsers((prev) => prev.map((u) => (u.id === userId ? updatedUser : u)));
-      setFilteredUsers((prev) => prev.map((u) => (u.id === userId ? updatedUser : u)));
+      setFilteredUsers((prev) =>
+        prev.map((u) => (u.id === userId ? updatedUser : u))
+      );
       return updatedUser;
     } catch (error) {
       console.error("Failed to update user:", error);

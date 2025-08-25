@@ -15,7 +15,6 @@ import {
   PaymentFormValues,
 } from "@/components/billing/ConsultationPaymentForm";
 import { ConsultationInvoiceTable } from "@/components/billing/ConsultationInvoiceTable";
-import { SearchBar } from "@/components/billing/SearchBar";
 import { EmptyState } from "@/components/billing/EmptyState";
 import { PaginationControls } from "@/components/ui/pagination-controls";
 import { BillingStats } from "@/components/billing/BillingStats";
@@ -29,7 +28,7 @@ import {
 } from "@/components/billing/InvoiceFilters";
 import { useTranslation } from "@/hooks/useTranslation";
 import { mapFactureStatus } from "@/types/billing";
-import { usePaymentNotifications } from "@/components/billing/PaymentStatusNotification";
+import { usePaymentNotifications } from "@/hooks/usePaymentNotifications";
 import { toast } from "sonner";
 
 interface BackendValidationError {
@@ -304,7 +303,6 @@ function BillingPage() {
                   }}
                 />
               )}
-
             </>
           )}
         </CardContent>

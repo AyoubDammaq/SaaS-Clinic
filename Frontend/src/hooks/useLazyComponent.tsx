@@ -1,5 +1,4 @@
-
-import { useState, useEffect, ComponentType } from 'react';
+import { useState, useEffect, ComponentType } from "react";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 interface UseLazyComponentOptions {
@@ -18,23 +17,23 @@ export function useLazyComponent<T>(
 
   useEffect(() => {
     let isMounted = true;
-    let startTime = Date.now();
+    const startTime = Date.now();
     let timeout: number | undefined;
-    
+
     // Add initial delay if specified
     if (delayMs > 0) {
       timeout = window.setTimeout(loadComponent, delayMs);
     } else {
       loadComponent();
     }
-    
+
     function loadComponent() {
       factory()
-        .then(module => {
+        .then((module) => {
           // Calculate how much time has elapsed
           const elapsedTime = Date.now() - startTime;
           const remainingTime = Math.max(0, minimumLoadTimeMs - elapsedTime);
-          
+
           // Wait for minimum load time if needed
           if (remainingTime > 0) {
             setTimeout(() => {
@@ -50,9 +49,9 @@ export function useLazyComponent<T>(
             }
           }
         })
-        .catch(err => {
+        .catch((err) => {
           if (isMounted) {
-            console.error('Failed to lazy load component:', err);
+            console.error("Failed to lazy load component:", err);
             setError(err);
             setIsLoading(false);
           }
@@ -72,7 +71,7 @@ export function useLazyComponent<T>(
           Failed to load component
         </div>
       )) as unknown as ComponentType<T>,
-      isLoading: false
+      isLoading: false,
     };
   }
 
@@ -83,7 +82,7 @@ export function useLazyComponent<T>(
           <LoadingSpinner size="md" text="Loading component..." />
         </div>
       )) as unknown as ComponentType<T>,
-      isLoading: true
+      isLoading: true,
     };
   }
 
